@@ -1468,8 +1468,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4618560127185644871}
-  - component: {fileID: 1128988034}
   - component: {fileID: 441444427113020946}
+  - component: {fileID: 6303004370760673573}
   m_Layer: 0
   m_Name: PT_Medieval_Female_Peasant_01_c
   m_TagString: Untagged
@@ -1493,25 +1493,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1128988034
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4618560127185285413}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: be98679631e300549bf11d88ed40176a, type: 3}
-  m_Controller: {fileID: 9100000, guid: cd10636a08c5af44d9a4a203a1fdec82, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &441444427113020946
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1526,6 +1507,25 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!95 &6303004370760673573
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618560127185285413}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: be98679631e300549bf11d88ed40176a, type: 3}
+  m_Controller: {fileID: 9100000, guid: cd10636a08c5af44d9a4a203a1fdec82, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4618560127185285415
 GameObject:
   m_ObjectHideFlags: 0

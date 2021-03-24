@@ -22,6 +22,7 @@ namespace JTTF
 
 			progressBar.SetVisible(true);
 			tool.PlayAnim(animationController);
+			tool.Use();
 		}
 		void UnuseTool()
 		{
@@ -30,12 +31,14 @@ namespace JTTF
 			isActive = false;
 			progressBar.SetVisible(false);
 			tool.StopAnim(animationController);
+			tool.Unuse();
 		}
 		void CancelTool()
 		{
 			isActive = false;
 			progressBar.SetVisible(false);
 			tool.StopAnim(animationController);
+			tool.Unuse();
 		}
 
 		void ToolInput()

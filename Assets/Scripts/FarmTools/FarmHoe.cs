@@ -13,6 +13,7 @@ namespace JTTF
 		[SerializeField] float forwardOffset = 1.0f;
 
 		GameObject farmPlotPreview = null;
+		bool isUsed = false;
 
 		private void Awake()
 		{
@@ -20,6 +21,8 @@ namespace JTTF
 		}
 		private void Update()
 		{
+			if (isUsed) return;
+
 			Vector3 previewPosition = CharacterController.Position + CharacterController.Forward * forwardOffset;
 			previewPosition.x = Mathf.RoundToInt(previewPosition.x);
 			previewPosition.y = 0.0f;
@@ -29,8 +32,18 @@ namespace JTTF
 
 		public override bool IsUsable()
 		{
-			//todo
+			if (Physics.CheckBox(farmPlotPreview.transform.position + new Vector3(0.0f, 1.0f, 0.0f), new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, LayerMask.GetMask("World", "Farm")))
+				return false;
+
 			return true;
+		}
+		public override void Use()
+		{
+			isUsed = true;
+		}
+		public override void Unuse()
+		{
+			isUsed = false;
 		}
 		public override void ApplyEffect()
 		{

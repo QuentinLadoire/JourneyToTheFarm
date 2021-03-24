@@ -12,12 +12,20 @@ namespace JTTF
 
 		[SerializeField] float forwardOffset = 1.0f;
 
-		GameObject farmPlotPreview = null;
+		FarmPlotPreview farmPlotPreview = null;
 		bool isUsed = false;
+
+		void HasMove()
+		{
+			if (IsUsable())
+				farmPlotPreview.SetBlueMat();
+			else
+				farmPlotPreview.SetRedMat();
+		}
 
 		private void Awake()
 		{
-			farmPlotPreview = Instantiate(farmPlotPreviewPrefab);
+			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<FarmPlotPreview>();
 		}
 		private void Update()
 		{
@@ -27,7 +35,15 @@ namespace JTTF
 			previewPosition.x = Mathf.RoundToInt(previewPosition.x);
 			previewPosition.y = 0.0f;
 			previewPosition.z = Mathf.RoundToInt(previewPosition.z);
+
+			bool hasMove = false;
+			if (previewPosition != farmPlotPreview.transform.position)
+				hasMove = true;
+
 			farmPlotPreview.transform.position = previewPosition;
+
+			if (hasMove)
+				HasMove();
 		}
 
 		public override bool IsUsable()

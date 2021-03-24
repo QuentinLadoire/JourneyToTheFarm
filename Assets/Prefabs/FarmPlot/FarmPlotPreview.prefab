@@ -372,6 +372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6047203369850023495}
+  - component: {fileID: 3989639397509415917}
   m_Layer: 0
   m_Name: FarmPlotPreview
   m_TagString: Untagged
@@ -394,6 +395,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3989639397509415917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047203369850023488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d092be06ac8ec2a44aae60ed2f4a68d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueMat: {fileID: 2100000, guid: 7439a435306f1a948b79b22aa49103e6, type: 2}
+  redMat: {fileID: 2100000, guid: 2cc98bddd6c451343a1e553946b5f1a1, type: 2}
 --- !u!1 &6047203369938819517
 GameObject:
   m_ObjectHideFlags: 0

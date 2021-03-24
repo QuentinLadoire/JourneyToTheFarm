@@ -43,7 +43,9 @@ namespace JTTF
 			CameraRotation();
 
 			CameraFarOffset();
-
+		}
+		private void FixedUpdate()
+		{
 			CameraFollowing();
 		}
 	}

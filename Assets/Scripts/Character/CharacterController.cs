@@ -37,7 +37,7 @@ namespace JTTF
 
 			animationController = GetComponent<AnimationController>();
 		}
-		private void Update()
+		private void FixedUpdate()
 		{
 			CharacterMovement();
 

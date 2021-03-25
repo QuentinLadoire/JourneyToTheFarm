@@ -13,6 +13,7 @@ namespace JTTF
 		bool isActive = false;
 		float currentDuration = 0.0f;
 
+		CharacterController characterController = null;
 		AnimationController animationController = null;
 
 		void UseTool()
@@ -35,6 +36,8 @@ namespace JTTF
 		}
 		void CancelTool()
 		{
+			if (!isActive) return;
+
 			isActive = false;
 			progressBar.SetVisible(false);
 			tool.StopAnim(animationController);
@@ -61,6 +64,11 @@ namespace JTTF
 		private void Awake()
 		{
 			animationController = GetComponent<AnimationController>();
+			characterController = GetComponent<CharacterController>();
+		}
+		private void Start()
+		{
+			characterController.onMoveEnter += CancelTool;
 		}
 		private void Update()
 		{

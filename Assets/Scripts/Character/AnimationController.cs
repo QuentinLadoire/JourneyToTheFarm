@@ -7,10 +7,16 @@ namespace JTTF
     public class AnimationController : MonoBehaviour
     {
         Animator animator = null;
+		CharacterController characterController = null;
 
 		private void Awake()
 		{
 			animator = GetComponentInChildren<Animator>();
+			characterController = GetComponent<CharacterController>();
+		}
+		private void Start()
+		{
+			characterController.onMove += CharacterMouvementAnim;
 		}
 
 		public void CharacterMouvementAnim(Vector3 direction)

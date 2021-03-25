@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,17 +12,32 @@ namespace JTTF
 		public static Vector3 Position { get => instance.transform.position; }
 		public static Vector3 Forward { get => instance.transform.forward; }
 
+		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
+		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
+		public Action<Vector3> onMove = (Vector3) => { /*Debug.Log("OnMovement");*/ };
+
 		[SerializeField] GameObject followingCamera = null;
 		[SerializeField] float speed = 1.0f;
 
-		AnimationController animationController = null;
+		Vector3 previousDirection = Vector3.zero;
 
+		void CharacterMovementEvent(Vector3 direction)
+		{
+			if (direction != Vector3.zero && previousDirection == Vector3.zero)
+				onMoveEnter.Invoke();
+			if (direction == Vector3.zero && previousDirection != Vector3.zero)
+				onMoveExit.Invoke();
+
+			previousDirection = direction;
+
+			onMove.Invoke(direction);
+		}
 		void CharacterMovement()
 		{
 			Vector3 direction = (Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.forward).normalized;
 			transform.position += direction * speed * Time.deltaTime;
 
-			animationController.CharacterMouvementAnim(direction);
+			CharacterMovementEvent(direction);
 		}
 		void CharacterRotation()
 		{
@@ -34,8 +50,6 @@ namespace JTTF
 		private void Awake()
 		{
 			instance = this;
-
-			animationController = GetComponent<AnimationController>();
 		}
 		private void FixedUpdate()
 		{

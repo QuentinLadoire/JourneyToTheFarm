@@ -1470,6 +1470,7 @@ GameObject:
   - component: {fileID: 4618560127185644871}
   - component: {fileID: 441444427113020946}
   - component: {fileID: 6303004370760673573}
+  - component: {fileID: 4397624018590723947}
   m_Layer: 0
   m_Name: PT_Medieval_Female_Peasant_01_c
   m_TagString: Untagged
@@ -1520,12 +1521,26 @@ Animator:
   m_Controller: {fileID: 9100000, guid: cd10636a08c5af44d9a4a203a1fdec82, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4397624018590723947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618560127185285413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e76a2a53b8dfde4684950d546a3223f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IKGoal: []
+  IKHint: []
 --- !u!1 &4618560127185285415
 GameObject:
   m_ObjectHideFlags: 0

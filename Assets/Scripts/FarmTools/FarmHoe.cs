@@ -45,6 +45,10 @@ namespace JTTF
 			if (hasMove)
 				HasMove();
 		}
+		private void OnDestroy()
+		{
+			Destroy(farmPlotPreview.gameObject);
+		}
 
 		public override bool IsUsable()
 		{

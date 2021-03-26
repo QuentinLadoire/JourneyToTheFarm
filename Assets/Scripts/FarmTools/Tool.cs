@@ -15,5 +15,10 @@ namespace JTTF
         public abstract void ApplyEffect();
         public abstract void PlayAnim(AnimationController animationController);
         public abstract void StopAnim(AnimationController animationController);
-    }
+
+        public void Destroy()
+		{
+            Destroy(gameObject);
+		}
+	}
 }

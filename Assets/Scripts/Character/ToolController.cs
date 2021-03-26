@@ -6,9 +6,13 @@ namespace JTTF
 {
     public class ToolController : MonoBehaviour
     {
+		[SerializeField] Inventory inventory = null;
+
+		[SerializeField] Transform handTransform = null;
+
 		[SerializeField] ProgressBar progressBar = null;
 
-        public Tool tool = null;
+        Tool tool = null;
 
 		bool isActive = false;
 		float currentDuration = 0.0f;
@@ -44,6 +48,23 @@ namespace JTTF
 			tool.Unuse();
 		}
 
+		void OnScroll(int index, Item item)
+		{
+			if (tool != null)
+			{
+				CancelTool();
+
+				tool.Destroy();
+			}
+
+			if (item != null && item.type == ItemType.Tool)
+			{
+				var toolItem = item as ToolItem;
+				tool = Instantiate(toolItem.prefab).GetComponent<Tool>();
+				tool.transform.SetParent(handTransform, false);
+			}
+		}
+
 		void ToolInput()
 		{
 			if (Input.GetButtonDown("ActivateTool"))
@@ -65,16 +86,29 @@ namespace JTTF
 		{
 			animationController = GetComponent<AnimationController>();
 			characterController = GetComponent<CharacterController>();
-		}
-		private void Start()
-		{
+
 			characterController.onMoveEnter += CancelTool;
+
+			if (inventory == null) Debug.Log("Inventory is null");
+			else
+			{
+				inventory.onScroll += OnScroll;
+			}
 		}
 		private void Update()
 		{
 			ToolInput();
 
 			UpdateToolDuration();
+		}
+		private void OnDestroy()
+		{
+			characterController.onMoveEnter -= CancelTool;
+
+			if (inventory != null)
+			{
+				inventory.onScroll -= OnScroll;
+			}
 		}
 	}
 }

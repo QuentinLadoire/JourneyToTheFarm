@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmHoe : Tool
+	public class FarmHoe : UsableItem
 	{
-		[Header("FarmHoe Paramater")]
+		[Header("FarmHoe Parameter")]
 		[SerializeField] GameObject farmPlotPrefab = null;
 		[SerializeField] GameObject farmPlotPreviewPrefab = null;
 
@@ -45,10 +45,6 @@ namespace JTTF
 			if (hasMove)
 				HasMove();
 		}
-		private void OnDestroy()
-		{
-			Destroy(farmPlotPreview.gameObject);
-		}
 
 		public override bool IsUsable()
 		{
@@ -77,6 +73,11 @@ namespace JTTF
 		public override void StopAnim(AnimationController animationController)
 		{
 			animationController.CharacterDiggingAnim(false);
+		}
+		public override void Destroy()
+		{
+            Destroy(gameObject);
+			Destroy(farmPlotPreview.gameObject);
 		}
 	}
 }

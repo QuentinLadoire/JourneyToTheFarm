@@ -1187,11 +1187,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedImage: {fileID: 1604360138}
---- !u!4 &675585031 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8497703060374543019, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
-  m_PrefabInstance: {fileID: 4110536172970593036}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &727506026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2846,10 +2841,6 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 470493463}
-    - target: {fileID: 3869149710092022336, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
-      propertyPath: handTransform
-      value: 
-      objectReference: {fileID: 675585031}
     - target: {fileID: 4110536171662277972, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
       propertyPath: m_RootOrder
       value: 5

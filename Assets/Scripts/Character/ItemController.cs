@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class ToolController : MonoBehaviour
+    public class ItemController : MonoBehaviour
     {
 		[SerializeField] Inventory inventory = null;
 
@@ -12,7 +12,7 @@ namespace JTTF
 
 		[SerializeField] ProgressBar progressBar = null;
 
-        Tool tool = null;
+        UsableItem usableItem = null;
 
 		bool isActive = false;
 		float currentDuration = 0.0f;
@@ -23,20 +23,20 @@ namespace JTTF
 		void UseTool()
 		{
 			isActive = true;
-			currentDuration = tool.duration;
+			currentDuration = usableItem.duration;
 
 			progressBar.SetVisible(true);
-			tool.PlayAnim(animationController);
-			tool.Use();
+			usableItem.PlayAnim(animationController);
+			usableItem.Use();
 		}
 		void UnuseTool()
 		{
-			tool.ApplyEffect();
+			usableItem.ApplyEffect();
 
 			isActive = false;
 			progressBar.SetVisible(false);
-			tool.StopAnim(animationController);
-			tool.Unuse();
+			usableItem.StopAnim(animationController);
+			usableItem.Unuse();
 		}
 		void CancelTool()
 		{
@@ -44,42 +44,42 @@ namespace JTTF
 
 			isActive = false;
 			progressBar.SetVisible(false);
-			tool.StopAnim(animationController);
-			tool.Unuse();
+			usableItem.StopAnim(animationController);
+			usableItem.Unuse();
 		}
 
 		void OnScroll(int index, Item item)
 		{
-			if (tool != null)
+			if (usableItem != null)
 			{
 				CancelTool();
 
-				tool.Destroy();
+				usableItem.Destroy();
 			}
 
 			if (item != null && item.type == ItemType.Tool)
 			{
 				var toolItem = item as ToolItem;
-				tool = Instantiate(toolItem.prefab).GetComponent<Tool>();
-				tool.transform.SetParent(handTransform, false);
+				usableItem = Instantiate(toolItem.prefab).GetComponent<UsableItem>();
+				usableItem.transform.SetParent(handTransform, false);
 			}
 		}
 
 		void ToolInput()
 		{
 			if (Input.GetButtonDown("ActivateTool"))
-				if (tool != null && tool.IsUsable())
+				if (usableItem != null && usableItem.IsUsable())
 					UseTool();
 		}
 		void UpdateToolDuration()
 		{
-			if (!isActive || tool == null) return;
+			if (!isActive || usableItem == null) return;
 
 			if (currentDuration <= 0.0f)
 				UnuseTool();
 
 			currentDuration -= Time.deltaTime;
-			progressBar.SetPercent( 1 - (currentDuration / tool.duration));
+			progressBar.SetPercent( 1 - (currentDuration / usableItem.duration));
 		}
 
 		private void Awake()

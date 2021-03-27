@@ -432,8 +432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8d4a4d43b232547850654f63b94941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  handTransform: {fileID: 8497703060374543019}
   progressBar: {fileID: 6076909036526028420}
-  tool: {fileID: 0}
 --- !u!114 &1265649284977294238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,5 +822,10 @@ PrefabInstance:
 --- !u!4 &8497703060374543071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4618560127185644871, guid: 21eda767807657e4396dc6ee8eb15cba, type: 3}
+  m_PrefabInstance: {fileID: 3888167913964779416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8497703060374543019 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4618560127185644851, guid: 21eda767807657e4396dc6ee8eb15cba, type: 3}
   m_PrefabInstance: {fileID: 3888167913964779416}
   m_PrefabAsset: {fileID: 0}

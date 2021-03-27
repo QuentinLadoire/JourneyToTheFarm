@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public abstract class Tool : MonoBehaviour
+    public abstract class UsableItem : MonoBehaviour
     {
-        [Header("Tool Parameter")]
+        [Header("UsableItem Parameter")]
         public float duration = 0.0f;
 
         public abstract bool IsUsable();
@@ -15,10 +15,6 @@ namespace JTTF
         public abstract void ApplyEffect();
         public abstract void PlayAnim(AnimationController animationController);
         public abstract void StopAnim(AnimationController animationController);
-
-        public void Destroy()
-		{
-            Destroy(gameObject);
-		}
+        public abstract void Destroy();
 	}
 }

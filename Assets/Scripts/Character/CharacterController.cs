@@ -7,19 +7,18 @@ namespace JTTF
 {
 	public class CharacterController : MonoBehaviour
 	{
-		static CharacterController instance = null;
-
-		public static Vector3 Position { get => instance.transform.position; }
-		public static Vector3 Forward { get => instance.transform.forward; }
-
 		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
 		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
 		public Action<Vector3> onMove = (Vector3) => { /*Debug.Log("OnMovement");*/ };
+		public Action<Vector3> onHasMoved = (Vector3) => { /*Debug.Log("HasMove");*/ };
+
+		public Vector3 RoundPosition { get; private set; } = Vector3.zero;
 
 		[SerializeField] GameObject followingCamera = null;
 		[SerializeField] float speed = 1.0f;
 
 		Vector3 previousDirection = Vector3.zero;
+		Vector3 previousPosition = Vector3.zero;
 
 		void CharacterMovementEvent(Vector3 direction)
 		{
@@ -27,10 +26,16 @@ namespace JTTF
 				onMoveEnter.Invoke();
 			if (direction == Vector3.zero && previousDirection != Vector3.zero)
 				onMoveExit.Invoke();
+			onMove.Invoke(direction);
 
 			previousDirection = direction;
 
-			onMove.Invoke(direction);
+			Vector3 previousRoundPosition = new Vector3(Mathf.RoundToInt(previousPosition.x), 0.0f, Mathf.RoundToInt(previousPosition.z));
+			RoundPosition = new Vector3(Mathf.RoundToInt(transform.position.x), 0.0f, Mathf.RoundToInt(transform.position.z));
+			if (previousRoundPosition != RoundPosition)
+				onHasMoved.Invoke(RoundPosition);
+
+			previousPosition = transform.position;
 		}
 		void CharacterMovement()
 		{
@@ -47,10 +52,6 @@ namespace JTTF
 			transform.rotation = cameraRotation;
 		}
 
-		private void Awake()
-		{
-			instance = this;
-		}
 		private void FixedUpdate()
 		{
 			CharacterMovement();

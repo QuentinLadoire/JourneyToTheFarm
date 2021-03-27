@@ -960,10 +960,10 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: f2b09e482f89d1f45bf38952d66417dd, type: 3}
     prefab: {fileID: 617178128329146584, guid: 7489ea9a46ed1a04e81012efb9f569a6, type: 3}
   seeds:
-  - name: WheatSeed
+  - name: WheatSeedBag
     type: 2
     sprite: {fileID: 21300000, guid: 05458bf22f8428e459d44576841b2c2c, type: 3}
-    prefab: {fileID: 4945689059156840016, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
+    prefab: {fileID: 2183954413004688833, guid: 494760c492ae22e4cbdcea8811b9a190, type: 3}
 --- !u!1 &629902264
 GameObject:
   m_ObjectHideFlags: 0

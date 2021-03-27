@@ -60,7 +60,7 @@ namespace JTTF
 			if (item != null)
 			{
 				usableItem = Instantiate(item.prefab).GetComponent<UsableItem>();
-				usableItem.Init(item, handTransform);
+				usableItem.Init(handTransform);
 			}
 		}
 

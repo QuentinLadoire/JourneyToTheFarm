@@ -10,13 +10,14 @@ namespace JTTF
 		[SerializeField] GameObject farmPlotPrefab = null;
 		[SerializeField] GameObject farmPlotPreviewPrefab = null;
 
-		[SerializeField] float forwardOffset = 1.0f;
-
 		FarmPlotPreview farmPlotPreview = null;
-		bool isUsed = false;
 
-		void HasMove()
+		void OnHasMoved(Vector3 position)
 		{
+			if (isUsed) return;
+
+			farmPlotPreview.transform.position = position;
+
 			if (IsUsable())
 				farmPlotPreview.SetBlueMat();
 			else
@@ -26,27 +27,18 @@ namespace JTTF
 		private void Awake()
 		{
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<FarmPlotPreview>();
+			farmPlotPreview.transform.position = Player.RoundPosition;
 		}
-		private void Update()
+		private void Start()
 		{
-			if (isUsed) return;
-
-			Vector3 previewPosition = CharacterController.Position + CharacterController.Forward * forwardOffset;
-			previewPosition.x = Mathf.RoundToInt(previewPosition.x);
-			previewPosition.y = 0.0f;
-			previewPosition.z = Mathf.RoundToInt(previewPosition.z);
-
-			bool hasMove = false;
-			if (previewPosition != farmPlotPreview.transform.position)
-				hasMove = true;
-
-			farmPlotPreview.transform.position = previewPosition;
-
-			if (hasMove)
-				HasMove();
+			Player.OnHasMoved += OnHasMoved;
+		}
+		private void OnDestroy()
+		{
+			Player.OnHasMoved -= OnHasMoved;
 		}
 
-		public override void Init(Item item, Transform parent)
+		public override void Init(Transform parent)
 		{
 			transform.SetParent(parent, false);
 		}
@@ -56,14 +48,6 @@ namespace JTTF
 				return false;
 
 			return true;
-		}
-		public override void Use()
-		{
-			isUsed = true;
-		}
-		public override void Unuse()
-		{
-			isUsed = false;
 		}
 		public override void ApplyEffect()
 		{

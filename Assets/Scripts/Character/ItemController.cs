@@ -20,7 +20,7 @@ namespace JTTF
 		CharacterController characterController = null;
 		AnimationController animationController = null;
 
-		void UseTool()
+		void UseItem()
 		{
 			isActive = true;
 			currentDuration = usableItem.duration;
@@ -29,7 +29,7 @@ namespace JTTF
 			usableItem.PlayAnim(animationController);
 			usableItem.Use();
 		}
-		void UnuseTool()
+		void UnuseItem()
 		{
 			usableItem.ApplyEffect();
 
@@ -38,7 +38,7 @@ namespace JTTF
 			usableItem.StopAnim(animationController);
 			usableItem.Unuse();
 		}
-		void CancelTool()
+		void CancelItem()
 		{
 			if (!isActive) return;
 
@@ -52,31 +52,30 @@ namespace JTTF
 		{
 			if (usableItem != null)
 			{
-				CancelTool();
+				CancelItem();
 
 				usableItem.Destroy();
 			}
 
-			if (item != null && item.type == ItemType.Tool)
+			if (item != null)
 			{
-				var toolItem = item as ToolItem;
-				usableItem = Instantiate(toolItem.prefab).GetComponent<UsableItem>();
-				usableItem.transform.SetParent(handTransform, false);
+				usableItem = Instantiate(item.prefab).GetComponent<UsableItem>();
+				usableItem.Init(item, handTransform);
 			}
 		}
 
-		void ToolInput()
+		void ItemInput()
 		{
 			if (Input.GetButtonDown("ActivateTool"))
 				if (usableItem != null && usableItem.IsUsable())
-					UseTool();
+					UseItem();
 		}
-		void UpdateToolDuration()
+		void UpdateItemDuration()
 		{
 			if (!isActive || usableItem == null) return;
 
 			if (currentDuration <= 0.0f)
-				UnuseTool();
+				UnuseItem();
 
 			currentDuration -= Time.deltaTime;
 			progressBar.SetPercent( 1 - (currentDuration / usableItem.duration));
@@ -87,7 +86,7 @@ namespace JTTF
 			animationController = GetComponent<AnimationController>();
 			characterController = GetComponent<CharacterController>();
 
-			characterController.onMoveEnter += CancelTool;
+			characterController.onMoveEnter += CancelItem;
 
 			if (inventory == null) Debug.Log("Inventory is null");
 			else
@@ -97,13 +96,13 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			ToolInput();
+			ItemInput();
 
-			UpdateToolDuration();
+			UpdateItemDuration();
 		}
 		private void OnDestroy()
 		{
-			characterController.onMoveEnter -= CancelTool;
+			characterController.onMoveEnter -= CancelItem;
 
 			if (inventory != null)
 			{

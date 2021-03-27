@@ -9,6 +9,7 @@ namespace JTTF
         [Header("UsableItem Parameter")]
         public float duration = 0.0f;
 
+        public abstract void Init(Item item, Transform parent);
         public abstract bool IsUsable();
         public abstract void Use();
         public abstract void Unuse();

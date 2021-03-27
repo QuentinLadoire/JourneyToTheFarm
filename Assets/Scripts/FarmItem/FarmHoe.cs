@@ -46,6 +46,10 @@ namespace JTTF
 				HasMove();
 		}
 
+		public override void Init(Item item, Transform parent)
+		{
+			transform.SetParent(parent, false);
+		}
 		public override bool IsUsable()
 		{
 			if (Physics.CheckBox(farmPlotPreview.transform.position + new Vector3(0.0f, 1.0f, 0.0f), new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, LayerMask.GetMask("World", "Farm")))

@@ -20,10 +20,19 @@ namespace JTTF
 
 			return instance.errorItem;
 		}
+		public static Item GetSeed(string name)
+		{
+			foreach (var seed in instance.seeds)
+				if (seed.name == name)
+					return seed;
+
+			return instance.errorItem;
+		}
 
 		[SerializeField] Item errorItem = null;
 		[SerializeField] Item defaultItem = null;
-		[SerializeField] ToolItem[] tools = null;
+		[SerializeField] Item[] tools = null;
+		[SerializeField] Item[] seeds = null;
 
 		private void Awake()
 		{

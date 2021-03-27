@@ -948,15 +948,22 @@ MonoBehaviour:
     name: ErrorItem
     type: -1
     sprite: {fileID: 21300000, guid: 0de423762d32fd14ab562541af24f463, type: 3}
+    prefab: {fileID: 0}
   defaultItem:
     name: DefaultItem
     type: 0
     sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    prefab: {fileID: 0}
   tools:
   - name: Shovel
     type: 1
     sprite: {fileID: 21300000, guid: f2b09e482f89d1f45bf38952d66417dd, type: 3}
     prefab: {fileID: 617178128329146584, guid: 7489ea9a46ed1a04e81012efb9f569a6, type: 3}
+  seeds:
+  - name: WheatSeed
+    type: 2
+    sprite: {fileID: 21300000, guid: 05458bf22f8428e459d44576841b2c2c, type: 3}
+    prefab: {fileID: 4945689059156840016, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
 --- !u!1 &629902264
 GameObject:
   m_ObjectHideFlags: 0

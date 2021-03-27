@@ -8,7 +8,8 @@ namespace JTTF
     {
         None = -1,
         Item,
-        Tool
+        Tool,
+        Seed
     }
 
     [System.Serializable]
@@ -17,16 +18,6 @@ namespace JTTF
         public string name = "NoName";
         public ItemType type = ItemType.Item;
         public Sprite sprite = null;
-    }
-
-    [System.Serializable]
-    public class ToolItem : Item
-    {
         public GameObject prefab = null;
-
-        public ToolItem()
-        {
-            type = ItemType.Tool;
-        }
     }
 }

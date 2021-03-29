@@ -12,7 +12,6 @@ namespace JTTF
 
 		PreviewObject farmPlotPreview = null;
 		Transform leftHandTransform = null;
-		bool animIsPlayed = false;
 
 		void OnHasMoved(Vector3 position)
 		{
@@ -63,12 +62,10 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			animIsPlayed = true;
 			animationController.CharacterDiggingAnim(true);
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			animIsPlayed = false;
 			animationController.CharacterDiggingAnim(false);
 		}
 		public override void Destroy()

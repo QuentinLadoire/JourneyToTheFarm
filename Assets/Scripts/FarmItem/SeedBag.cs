@@ -62,7 +62,7 @@ namespace JTTF
 		}
 		public override void ApplyEffect()
 		{
-			Debug.Log("ApplyEffect not implemented");
+			farmPlot.SetSeed(seedName, growingDuration);
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{

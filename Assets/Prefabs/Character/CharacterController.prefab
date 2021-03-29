@@ -446,7 +446,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  handTransform: {fileID: 8497703060374543019}
+  rightHandTransform: {fileID: 8497703060374543019}
+  leftHandTransform: {fileID: 8497703060374543017}
   progressBar: {fileID: 6076909036526028420}
 --- !u!114 &1265649284977294238
 MonoBehaviour:
@@ -835,6 +836,11 @@ PrefabInstance:
 --- !u!4 &8497703060374543019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4618560127185644851, guid: 21eda767807657e4396dc6ee8eb15cba, type: 3}
+  m_PrefabInstance: {fileID: 3888167913964779416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8497703060374543017 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4618560127185644849, guid: 21eda767807657e4396dc6ee8eb15cba, type: 3}
   m_PrefabInstance: {fileID: 3888167913964779416}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8497703060374543071 stripped

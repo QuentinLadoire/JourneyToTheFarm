@@ -8,7 +8,8 @@ namespace JTTF
     {
 		[SerializeField] Inventory inventory = null;
 
-		[SerializeField] Transform handTransform = null;
+		[SerializeField] Transform rightHandTransform = null;
+		[SerializeField] Transform leftHandTransform = null;
 
 		[SerializeField] ProgressBar progressBar = null;
 
@@ -60,7 +61,7 @@ namespace JTTF
 			if (item != null)
 			{
 				usableItem = Instantiate(item.prefab).GetComponent<UsableItem>();
-				usableItem.Init(handTransform);
+				usableItem.Init(rightHandTransform, leftHandTransform);
 			}
 		}
 

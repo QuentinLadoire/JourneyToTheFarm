@@ -20,6 +20,14 @@ namespace JTTF
 
 			return instance.errorItem;
 		}
+		public static Item GetSeedBag(string name)
+		{
+			foreach (var seedBag in instance.seedBags)
+				if (seedBag.name == name)
+					return seedBag;
+
+			return instance.errorItem;
+		}
 		public static Item GetSeed(string name)
 		{
 			foreach (var seed in instance.seeds)
@@ -32,6 +40,7 @@ namespace JTTF
 		[SerializeField] Item errorItem = null;
 		[SerializeField] Item defaultItem = null;
 		[SerializeField] Item[] tools = null;
+		[SerializeField] Item[] seedBags = null;
 		[SerializeField] Item[] seeds = null;
 
 		private void Awake()

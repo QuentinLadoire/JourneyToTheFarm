@@ -7,20 +7,31 @@ namespace JTTF
 	public class SeedBag : UsableItem
 	{
 		[Header("SeedBag parameter")]
-		[SerializeField] SeedInfo seedInfo = null;
+		[SerializeField] string seedName = "NoName";
+		[SerializeField] float growingDuration = 0.0f;
+		[SerializeField] GameObject seedPreviewPrefab = null;
 
 		FarmPlot farmPlot = null;
+		PreviewObject seedPreview = null;
 
 		void OnHasMoved(Vector3 position)
 		{
 			if (isUsed) return;
 
-			if (IsUsable())
-			{
+			if (seedPreview != null)
+				seedPreview.transform.position = position;
 
-			}
+			if (IsUsable())
+				seedPreview.SetBlueMat();
+			else
+				seedPreview.SetRedMat();
 		}
 
+		private void Awake()
+		{
+			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
+			OnHasMoved(Player.RoundPosition);
+		}
 		private void Start()
 		{
 			Player.OnHasMoved += OnHasMoved;
@@ -30,20 +41,20 @@ namespace JTTF
 			Player.OnHasMoved -= OnHasMoved;
 		}
 
-		public override void Init(Transform parent)
+		public override void Init(Transform rightHand, Transform leftHand)
 		{
-			transform.SetParent(parent, false);
+			transform.SetParent(rightHand, false);
 		}
 		public override bool IsUsable()
 		{
-			var colliders = Physics.OverlapSphere(Player.Position, 0.1f);
+			var colliders = Physics.OverlapBox(seedPreview.transform.position + Vector3.up, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, LayerMask.GetMask("Farm"));
 			if (colliders != null)
 			{
 				foreach (var collider in colliders)
 					if (collider.tag == "FarmPlot")
 					{
 						farmPlot = collider.GetComponent<FarmPlot>();
-						return true;
+						return !farmPlot.HasSeed;
 					}
 			}
 
@@ -64,6 +75,7 @@ namespace JTTF
 		public override void Destroy()
 		{
 			Destroy(gameObject);
+			Destroy(seedPreview.gameObject);
 		}
 	}
 }

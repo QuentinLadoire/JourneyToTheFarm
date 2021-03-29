@@ -20,7 +20,7 @@ namespace JTTF
             isUsed = false;
         }
 
-        public abstract void Init(Transform parent);
+        public abstract void Init(Transform rightHand, Transform leftHand);
         public abstract bool IsUsable();
         public abstract void ApplyEffect();
         public abstract void PlayAnim(AnimationController animationController);

@@ -9,6 +9,7 @@ namespace JTTF
         None = -1,
         Item,
         Tool,
+        SeedBag,
         Seed
     }
 

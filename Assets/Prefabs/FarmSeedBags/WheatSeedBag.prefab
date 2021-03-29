@@ -56,6 +56,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
+      propertyPath: duration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
+      propertyPath: seedName
+      value: WheatSeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
       propertyPath: seedInfo.step1
       value: 
       objectReference: {fileID: 1958678361418349235, guid: d07d3bccaaacf184fbcc021606291690, type: 3}
@@ -67,5 +75,13 @@ PrefabInstance:
       propertyPath: seedInfo.step3
       value: 
       objectReference: {fileID: 8525681458234279196, guid: f3c0a5afb3cfeac4eb4af08146516b00, type: 3}
+    - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
+      propertyPath: growingDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
+      propertyPath: seedPreviewPrefab
+      value: 
+      objectReference: {fileID: 1958678361418349235, guid: 33722e848afe4d74faabe7cf24239f08, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}

@@ -19,12 +19,15 @@ namespace JTTF
         {
             isUsed = false;
         }
+        public virtual void Destroy()
+		{
+            Destroy(gameObject);
+		}
 
         public abstract void Init(Transform rightHand, Transform leftHand);
         public abstract bool IsUsable();
         public abstract void ApplyEffect();
         public abstract void PlayAnim(AnimationController animationController);
         public abstract void StopAnim(AnimationController animationController);
-        public abstract void Destroy();
 	}
 }

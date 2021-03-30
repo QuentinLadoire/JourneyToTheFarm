@@ -40,6 +40,9 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
+			if (farmPlotPreview != null)
+				Destroy(farmPlotPreview.gameObject);
+
 			Player.OnHasMoved -= OnHasMoved;
 		}
 
@@ -67,11 +70,6 @@ namespace JTTF
 		public override void StopAnim(AnimationController animationController)
 		{
 			animationController.CharacterDiggingAnim(false);
-		}
-		public override void Destroy()
-		{
-            Destroy(gameObject);
-			Destroy(farmPlotPreview.gameObject);
 		}
 	}
 }

@@ -38,6 +38,8 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
+			Destroy(seedPreview.gameObject);
+
 			Player.OnHasMoved -= OnHasMoved;
 		}
 
@@ -71,11 +73,6 @@ namespace JTTF
 		public override void StopAnim(AnimationController animationController)
 		{
 			animationController.CharacterPlantAPlant(false);
-		}
-		public override void Destroy()
-		{
-			Destroy(gameObject);
-			Destroy(seedPreview.gameObject);
 		}
 	}
 }

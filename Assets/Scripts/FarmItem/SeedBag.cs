@@ -66,11 +66,11 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			Debug.Log("PlayAnim not implemented");
+			animationController.CharacterPlantAPlant(true);
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			Debug.Log("StopAnim not implemented");
+			animationController.CharacterPlantAPlant(false);
 		}
 		public override void Destroy()
 		{

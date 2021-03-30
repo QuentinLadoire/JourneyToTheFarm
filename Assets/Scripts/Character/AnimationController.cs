@@ -33,5 +33,11 @@ namespace JTTF
 
 			animator.SetBool("IsDig", value);
 		}
+		public void CharacterPlantAPlant(bool value)
+		{
+			if (animator == null) { Debug.LogError("Animator is Null"); return; }
+
+			animator.SetBool("IsPlant", value);
+		}
 	}
 }

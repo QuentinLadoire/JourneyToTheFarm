@@ -57,7 +57,7 @@ namespace JTTF
 				usableItem.Destroy();
 			}
 
-			if (item != null)
+			if (item != null && item.prefab != null)
 			{
 				usableItem = Instantiate(item.prefab).GetComponent<UsableItem>();
 				usableItem.Init(rightHandTransform, leftHandTransform);

@@ -8,6 +8,7 @@ namespace JTTF
 	{
 		[Header("SeedBag parameter")]
 		[SerializeField] string seedName = "NoName";
+		[SerializeField] string plantName = "NoName";
 		[SerializeField] float growingDuration = 0.0f;
 		[SerializeField] GameObject seedPreviewPrefab = null;
 
@@ -65,7 +66,7 @@ namespace JTTF
 		}
 		public override void ApplyEffect()
 		{
-			farmPlot.SetSeed(seedName, growingDuration);
+			farmPlot.SetSeed(seedName, growingDuration, plantName);
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{

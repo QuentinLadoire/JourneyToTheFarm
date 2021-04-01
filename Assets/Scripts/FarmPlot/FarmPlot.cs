@@ -15,6 +15,7 @@ namespace JTTF
         GameObject seedObject = null;
 
         string seedName = "NoSeed";
+        string plantName = "NoName";
         float growingDurationMax = 10.0f;
         float currentGrowingDuration = 0.0f;
 
@@ -26,14 +27,15 @@ namespace JTTF
 		{
             return (int)((1 - currentGrowingDuration / growingDurationMax) * 10) / 10.0f;
         }
-        public void SetSeed(string name, float growingDuration)
+        public void SetSeed(string seedName, float growingDuration, string plantName)
 		{
             HasSeed = true;
-            seedName = name;
+            this.seedName = seedName;
+            this.plantName = plantName;
             growingDurationMax = growingDuration;
             currentGrowingDuration = growingDuration;
 
-            seedObject = Instantiate(ItemList.GetSeed(seedName + "Step1").prefab);
+			seedObject = Instantiate(ItemList.GetSeed(this.seedName + "Step1").prefab);
             seedObject.transform.SetParent(transform, false);
 
             progressBar.SetVisible(true);
@@ -91,10 +93,13 @@ namespace JTTF
 		}
         public override void ApplyEffect()
 		{
+            Player.AddItem(ItemType.Plant, plantName);
+
             IsMature = false;
             activableImage.SetActive(false);
 
             seedName = "NoSeed";
+            plantName = "NoName";
             HasSeed = false;
 
             if (seedObject != null)

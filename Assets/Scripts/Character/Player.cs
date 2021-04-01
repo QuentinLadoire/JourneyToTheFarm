@@ -18,6 +18,11 @@ namespace JTTF
 		public static Action<int, Item> OnAddItemShortcut { get => instance.inventory.onAddItemShortcut; set => instance.inventory.onAddItemShortcut = value; }
 		public static Action<int, Item> OnScroll { get => instance.inventory.onScroll; set => instance.inventory.onScroll = value; }
 
+		public static void AddItem(ItemType itemType, string itemName)
+		{
+			instance.inventory.AddItem(ItemList.GetItem(itemType, itemName));
+		}
+
 		CharacterController characterController = null;
         ItemController itemController = null;
         AnimationController animationController = null;
@@ -31,6 +36,11 @@ namespace JTTF
 			inventory = GetComponent<Inventory>();
 
 			instance = this;
+		}
+		private void Start()
+		{
+			AddItem(ItemType.Tool, "Shovel");
+			AddItem(ItemType.SeedBag, "WheatSeedBag");
 		}
 	}
 }

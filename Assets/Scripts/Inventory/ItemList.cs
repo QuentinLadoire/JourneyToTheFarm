@@ -36,12 +36,41 @@ namespace JTTF
 
 			return instance.errorItem;
 		}
+		public static Item GetPlant(string name)
+		{
+			foreach (var plant in instance.plants)
+				if (name == plant.name)
+					return plant;
+
+			return instance.errorItem;
+		}
+
+		public static Item GetItem(ItemType itemType, string itemName)
+		{
+			switch (itemType)
+			{
+				case ItemType.Tool:
+					return GetTool(itemName);
+
+				case ItemType.SeedBag:
+					return GetSeedBag(itemName);
+
+				case ItemType.Seed:
+					return GetSeed(itemName);
+
+				case ItemType.Plant:
+					return GetPlant(itemName);
+			}
+
+			return instance.errorItem;
+		}
 
 		[SerializeField] Item errorItem = null;
 		[SerializeField] Item defaultItem = null;
 		[SerializeField] Item[] tools = null;
 		[SerializeField] Item[] seedBags = null;
 		[SerializeField] Item[] seeds = null;
+		[SerializeField] Item[] plants = null;
 
 		private void Awake()
 		{

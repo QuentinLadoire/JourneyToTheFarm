@@ -47,13 +47,20 @@ namespace JTTF
 
 			onAddItemShortcut.Invoke(index, item);
 		}
+		public void AddItem(Item item)
+		{
+			for (int i = 0; i < slotShortcut.Length; i++)
+				if (slotShortcut[i] == null)
+				{
+					AddItemAtShortcut(i, item);
+					return;
+				}
+
+			Debug.Log("Can't add item, no empty slot");
+		}
 
 		private void Start()
 		{
-			AddItemAtShortcut(0, ItemList.GetTool("Shovel"));
-			AddItemAtShortcut(1, ItemList.GetSeedBag("WheatSeedBag"));
-			AddItemAtShortcut(2, ItemList.GetTool("Axe"));
-
 			onScroll.Invoke(shortcutIndex, slotShortcut[shortcutIndex]);
 		}
 		private void Update()

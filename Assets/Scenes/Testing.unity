@@ -1025,6 +1025,11 @@ MonoBehaviour:
     type: 3
     sprite: {fileID: 21300000, guid: 0de423762d32fd14ab562541af24f463, type: 3}
     prefab: {fileID: 8525681458234279196, guid: f3c0a5afb3cfeac4eb4af08146516b00, type: 3}
+  plants:
+  - name: Wheat
+    type: 4
+    sprite: {fileID: 21300000, guid: 05458bf22f8428e459d44576841b2c2c, type: 3}
+    prefab: {fileID: 0}
 --- !u!1 &629902264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,7 +1392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab86461956fb4b47a8dfe52dd8de493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   inventorySlots:
   - {fileID: 1441476457}
   - {fileID: 373830326}

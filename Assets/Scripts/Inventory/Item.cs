@@ -10,7 +10,8 @@ namespace JTTF
         Item,
         Tool,
         SeedBag,
-        Seed
+        Seed,
+        Plant
     }
 
     [System.Serializable]

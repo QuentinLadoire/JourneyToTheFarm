@@ -38,7 +38,8 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			Destroy(seedPreview.gameObject);
+			if (seedPreview != null)
+				Destroy(seedPreview.gameObject);
 
 			Player.OnHasMoved -= OnHasMoved;
 		}

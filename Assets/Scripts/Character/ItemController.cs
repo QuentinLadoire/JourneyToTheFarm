@@ -6,8 +6,6 @@ namespace JTTF
 {
     public class ItemController : MonoBehaviour
     {
-		[SerializeField] Inventory inventory = null;
-
 		[SerializeField] Transform rightHandTransform = null;
 		[SerializeField] Transform leftHandTransform = null;
 
@@ -20,6 +18,7 @@ namespace JTTF
 
 		CharacterController characterController = null;
 		AnimationController animationController = null;
+		Inventory inventory = null;
 
 		void UseItem()
 		{
@@ -67,7 +66,7 @@ namespace JTTF
 
 		void ItemInput()
 		{
-			if (Input.GetButtonDown("ActivateTool"))
+			if (Input.GetButtonDown("UseTool"))
 				if (usableItem != null && usableItem.IsUsable())
 					UseItem();
 		}
@@ -86,6 +85,7 @@ namespace JTTF
 		{
 			animationController = GetComponent<AnimationController>();
 			characterController = GetComponent<CharacterController>();
+			inventory = GetComponent<Inventory>();
 
 			characterController.onMoveEnter += CancelItem;
 

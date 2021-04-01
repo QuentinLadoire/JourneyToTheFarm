@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class FarmPlot : MonoBehaviour
+    public class FarmPlot : ActivableObject
     {
         public bool HasSeed { get; private set; } = false;
         public bool IsMature { get; private set; } = false;
 
         [SerializeField] ProgressBar progressBar = null;
+        [SerializeField] GameObject activableImage = null;
 
         GameObject seedObject = null;
 
@@ -56,6 +57,7 @@ namespace JTTF
             {
                 IsMature = true;
                 progressBar.SetVisible(false);
+                activableImage.SetActive(true);
             }
             currentGrowingDuration -= Time.deltaTime;
 
@@ -74,5 +76,37 @@ namespace JTTF
 
             UpdateGrowingDuration();
 		}
-	}
+
+		public override void Select()
+		{
+            activableImage.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+		}
+		public override void Deselect()
+		{
+            activableImage.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		}
+		public override bool IsActivable()
+		{
+            return IsMature;
+		}
+        public override void ApplyEffect()
+		{
+            IsMature = false;
+            activableImage.SetActive(false);
+
+            seedName = "NoSeed";
+            HasSeed = false;
+
+            if (seedObject != null)
+                Destroy(seedObject);
+		}
+        public override void PlayAnim(AnimationController animationController)
+		{
+            Debug.Log("PlayAnim is not implemented");
+		}
+        public override void StopAnim(AnimationController animationController)
+		{
+            Debug.Log("StopAnim is not implmented");
+		}
+    }
 }

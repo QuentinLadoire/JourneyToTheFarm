@@ -53,6 +53,7 @@ namespace JTTF
 			AddItemAtShortcut(0, ItemList.GetTool("Shovel"));
 			AddItemAtShortcut(1, ItemList.GetSeedBag("WheatSeedBag"));
 			AddItemAtShortcut(2, ItemList.GetTool("Axe"));
+
 			onScroll.Invoke(shortcutIndex, slotShortcut[shortcutIndex]);
 		}
 		private void Update()

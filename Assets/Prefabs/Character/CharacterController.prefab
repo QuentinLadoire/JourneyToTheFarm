@@ -367,6 +367,8 @@ GameObject:
   - component: {fileID: 4110536171662277973}
   - component: {fileID: 3869149710092022336}
   - component: {fileID: 1265649284977294238}
+  - component: {fileID: 7164545464920660025}
+  - component: {fileID: 263482431248501794}
   m_Layer: 6
   m_Name: CharacterController
   m_TagString: Untagged
@@ -419,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c33b28073fb934ea511fb00595bf71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
 --- !u!114 &4110536171662277973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +462,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9c3aae791e017c45b80949a7b440c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7164545464920660025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110536171662277979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9297b1418357bc4e87fd1235c07494b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressBar: {fileID: 6076909036526028420}
+  checkRadius: 2
+--- !u!114 &263482431248501794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110536171662277979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f2716fe260acab4bb2031e411e6e2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5638070224489662589

@@ -6,8 +6,6 @@ namespace JTTF
 {
 	public class InventorySlotPanel : MonoBehaviour
 	{
-		[SerializeField] Inventory inventory = null;
-
 		[SerializeField] InventorySlot[] inventorySlots = null;
 		int selectedSlot = 0;
 
@@ -25,12 +23,8 @@ namespace JTTF
 
 		private void Awake()
 		{
-			if (inventory == null) Debug.Log("Inventory is null");
-			else
-			{
-				inventory.onAddItemShortcut += OnAddItemShortcut;
-				inventory.onScroll += OnScroll;
-			}
+			Player.OnAddItemShortcut += OnAddItemShortcut;
+			Player.OnScroll += OnScroll;
 		}
 		private void Start()
 		{
@@ -38,11 +32,8 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			if (inventory != null)
-			{
-				inventory.onAddItemShortcut -= OnAddItemShortcut;
-				inventory.onScroll -= OnScroll;
-			}
+			Player.OnAddItemShortcut -= OnAddItemShortcut;
+			Player.OnScroll -= OnScroll;
 		}
 	}
 }

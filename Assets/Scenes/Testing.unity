@@ -1781,9 +1781,9 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014324242}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1209359334 stripped
+--- !u!1 &1035759395 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8497703060374046403, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7181371269421748959, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
   m_PrefabInstance: {fileID: 4110536172970593036}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1252260878 stripped
@@ -3140,6 +3140,10 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8497703060374046397, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8497703060374543019, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
@@ -3160,7 +3164,15 @@ PrefabInstance:
     - target: {fileID: 4403957497182260584, guid: e367098f108baf04d9349129bc64390f, type: 3}
       propertyPath: followingObject
       value: 
-      objectReference: {fileID: 1209359334}
+      objectReference: {fileID: 1035759395}
+    - target: {fileID: 4403957497182260584, guid: e367098f108baf04d9349129bc64390f, type: 3}
+      propertyPath: followingOffset.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4403957497182260584, guid: e367098f108baf04d9349129bc64390f, type: 3}
+      propertyPath: followingOffset.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4403957497182260590, guid: e367098f108baf04d9349129bc64390f, type: 3}
       propertyPath: m_Name
       value: CameraController
@@ -3179,7 +3191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4403957497182260591, guid: e367098f108baf04d9349129bc64390f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 4403957497182260591, guid: e367098f108baf04d9349129bc64390f, type: 3}
       propertyPath: m_LocalPosition.z

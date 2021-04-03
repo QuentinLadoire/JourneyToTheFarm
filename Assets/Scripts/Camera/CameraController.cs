@@ -14,6 +14,8 @@ namespace JTTF
 
 		[SerializeField] float farOffset = -5.0f;
 
+		[SerializeField] Vector3 followingOffset = Vector3.zero;
+
 		void CameraRotation()
 		{
 			cameraObject.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Mouse X") * angularSpeed);
@@ -31,7 +33,7 @@ namespace JTTF
 		{
 			if (followingObject == null) return;
 
-			transform.position = Vector3.MoveTowards(transform.position, followingObject.transform.position, speed * Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, followingObject.transform.position + followingOffset, speed * Time.deltaTime);
 		}
 
 		private void Start()
@@ -47,6 +49,12 @@ namespace JTTF
 		private void FixedUpdate()
 		{
 			CameraFollowing();
+		}
+
+		private void OnValidate()
+		{
+			if (followingObject != null)
+				transform.position = followingObject.transform.position + followingOffset;
 		}
 	}
 }

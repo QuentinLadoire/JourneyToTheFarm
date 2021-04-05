@@ -107,11 +107,11 @@ namespace JTTF
 		}
         public override void PlayAnim(AnimationController animationController)
 		{
-            Debug.Log("PlayAnim is not implemented");
+            animationController.CharacterPickUp(true);
 		}
         public override void StopAnim(AnimationController animationController)
 		{
-            Debug.Log("StopAnim is not implmented");
-		}
+            animationController.CharacterPickUp(false);
+        }
     }
 }

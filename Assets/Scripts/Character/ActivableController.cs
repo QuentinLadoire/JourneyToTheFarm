@@ -50,7 +50,7 @@ namespace JTTF
 		{
             ActivableObject nearObject = null;
 
-            var colliders = Physics.OverlapSphere(transform.position, checkRadius, LayerMask.GetMask("Farm"));
+            var colliders = Physics.OverlapSphere(transform.position, checkRadius);
             foreach (var collider in colliders)
 			{
                 var tmp = collider.GetComponent<ActivableObject>();

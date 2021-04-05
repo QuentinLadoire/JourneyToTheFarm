@@ -39,5 +39,11 @@ namespace JTTF
 
 			animator.SetBool("IsPlant", value);
 		}
+		public void CharacterPickUp(bool value)
+		{
+			if (animator == null) { Debug.LogError("Animator is Null"); return; }
+
+			animator.SetBool("IsPick", value);
+		}
 	}
 }

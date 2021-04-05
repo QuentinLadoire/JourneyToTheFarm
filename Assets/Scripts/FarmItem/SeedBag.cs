@@ -73,11 +73,11 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			animationController.CharacterPlantAPlant(true);
+			animationController.CharacterPlantAPlant(true, multiplier);
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			animationController.CharacterPlantAPlant(false);
+			animationController.CharacterPlantAPlant(false, multiplier);
 		}
 	}
 }

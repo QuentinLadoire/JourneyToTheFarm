@@ -78,11 +78,11 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			animationController.CharacterDiggingAnim(true);
+			animationController.CharacterDiggingAnim(true, multiplier);
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			animationController.CharacterDiggingAnim(false);
+			animationController.CharacterDiggingAnim(false, multiplier);
 		}
 	}
 }

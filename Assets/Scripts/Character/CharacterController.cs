@@ -17,6 +17,8 @@ namespace JTTF
 		[SerializeField] GameObject followingCamera = null;
 		[SerializeField] float speed = 1.0f;
 
+		AnimationController animationController = null;
+
 		Vector3 previousDirection = Vector3.zero;
 		Vector3 previousPosition = Vector3.zero;
 
@@ -42,6 +44,8 @@ namespace JTTF
 			Vector3 direction = (Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.forward).normalized;
 			transform.position += direction * speed * Time.deltaTime;
 
+			animationController.CharacterMouvementAnim(direction);
+
 			CharacterMovementEvent(direction);
 		}
 		void CharacterRotation()
@@ -52,6 +56,10 @@ namespace JTTF
 			transform.rotation = cameraRotation;
 		}
 
+		private void Awake()
+		{
+			animationController = GetComponent<AnimationController>();
+		}
 		private void FixedUpdate()
 		{
 			CharacterMovement();

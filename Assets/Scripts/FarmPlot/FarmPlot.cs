@@ -107,11 +107,11 @@ namespace JTTF
 		}
         public override void PlayAnim(AnimationController animationController)
 		{
-            animationController.CharacterPickUp(true);
+            animationController.CharacterPickUp(true, multiplier);
 		}
         public override void StopAnim(AnimationController animationController)
 		{
-            animationController.CharacterPickUp(false);
+            animationController.CharacterPickUp(false, multiplier);
         }
     }
 }

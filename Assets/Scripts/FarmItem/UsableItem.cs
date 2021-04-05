@@ -8,6 +8,7 @@ namespace JTTF
     {
         [Header("UsableItem Parameter")]
         public float duration = 0.0f;
+        public float multiplier = 1.0f;
 
         protected bool isUsed = false;
 

@@ -63,7 +63,7 @@ namespace JTTF
 			{
 				var colliders = Physics.OverlapBox(farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
 				foreach (var collider in colliders)
-					if (collider.tag == "Obstacle")
+					if (collider.tag == "Obstacle" || collider.tag == "FarmPlot")
 						return false;
 
 				return true;

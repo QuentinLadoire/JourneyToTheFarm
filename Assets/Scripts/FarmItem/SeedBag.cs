@@ -15,14 +15,18 @@ namespace JTTF
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
 
+		RaycastHit hit;
+
 		void OnHasMoved(Vector3 position)
 		{
 			if (isUsed) return;
 
-			RaycastHit hit;
 			if (seedPreview != null)
 				if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
+				{
 					seedPreview.transform.position = hit.point;
+					seedPreview.transform.up = hit.normal;
+				}
 
 			if (IsUsable())
 				seedPreview.SetBlueMat();
@@ -53,16 +57,13 @@ namespace JTTF
 		}
 		public override bool IsUsable()
 		{
-			var colliders = Physics.OverlapBox(seedPreview.transform.position + Vector3.up, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, LayerMask.GetMask("Farm"));
-			if (colliders != null)
-			{
-				foreach (var collider in colliders)
-					if (collider.tag == "FarmPlot")
-					{
-						farmPlot = collider.GetComponent<FarmPlot>();
-						return !farmPlot.HasSeed;
-					}
-			}
+			var colliders = Physics.OverlapBox(seedPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
+			foreach (var collider in colliders)
+				if (collider.tag == "FarmPlot")
+				{
+					farmPlot = collider.GetComponent<FarmPlot>();
+					return !farmPlot.HasSeed;
+				}
 
 			return false;
 		}

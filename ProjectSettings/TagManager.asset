@@ -7,6 +7,8 @@ TagManager:
   - FarmPlot
   - FarmPlotPreview
   - SeedBag
+  - Ground
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,10 +16,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Character
-  - Camera
-  - World
-  - Farm
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

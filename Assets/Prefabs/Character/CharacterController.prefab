@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 3761163940572375389}
   - component: {fileID: 7772226043996549967}
   - component: {fileID: 6076909036526028420}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7712026426354270506}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ToolUIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 1265649284977294238}
   - component: {fileID: 7164545464920660025}
   - component: {fileID: 263482431248501794}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CharacterController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 6224042944208944861}
   - component: {fileID: 5360706708069069428}
   - component: {fileID: 2040271132526259824}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

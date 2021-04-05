@@ -13,11 +13,17 @@ namespace JTTF
 		PreviewObject farmPlotPreview = null;
 		Transform leftHandTransform = null;
 
+		RaycastHit hit;
+
 		void OnHasMoved(Vector3 position)
 		{
 			if (isUsed) return;
 
-			farmPlotPreview.transform.position = position;
+			if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
+			{
+				farmPlotPreview.transform.position = hit.point;
+				farmPlotPreview.transform.up = hit.normal;
+			}
 
 			if (IsUsable())
 				farmPlotPreview.SetBlueMat();
@@ -53,10 +59,17 @@ namespace JTTF
 		}
 		public override bool IsUsable()
 		{
-			if (Physics.CheckBox(farmPlotPreview.transform.position + Vector3.up, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, LayerMask.GetMask("World", "Farm")))
-				return false;
+			if (hit.collider != null && hit.collider.tag == "Ground")
+			{
+				var colliders = Physics.OverlapBox(farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
+				foreach (var collider in colliders)
+					if (collider.tag == "Obstacle")
+						return false;
 
-			return true;
+				return true;
+			}
+
+			return false;
 		}
 		public override void ApplyEffect()
 		{

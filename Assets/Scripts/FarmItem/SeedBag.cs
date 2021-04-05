@@ -19,8 +19,10 @@ namespace JTTF
 		{
 			if (isUsed) return;
 
+			RaycastHit hit;
 			if (seedPreview != null)
-				seedPreview.transform.position = position;
+				if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
+					seedPreview.transform.position = hit.point;
 
 			if (IsUsable())
 				seedPreview.SetBlueMat();

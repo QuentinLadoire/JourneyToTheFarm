@@ -30,8 +30,8 @@ namespace JTTF
 
 			previousDirection = direction;
 
-			Vector3 previousRoundPosition = new Vector3(Mathf.RoundToInt(previousPosition.x), 0.0f, Mathf.RoundToInt(previousPosition.z));
-			RoundPosition = new Vector3(Mathf.RoundToInt(transform.position.x), 0.0f, Mathf.RoundToInt(transform.position.z));
+			Vector3 previousRoundPosition = new Vector3(Mathf.RoundToInt(previousPosition.x), Mathf.RoundToInt(previousPosition.y), Mathf.RoundToInt(previousPosition.z));
+			RoundPosition = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
 			if (previousRoundPosition != RoundPosition)
 				onHasMoved.Invoke(RoundPosition);
 

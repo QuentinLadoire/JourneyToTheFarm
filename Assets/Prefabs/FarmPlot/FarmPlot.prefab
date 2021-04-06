@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 9.567
+  multiplier: 1
   progressBar: {fileID: 8871053077275436067}
   activableImage: {fileID: 2649440668117682864}
 --- !u!1 &7355780962928724046

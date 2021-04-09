@@ -59,11 +59,11 @@ namespace JTTF
 		}
 		public override bool IsUsable()
 		{
-			if (hit.collider != null && hit.collider.tag == "Ground")
+			if (hit.collider != null && hit.collider.CompareTag("Ground"))
 			{
 				var colliders = Physics.OverlapBox(farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
 				foreach (var collider in colliders)
-					if (collider.tag == "Obstacle" || collider.tag == "FarmPlot")
+					if (collider.CompareTag("Obstacle") || collider.CompareTag("FarmPlot"))
 						return false;
 
 				return true;
@@ -78,11 +78,11 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			animationController.CharacterDiggingAnim(true, multiplier);
+			animationController.CharacterDiggingAnim(true, GetDesiredAnimationSpeed());
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			animationController.CharacterDiggingAnim(false, multiplier);
+			animationController.CharacterDiggingAnim(false);
 		}
 	}
 }

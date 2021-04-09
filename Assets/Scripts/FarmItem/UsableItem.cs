@@ -8,9 +8,14 @@ namespace JTTF
     {
         [Header("UsableItem Parameter")]
         public float duration = 0.0f;
-        public float multiplier = 1.0f;
+        public float animationDuration = 0.0f;
 
         protected bool isUsed = false;
+
+        protected float GetDesiredAnimationSpeed()
+		{
+            return duration == 0 ? 1.0f : animationDuration / duration;
+		}
 
         public virtual void Use()
         {

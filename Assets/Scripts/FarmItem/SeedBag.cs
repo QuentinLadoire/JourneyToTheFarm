@@ -59,7 +59,7 @@ namespace JTTF
 		{
 			var colliders = Physics.OverlapBox(seedPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
 			foreach (var collider in colliders)
-				if (collider.tag == "FarmPlot")
+				if (collider.CompareTag("FarmPlot"))
 				{
 					farmPlot = collider.GetComponent<FarmPlot>();
 					return !farmPlot.HasSeed;
@@ -73,11 +73,11 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			animationController.CharacterPlantAPlant(true, multiplier);
+			animationController.CharacterPlantAPlant(true, GetDesiredAnimationSpeed());
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			animationController.CharacterPlantAPlant(false, multiplier);
+			animationController.CharacterPlantAPlant(false);
 		}
 	}
 }

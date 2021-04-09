@@ -28,7 +28,9 @@ namespace JTTF
 				onMoveEnter.Invoke();
 			if (direction == Vector3.zero && previousDirection != Vector3.zero)
 				onMoveExit.Invoke();
-			onMove.Invoke(direction);
+
+			if (direction != Vector3.zero)
+				onMove.Invoke(direction);
 
 			previousDirection = direction;
 
@@ -44,8 +46,6 @@ namespace JTTF
 			Vector3 direction = (Input.GetAxisRaw("Horizontal") * transform.right + Input.GetAxisRaw("Vertical") * transform.forward).normalized;
 			transform.position += direction * speed * Time.deltaTime;
 
-			animationController.CharacterMouvementAnim(direction);
-
 			CharacterMovementEvent(direction);
 		}
 		void CharacterRotation()
@@ -56,15 +56,32 @@ namespace JTTF
 			transform.rotation = cameraRotation;
 		}
 
+		void OnMoveExit()
+		{
+			animationController.CharacterMouvementAnim(Vector3.zero);
+		}
+		void OnMove(Vector3 direction)
+		{
+			animationController.CharacterMouvementAnim(direction);
+		}
+
 		private void Awake()
 		{
 			animationController = GetComponent<AnimationController>();
+
+			onMoveExit += OnMoveExit;
+			onMove += OnMove;
 		}
 		private void FixedUpdate()
 		{
 			CharacterMovement();
 
 			CharacterRotation();
+		}
+		private void OnDestroy()
+		{
+			onMoveExit -= OnMoveExit;
+			onMove -= OnMove;
 		}
 	}
 }

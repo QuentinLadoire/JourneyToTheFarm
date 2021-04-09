@@ -56,10 +56,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
-      propertyPath: duration
-      value: 7.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4945689059156840022, guid: 70d000d6bae32aa47894a666a4fcbae6, type: 3}
       propertyPath: seedName
       value: WheatSeed
       objectReference: {fileID: 0}

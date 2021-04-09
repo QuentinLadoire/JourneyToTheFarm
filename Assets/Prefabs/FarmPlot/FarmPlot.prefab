@@ -337,8 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55222420a3d5214999342984e168656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 9.567
-  multiplier: 1
+  duration: 2
+  animationDuration: 9.5
   progressBar: {fileID: 8871053077275436067}
   activableImage: {fileID: 2649440668117682864}
 --- !u!1 &7355780962928724046

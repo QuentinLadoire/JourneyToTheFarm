@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4937326d2c1b946b5431b8ee79b9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 4.8
-  multiplier: 1
+  duration: 2
+  animationDuration: 4.8
   farmPlotPrefab: {fileID: 6047203369850023488, guid: f31b79a01f216f148ab646c588ae0a13, type: 3}
   farmPlotPreviewPrefab: {fileID: 6047203369850023488, guid: ec33b840162ecfc4b92a72fb1fa88e82, type: 3}
 --- !u!1001 &1270319643922252682

@@ -239,8 +239,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894e957c96eecad43967af932347c771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0
-  spriteRenderer: {fileID: 4945689057829376856}
+  duration: 2
+  animationDuration: 7.5
+  seedName: NoName
+  plantName: NoName
+  growingDuration: 0
+  seedPreviewPrefab: {fileID: 0}
 --- !u!1 &4945689059267111302
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,20 +7,22 @@ namespace JTTF
 {
 	public class ProgressBar : MonoBehaviour
 	{
-		Image image = null;
+		[SerializeField] Image gaugeImage = null;
+
+		Image backgroundImage = null;
 
 		public void SetVisible(bool value)
 		{
-			image.enabled = value;
+			backgroundImage.enabled = value;
+			gaugeImage.enabled = value;
 		}
 		public void SetPercent(float percent)
 		{
-			image.fillAmount = Mathf.Clamp(percent, 0.0f, 1.0f);
+			gaugeImage.fillAmount = Mathf.Clamp(percent, 0.0f, 1.0f);
 		}
-
 		private void Awake()
 		{
-			image = GetComponent<Image>();
+			backgroundImage = GetComponent<Image>();
 		}
 	}
 }

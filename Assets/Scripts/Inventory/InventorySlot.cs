@@ -7,13 +7,12 @@ namespace JTTF
 {
     public class InventorySlot : MonoBehaviour
     {
+		[SerializeField] Image iconImage = null;
 		[SerializeField] Image selectedImage = null;
-
-        Image itemImage = null;
 
 		public void SetSprite(Sprite sprite)
 		{
-			itemImage.sprite = sprite;
+			iconImage.sprite = sprite;
 		}
 		public void SetSelected(bool value)
 		{
@@ -22,8 +21,6 @@ namespace JTTF
 
 		private void Awake()
 		{
-			itemImage = GetComponent<Image>();
-			
 			selectedImage.enabled = false;
 		}
 	}

@@ -67,7 +67,7 @@ namespace JTTF
 		void ItemInput()
 		{
 			if (Input.GetButtonDown("UseTool"))
-				if (usableItem != null && usableItem.IsUsable())
+				if (usableItem != null && characterController.IsIdle && usableItem.IsUsable())
 					UseItem();
 		}
 		void UpdateItemDuration()

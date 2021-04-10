@@ -13,6 +13,7 @@ namespace JTTF
 		public Action<Vector3> onHasMoved = (Vector3) => { /*Debug.Log("HasMove");*/ };
 
 		public Vector3 RoundPosition { get; private set; } = Vector3.zero;
+		public bool IsIdle { get; private set; } = true;
 
 		[SerializeField] GameObject followingCamera = null;
 		[SerializeField] float speed = 1.0f;
@@ -51,13 +52,20 @@ namespace JTTF
 		void CharacterRotation()
 		{
 			if (followingCamera == null) { Debug.LogError("Following Camera is Null"); return; }
+			if (IsIdle == true) return;
 
 			var cameraRotation = Quaternion.LookRotation(Vector3.Scale(followingCamera.transform.forward, new Vector3(1.0f, 0.0f, 1.0f)));
 			transform.rotation = cameraRotation;
 		}
 
+		void OnMoveEnter()
+		{
+			IsIdle = false;
+		}
 		void OnMoveExit()
 		{
+			IsIdle = true;
+
 			animationController.CharacterMouvementAnim(Vector3.zero);
 		}
 		void OnMove(Vector3 direction)
@@ -69,6 +77,7 @@ namespace JTTF
 		{
 			animationController = GetComponent<AnimationController>();
 
+			onMoveEnter += OnMoveEnter;
 			onMoveExit += OnMoveExit;
 			onMove += OnMove;
 		}
@@ -80,6 +89,7 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
+			onMoveEnter -= OnMoveEnter;
 			onMoveExit -= OnMoveExit;
 			onMove -= OnMove;
 		}

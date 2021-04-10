@@ -54,13 +54,13 @@ namespace JTTF
             foreach (var collider in colliders)
 			{
                 var tmp = collider.GetComponent<ActivableObject>();
-                if (tmp != null)
-				{
+                if (tmp != null && tmp.IsActivable())
+                {
                     float distance = (tmp.transform.position - transform.position).sqrMagnitude;
                     if (distance < checkRadius * checkRadius)
                         if (nearObject == null || distance < (nearObject.transform.position - transform.position).sqrMagnitude)
                             nearObject = tmp;
-				}
+                }
             }
             
             if (activableObject != nearObject)

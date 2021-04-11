@@ -11,7 +11,7 @@ namespace JTTF
 
 		[SerializeField] ProgressBar progressBar = null;
 
-        UsableItem usableItem = null;
+        UsableObject usableItem = null;
 
 		bool isActive = false;
 		float currentDuration = 0.0f;
@@ -59,7 +59,7 @@ namespace JTTF
 
 			if (itemContainer.Item != null && itemContainer.Item.prefab != null)
 			{
-				usableItem = Instantiate(itemContainer.Item.prefab).GetComponent<UsableItem>();
+				usableItem = Instantiate(itemContainer.Item.prefab).GetComponent<UsableObject>();
 				usableItem.Init(rightHandTransform, leftHandTransform);
 			}
 		}

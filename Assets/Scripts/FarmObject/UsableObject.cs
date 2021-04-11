@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public abstract class UsableItem : MonoBehaviour
+    public abstract class UsableObject : MonoBehaviour
     {
         [Header("UsableItem Parameter")]
         public float duration = 0.0f;

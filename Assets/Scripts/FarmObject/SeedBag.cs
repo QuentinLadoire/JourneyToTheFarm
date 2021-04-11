@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedBag : UsableItem
+	public class SeedBag : UsableObject
 	{
 		[Header("SeedBag parameter")]
 		[SerializeField] string seedName = "NoName";

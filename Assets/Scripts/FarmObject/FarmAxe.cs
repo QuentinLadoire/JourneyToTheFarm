@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmAxe : UsableItem
+	public class FarmAxe : UsableObject
 	{
 		public override void ApplyEffect()
 		{

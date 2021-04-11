@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmHoe : UsableItem
+	public class FarmHoe : UsableObject
 	{
 		[Header("FarmHoe Parameter")]
 		[SerializeField] GameObject farmPlotPrefab = null;

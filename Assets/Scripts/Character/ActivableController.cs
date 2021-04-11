@@ -6,109 +6,90 @@ namespace JTTF
 {
     public class ActivableController : MonoBehaviour
     {
-        [SerializeField] ProgressBar progressBar = null;
-
-        [SerializeField] float checkRadius = 1.0f;
+		[SerializeField] ProgressBar progressBar = null;
 
         ActivableObject activableObject = null;
 
-        bool isActive = false;
-        float currentDuration = 0.0f;
+		bool isActive = false;
+		float currentDuration = 0.0f;
 
-        CharacterController characterController = null;
-        AnimationController animationController = null;
+		CharacterController characterController = null;
+		AnimationController animationController = null;
+		TransportableController transportableController = null;
 
-        void ActiveObject()
-        {
-            isActive = true;
-            currentDuration = activableObject.duration;
-
-            progressBar.SetVisible(true);
-            activableObject.Activate();
-            activableObject.PlayAnim(animationController);
-        }
-        void DesactivateObject()
+		void ActivateItem()
 		{
-            activableObject.ApplyEffect();
+			isActive = true;
+			currentDuration = activableObject.duration;
 
-            isActive = false;
-            progressBar.SetVisible(false);
-            activableObject.StopAnim(animationController);
-            activableObject.Desactivate();
+			progressBar.SetVisible(true);
+			activableObject.PlayAnim(animationController);
+			activableObject.Activate();
 		}
-        void CancelItem()
+		void DesactivateItem()
 		{
-            if (!isActive) return;
+			activableObject.ApplyEffect();
 
-            isActive = false;
-            progressBar.SetVisible(false);
-            activableObject.StopAnim(animationController);
-            activableObject.Desactivate();
-        }
-
-        void CheckActivableObject()
-		{
-            ActivableObject nearObject = null;
-
-            var colliders = Physics.OverlapSphere(transform.position, checkRadius);
-            foreach (var collider in colliders)
-			{
-                var tmp = collider.GetComponent<ActivableObject>();
-                if (tmp != null && tmp.IsActivable())
-                {
-                    float distance = (tmp.transform.position - transform.position).sqrMagnitude;
-                    if (distance < checkRadius * checkRadius)
-                        if (nearObject == null || distance < (nearObject.transform.position - transform.position).sqrMagnitude)
-                            nearObject = tmp;
-                }
-            }
-            
-            if (activableObject != nearObject)
-            {
-                if (activableObject != null)
-                    activableObject.Deselect();
-
-                activableObject = nearObject;
-
-                if (activableObject != null)
-                    activableObject.Select();
-            }
+			isActive = false;
+			progressBar.SetVisible(false);
+			activableObject.StopAnim(animationController);
+			activableObject.Desactivate();
 		}
-        void ObjectInput()
+		void CancelItem()
 		{
-            if (Input.GetButton("ActiveObject"))
-                if (activableObject != null && activableObject.IsActivable())
-                    ActiveObject();
-        }
-        void UpdateDuration()
+			if (!isActive) return;
+
+			isActive = false;
+			progressBar.SetVisible(false);
+			activableObject.StopAnim(animationController);
+			activableObject.Desactivate();
+		}
+
+		void OnTransportableObjectChange(TransportableObject transportableObject)
 		{
-            if (!isActive || activableObject == null) return;
+			if (activableObject != null)
+				CancelItem();
 
-            if (currentDuration <= 0.0f)
-                DesactivateObject();
+			if (transportableObject != null)
+				activableObject = transportableObject.GetComponent<ActivableObject>();
+		}
 
-            currentDuration -= Time.deltaTime;
-            progressBar.SetPercent(1 - (currentDuration / activableObject.duration));
-        }
+		void ItemInput()
+		{
+			if (Input.GetButtonDown("UseTool"))
+				if (activableObject != null && characterController.IsIdle && activableObject.IsActivable())
+					ActivateItem();
+		}
+		void UpdateItemDuration()
+		{
+			if (!isActive || activableObject == null) return;
+
+			if (currentDuration <= 0.0f)
+				DesactivateItem();
+
+			currentDuration -= Time.deltaTime;
+			progressBar.SetPercent( 1 - (currentDuration / activableObject.duration));
+		}
 
 		private void Awake()
 		{
-            animationController = GetComponent<AnimationController>();
-            characterController = GetComponent<CharacterController>();
+			animationController = GetComponent<AnimationController>();
+			characterController = GetComponent<CharacterController>();
+			transportableController = GetComponent<TransportableController>();
 
-            characterController.onMoveEnter += CancelItem;
+			characterController.onMoveEnter += CancelItem;
+			transportableController.onTransportableObjectChange += OnTransportableObjectChange;
 		}
 		private void Update()
 		{
-            CheckActivableObject();
+			ItemInput();
 
-            ObjectInput();
-
-            UpdateDuration();
-        }
+			UpdateItemDuration();
+		}
 		private void OnDestroy()
 		{
-            characterController.onMoveEnter -= CancelItem;
+			characterController.onMoveEnter -= CancelItem;
+			transportableController.onTransportableObjectChange -= OnTransportableObjectChange;
 		}
 	}
 }

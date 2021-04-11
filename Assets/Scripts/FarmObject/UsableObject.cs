@@ -4,36 +4,36 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public abstract class UsableObject : MonoBehaviour
+    namespace Deprecated
     {
-        [Header("UsableItem Parameter")]
-        public float duration = 0.0f;
-        public float animationDuration = 0.0f;
-
-        protected bool isUsed = false;
-
-        protected float GetDesiredAnimationSpeed()
-		{
-            return duration == 0 ? 1.0f : animationDuration / duration;
-		}
-
-        public virtual void Use()
+        public abstract class UsableObject : SimpleObject
         {
-            isUsed = true;
-        }
-        public virtual void Unuse()
-        {
-            isUsed = false;
-        }
-        public virtual void Destroy()
-		{
-            Destroy(gameObject);
-		}
+            [Header("UsableItem Parameter")]
+            public float duration = 0.0f;
+            public float animationDuration = 0.0f;
 
-        public abstract void Init(Transform rightHand, Transform leftHand);
-        public abstract bool IsUsable();
-        public abstract void ApplyEffect();
-        public abstract void PlayAnim(AnimationController animationController);
-        public abstract void StopAnim(AnimationController animationController);
-	}
+            protected bool isUsed = false;
+
+            protected float GetDesiredAnimationSpeed()
+            {
+                return duration == 0 ? 1.0f : animationDuration / duration;
+            }
+            public abstract void PlayAnim(AnimationController animationController);
+            public abstract void StopAnim(AnimationController animationController);
+
+            public virtual void Use()
+            {
+                isUsed = true;
+            }
+            public virtual void Unuse()
+            {
+                isUsed = false;
+            }
+
+            public abstract bool IsUsable();
+            public abstract void ApplyEffect();
+
+            public abstract void Init(Transform rightHand, Transform leftHand);
+        }
+    }
 }

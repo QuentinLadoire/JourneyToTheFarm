@@ -4,17 +4,13 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmAxe : UsableObject
+	public class FarmAxe : ActivableObject
 	{
 		public override void ApplyEffect()
 		{
 			Debug.Log("ApplyEffect is not implemented");
 		}
-		public override void Init(Transform rightHand, Transform leftHand)
-		{
-			Debug.Log("Init is not implemented");
-		}
-		public override bool IsUsable()
+		public override bool IsActivable()
 		{
 			Debug.Log("IsUsable is not implemented");
 

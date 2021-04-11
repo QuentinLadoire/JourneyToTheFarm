@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class FarmPlot : ActivableObject
+    public class FarmPlot : SelectableObject
     {
         public bool HasSeed { get; private set; } = false;
         public bool IsMature { get; private set; } = false;

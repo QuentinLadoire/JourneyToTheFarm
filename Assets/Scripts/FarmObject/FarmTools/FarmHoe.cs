@@ -4,20 +4,27 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmHoe : UsableObject
+	public class FarmHoe : ActivableObject
 	{
 		[Header("FarmHoe Parameter")]
 		[SerializeField] GameObject farmPlotPrefab = null;
 		[SerializeField] GameObject farmPlotPreviewPrefab = null;
 
-		PreviewObject farmPlotPreview = null;
+		TransportableObject transportableObject = null;
 		Transform leftHandTransform = null;
+
+		PreviewObject farmPlotPreview = null;
 
 		RaycastHit hit;
 
+		void OnSetHands(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+			leftHandTransform = leftHand;
+		}
 		void OnHasMoved(Vector3 position)
 		{
-			if (isUsed) return;
+			if (isActived) return;
 
 			if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
 			{
@@ -25,7 +32,7 @@ namespace JTTF
 				farmPlotPreview.transform.up = hit.normal;
 			}
 
-			if (IsUsable())
+			if (IsActivable())
 				farmPlotPreview.SetBlueMat();
 			else
 				farmPlotPreview.SetRedMat();
@@ -33,6 +40,9 @@ namespace JTTF
 
 		private void Awake()
 		{
+			transportableObject = GetComponent<TransportableObject>();
+			transportableObject.onSetHands += OnSetHands;
+
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 			OnHasMoved(Player.RoundPosition);
 		}
@@ -42,22 +52,19 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			transform.up = leftHandTransform.position - transform.position;
+			if (leftHandTransform != null)
+				transform.up = leftHandTransform.position - transform.position;
 		}
 		private void OnDestroy()
 		{
 			if (farmPlotPreview != null)
 				Destroy(farmPlotPreview.gameObject);
 
+			transportableObject.onSetHands -= OnSetHands;
 			Player.OnHasMoved -= OnHasMoved;
 		}
 
-		public override void Init(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-			leftHandTransform = leftHand;
-		}
-		public override bool IsUsable()
+		public override bool IsActivable()
 		{
 			if (hit.collider != null && hit.collider.CompareTag("Ground"))
 			{

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedBag : UsableObject
+	public class SeedBag : ActivableObject
 	{
 		[Header("SeedBag parameter")]
 		[SerializeField] string seedName = "NoName";
@@ -12,14 +12,20 @@ namespace JTTF
 		[SerializeField] float growingDuration = 0.0f;
 		[SerializeField] GameObject seedPreviewPrefab = null;
 
+		TransportableObject transportableObject = null;
+
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
 
 		RaycastHit hit;
 
+		void OnSetHands(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+		}
 		void OnHasMoved(Vector3 position)
 		{
-			if (isUsed) return;
+			if (isActived) return;
 
 			if (seedPreview != null)
 				if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
@@ -28,7 +34,7 @@ namespace JTTF
 					seedPreview.transform.up = hit.normal;
 				}
 
-			if (IsUsable())
+			if (IsActivable())
 				seedPreview.SetBlueMat();
 			else
 				seedPreview.SetRedMat();
@@ -36,6 +42,9 @@ namespace JTTF
 
 		private void Awake()
 		{
+			transportableObject = GetComponent<TransportableObject>();
+			transportableObject.onSetHands += OnSetHands;
+
 			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
 			OnHasMoved(Player.RoundPosition);
 		}
@@ -48,14 +57,11 @@ namespace JTTF
 			if (seedPreview != null)
 				Destroy(seedPreview.gameObject);
 
+			transportableObject.onSetHands -= OnSetHands;
 			Player.OnHasMoved -= OnHasMoved;
 		}
 
-		public override void Init(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
-		public override bool IsUsable()
+		public override bool IsActivable()
 		{
 			var colliders = Physics.OverlapBox(seedPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
 			foreach (var collider in colliders)

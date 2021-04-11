@@ -24,15 +24,11 @@ namespace JTTF
 		}
 
 		CharacterController characterController = null;
-        UsableController itemController = null;
-        AnimationController animationController = null;
 		Inventory inventory = null;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
-			itemController = GetComponent<UsableController>();
-			animationController = GetComponent<AnimationController>();
 			inventory = GetComponent<Inventory>();
 
 			instance = this;

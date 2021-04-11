@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public abstract class ActivableObject : MonoBehaviour
+    public abstract class ActivableObject : SimpleObject
     {
         [Header("ActivableObject Parameter")]
         public float duration = 0.0f;
@@ -16,6 +16,8 @@ namespace JTTF
         {
             return duration == 0 ? 1.0f : animationDuration / duration;
         }
+        public abstract void PlayAnim(AnimationController animationController);
+        public abstract void StopAnim(AnimationController animationController);
 
         public virtual void Activate()
         {
@@ -25,16 +27,8 @@ namespace JTTF
         {
             isActived = false;
         }
-        public virtual void Destroy()
-        {
-            Destroy(gameObject);
-        }
 
-        public abstract void Select();
-        public abstract void Deselect();
         public abstract bool IsActivable();
         public abstract void ApplyEffect();
-        public abstract void PlayAnim(AnimationController animationController);
-        public abstract void StopAnim(AnimationController animationController);
     }
 }

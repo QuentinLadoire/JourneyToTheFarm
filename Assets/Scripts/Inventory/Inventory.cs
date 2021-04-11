@@ -5,12 +5,24 @@ using UnityEngine;
 
 namespace JTTF
 {
+	public struct ItemContainer
+	{
+		public Item Item { get; set; }
+		public int Amount { get; set; }
+
+		public ItemContainer(Item item = null, int amount = 0)
+		{
+			Item = item;
+			Amount = amount;
+		}
+	}
+
 	public class Inventory : MonoBehaviour
 	{
-		public Action<int, Item> onScroll = (int index, Item item) => { /*Debug.Log("OnScrollUp");*/ };
-		public Action<int, Item> onAddItemShortcut = (int index, Item item) => { /*Debug.Log("OnNewItemShortcut index : " + index);*/ };
+		public Action<int, ItemContainer> onScroll = (int index, ItemContainer itemContainer) => { /*Debug.Log("OnScrollUp");*/ };
+		public Action<int, ItemContainer> onAddItemShortcut = (int index, ItemContainer itemContainer) => { /*Debug.Log("OnNewItemShortcut index : " + index);*/ };
 
-		Item[] slotShortcut = new Item[10];
+		ItemContainer[] slotShortcut = new ItemContainer[10];
 		int shortcutIndex = 0;
 
 		void ScrollUp()
@@ -29,7 +41,7 @@ namespace JTTF
 
 			onScroll.Invoke(shortcutIndex, slotShortcut[shortcutIndex]);
 		}
-		void ScrollShortcut()
+		void ScrollInput()
 		{
 			float delta = Input.GetAxis("ScrollShortcut");
 
@@ -39,20 +51,21 @@ namespace JTTF
 				ScrollDown();
 		}
 
-		public void AddItemAtShortcut(int index, Item item)
+		public void AddItemAtShortcut(int index, Item item, int amount)
 		{
 			if (index < 0 || index > 9) { Debug.Log("Index is out of range"); return; }
 
-			slotShortcut[index] = item;
+			slotShortcut[index].Item = item;
+			slotShortcut[index].Amount = amount;
 
-			onAddItemShortcut.Invoke(index, item);
+			onAddItemShortcut.Invoke(index, slotShortcut[index]);
 		}
-		public void AddItem(Item item)
+		public void AddItem(Item item, int amount = 1)
 		{
 			for (int i = 0; i < slotShortcut.Length; i++)
-				if (slotShortcut[i] == null)
+				if (slotShortcut[i].Item == null)
 				{
-					AddItemAtShortcut(i, item);
+					AddItemAtShortcut(i, item, amount);
 					return;
 				}
 
@@ -65,7 +78,7 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			ScrollShortcut();
+			ScrollInput();
 		}
 	}
 }

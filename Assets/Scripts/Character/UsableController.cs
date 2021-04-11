@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class ItemController : MonoBehaviour
+    public class UsableController : MonoBehaviour
     {
 		[SerializeField] Transform rightHandTransform = null;
 		[SerializeField] Transform leftHandTransform = null;
@@ -48,7 +48,7 @@ namespace JTTF
 			usableItem.Unuse();
 		}
 
-		void OnScroll(int index, Item item)
+		void OnScroll(int index, ItemContainer itemContainer)
 		{
 			if (usableItem != null)
 			{
@@ -57,9 +57,9 @@ namespace JTTF
 				usableItem.Destroy();
 			}
 
-			if (item != null && item.prefab != null)
+			if (itemContainer.Item != null && itemContainer.Item.prefab != null)
 			{
-				usableItem = Instantiate(item.prefab).GetComponent<UsableItem>();
+				usableItem = Instantiate(itemContainer.Item.prefab).GetComponent<UsableItem>();
 				usableItem.Init(rightHandTransform, leftHandTransform);
 			}
 		}

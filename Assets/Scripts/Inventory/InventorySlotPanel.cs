@@ -9,11 +9,12 @@ namespace JTTF
 		[SerializeField] InventorySlot[] inventorySlots = null;
 		int selectedSlot = 0;
 
-		void OnAddItemShortcut(int index, Item item)
+		void OnAddItemShortcut(int index, ItemContainer itemContainer)
 		{
-			inventorySlots[index].SetSprite(item.sprite);
+			if (itemContainer.Item != null)
+				inventorySlots[index].SetSprite(itemContainer.Item.sprite);
 		}
-		void OnScroll(int index, Item item)
+		void OnScroll(int index, ItemContainer itemContainer)
 		{
 			inventorySlots[selectedSlot].SetSelected(false);
 			inventorySlots[index].SetSelected(true);

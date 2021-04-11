@@ -15,23 +15,23 @@ namespace JTTF
 
 		public static Action<Vector3> OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
-		public static Action<int, Item> OnAddItemShortcut { get => instance.inventory.onAddItemShortcut; set => instance.inventory.onAddItemShortcut = value; }
-		public static Action<int, Item> OnScroll { get => instance.inventory.onScroll; set => instance.inventory.onScroll = value; }
+		public static Action<int, ItemContainer> OnAddItemShortcut { get => instance.inventory.onAddItemShortcut; set => instance.inventory.onAddItemShortcut = value; }
+		public static Action<int, ItemContainer> OnScroll { get => instance.inventory.onScroll; set => instance.inventory.onScroll = value; }
 
 		public static void AddItem(ItemType itemType, string itemName)
 		{
-			instance.inventory.AddItem(ItemList.GetItem(itemType, itemName));
+			instance.inventory.AddItem(GameManager.DataBase.GetItem(itemType, itemName));
 		}
 
 		CharacterController characterController = null;
-        ItemController itemController = null;
+        UsableController itemController = null;
         AnimationController animationController = null;
 		Inventory inventory = null;
 
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
-			itemController = GetComponent<ItemController>();
+			itemController = GetComponent<UsableController>();
 			animationController = GetComponent<AnimationController>();
 			inventory = GetComponent<Inventory>();
 

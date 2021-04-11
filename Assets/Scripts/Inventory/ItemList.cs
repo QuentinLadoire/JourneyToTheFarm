@@ -4,77 +4,80 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class ItemList : MonoBehaviour
+	namespace Deprecated
 	{
-		static ItemList instance = null;
-
-		public static Item GetDefaultItem()
+		public class ItemList : MonoBehaviour
 		{
-			return instance.defaultItem;
-		}
-		public static Item GetTool(string name)
-		{
-			foreach (var tool in instance.tools)
-				if (tool.name == name)
-					return tool;
+			static ItemList instance = null;
 
-			return instance.errorItem;
-		}
-		public static Item GetSeedBag(string name)
-		{
-			foreach (var seedBag in instance.seedBags)
-				if (seedBag.name == name)
-					return seedBag;
-
-			return instance.errorItem;
-		}
-		public static Item GetSeed(string name)
-		{
-			foreach (var seed in instance.seeds)
-				if (seed.name == name)
-					return seed;
-
-			return instance.errorItem;
-		}
-		public static Item GetPlant(string name)
-		{
-			foreach (var plant in instance.plants)
-				if (name == plant.name)
-					return plant;
-
-			return instance.errorItem;
-		}
-
-		public static Item GetItem(ItemType itemType, string itemName)
-		{
-			switch (itemType)
+			public static Item GetDefaultItem()
 			{
-				case ItemType.Tool:
-					return GetTool(itemName);
+				return instance.defaultItem;
+			}
+			public static Item GetTool(string name)
+			{
+				foreach (var tool in instance.tools)
+					if (tool.name == name)
+						return tool;
 
-				case ItemType.SeedBag:
-					return GetSeedBag(itemName);
+				return instance.errorItem;
+			}
+			public static Item GetSeedBag(string name)
+			{
+				foreach (var seedBag in instance.seedBags)
+					if (seedBag.name == name)
+						return seedBag;
 
-				case ItemType.Seed:
-					return GetSeed(itemName);
+				return instance.errorItem;
+			}
+			public static Item GetSeed(string name)
+			{
+				foreach (var seed in instance.seeds)
+					if (seed.name == name)
+						return seed;
 
-				case ItemType.Plant:
-					return GetPlant(itemName);
+				return instance.errorItem;
+			}
+			public static Item GetPlant(string name)
+			{
+				foreach (var plant in instance.plants)
+					if (name == plant.name)
+						return plant;
+
+				return instance.errorItem;
 			}
 
-			return instance.errorItem;
-		}
+			public static Item GetItem(ItemType itemType, string itemName)
+			{
+				switch (itemType)
+				{
+					case ItemType.Tool:
+						return GetTool(itemName);
 
-		[SerializeField] Item errorItem = null;
-		[SerializeField] Item defaultItem = null;
-		[SerializeField] Item[] tools = null;
-		[SerializeField] Item[] seedBags = null;
-		[SerializeField] Item[] seeds = null;
-		[SerializeField] Item[] plants = null;
+					case ItemType.SeedBag:
+						return GetSeedBag(itemName);
 
-		private void Awake()
-		{
-			instance = this;
+					case ItemType.Seed:
+						return GetSeed(itemName);
+
+					case ItemType.Plant:
+						return GetPlant(itemName);
+				}
+
+				return instance.errorItem;
+			}
+
+			[SerializeField] Item errorItem = Item.Default;
+			[SerializeField] Item defaultItem = Item.Default;
+			[SerializeField] Item[] tools = null;
+			[SerializeField] Item[] seedBags = null;
+			[SerializeField] Item[] seeds = null;
+			[SerializeField] Item[] plants = null;
+
+			private void Awake()
+			{
+				instance = this;
+			}
 		}
 	}
 }

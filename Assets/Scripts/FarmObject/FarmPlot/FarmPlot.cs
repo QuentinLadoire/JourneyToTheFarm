@@ -93,17 +93,18 @@ namespace JTTF
 		}
         public override void ApplyEffect()
 		{
-            Player.AddItem(ItemType.Plant, plantName);
+            if (Player.AddItem(ItemType.Plant, plantName))
+            {
+                IsMature = false;
+                activableImage.SetActive(false);
 
-            IsMature = false;
-            activableImage.SetActive(false);
+                seedName = "NoSeed";
+                plantName = "NoName";
+                HasSeed = false;
 
-            seedName = "NoSeed";
-            plantName = "NoName";
-            HasSeed = false;
-
-            if (seedObject != null)
-                Destroy(seedObject);
+                if (seedObject != null)
+                    Destroy(seedObject);
+            }
 		}
         public override void PlayAnim(AnimationController animationController)
 		{

@@ -9,22 +9,25 @@ namespace JTTF
 		[SerializeField] InventorySlot[] inventorySlots = null;
 		int selectedSlot = 0;
 
-		void OnAddItemShortcut(int index, ItemContainer itemContainer)
+		void OnAddItem(ItemContainer itemContainer)
 		{
 			if (itemContainer.Item != null)
-				inventorySlots[index].SetSprite(itemContainer.Item.sprite);
+			{
+				inventorySlots[itemContainer.SlotIndex].SetSprite(itemContainer.Item.sprite);
+				inventorySlots[itemContainer.SlotIndex].SetAmount(itemContainer.Amount);
+			}
 		}
-		void OnScroll(int index, ItemContainer itemContainer)
+		void OnScroll(ItemContainer itemContainer)
 		{
 			inventorySlots[selectedSlot].SetSelected(false);
-			inventorySlots[index].SetSelected(true);
+			inventorySlots[itemContainer.SlotIndex].SetSelected(true);
 
-			selectedSlot = index;
+			selectedSlot = itemContainer.SlotIndex;
 		}
 
 		private void Awake()
 		{
-			Player.OnAddItemShortcut += OnAddItemShortcut;
+			Player.OnAddItem += OnAddItem;
 			Player.OnScroll += OnScroll;
 		}
 		private void Start()
@@ -33,7 +36,7 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			Player.OnAddItemShortcut -= OnAddItemShortcut;
+			Player.OnAddItem -= OnAddItem;
 			Player.OnScroll -= OnScroll;
 		}
 	}

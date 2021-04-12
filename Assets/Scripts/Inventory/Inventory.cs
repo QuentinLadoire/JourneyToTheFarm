@@ -5,13 +5,17 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public struct ItemContainer
+	public class ItemContainer
 	{
+		public const int AmountMax = 999;
+
 		public Item Item { get; set; }
 		public int Amount { get; set; }
+		public int SlotIndex { get; set; }
 
-		public ItemContainer(Item item = null, int amount = 0)
+		public ItemContainer(int slotIndex = -1, Item item = null, int amount = 0)
 		{
+			SlotIndex = slotIndex;
 			Item = item;
 			Amount = amount;
 		}
@@ -19,11 +23,13 @@ namespace JTTF
 
 	public class Inventory : MonoBehaviour
 	{
-		public Action<int, ItemContainer> onScroll = (int index, ItemContainer itemContainer) => { /*Debug.Log("OnScrollUp");*/ };
-		public Action<int, ItemContainer> onAddItemShortcut = (int index, ItemContainer itemContainer) => { /*Debug.Log("OnNewItemShortcut index : " + index);*/ };
+		public Action<ItemContainer> onScroll = (ItemContainer itemContainer) => { /*Debug.Log("OnScrollUp");*/ };
+		public Action<ItemContainer> onAddItem = (ItemContainer itemContainer) => { /*Debug.Log("OnNewItemShortcut index : " + index);*/ };
 
-		ItemContainer[] slotShortcut = new ItemContainer[10];
+		readonly ItemContainer[] slotShortcut = new ItemContainer[10];
 		int shortcutIndex = 0;
+
+		List<ItemContainer> usedSlots = new List<ItemContainer>();
 
 		void ScrollUp()
 		{
@@ -31,7 +37,7 @@ namespace JTTF
 			if (shortcutIndex == -1)
 				shortcutIndex = 9;
 
-			onScroll.Invoke(shortcutIndex, slotShortcut[shortcutIndex]);
+			onScroll.Invoke(slotShortcut[shortcutIndex]);
 		}
 		void ScrollDown()
 		{
@@ -39,7 +45,7 @@ namespace JTTF
 			if (shortcutIndex == 10)
 				shortcutIndex = 0;
 
-			onScroll.Invoke(shortcutIndex, slotShortcut[shortcutIndex]);
+			onScroll.Invoke(slotShortcut[shortcutIndex]);
 		}
 		void ScrollInput()
 		{
@@ -51,30 +57,79 @@ namespace JTTF
 				ScrollDown();
 		}
 
-		public void AddItemAtShortcut(int index, Item item, int amount)
+		bool AddItemAsEmptySlot(Item item, int amount = 1)
 		{
-			if (index < 0 || index > 9) { Debug.Log("Index is out of range"); return; }
+			amount = Mathf.Clamp(amount, 1, ItemContainer.AmountMax);
 
-			slotShortcut[index].Item = item;
-			slotShortcut[index].Amount = amount;
-
-			onAddItemShortcut.Invoke(index, slotShortcut[index]);
-		}
-		public void AddItem(Item item, int amount = 1)
-		{
-			for (int i = 0; i < slotShortcut.Length; i++)
-				if (slotShortcut[i].Item == null)
+			foreach (var slot in slotShortcut)
+				if (slot.Item == null)
 				{
-					AddItemAtShortcut(i, item, amount);
-					return;
+					slot.Item = item;
+					slot.Amount = amount;
+
+					usedSlots.Add(slot);
+
+					onAddItem.Invoke(slot);
+
+					return true;
 				}
 
-			Debug.Log("Can't add item, no empty slot");
+			return false;
+		}
+		int FillItem(Item item, int amount = 1)
+		{
+			foreach (var slot in usedSlots)
+			{
+				if (amount > 0 && slot.Item == item)
+				{
+					var rest = ItemContainer.AmountMax - slot.Amount;
+					if (amount < rest)
+					{
+						slot.Amount += amount;
+						amount = 0;
+					}
+					else
+					{
+						slot.Amount = ItemContainer.AmountMax;
+						amount -= rest;
+					}
+
+					onAddItem.Invoke(slot);
+				}
+			}
+
+			return amount;
 		}
 
+		public bool HasEmptySlot()
+		{
+			return usedSlots.Count < slotShortcut.Length;
+		}
+		public bool AddItem(Item item, int amount = 1)
+		{
+			if (!item.stackable)
+			{
+				return AddItemAsEmptySlot(item);
+			}
+			else
+			{
+				amount = FillItem(item, amount);
+
+				if (amount > 0)
+					return AddItemAsEmptySlot(item, amount);
+
+				return true;
+			}
+		}
+
+		private void Awake()
+		{
+			for (int i = 0; i < slotShortcut.Length; i++)
+				slotShortcut[i] = new ItemContainer(i);
+		}
 		private void Start()
 		{
-			onScroll.Invoke(shortcutIndex, slotShortcut[shortcutIndex]);
+			onScroll.Invoke(slotShortcut[shortcutIndex]);
 		}
 		private void Update()
 		{

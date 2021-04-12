@@ -14,7 +14,7 @@ namespace JTTF
 
 		TransportableObject currentObject = null;
 
-		void OnScroll(int index, ItemContainer itemContainer)
+		void OnScroll(ItemContainer itemContainer)
 		{
 			var toDestroy = currentObject;
 

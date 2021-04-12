@@ -8491,7 +8491,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 8223666954712705743, guid: 3256c59ac142e3f41bbcff4db1de7438, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8223666955441187388, guid: 3256c59ac142e3f41bbcff4db1de7438, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223666955441187390, guid: 3256c59ac142e3f41bbcff4db1de7438, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8623500248907169029, guid: 3256c59ac142e3f41bbcff4db1de7438, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9050444300470501756, guid: 3256c59ac142e3f41bbcff4db1de7438, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

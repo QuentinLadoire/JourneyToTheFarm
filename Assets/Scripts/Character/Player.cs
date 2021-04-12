@@ -15,12 +15,12 @@ namespace JTTF
 
 		public static Action<Vector3> OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
-		public static Action<int, ItemContainer> OnAddItemShortcut { get => instance.inventory.onAddItemShortcut; set => instance.inventory.onAddItemShortcut = value; }
-		public static Action<int, ItemContainer> OnScroll { get => instance.inventory.onScroll; set => instance.inventory.onScroll = value; }
+		public static Action<ItemContainer> OnAddItem { get => instance.inventory.onAddItem; set => instance.inventory.onAddItem = value; }
+		public static Action<ItemContainer> OnScroll { get => instance.inventory.onScroll; set => instance.inventory.onScroll = value; }
 
-		public static void AddItem(ItemType itemType, string itemName)
+		public static bool AddItem(ItemType itemType, string itemName, int amount = 1)
 		{
-			instance.inventory.AddItem(GameManager.DataBase.GetItem(itemType, itemName));
+			return instance.inventory.AddItem(GameManager.DataBase.GetItem(itemType, itemName), amount);
 		}
 
 		CharacterController characterController = null;

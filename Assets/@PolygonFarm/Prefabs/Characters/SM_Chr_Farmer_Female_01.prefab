@@ -225,6 +225,7 @@ Transform:
   - {fileID: 4378377728287264}
   - {fileID: 4872827828416708}
   - {fileID: 4404724743169104}
+  - {fileID: 7930079339859992368}
   m_Father: {fileID: 4378093262571604}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1270,6 +1271,7 @@ Transform:
   - {fileID: 4148414989202606}
   - {fileID: 4449091936734272}
   - {fileID: 4967267052655042}
+  - {fileID: 2853701873378059117}
   m_Father: {fileID: 4220368157019676}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2382,3 +2384,63 @@ Transform:
   m_Father: {fileID: 4968508132326570}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &922180647262160388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7930079339859992368}
+  m_Layer: 0
+  m_Name: Hand_R_WeaponSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7930079339859992368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922180647262160388}
+  m_LocalRotation: {x: -0.70035547, y: 0.6841067, z: -0.18810306, w: 0.07821444}
+  m_LocalPosition: {x: 0.12, y: 0.04, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4340926388135612}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 8.5, y: 158, z: -93}
+--- !u!1 &3521675561023131687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2853701873378059117}
+  m_Layer: 0
+  m_Name: Hand_L_WeaponSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2853701873378059117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3521675561023131687}
+  m_LocalRotation: {x: 0.08795159, y: -0.1837518, z: -0.7198229, w: 0.66359234}
+  m_LocalPosition: {x: -0.12, y: -0.04, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4189373669857666}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -8.5, y: -22, z: -93}

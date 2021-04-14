@@ -7,7 +7,6 @@ namespace JTTF
 	public class FarmAxe : ActivableObject
 	{
 		TransportableObject transportableObject = null;
-		Transform rightHandTransform = null;
 
 		Tree tree = null;
 
@@ -16,11 +15,6 @@ namespace JTTF
 			transportableObject = GetComponent<TransportableObject>();
 			transportableObject.onSetHands += OnSetHands;
 		}
-		private void Update()
-		{
-			if (rightHandTransform != null)
-				transform.up = rightHandTransform.position - transform.position;
-		}
 		private void OnDestroy()
 		{
 			transportableObject.onSetHands -= OnSetHands;
@@ -28,15 +22,12 @@ namespace JTTF
 
 		void OnSetHands(Transform rightHand, Transform leftHand)
 		{
-			transform.SetParent(leftHand, false);
-			rightHandTransform = rightHand;
+			transform.SetParent(rightHand, false);
 		}
 
 		public override void ApplyEffect()
 		{
-			Debug.Log("TIMBER !!!!");
-			var tmp = Player.AddItem(ItemType.Resource, "Log", 3);
-			Debug.Log(tmp);
+			Player.AddItem(ItemType.Resource, "Log", 3);
 		}
 		public override bool IsActivable()
 		{
@@ -52,11 +43,11 @@ namespace JTTF
 		}
 		public override void PlayAnim(AnimationController animationController)
 		{
-			Debug.Log("PlayAnim is not implemented");
+			animationController.CharacterCutting(true, GetDesiredAnimationSpeed());
 		}
 		public override void StopAnim(AnimationController animationController)
 		{
-			Debug.Log("StopAnim is not implemented");
+			animationController.CharacterCutting(false);
 		}
 	}
 }

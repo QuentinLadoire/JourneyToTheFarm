@@ -13,35 +13,41 @@ namespace JTTF
 			animator = GetComponentInChildren<Animator>();
 		}
 
-		public void CharacterMouvementAnim(Vector3 direction, float multiplier = 1.0f)
+		public void CharacterMouvementAnim(Vector3 direction, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
 			var localDirection = transform.worldToLocalMatrix * direction;
 			animator.SetFloat("DirectionX", localDirection.x);
 			animator.SetFloat("DirectionY", localDirection.z);
-			animator.speed = multiplier;
+			animator.speed = speed;
 		}
-		public void CharacterDiggingAnim(bool value, float multiplier = 1.0f)
+		public void CharacterDiggingAnim(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
 			animator.SetBool("IsDig", value);
-			animator.speed = multiplier;
+			animator.speed = speed;
 		}
-		public void CharacterPlantAPlant(bool value, float multiplier = 1.0f)
+		public void CharacterPlantAPlant(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
 			animator.SetBool("IsPlant", value);
-			animator.speed = multiplier;
+			animator.speed = speed;
 		}
-		public void CharacterPickUp(bool value, float multiplier = 1.0f)
+		public void CharacterPickUp(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
 			animator.SetBool("IsPick", value);
-			animator.speed = multiplier;
+			animator.speed = speed;
+		}
+		public void CharacterCutting(bool value, float speed = 1.0f)
+		{
+			if (animator == null) { Debug.LogError("Animator is Null"); return; }
+			animator.SetBool("IsCut", value);
+			animator.speed = speed;
 		}
 	}
 }

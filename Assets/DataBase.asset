@@ -23,6 +23,11 @@ MonoBehaviour:
     stackable: 0
     sprite: {fileID: 21300000, guid: c0da1bff26ddaf04ea3c7e9718a022e4, type: 3}
     prefab: {fileID: 2669426836222288937, guid: 32f5742d5bc79184294fe646f5b06f3a, type: 3}
+  - name: Pickaxe
+    type: 0
+    stackable: 0
+    sprite: {fileID: 21300000, guid: 1dd993c72c365b24ea76332773cd5f7c, type: 3}
+    prefab: {fileID: 0}
   seedBags:
   - name: WheatSeedBag
     type: 1
@@ -55,5 +60,5 @@ MonoBehaviour:
   - name: Log
     type: 4
     stackable: 1
-    sprite: {fileID: 21300000, guid: 0de423762d32fd14ab562541af24f463, type: 3}
+    sprite: {fileID: 21300000, guid: 89dbbd5733cd9554c8a96c9e95a238c3, type: 3}
     prefab: {fileID: 0}

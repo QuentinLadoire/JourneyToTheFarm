@@ -24,7 +24,7 @@ namespace JTTF
 		void CameraFarOffset()
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(transform.position, -cameraObject.transform.forward, out hit, -farOffset, LayerMask.GetMask("World")))
+			if (Physics.Raycast(transform.position, -cameraObject.transform.forward, out hit, -farOffset))
 				cameraObject.transform.position = hit.point;
 			else
 				cameraObject.transform.localPosition = cameraObject.transform.forward * farOffset;

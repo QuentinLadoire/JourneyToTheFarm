@@ -10,7 +10,8 @@ namespace JTTF
 		Tool = 0,
 		SeedBag = 1,
 		Seed = 2,
-		Plant = 3
+		Plant = 3,
+		Resource = 4
 	}
 
 	[System.Serializable]

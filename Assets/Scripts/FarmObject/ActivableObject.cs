@@ -9,12 +9,13 @@ namespace JTTF
         [Header("ActivableObject Parameter")]
         public float duration = 0.0f;
         public float animationDuration = 0.0f;
+        public float animationMultiplier = 1.0f;
     
         protected bool isActived = false;
 
         protected float GetDesiredAnimationSpeed()
         {
-            return duration == 0 ? 1.0f : animationDuration / duration;
+            return (duration == 0 ? 1.0f : animationDuration / duration) * animationMultiplier;
         }
         public abstract void PlayAnim(AnimationController animationController);
         public abstract void StopAnim(AnimationController animationController);

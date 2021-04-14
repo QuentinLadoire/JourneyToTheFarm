@@ -18,6 +18,11 @@ MonoBehaviour:
     stackable: 0
     sprite: {fileID: 21300000, guid: de9f8fe0bb5a89d4eb707e808eb95c60, type: 3}
     prefab: {fileID: 617178128329146584, guid: 7489ea9a46ed1a04e81012efb9f569a6, type: 3}
+  - name: Axe
+    type: 0
+    stackable: 0
+    sprite: {fileID: 21300000, guid: c0da1bff26ddaf04ea3c7e9718a022e4, type: 3}
+    prefab: {fileID: 2669426836222288937, guid: 32f5742d5bc79184294fe646f5b06f3a, type: 3}
   seedBags:
   - name: WheatSeedBag
     type: 1
@@ -45,4 +50,10 @@ MonoBehaviour:
     type: 3
     stackable: 1
     sprite: {fileID: 21300000, guid: 05458bf22f8428e459d44576841b2c2c, type: 3}
+    prefab: {fileID: 0}
+  resources:
+  - name: Log
+    type: 4
+    stackable: 1
+    sprite: {fileID: 21300000, guid: 0de423762d32fd14ab562541af24f463, type: 3}
     prefab: {fileID: 0}

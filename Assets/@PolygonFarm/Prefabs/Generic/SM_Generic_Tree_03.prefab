@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4628061784119660}
   - component: {fileID: 33088213492193364}
   - component: {fileID: 23484339040496786}
-  - component: {fileID: 95361804834755872}
   - component: {fileID: 1925708126240745406}
   m_Layer: 0
   m_Name: SM_Generic_Tree_03
@@ -83,25 +82,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &95361804834755872
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1092034201289170}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5d04779582cddc847acaad6e564ec308, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &1925708126240745406
 CapsuleCollider:
   m_ObjectHideFlags: 0

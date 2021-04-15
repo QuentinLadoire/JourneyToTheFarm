@@ -27,15 +27,16 @@ namespace JTTF
 
 		public override void ApplyEffect()
 		{
-			Player.AddItem(ItemType.Resource, "Log", 3);
+			if (tree != null)
+				tree.Harvest();
 		}
 		public override bool IsActivable()
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(Player.Position + Vector3.up, Player.Forward, out hit))
+			if (Physics.Raycast(Player.Position + Vector3.up, Player.Forward, out hit, 0.5f))
 			{
 				tree = hit.collider.GetComponentInParent<Tree>();
-				if (tree != null)
+				if (tree != null && tree.IsHarvestable())
 					return true;
 			}
 

@@ -43,3 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6c318ec499a0c4b89b1b33706dd77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logName: Log
+  logQuantity: 3
+  harvestableCooldown: 30
+  lifeTime: 10
+  modelObject: {fileID: 0}

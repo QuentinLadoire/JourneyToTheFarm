@@ -38,6 +38,7 @@ namespace JTTF
 			AddItem(ItemType.Tool, "Shovel");
 			AddItem(ItemType.SeedBag, "WheatSeedBag");
 			AddItem(ItemType.Tool, "Axe");
+			AddItem(ItemType.Tool, "Pickaxe");
 		}
 	}
 }

@@ -27,7 +27,7 @@ MonoBehaviour:
     type: 0
     stackable: 0
     sprite: {fileID: 21300000, guid: 1dd993c72c365b24ea76332773cd5f7c, type: 3}
-    prefab: {fileID: 0}
+    prefab: {fileID: 7881681813644691100, guid: 555f02f56e3056140bf828ca2343a3c3, type: 3}
   seedBags:
   - name: WheatSeedBag
     type: 1

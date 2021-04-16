@@ -33,7 +33,7 @@ namespace JTTF
 		public override bool IsActivable()
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(Player.Position + Vector3.up, Player.Forward, out hit, 0.5f))
+			if (Physics.Raycast(Player.Position + Vector3.up, Player.Forward, out hit, 1.0f))
 			{
 				tree = hit.collider.GetComponentInParent<Tree>();
 				if (tree != null && tree.IsHarvestable())

@@ -62,3 +62,8 @@ MonoBehaviour:
     stackable: 1
     sprite: {fileID: 21300000, guid: 89dbbd5733cd9554c8a96c9e95a238c3, type: 3}
     prefab: {fileID: 0}
+  - name: Stone
+    type: 4
+    stackable: 1
+    sprite: {fileID: 21300000, guid: 1ae720b7effcbee4ebe74e69a17611d9, type: 3}
+    prefab: {fileID: 0}

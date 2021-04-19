@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7881681813644691101}
   - component: {fileID: 3467417820560304541}
+  - component: {fileID: -2299242585508556986}
   m_Layer: 0
   m_Name: FarmPickaxe
   m_TagString: Untagged
@@ -44,6 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee7a9d176cc1a747a38b0337045425f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2299242585508556986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7881681813644691100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdac39b359cf05a4a8963e2b8a65522d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 5
+  animationDuration: 2.3
+  animationMultiplier: 3
 --- !u!1001 &1258415281249726147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,12 +76,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -73,19 +101,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.8149682
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0.5777603
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.031779833
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.031779826
       objectReference: {fileID: 0}
     - target: {fileID: 473874, guid: 42d7ee5c11e09824fb98a4babce5d1a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

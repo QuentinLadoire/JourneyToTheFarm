@@ -49,5 +49,11 @@ namespace JTTF
 			animator.SetBool("IsCut", value);
 			animator.speed = speed;
 		}
+		public void CharacterMining(bool value, float speed = 1.0f)
+		{
+			if (animator == null) { Debug.LogError("Animator is Null"); return; }
+			animator.SetBool("IsMine", value);
+			animator.speed = speed;
+		}
 	}
 }

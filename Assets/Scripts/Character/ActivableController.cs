@@ -82,9 +82,12 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			ItemInput();
+			if (Player.HasControl)
+			{
+				ItemInput();
 
-			UpdateItemDuration();
+				UpdateItemDuration();
+			}
 		}
 		private void OnDestroy()
 		{

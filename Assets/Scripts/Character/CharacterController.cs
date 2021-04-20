@@ -83,9 +83,12 @@ namespace JTTF
 		}
 		private void FixedUpdate()
 		{
-			CharacterMovement();
+			if (Player.HasControl)
+			{
+				CharacterMovement();
 
-			CharacterRotation();
+				CharacterRotation();
+			}
 		}
 		private void OnDestroy()
 		{

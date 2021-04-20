@@ -13,6 +13,10 @@ namespace JTTF
 		public static Vector3 Forward { get => instance.transform.forward; }
 		public static Vector3 RoundPosition { get => instance.characterController.RoundPosition; }
 
+		public static bool HasControl { get => instance.hasControl; }
+		public static Action OnActiveControl { get => instance.onActiveControl; set => instance.onActiveControl = value; }
+		public static Action OnDesactiveControl { get => instance.onDesactiveControl; set => instance.onDesactiveControl = value; }
+
 		public static Action<Vector3> OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
 		public static Action<ItemContainer> OnAddItem { get => instance.inventory.onAddItem; set => instance.inventory.onAddItem = value; }
@@ -23,8 +27,23 @@ namespace JTTF
 			return instance.inventory.AddItem(GameManager.DataBase.GetItem(itemType, itemName), amount);
 		}
 
+		public static void ActiveControl()
+		{
+			instance.hasControl = true;
+			instance.onActiveControl.Invoke();
+		}
+		public static void DesactiveControl()
+		{
+			instance.hasControl = false;
+			instance.onDesactiveControl.Invoke();
+		}
+
 		CharacterController characterController = null;
 		Inventory inventory = null;
+
+		bool hasControl = false;
+		Action onActiveControl = () => Debug.Log("OnActiveControl");
+		Action onDesactiveControl = () => Debug.Log("OnDesactiveControl");
 
 		private void Awake()
 		{

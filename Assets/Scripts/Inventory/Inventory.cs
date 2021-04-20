@@ -133,7 +133,10 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			ScrollInput();
+			if (Player.HasControl)
+			{
+				ScrollInput();
+			}
 		}
 	}
 }

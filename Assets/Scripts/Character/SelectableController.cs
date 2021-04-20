@@ -100,11 +100,14 @@ namespace JTTF
 		}
 		private void Update()
 		{
-            CheckActivableObject();
+            if (Player.HasControl)
+            {
+                CheckActivableObject();
 
-            ObjectInput();
+                ObjectInput();
 
-            UpdateDuration();
+                UpdateDuration();
+            }
         }
 		private void OnDestroy()
 		{

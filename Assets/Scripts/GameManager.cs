@@ -8,9 +8,9 @@ namespace JTTF
 	{
 		static GameManager instance = null;
 
-		public static DataBase DataBase { get => instance.dataBase; }
+		public static ItemDataBase DataBase { get => instance.dataBase; }
 
-		[SerializeField] DataBase dataBase = null;
+		[SerializeField] ItemDataBase dataBase = null;
 
 		void OnInventoryOpen()
 		{

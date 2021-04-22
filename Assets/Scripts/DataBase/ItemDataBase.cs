@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace JTTF
 {
-	[CreateAssetMenu(fileName = "NewDataBase", menuName = "Create New DataBase")]
-	public class DataBase : ScriptableObject
+	[CreateAssetMenu(fileName = "NewItemDataBase", menuName = "Create New ItemDataBase")]
+	public class ItemDataBase : ScriptableObject
 	{
 		public List<Item> tools = new List<Item>();
 		public List<Item> seedBags = new List<Item>();

@@ -22,6 +22,9 @@ namespace JTTF
 		public static Action<ItemContainer> OnAddItem { get => instance.inventory.onAddItem; set => instance.inventory.onAddItem = value; }
 		public static Action<ItemContainer> OnScroll { get => instance.inventory.onScroll; set => instance.inventory.onScroll = value; }
 
+		public static Action OnInventoryOpen { get => instance.inventory.onOpen; set => instance.inventory.onOpen = value; }
+		public static Action OnInventoryClose { get => instance.inventory.onClose; set => instance.inventory.onClose = value; }
+
 		public static bool AddItem(ItemType itemType, string itemName, int amount = 1)
 		{
 			return instance.inventory.AddItem(GameManager.DataBase.GetItem(itemType, itemName), amount);
@@ -41,9 +44,9 @@ namespace JTTF
 		CharacterController characterController = null;
 		Inventory inventory = null;
 
-		bool hasControl = false;
-		Action onActiveControl = () => Debug.Log("OnActiveControl");
-		Action onDesactiveControl = () => Debug.Log("OnDesactiveControl");
+		bool hasControl = true;
+		Action onActiveControl = () => { /*Debug.Log("OnActiveControl");*/ };
+		Action onDesactiveControl = () => { /*Debug.Log("OnDesactiveControl");*/ };
 
 		private void Awake()
 		{
@@ -51,13 +54,6 @@ namespace JTTF
 			inventory = GetComponent<Inventory>();
 
 			instance = this;
-		}
-		private void Start()
-		{
-			AddItem(ItemType.Tool, "Shovel");
-			AddItem(ItemType.SeedBag, "WheatSeedBag");
-			AddItem(ItemType.Tool, "Axe");
-			AddItem(ItemType.Tool, "Pickaxe");
 		}
 	}
 }

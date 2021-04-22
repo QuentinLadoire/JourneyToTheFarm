@@ -23,10 +23,17 @@ namespace JTTF
 
 	public class Inventory : MonoBehaviour
 	{
+		public const int sizeMax = 40;
+
 		public Action<ItemContainer> onScroll = (ItemContainer itemContainer) => { /*Debug.Log("OnScrollUp");*/ };
 		public Action<ItemContainer> onAddItem = (ItemContainer itemContainer) => { /*Debug.Log("OnNewItemShortcut index : " + index);*/ };
 
-		readonly ItemContainer[] slotShortcut = new ItemContainer[10];
+		public Action onOpen = () => { /*Debug.Log("OnOpen");*/ };
+		public Action onClose = () => { /*Debug.Log("OnClose");*/ };
+
+		bool isOpen = false;
+
+		readonly ItemContainer[] slotShortcut = new ItemContainer[sizeMax];
 		int shortcutIndex = 0;
 
 		List<ItemContainer> usedSlots = new List<ItemContainer>();
@@ -55,6 +62,17 @@ namespace JTTF
 				ScrollUp();
 			else if (delta < 0.0f)
 				ScrollDown();
+		}
+		void OpeningInput()
+		{
+			if (Input.GetButtonDown("Inventory"))
+			{
+				isOpen = !isOpen;
+				if (isOpen)
+					onOpen.Invoke();
+				else
+					onClose.Invoke();
+			}
 		}
 
 		bool AddItemAsEmptySlot(Item item, int amount = 1)
@@ -133,6 +151,8 @@ namespace JTTF
 		}
 		private void Update()
 		{
+			OpeningInput();
+
 			if (Player.HasControl)
 			{
 				ScrollInput();

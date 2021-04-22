@@ -36,13 +36,10 @@ namespace JTTF
 			transform.position = Vector3.MoveTowards(transform.position, followingObject.transform.position + followingOffset, speed * Time.deltaTime);
 		}
 
-		private void Start()
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-		}
 		private void Update()
 		{
-			CameraRotation();
+			if (Player.HasControl)
+				CameraRotation();
 
 			CameraFarOffset();
 		}

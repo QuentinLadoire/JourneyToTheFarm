@@ -6,7 +6,7 @@ namespace JTTF
 {
 	public class GamepanelController : MonoBehaviour
 	{
-		[SerializeField] GameObject inventoryPanel = null;
+		[SerializeField] InventoryPanel inventoryPanel = null;
 
 		void OnInventoryOpen()
 		{
@@ -23,11 +23,15 @@ namespace JTTF
 		{
 			Player.OnInventoryOpen += OnInventoryOpen;
 			Player.OnInventoryClose += OnInventoryClose;
+
+			inventoryPanel.Init();
 		}
 		private void OnDestroy()
 		{
 			Player.OnInventoryOpen -= OnInventoryOpen;
 			Player.OnInventoryClose -= OnInventoryClose;
+
+			inventoryPanel.Destroy();
 		}
 	}
 }

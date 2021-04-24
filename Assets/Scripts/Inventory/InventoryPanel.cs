@@ -18,11 +18,15 @@ namespace JTTF
 				}
 		}
 
-		private void Start()
+		public void SetActive(bool value)
+		{
+			gameObject.SetActive(value);
+		}
+		public void Init()
 		{
 			Player.OnAddItem += OnAddItem;
 		}
-		private void OnDestroy()
+		public void Destroy()
 		{
 			Player.OnAddItem -= OnAddItem;
 		}

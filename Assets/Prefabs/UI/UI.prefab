@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPanel: {fileID: 1061051598786260555}
+  craftingPanel: {fileID: 2479909112619843181}
 --- !u!1 &8223666954678988343
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +365,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6744249723039172946, guid: d97a95c762d604e4cbc526352b44cfbd, type: 3}
   m_PrefabInstance: {fileID: 6744249721794872356}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2479909112619843181 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9219443831125703241, guid: d97a95c762d604e4cbc526352b44cfbd, type: 3}
+  m_PrefabInstance: {fileID: 6744249721794872356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ec375c80d312942bb60277f3825db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7286241061990799933
 PrefabInstance:
   m_ObjectHideFlags: 0

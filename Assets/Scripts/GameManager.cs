@@ -12,13 +12,13 @@ namespace JTTF
 
 		[SerializeField] ItemDataBase itemDataBase = null;
 
-		void OnInventoryOpen()
+		void OnGameMenuOpen()
 		{
 			Cursor.lockState = CursorLockMode.Confined;
 
 			Player.DesactiveControl();
 		}
-		void OnInventoryClose()
+		void OnGameMenuClose()
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 
@@ -33,8 +33,11 @@ namespace JTTF
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 
-			Player.OnInventoryOpen += OnInventoryOpen;
-			Player.OnInventoryClose += OnInventoryClose;
+			Player.OnInventoryOpen += OnGameMenuOpen;
+			Player.OnInventoryClose += OnGameMenuClose;
+
+			Player.OnCraftingOpen += OnGameMenuOpen;
+			Player.OnCraftingClose += OnGameMenuClose;
 
 
 			Player.AddItem(ItemType.Tool, "Shovel");
@@ -51,8 +54,11 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			Player.OnInventoryOpen -= OnInventoryOpen;
-			Player.OnInventoryClose -= OnInventoryClose;
+			Player.OnInventoryOpen -= OnGameMenuOpen;
+			Player.OnInventoryClose -= OnGameMenuClose;
+
+			Player.OnCraftingOpen -= OnGameMenuOpen;
+			Player.OnCraftingClose -= OnGameMenuClose;
 		}
 	}
 }

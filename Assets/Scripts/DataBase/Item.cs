@@ -19,19 +19,10 @@ namespace JTTF
 	{
 		public static Item Default = new Item();
 
-		public string name;
-		public ItemType type;
-		public bool stackable;
-		public Sprite sprite;
-		public GameObject prefab;
-
-		public Item(string name = "NoName", ItemType type = ItemType.None, bool stackable = false, Sprite sprite = null, GameObject prefab = null)
-		{
-			this.name = name;
-			this.type = type;
-			this.stackable = stackable;
-			this.sprite = sprite;
-			this.prefab = prefab;
-		}
+		public string name = "NoName";
+		public ItemType type = ItemType.None;
+		public bool stackable = false;
+		public Sprite sprite = null;
+		public GameObject prefab = null;
 	}
 }

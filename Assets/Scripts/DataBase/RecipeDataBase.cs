@@ -8,5 +8,14 @@ namespace JTTF
     public class RecipeDataBase : ScriptableObject
     {
         public List<Recipe> Recipes = new List<Recipe>();
+
+        public Recipe GetRecipe(string name)
+		{
+            foreach (var recipe in Recipes)
+                if (recipe.name == name)
+                    return recipe;
+
+            return Recipe.Default;
+		}
     }
 }

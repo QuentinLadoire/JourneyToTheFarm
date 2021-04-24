@@ -25,9 +25,12 @@ namespace JTTF
 		public static Action OnInventoryOpen { get => instance.inventory.onOpen; set => instance.inventory.onOpen = value; }
 		public static Action OnInventoryClose { get => instance.inventory.onClose; set => instance.inventory.onClose = value; }
 
+		public static Action OnCraftingOpen { get => instance.craftingController.onOpen; set => instance.craftingController.onOpen = value; }
+		public static Action OnCraftingClose { get => instance.craftingController.onClose; set => instance.craftingController.onClose = value; }
+
 		public static bool AddItem(ItemType itemType, string itemName, int amount = 1)
 		{
-			return instance.inventory.AddItem(GameManager.DataBase.GetItem(itemType, itemName), amount);
+			return instance.inventory.AddItem(GameManager.ItemDataBase.GetItem(itemType, itemName), amount);
 		}
 
 		public static void ActiveControl()
@@ -43,6 +46,7 @@ namespace JTTF
 
 		CharacterController characterController = null;
 		Inventory inventory = null;
+		CraftingController craftingController = null;
 
 		bool hasControl = true;
 		Action onActiveControl = () => { /*Debug.Log("OnActiveControl");*/ };
@@ -52,6 +56,7 @@ namespace JTTF
 		{
 			characterController = GetComponent<CharacterController>();
 			inventory = GetComponent<Inventory>();
+			craftingController = GetComponent<CraftingController>();
 
 			instance = this;
 		}

@@ -25,7 +25,7 @@ namespace JTTF
 
             inCrafting = true;
             currentRecipe = recipe;
-            currentDuration = recipe.duration;
+            currentDuration = recipe.craftDuration;
 		}
         public void CancelCraft()
 		{

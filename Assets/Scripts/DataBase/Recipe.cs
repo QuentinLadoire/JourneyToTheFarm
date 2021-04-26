@@ -18,10 +18,11 @@ namespace JTTF
 
         public string name = "NoName";
         public ItemType itemType = ItemType.None;
+        public Sprite icon = null;
         public int amount = 0;
 
         [TextArea] public string description = "NoDescription";
-        public float duration = 0.0f;
-        public ItemInfo[] items = null;
+        public float craftDuration = 0.0f;
+        public ItemInfo[] requirements = null;
     }
 }

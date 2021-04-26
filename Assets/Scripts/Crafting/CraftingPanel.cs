@@ -2,18 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraftingPanel : MonoBehaviour
+namespace JTTF
 {
-    public void SetActive(bool value)
+	public class CraftingPanel : MonoBehaviour
 	{
-		gameObject.SetActive(value);
-	}
-	public void Init()
-	{
+		[SerializeField] GameObject recipeContent = null;
+		[SerializeField] GameObject recipePaternPrefab = null;
 
-	}
-	public void Destroy()
-	{
+		[SerializeField] GameObject recipeDescrition = null;
 
+		public void SetActive(bool value)
+		{
+			gameObject.SetActive(value);
+		}
+		public void Init()
+		{
+			foreach (var recipe in Player.CraftingController.RecipeDataBase.Recipes)
+			{
+				var recipePatern = Instantiate(recipePaternPrefab).GetComponent<RecipePatern>();
+				recipePatern.SetParent(recipeContent.transform, false);
+				recipePatern.Set(recipe.icon, recipe.name);
+			}
+		}
+		public void Destroy()
+		{
+
+		}
 	}
 }

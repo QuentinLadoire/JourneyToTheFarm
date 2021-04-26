@@ -28,6 +28,8 @@ namespace JTTF
 		public static Action OnCraftingOpen { get => instance.craftingController.onOpen; set => instance.craftingController.onOpen = value; }
 		public static Action OnCraftingClose { get => instance.craftingController.onClose; set => instance.craftingController.onClose = value; }
 
+		public static CraftingController CraftingController { get => instance.craftingController; }
+
 		public static bool AddItem(ItemType itemType, string itemName, int amount = 1)
 		{
 			return instance.inventory.AddItem(GameManager.ItemDataBase.GetItem(itemType, itemName), amount);

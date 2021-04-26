@@ -14,12 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Recipes:
   - name: Chest
+    itemType: 5
+    icon: {fileID: 21300000, guid: 5955310c16aeb9044a48215cc47ff6e1, type: 3}
+    amount: 1
     description: A container for stock some item.
-    items:
+    duration: 0
+    requirements:
     - name: Log
-      quantity: 5
+      amount: 5
   - name: Furnace
+    itemType: 5
+    icon: {fileID: 21300000, guid: 8cf50a2f43047db4cb23a38abeffe591, type: 3}
+    amount: 1
     description: Can cook foods or smelt ores.
-    items:
+    duration: 0
+    requirements:
     - name: Stone
-      quantity: 5
+      amount: 5

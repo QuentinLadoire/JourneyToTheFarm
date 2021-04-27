@@ -49,6 +49,8 @@ namespace JTTF
         void EndCraft()
 		{
             Player.AddItem(currentRecipe.itemType, currentRecipe.name, currentRecipe.amount);
+            foreach (var requirement in currentRecipe.requirements)
+                Player.RemoveItem(requirement.name, requirement.amount);
 
             inCrafting = false;
             currentRecipe = null;

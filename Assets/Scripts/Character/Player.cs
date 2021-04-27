@@ -43,6 +43,10 @@ namespace JTTF
 		{
 			return instance.inventory.HasItem(name);
 		}
+		public static void RemoveItem(string name, int amount = 1)
+		{
+			instance.inventory.RemoveItem(name, amount);
+		}
 
 		public static void Craft(Recipe recipe)
 		{

@@ -147,6 +147,27 @@ namespace JTTF
 
 			return 0;
 		}
+		public void RemoveItem(string name, int amount = 1)
+		{
+			foreach (var usedSlot in usedSlots)
+			{
+				if (usedSlot.Item.name == name)
+					if (usedSlot.Amount > amount)
+						usedSlot.Amount -= amount;
+					else
+					{
+						amount -= usedSlot.Amount;
+						usedSlot.Amount = 0;
+						if (amount == 0)
+						{
+							usedSlots.RemoveAll(item => item.Amount == 0);
+							return;
+						}
+					}
+			}
+
+			usedSlots.RemoveAll(item => item.Amount == 0);
+		}
 
 		private void Awake()
 		{

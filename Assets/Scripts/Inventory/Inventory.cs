@@ -139,6 +139,14 @@ namespace JTTF
 				return true;
 			}
 		}
+		public int HasItem(string name)
+		{
+			foreach (var usedSlot in usedSlots)
+				if (usedSlot.Item.name == name)
+					return usedSlot.Amount;
+
+			return 0;
+		}
 
 		private void Awake()
 		{

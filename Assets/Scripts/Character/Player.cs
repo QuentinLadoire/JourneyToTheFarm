@@ -34,6 +34,10 @@ namespace JTTF
 		{
 			return instance.inventory.AddItem(GameManager.ItemDataBase.GetItem(itemType, itemName), amount);
 		}
+		public static int HasItem(string name)
+		{
+			return instance.inventory.HasItem(name);
+		}
 
 		public static void ActiveControl()
 		{

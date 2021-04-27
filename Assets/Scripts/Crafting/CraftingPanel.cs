@@ -23,7 +23,7 @@ namespace JTTF
 			foreach (var requirement in recipe.requirements)
 			{
 				str += "\n";
-				str += 0.ToString() + " / " + requirement.amount.ToString() + " " + requirement.name;
+				str += Player.HasItem(requirement.name).ToString() + " / " + requirement.amount.ToString() + " " + requirement.name;
 			}
 			recipeDescription.SetCraftRequirement(str);
 
@@ -34,12 +34,18 @@ namespace JTTF
 			Debug.Log("Craft " + currentRecipe.name);
 		}
 
+		void OnCraftingOpen()
+		{
+			OnClickRecipeButton(currentRecipe);
+		}
+
 		public void SetActive(bool value)
 		{
 			gameObject.SetActive(value);
 		}
 		public void Init()
 		{
+			currentRecipe = Player.CraftingController.RecipeDataBase.Recipes[0];
 			foreach (var recipe in Player.CraftingController.RecipeDataBase.Recipes)
 			{
 				var recipePatern = Instantiate(recipePaternPrefab).GetComponent<RecipeButton>();
@@ -50,11 +56,11 @@ namespace JTTF
 
 			recipeDescription.onClick += OnClickCraftButton;
 
-			OnClickRecipeButton(Player.CraftingController.RecipeDataBase.Recipes[0]);
+			Player.OnCraftingOpen += OnCraftingOpen;
 		}
 		public void Destroy()
 		{
-
+			Player.OnCraftingOpen -= OnCraftingOpen;
 		}
 	}
 }

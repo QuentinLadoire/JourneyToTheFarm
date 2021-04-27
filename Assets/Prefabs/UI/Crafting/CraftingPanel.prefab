@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 1310037080536707840}
   - component: {fileID: 4672639134224444228}
   - component: {fileID: 5492791765371242870}
-  - component: {fileID: 3791106468903365027}
+  - component: {fileID: 3294975652856118384}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3791106468903365027
+--- !u!114 &3294975652856118384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,8 +369,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6744249723039172946}
-  - component: {fileID: 2747610833722045293}
-  - component: {fileID: 4437601448299351403}
+  - component: {fileID: 2994127070809160027}
+  - component: {fileID: 6009674163366767151}
   - component: {fileID: 9219443831125703241}
   m_Layer: 5
   m_Name: CraftingPanel
@@ -401,7 +401,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1010, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &2747610833722045293
+--- !u!222 &2994127070809160027
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -409,7 +409,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6744249723039172941}
   m_CullTransparentMesh: 1
---- !u!114 &4437601448299351403
+--- !u!114 &6009674163366767151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -708,11 +708,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -728,7 +728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

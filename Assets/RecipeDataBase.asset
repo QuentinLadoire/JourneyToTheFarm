@@ -18,7 +18,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 5955310c16aeb9044a48215cc47ff6e1, type: 3}
     amount: 1
     description: A container for stock some item.
-    duration: 0
+    craftDuration: 5
     requirements:
     - name: Log
       amount: 5
@@ -27,7 +27,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 8cf50a2f43047db4cb23a38abeffe591, type: 3}
     amount: 1
     description: Can cook foods or smelt ores.
-    duration: 0
+    craftDuration: 5
     requirements:
     - name: Stone
       amount: 5

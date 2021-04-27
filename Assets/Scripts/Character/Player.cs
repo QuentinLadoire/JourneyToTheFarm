@@ -28,6 +28,11 @@ namespace JTTF
 		public static Action OnCraftingOpen { get => instance.craftingController.onOpen; set => instance.craftingController.onOpen = value; }
 		public static Action OnCraftingClose { get => instance.craftingController.onClose; set => instance.craftingController.onClose = value; }
 
+		public static Action<Recipe> OnStartCraft { get => instance.craftingController.onStartCraft; set => instance.craftingController.onStartCraft = value; }
+		public static Action OnCancelCraft { get => instance.craftingController.onCancelCraft; set => instance.craftingController.onCancelCraft = value; }
+		public static Action OnEndCraft { get => instance.craftingController.onEndCraft; set => instance.craftingController.onEndCraft = value; }
+		public static Action<float> OnCraft { get => instance.craftingController.onCraft; set => instance.craftingController.onCraft = value; }
+
 		public static CraftingController CraftingController { get => instance.craftingController; }
 
 		public static bool AddItem(ItemType itemType, string itemName, int amount = 1)
@@ -37,6 +42,15 @@ namespace JTTF
 		public static int HasItem(string name)
 		{
 			return instance.inventory.HasItem(name);
+		}
+
+		public static void Craft(Recipe recipe)
+		{
+			instance.craftingController.StartCraft(recipe);
+		}
+		public static void CancelCraft()
+		{
+			instance.craftingController.CancelCraft();
 		}
 
 		public static void ActiveControl()

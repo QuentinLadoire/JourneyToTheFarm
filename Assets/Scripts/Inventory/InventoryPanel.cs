@@ -18,17 +18,28 @@ namespace JTTF
 				}
 		}
 
-		public void SetActive(bool value)
+		void OnInventoryOpen()
 		{
-			gameObject.SetActive(value);
+			gameObject.SetActive(true);
 		}
+		void OnInventoryClose()
+		{
+			gameObject.SetActive(false);
+		}
+
 		public void Init()
 		{
 			Player.OnAddItem += OnAddItem;
+
+			Player.OnInventoryOpen += OnInventoryOpen;
+			Player.OnInventoryClose += OnInventoryClose;
 		}
 		public void Destroy()
 		{
 			Player.OnAddItem -= OnAddItem;
+
+			Player.OnInventoryOpen -= OnInventoryOpen;
+			Player.OnInventoryClose -= OnInventoryClose;
 		}
 	}
 }

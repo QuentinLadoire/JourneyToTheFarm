@@ -31,18 +31,20 @@ namespace JTTF
 		}
 		void OnClickCraftButton()
 		{
-			Debug.Log("Craft " + currentRecipe.name);
+			Player.Craft(currentRecipe);
 		}
 
 		void OnCraftingOpen()
 		{
+			gameObject.SetActive(true);
+
 			OnClickRecipeButton(currentRecipe);
 		}
-
-		public void SetActive(bool value)
+		void OnCraftingClose()
 		{
-			gameObject.SetActive(value);
+			gameObject.SetActive(false);
 		}
+
 		public void Init()
 		{
 			currentRecipe = Player.CraftingController.RecipeDataBase.Recipes[0];
@@ -57,10 +59,12 @@ namespace JTTF
 			recipeDescription.onClick += OnClickCraftButton;
 
 			Player.OnCraftingOpen += OnCraftingOpen;
+			Player.OnCraftingClose += OnCraftingClose;
 		}
 		public void Destroy()
 		{
 			Player.OnCraftingOpen -= OnCraftingOpen;
+			Player.OnCraftingClose -= OnCraftingClose;
 		}
 	}
 }

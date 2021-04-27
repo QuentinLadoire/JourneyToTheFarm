@@ -12,6 +12,12 @@ namespace JTTF
         public Action onOpen = () => { /*Debug.Log("OnOpen");*/ };
         public Action onClose = () => { /*Debug.Log("OnClose");*/ };
 
+        public Action<Recipe> onStartCraft = (Recipe) => { /*Debug.Log("OnStartCraft");*/ };
+        public Action onCancelCraft = () => { /*Debug.Log("OnCancelCraft");*/ };
+        public Action onEndCraft = () => { /*Debug.Log("OnEndCraft");*/ };
+
+        public Action<float> onCraft = (float percent) => { /*Debug.Log("OnCraft");*/ };
+
         [SerializeField] RecipeDataBase recipeDataBase = null;
 
         bool isOpen = false;
@@ -21,17 +27,24 @@ namespace JTTF
 
         public void StartCraft(Recipe recipe)
 		{
+            if (inCrafting) CancelCraft();
             if (recipe == Recipe.Default) return;
+
+            if (!CanCraft(recipe)) return;
 
             inCrafting = true;
             currentRecipe = recipe;
             currentDuration = recipe.craftDuration;
-		}
+
+            onStartCraft.Invoke(recipe);
+        }
         public void CancelCraft()
 		{
             inCrafting = false;
             currentRecipe = null;
             currentDuration = 0.0f;
+
+            onCancelCraft.Invoke();
 		}
         void EndCraft()
 		{
@@ -40,6 +53,21 @@ namespace JTTF
             inCrafting = false;
             currentRecipe = null;
             currentDuration = 0.0f;
+
+            onEndCraft.Invoke();
+		}
+
+        bool CanCraft(Recipe recipe)
+		{
+            foreach (var requirement in recipe.requirements)
+                if (Player.HasItem(requirement.name) < requirement.amount)
+                    return false; 
+
+            return true;
+		}
+        float GetPercentDuration()
+		{
+            return 1 - (currentDuration / currentRecipe.craftDuration);
 		}
 
         void OpeningInput()
@@ -56,6 +84,8 @@ namespace JTTF
         void UpdateDuration()
 		{
             if (!inCrafting) return;
+
+            onCraft.Invoke(GetPercentDuration());
 
             if (currentDuration <= 0.0f)
                 EndCraft();

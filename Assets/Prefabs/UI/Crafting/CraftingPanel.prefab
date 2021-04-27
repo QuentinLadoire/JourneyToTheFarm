@@ -258,9 +258,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 5
-    m_Right: 0
+    m_Right: 5
     m_Top: 5
-    m_Bottom: 0
+    m_Bottom: 5
   m_ChildAlignment: 0
   m_Spacing: 5
   m_ChildForceExpandWidth: 1
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeContent: {fileID: 5658580473652076330}
   recipePaternPrefab: {fileID: 7532997017774429537, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
-  recipeDescrition: {fileID: 1922623305011773696}
+  recipeDescription: {fileID: 338108327801122522}
 --- !u!1 &8076503240045795008
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,16 +707,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -727,16 +723,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5839943064286380022, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -752,7 +744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7532997017774429537, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_Name
-      value: RecipePatern
+      value: RecipeButton
       objectReference: {fileID: 0}
     - target: {fileID: 7532997017774429537, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
       propertyPath: m_IsActive
@@ -862,13 +854,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d82d7ba51f361b7448cd13e94f9a8423, type: 3}
---- !u!1 &1922623305011773696 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6596604731839618071, guid: d82d7ba51f361b7448cd13e94f9a8423, type: 3}
-  m_PrefabInstance: {fileID: 4694262331925552407}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &274107823054464309 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4821258590746212386, guid: d82d7ba51f361b7448cd13e94f9a8423, type: 3}
   m_PrefabInstance: {fileID: 4694262331925552407}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &338108327801122522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4209619889100114995, guid: d82d7ba51f361b7448cd13e94f9a8423, type: 3}
+  m_PrefabInstance: {fileID: 4694262331925552407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f992b3a24a32e4caf40d11ff9bad8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,14 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class RecipePatern : MonoBehaviour
+    public class RecipeButton : MonoBehaviour
     {
         [SerializeField] Image iconRecipe = null;
         [SerializeField] Text nameRecipe = null;
+
+        Button button = null;
+
+        public Action onClick = () => { /*Debug.Log("OnRecipeButtonClick");*/ };
 
         public void SetParent(Transform parent, bool stayWorldPosition)
 		{
@@ -28,5 +33,16 @@ namespace JTTF
 		{
             nameRecipe.text = name;
 		}
-    }
+
+        void OnClick()
+		{
+            onClick.Invoke();
+        }
+
+		private void Awake()
+		{
+            button = GetComponent<Button>();
+            button.onClick.AddListener(OnClick);
+        }
+	}
 }

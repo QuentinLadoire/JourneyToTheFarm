@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 4821258590746212386}
   - component: {fileID: 8109255587522714918}
   - component: {fileID: 7734621057637029766}
+  - component: {fileID: -4209619889100114995}
   m_Layer: 5
   m_Name: RecipeDescription
   m_TagString: Untagged
@@ -434,6 +435,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-4209619889100114995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596604731839618071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f992b3a24a32e4caf40d11ff9bad8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 1919386338992170052}
+  itemName: {fileID: 8963478189206522861}
+  itemDescription: {fileID: 8261759157006870969}
+  craftRequirement: {fileID: 1309364828670296499}
+  craftButton: {fileID: 5352090964781069765}
 --- !u!1 &6736123588692762952
 GameObject:
   m_ObjectHideFlags: 0

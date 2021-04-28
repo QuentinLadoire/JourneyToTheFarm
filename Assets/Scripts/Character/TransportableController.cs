@@ -14,13 +14,14 @@ namespace JTTF
 
 		TransportableObject currentObject = null;
 
-		void OnScroll(ItemContainer itemContainer)
+		void OnScroll(int index, string itemName, ItemType itemType)
 		{
 			var toDestroy = currentObject;
 
-			if (itemContainer.Item != null && itemContainer.Item.prefab != null)
+			var item = GameManager.ItemDataBase.GetItem(itemType, itemName);
+			if (item.prefab != null)
 			{
-				currentObject = Instantiate(itemContainer.Item.prefab).GetComponent<TransportableObject>();
+				currentObject = Instantiate(item.prefab).GetComponent<TransportableObject>();
 				currentObject.SetHands(rightHandTransform, leftHandTransform);
 			}
 

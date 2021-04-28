@@ -9,183 +9,164 @@ namespace JTTF
 	{
 		public const int AmountMax = 999;
 
-		public Item Item { get; set; }
-		public int Amount { get; set; }
-		public int SlotIndex { get; set; }
+		public bool IsFull { get => Amount == AmountMax; }
+		public bool IsEmpty { get => Amount == 0; }
 
-		public ItemContainer(int slotIndex = -1, Item item = null, int amount = 0)
-		{
-			SlotIndex = slotIndex;
-			Item = item;
-			Amount = amount;
-		}
+		public int Amount { get; set; } = 0;
+		public string ItemName { get; set; } = "NoName";
+		public ItemType ItemType { get; set; } = ItemType.None;
 	}
 
 	public class Inventory : MonoBehaviour
 	{
 		public const int sizeMax = 40;
 
-		public Action<ItemContainer> onScroll = (ItemContainer itemContainer) => { /*Debug.Log("OnScrollUp");*/ };
-		public Action<ItemContainer> onAddItem = (ItemContainer itemContainer) => { /*Debug.Log("OnNewItemShortcut index : " + index);*/ };
+		public Action<int, string, int, ItemType> onAddItem = (int index, string name, int amount, ItemType itemType) => { /*Debug.Log("OnAddItem");*/ };
+		public Action<int, string, int, ItemType> onRemoveItem = (int index, string name, int amount, ItemType itemType) => { /*Debug.Log("OnRemoveItem");*/ };
 
-		public Action onOpen = () => { /*Debug.Log("OnOpen");*/ };
-		public Action onClose = () => { /*Debug.Log("OnClose");*/ };
+		readonly ItemContainer[] slots = new ItemContainer[sizeMax];
 
-		bool isOpen = false;
-
-		readonly ItemContainer[] slotShortcut = new ItemContainer[sizeMax];
-		int shortcutIndex = 0;
-
-		List<ItemContainer> usedSlots = new List<ItemContainer>();
-
-		void ScrollUp()
+		public int AddItem(string name, int amount, ItemType itemType)
 		{
-			shortcutIndex--;
-			if (shortcutIndex == -1)
-				shortcutIndex = 9;
-
-			onScroll.Invoke(slotShortcut[shortcutIndex]);
-		}
-		void ScrollDown()
-		{
-			shortcutIndex++;
-			if (shortcutIndex == 10)
-				shortcutIndex = 0;
-
-			onScroll.Invoke(slotShortcut[shortcutIndex]);
-		}
-		void ScrollInput()
-		{
-			float delta = Input.GetAxis("ScrollShortcut");
-
-			if (delta > 0.0f)
-				ScrollUp();
-			else if (delta < 0.0f)
-				ScrollDown();
-		}
-		void OpeningInput()
-		{
-			if (Input.GetButtonDown("Inventory"))
+			var index = GetItemIndex(name, true);
+			if (index != -1)
 			{
-				isOpen = !isOpen;
-				if (isOpen)
-					onOpen.Invoke();
+				var rest = slots[index].Amount + amount - ItemContainer.AmountMax;
+				AddItemAt(index, amount, itemType);
+
+				if (rest > 0)
+					return AddItem(name, rest, itemType);
 				else
-					onClose.Invoke();
+					return 0;
 			}
-		}
-
-		bool AddItemAsEmptySlot(Item item, int amount = 1)
-		{
-			amount = Mathf.Clamp(amount, 1, ItemContainer.AmountMax);
-
-			foreach (var slot in slotShortcut)
-				if (slot.Item == null)
-				{
-					slot.Item = item;
-					slot.Amount = amount;
-
-					usedSlots.Add(slot);
-
-					onAddItem.Invoke(slot);
-
-					return true;
-				}
-
-			return false;
-		}
-		int FillItem(Item item, int amount = 1)
-		{
-			foreach (var slot in usedSlots)
+			else
 			{
-				if (amount > 0 && slot.Item == item)
+				var emptySlotIndex = GetEmptySlotIndex();
+				if (emptySlotIndex != -1)
 				{
-					var rest = ItemContainer.AmountMax - slot.Amount;
-					if (amount < rest)
-					{
-						slot.Amount += amount;
-						amount = 0;
-					}
-					else
-					{
-						slot.Amount = ItemContainer.AmountMax;
-						amount -= rest;
-					}
+					var rest = amount - ItemContainer.AmountMax;
+					SetItemAt(emptySlotIndex, name, amount, itemType);
 
-					onAddItem.Invoke(slot);
+					if (rest > 0)
+						return AddItem(name, rest, itemType);
+					else
+						return 0;
 				}
 			}
 
 			return amount;
 		}
-
-		public bool HasEmptySlot()
+		public void RemoveItem(string name, int amount)
 		{
-			return usedSlots.Count < slotShortcut.Length;
-		}
-		public bool AddItem(Item item, int amount = 1)
-		{
-			if (!item.stackable)
+			var index = GetItemIndex(name);
+			if (index != -1)
 			{
-				return AddItemAsEmptySlot(item);
+				var rest = amount - slots[index].Amount;
+				RemoveItemAt(index, amount);
+
+				if (rest > 0)
+					RemoveItem(name, amount);
 			}
 			else
 			{
-				amount = FillItem(item, amount);
-
-				if (amount > 0)
-					return AddItemAsEmptySlot(item, amount);
-
-				return true;
+				Debug.Log("Can't remove Item - ItemName : " + name + " - Amount : " + amount + " - Doesn't contain Item");
 			}
 		}
-		public int HasItem(string name)
+
+		public bool HasItem(string name, int amount)
 		{
-			foreach (var usedSlot in usedSlots)
-				if (usedSlot.Item.name == name)
-					return usedSlot.Amount;
+			var index = GetItemIndex(name);
+			if (index != -1 && slots[index].Amount >= amount)
+				return true;
+
+			return false;
+		}
+		public int HowManyItem(string name)
+		{
+			var index = GetItemIndex(name);
+			if (index != -1)
+				return slots[index].Amount;
 
 			return 0;
 		}
-		public void RemoveItem(string name, int amount = 1)
+
+		public string GetItemName(int index)
 		{
-			foreach (var usedSlot in usedSlots)
+			return slots[index].ItemName;
+		}
+		public ItemType GetItemType(int index)
+		{
+			return slots[index].ItemType;
+		}
+
+		int GetEmptySlotIndex()
+		{
+			for (int i = 0; i < sizeMax; i++)
+				if (slots[i].IsEmpty)
+					return i;
+
+			return -1;
+		}
+		int GetItemIndex(string name, bool ignoreFullSlot = false)
+		{
+			for (int i = 0; i < sizeMax; i++)
 			{
-				if (usedSlot.Item.name == name)
-					if (usedSlot.Amount > amount)
-						usedSlot.Amount -= amount;
-					else
-					{
-						amount -= usedSlot.Amount;
-						usedSlot.Amount = 0;
-						if (amount == 0)
-						{
-							usedSlots.RemoveAll(item => item.Amount == 0);
-							return;
-						}
-					}
+				if (!ignoreFullSlot && slots[i].ItemName == name ||
+					ignoreFullSlot && slots[i].ItemName == name && !slots[i].IsFull)
+					return i;
 			}
 
-			usedSlots.RemoveAll(item => item.Amount == 0);
+			return -1;
+		}
+
+		void ClearItemAt(int index)
+		{
+			slots[index].ItemName = "NoName";
+			slots[index].Amount = 0;
+			slots[index].ItemType = ItemType.None;
+
+			onRemoveItem.Invoke(index, slots[index].ItemName, slots[index].Amount, ItemType.None);
+		}
+		void SetItemAt(int index, string name, int amount, ItemType itemType)
+		{
+			slots[index].ItemName = name;
+			slots[index].Amount = amount;
+			slots[index].ItemType = itemType;
+
+			if (slots[index].Amount > ItemContainer.AmountMax)
+				slots[index].Amount = ItemContainer.AmountMax;
+
+			onAddItem.Invoke(index, name, amount, itemType);
+		}
+
+		void AddItemAt(int index, int amount, ItemType itemType)
+		{
+			slots[index].Amount += amount;
+			if (slots[index].Amount > ItemContainer.AmountMax)
+				slots[index].Amount = ItemContainer.AmountMax;
+
+			onAddItem.Invoke(index, slots[index].ItemName, slots[index].Amount, itemType);
+		}
+		void RemoveItemAt(int index, int amount)
+		{
+			slots[index].Amount -= amount;
+			if (slots[index].Amount < 0)
+				slots[index].Amount = 0;
+
+			onRemoveItem.Invoke(index, slots[index].ItemName, slots[index].Amount, slots[index].ItemType);
+		}
+
+		void SwapItem(int index1, int index2)
+		{
+			var tmp = slots[index1];
+			slots[index1] = slots[index2];
+			slots[index2] = tmp;
 		}
 
 		private void Awake()
 		{
-			for (int i = 0; i < slotShortcut.Length; i++)
-				slotShortcut[i] = new ItemContainer(i);
-		}
-		private void Start()
-		{
-			onScroll.Invoke(slotShortcut[shortcutIndex]);
-		}
-		private void Update()
-		{
-			OpeningInput();
-
-			if (Player.HasControl)
-			{
-				ScrollInput();
-			}
+			for (int i = 0; i < sizeMax; i++)
+				slots[i] = new ItemContainer();
 		}
 	}
 }

@@ -15,7 +15,6 @@ namespace JTTF
         public Action<Recipe> onStartCraft = (Recipe) => { /*Debug.Log("OnStartCraft");*/ };
         public Action onCancelCraft = () => { /*Debug.Log("OnCancelCraft");*/ };
         public Action onEndCraft = () => { /*Debug.Log("OnEndCraft");*/ };
-
         public Action<float> onCraft = (float percent) => { /*Debug.Log("OnCraft");*/ };
 
         [SerializeField] RecipeDataBase recipeDataBase = null;
@@ -48,7 +47,7 @@ namespace JTTF
 		}
         void EndCraft()
 		{
-            Player.AddItem(currentRecipe.itemType, currentRecipe.name, currentRecipe.amount);
+            Player.AddItem(currentRecipe.name, currentRecipe.amount, currentRecipe.itemType);
             foreach (var requirement in currentRecipe.requirements)
                 Player.RemoveItem(requirement.name, requirement.amount);
 
@@ -62,7 +61,7 @@ namespace JTTF
         bool CanCraft(Recipe recipe)
 		{
             foreach (var requirement in recipe.requirements)
-                if (Player.HasItem(requirement.name) < requirement.amount)
+                if (!Player.HasItem(requirement.name, requirement.amount))
                     return false; 
 
             return true;

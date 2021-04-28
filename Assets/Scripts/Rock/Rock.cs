@@ -25,7 +25,7 @@ namespace JTTF
 			isHarvested = true;
 			currentCooldown = harvestableCooldown;
 
-			Player.AddItem(ItemType.Resource, stoneName, stoneQuantity);
+			Player.AddItem(stoneName, stoneQuantity, ItemType.Resource);
 
 			modelObject.SetActive(false);
 		}

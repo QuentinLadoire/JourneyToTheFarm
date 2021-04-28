@@ -8,14 +8,13 @@ namespace JTTF
     {
         [SerializeField] InventorySlot[] inventorySlots = null;
 
-        void OnAddItem(ItemContainer itemContainer)
+        void OnAddItem(int index, string name, int amount, ItemType itemType)
 		{
-			if (itemContainer.SlotIndex < Inventory.sizeMax && itemContainer.SlotIndex >= 10)
-				if (itemContainer.Item != null)
-				{
-					inventorySlots[itemContainer.SlotIndex - 10].SetSprite(itemContainer.Item.sprite);
-					inventorySlots[itemContainer.SlotIndex - 10].SetAmount(itemContainer.Amount);
-				}
+			if (index < 10) return;
+
+			var item = GameManager.ItemDataBase.GetItem(itemType, name);
+			inventorySlots[index - 10].SetSprite(item.sprite);
+			inventorySlots[index - 10].SetAmount(amount);
 		}
 
 		void OnInventoryOpen()

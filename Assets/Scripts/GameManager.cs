@@ -40,16 +40,16 @@ namespace JTTF
 			Player.OnCraftingClose += OnGameMenuClose;
 
 
-			Player.AddItem(ItemType.Tool, "Shovel");
-			Player.AddItem(ItemType.SeedBag, "WheatSeedBag");
-			Player.AddItem(ItemType.Tool, "Axe");
-			Player.AddItem(ItemType.Tool, "Pickaxe");
+			Player.AddItem("Shovel", 1, ItemType.Tool);
+			Player.AddItem("WheatSeedBag", 1, ItemType.SeedBag);
+			Player.AddItem("Axe", 1, ItemType.Tool);
+			Player.AddItem("Pickaxe", 1, ItemType.Tool);
 		}
 		private void Update()
 		{
 			if (Input.GetKeyDown(KeyCode.KeypadPlus))
 			{
-				Player.AddItem(ItemType.Resource, "Log", 999);
+				Player.AddItem("Log", 999, ItemType.Resource);
 			}
 		}
 		private void OnDestroy()

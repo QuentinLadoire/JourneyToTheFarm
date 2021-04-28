@@ -93,7 +93,7 @@ namespace JTTF
 		}
         public override void ApplyEffect()
 		{
-            if (Player.AddItem(ItemType.Plant, plantName))
+            if (Player.AddItem(plantName, 1, ItemType.Plant) == 0)
             {
                 IsMature = false;
                 activableImage.SetActive(false);

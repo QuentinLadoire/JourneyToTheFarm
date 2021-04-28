@@ -23,7 +23,7 @@ namespace JTTF
 			foreach (var requirement in recipe.requirements)
 			{
 				str += "\n";
-				str += Player.HasItem(requirement.name).ToString() + " / " + requirement.amount.ToString() + " " + requirement.name;
+				str += Player.HowManyItem(requirement.name).ToString() + " / " + requirement.amount.ToString() + " " + requirement.name;
 			}
 			recipeDescription.SetCraftRequirement(str);
 
@@ -47,8 +47,8 @@ namespace JTTF
 
 		public void Init()
 		{
-			currentRecipe = Player.CraftingController.RecipeDataBase.Recipes[0];
-			foreach (var recipe in Player.CraftingController.RecipeDataBase.Recipes)
+			currentRecipe = Player.CraftingRecipe.Recipes[0];
+			foreach (var recipe in Player.CraftingRecipe.Recipes)
 			{
 				var recipePatern = Instantiate(recipePaternPrefab).GetComponent<RecipeButton>();
 				recipePatern.SetParent(recipeContent.transform, false);

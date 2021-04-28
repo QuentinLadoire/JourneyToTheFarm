@@ -9,21 +9,20 @@ namespace JTTF
 		[SerializeField] InventorySlot[] inventorySlots = null;
 		int selectedSlot = 0;
 
-		void OnAddItem(ItemContainer itemContainer)
+		void OnAddItem(int index, string name, int amount, ItemType itemType)
 		{
-			if (itemContainer.SlotIndex < 10 && itemContainer.SlotIndex >= 0)
-				if (itemContainer.Item != null)
-				{
-					inventorySlots[itemContainer.SlotIndex].SetSprite(itemContainer.Item.sprite);
-					inventorySlots[itemContainer.SlotIndex].SetAmount(itemContainer.Amount);
-				}
+			if (index >= 10) return;
+
+			var item = GameManager.ItemDataBase.GetItem(itemType, name);
+			inventorySlots[index].SetSprite(item.sprite);
+			inventorySlots[index].SetAmount(amount);
 		}
-		void OnScroll(ItemContainer itemContainer)
+		void OnScroll(int index, string name, ItemType itemType)
 		{
 			inventorySlots[selectedSlot].SetSelected(false);
-			inventorySlots[itemContainer.SlotIndex].SetSelected(true);
+			inventorySlots[index].SetSelected(true);
 
-			selectedSlot = itemContainer.SlotIndex;
+			selectedSlot = index;
 		}
 
 		private void Awake()

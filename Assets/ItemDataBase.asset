@@ -67,3 +67,15 @@ MonoBehaviour:
     stackable: 1
     sprite: {fileID: 21300000, guid: 1ae720b7effcbee4ebe74e69a17611d9, type: 3}
     prefab: {fileID: 0}
+  containers:
+  - name: Chest
+    type: 5
+    stackable: 1
+    sprite: {fileID: 21300000, guid: 5955310c16aeb9044a48215cc47ff6e1, type: 3}
+    prefab: {fileID: 0}
+  craftings:
+  - name: Furnace
+    type: 6
+    stackable: 1
+    sprite: {fileID: 21300000, guid: 8cf50a2f43047db4cb23a38abeffe591, type: 3}
+    prefab: {fileID: 0}

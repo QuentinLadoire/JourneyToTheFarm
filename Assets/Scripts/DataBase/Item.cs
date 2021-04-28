@@ -12,7 +12,8 @@ namespace JTTF
 		Seed = 2,
 		Plant = 3,
 		Resource = 4,
-		Container = 5
+		Container = 5,
+		Crafting = 6
 	}
 
 	[System.Serializable]

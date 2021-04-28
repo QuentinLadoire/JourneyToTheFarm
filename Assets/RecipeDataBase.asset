@@ -23,7 +23,7 @@ MonoBehaviour:
     - name: Log
       amount: 5
   - name: Furnace
-    itemType: 5
+    itemType: 6
     icon: {fileID: 21300000, guid: 8cf50a2f43047db4cb23a38abeffe591, type: 3}
     amount: 1
     description: Can cook foods or smelt ores.

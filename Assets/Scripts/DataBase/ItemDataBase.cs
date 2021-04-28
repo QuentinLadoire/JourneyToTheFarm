@@ -12,6 +12,8 @@ namespace JTTF
 		public List<Item> seeds = new List<Item>();
 		public List<Item> plants = new List<Item>();
 		public List<Item> resources = new List<Item>();
+		public List<Item> containers = new List<Item>();
+		public List<Item> craftings = new List<Item>();
 
 		public Item GetTool(string name)
 		{
@@ -53,6 +55,22 @@ namespace JTTF
 
 			return Item.Default;
 		}
+		public Item GetContainer(string name)
+		{
+			foreach (var container in containers)
+				if (container.name == name)
+					return container;
+
+			return Item.Default;
+		}
+		public Item GetCrafting(string name)
+		{
+			foreach (var crafting in craftings)
+				if (crafting.name == name)
+					return crafting;
+
+			return Item.Default;
+		}
 
 		public Item GetItem(ItemType type, string name)
 		{
@@ -63,6 +81,8 @@ namespace JTTF
 				ItemType.Seed => GetSeed(name),
 				ItemType.Plant => GetPlant(name),
 				ItemType.Resource => GetResource(name),
+				ItemType.Container => GetContainer(name),
+				ItemType.Crafting => GetCrafting(name),
 				_ => Item.Default
 			};
 		}

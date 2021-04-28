@@ -34,6 +34,27 @@ namespace JTTF
 			Player.Craft(currentRecipe);
 		}
 
+		void OnAddItem(int index, string name, int amount, ItemType itemType)
+		{
+			string str = "Craft Requirement : ";
+			foreach (var requirement in currentRecipe.requirements)
+			{
+				str += "\n";
+				str += Player.HowManyItem(requirement.name).ToString() + " / " + requirement.amount.ToString() + " " + requirement.name;
+			}
+			recipeDescription.SetCraftRequirement(str);
+		}
+		void OnRemoveItem(int index, string name, int amoutn, ItemType itemType)
+		{
+			string str = "Craft Requirement : ";
+			foreach (var requirement in currentRecipe.requirements)
+			{
+				str += "\n";
+				str += Player.HowManyItem(requirement.name).ToString() + " / " + requirement.amount.ToString() + " " + requirement.name;
+			}
+			recipeDescription.SetCraftRequirement(str);
+		}
+
 		void OnCraftingOpen()
 		{
 			gameObject.SetActive(true);
@@ -60,11 +81,17 @@ namespace JTTF
 
 			Player.OnCraftingOpen += OnCraftingOpen;
 			Player.OnCraftingClose += OnCraftingClose;
+
+			Player.OnAddItem += OnAddItem;
+			Player.OnRemoveItem += OnRemoveItem;
 		}
 		public void Destroy()
 		{
 			Player.OnCraftingOpen -= OnCraftingOpen;
 			Player.OnCraftingClose -= OnCraftingClose;
+
+			Player.OnAddItem -= OnAddItem;
+			Player.OnRemoveItem -= OnRemoveItem;
 		}
 	}
 }

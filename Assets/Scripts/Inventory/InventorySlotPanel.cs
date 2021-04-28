@@ -17,6 +17,14 @@ namespace JTTF
 			inventorySlots[index].SetSprite(item.sprite);
 			inventorySlots[index].SetAmount(amount);
 		}
+		void OnRemoveItem(int index, string name, int amount, ItemType itemType)
+		{
+			if (index >= 10) return;
+
+			inventorySlots[index].SetAmount(amount);
+			if (amount == 0)
+				inventorySlots[index].SetSprite(null);
+		}
 		void OnScroll(int index, string name, ItemType itemType)
 		{
 			inventorySlots[selectedSlot].SetSelected(false);
@@ -28,6 +36,7 @@ namespace JTTF
 		private void Awake()
 		{
 			Player.OnAddItem += OnAddItem;
+			Player.OnRemoveItem += OnRemoveItem;
 			Player.OnScroll += OnScroll;
 		}
 		private void Start()
@@ -37,6 +46,7 @@ namespace JTTF
 		private void OnDestroy()
 		{
 			Player.OnAddItem -= OnAddItem;
+			Player.OnRemoveItem -= OnRemoveItem;
 			Player.OnScroll -= OnScroll;
 		}
 	}

@@ -8,32 +8,31 @@ namespace JTTF
     {
 		[SerializeField] ProgressBar progressBar = null;
 
-        ActivableObject activableObject = null;
-
 		bool isActive = false;
 		float currentDuration = 0.0f;
 
 		CharacterController characterController = null;
 		AnimationController animationController = null;
-		TransportableController transportableController = null;
+
+		IUsable usableObject = null;
 
 		void ActivateItem()
 		{
 			isActive = true;
-			currentDuration = activableObject.duration;
+			currentDuration = usableObject.Duration;
 
 			progressBar.SetVisible(true);
-			activableObject.PlayAnim(animationController);
-			activableObject.Activate();
+			usableObject.PlayAnim(animationController);
+			usableObject.Use();
 		}
 		void DesactivateItem()
 		{
-			activableObject.ApplyEffect();
+			usableObject.ApplyEffect();
 
 			isActive = false;
 			progressBar.SetVisible(false);
-			activableObject.StopAnim(animationController);
-			activableObject.Desactivate();
+			usableObject.StopAnim(animationController);
+			usableObject.Unuse();
 		}
 		void CancelItem()
 		{
@@ -41,44 +40,41 @@ namespace JTTF
 
 			isActive = false;
 			progressBar.SetVisible(false);
-			activableObject.StopAnim(animationController);
-			activableObject.Desactivate();
+			usableObject.StopAnim(animationController);
+			usableObject.Unuse();
 		}
 
-		void OnTransportableObjectChange(TransportableObject transportableObject)
+		void OnHandedObjectChange(GameObject handedObject)
 		{
-			if (activableObject != null)
-				CancelItem();
-
-			if (transportableObject != null)
-				activableObject = transportableObject.GetComponent<ActivableObject>();
+			if (handedObject != null)
+				usableObject = handedObject.GetComponent<IUsable>();
 		}
 
 		void ItemInput()
 		{
 			if (Input.GetButtonDown("UseTool"))
-				if (activableObject != null && characterController.IsIdle && activableObject.IsActivable())
+				if (usableObject != null && characterController.IsIdle && usableObject.IsUsable())
 					ActivateItem();
 		}
 		void UpdateItemDuration()
 		{
-			if (!isActive || activableObject == null) return;
+			if (!isActive || usableObject == null) return;
 
 			if (currentDuration <= 0.0f)
 				DesactivateItem();
 
 			currentDuration -= Time.deltaTime;
-			progressBar.SetPercent( 1 - (currentDuration / activableObject.duration));
+			progressBar.SetPercent( 1 - (currentDuration / usableObject.Duration));
 		}
 
 		private void Awake()
 		{
 			animationController = GetComponent<AnimationController>();
 			characterController = GetComponent<CharacterController>();
-			transportableController = GetComponent<TransportableController>();
 
 			characterController.onMoveEnter += CancelItem;
-			transportableController.onTransportableObjectChange += OnTransportableObjectChange;
+
+			Player.OnHandedObjectChange += OnHandedObjectChange;
 		}
 		private void Update()
 		{
@@ -92,7 +88,8 @@ namespace JTTF
 		private void OnDestroy()
 		{
 			characterController.onMoveEnter -= CancelItem;
-			transportableController.onTransportableObjectChange -= OnTransportableObjectChange;
+
+			Player.OnHandedObjectChange -= OnHandedObjectChange;
 		}
 	}
 }

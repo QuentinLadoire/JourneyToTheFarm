@@ -4,28 +4,31 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedBag : ActivableObject
+	public class SeedBag : SimpleObject, IHandable, IUsable
 	{
+		public float Duration { get => duration; }
+		public float AnimationDuration { get => animationDuration; }
+		public float AnimationMultiplier { get => animationMultiplier; }
+
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] float animationDuration = 0.0f;
+		[SerializeField] float animationMultiplier = 1.0f;
+
 		[Header("SeedBag parameter")]
 		[SerializeField] string seedName = "NoName";
 		[SerializeField] string plantName = "NoName";
 		[SerializeField] float growingDuration = 0.0f;
 		[SerializeField] GameObject seedPreviewPrefab = null;
 
-		TransportableObject transportableObject = null;
-
+		bool isUsed = false;
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
 
 		RaycastHit hit;
 
-		void OnSetHands(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
 		void OnHasMoved(Vector3 position)
 		{
-			if (isActived) return;
+			if (isUsed) return;
 
 			if (seedPreview != null)
 				if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
@@ -34,17 +37,52 @@ namespace JTTF
 					seedPreview.transform.up = hit.normal;
 				}
 
-			if (IsActivable())
+			if (IsUsable())
 				seedPreview.SetBlueMat();
 			else
 				seedPreview.SetRedMat();
 		}
 
+		public void SetHanded(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+		}
+
+		public bool IsUsable()
+		{
+			var colliders = Physics.OverlapBox(seedPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
+			foreach (var collider in colliders)
+				if (collider.CompareTag("FarmPlot"))
+				{
+					farmPlot = collider.GetComponent<FarmPlot>();
+					return !farmPlot.HasSeed;
+				}
+
+			return false;
+		}
+		public void Use()
+		{
+			isUsed = true;
+		}
+		public void Unuse()
+		{
+			isUsed = false;
+		}
+		public void ApplyEffect()
+		{
+			farmPlot.SetSeed(seedName, growingDuration, plantName);
+		}
+		public void PlayAnim(AnimationController animationController)
+		{
+			animationController.CharacterPlantAPlant(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
+		}
+		public void StopAnim(AnimationController animationController)
+		{
+			animationController.CharacterPlantAPlant(false);
+		}
+
 		private void Awake()
 		{
-			transportableObject = GetComponent<TransportableObject>();
-			transportableObject.onSetHands += OnSetHands;
-
 			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
 			OnHasMoved(Player.RoundPosition);
 		}
@@ -57,33 +95,7 @@ namespace JTTF
 			if (seedPreview != null)
 				Destroy(seedPreview.gameObject);
 
-			transportableObject.onSetHands -= OnSetHands;
 			Player.OnHasMoved -= OnHasMoved;
-		}
-
-		public override bool IsActivable()
-		{
-			var colliders = Physics.OverlapBox(seedPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
-			foreach (var collider in colliders)
-				if (collider.CompareTag("FarmPlot"))
-				{
-					farmPlot = collider.GetComponent<FarmPlot>();
-					return !farmPlot.HasSeed;
-				}
-
-			return false;
-		}
-		public override void ApplyEffect()
-		{
-			farmPlot.SetSeed(seedName, growingDuration, plantName);
-		}
-		public override void PlayAnim(AnimationController animationController)
-		{
-			animationController.CharacterPlantAPlant(true, GetDesiredAnimationSpeed());
-		}
-		public override void StopAnim(AnimationController animationController)
-		{
-			animationController.CharacterPlantAPlant(false);
 		}
 	}
 }

@@ -4,28 +4,25 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmPickaxe : ActivableObject
+	public class FarmPickaxe : SimpleObject, IHandable, IUsable
 	{
-		TransportableObject transportableObject = null;
+		public float Duration { get => duration; }
+		public float AnimationDuration { get => animationDuration; }
+		public float AnimationMultiplier { get => animationMultiplier; }
 
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] float animationDuration = 0.0f;
+		[SerializeField] float animationMultiplier = 1.0f;
+
+		bool isUsed = false;
 		Rock rock = null;
 
-		private void Awake()
-		{
-			transportableObject = GetComponent<TransportableObject>();
-			transportableObject.onSetHands += OnSetHand;
-		}
-		private void OnDestroy()
-		{
-			transportableObject.onSetHands -= OnSetHand;
-		}
-
-		void OnSetHand(Transform rightHand, Transform leftHand)
+		public void SetHanded(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 		}
 
-		public override bool IsActivable()
+		public bool IsUsable()
 		{
 			RaycastHit hit;
 			if (Physics.Raycast(Player.Position + new Vector3(0.0f, 0.2f, 0.0f), Player.Forward, out hit, 0.7f))
@@ -37,16 +34,24 @@ namespace JTTF
 
 			return false;
 		}
-		public override void ApplyEffect()
+		public void Use()
+		{
+			isUsed = true;
+		}
+		public void Unuse()
+		{
+			isUsed = true;
+		}
+		public void ApplyEffect()
 		{
 			if (rock != null)
 				rock.Harvest();
 		}
-		public override void PlayAnim(AnimationController animationController)
+		public void PlayAnim(AnimationController animationController)
 		{
-			animationController.CharacterMining(true, GetDesiredAnimationSpeed());
+			animationController.CharacterMining(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
 		}
-		public override void StopAnim(AnimationController animationController)
+		public void StopAnim(AnimationController animationController)
 		{
 			animationController.CharacterMining(false);
 		}

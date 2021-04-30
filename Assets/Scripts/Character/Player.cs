@@ -22,6 +22,9 @@ namespace JTTF
 		//CharacterController
 		public static Action<Vector3> OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
+		//HandController
+		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }
+
 		//Inventory
 		public static Action<int, string, int, ItemType> OnAddItem { get => instance.inventory.onAddItem; set => instance.inventory.onAddItem = value; }
 		public static Action<int, string, int, ItemType> OnRemoveItem { get => instance.inventory.onRemoveItem; set => instance.inventory.onRemoveItem = value; }
@@ -80,6 +83,7 @@ namespace JTTF
 
 
 		CharacterController characterController = null;
+		HandController handController = null;
 		InventoryController inventoryController = null;
 		CraftingController craftingController = null;
 		Inventory inventory = null;
@@ -91,6 +95,7 @@ namespace JTTF
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
+			handController = GetComponent<HandController>();
 			inventoryController = GetComponent<InventoryController>();
 			craftingController = GetComponent<CraftingController>();
 			inventory = GetComponent<Inventory>();

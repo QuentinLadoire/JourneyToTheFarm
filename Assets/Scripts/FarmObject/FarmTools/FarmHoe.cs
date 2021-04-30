@@ -4,27 +4,74 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class FarmHoe : ActivableObject
+	public class FarmHoe : SimpleObject, IHandable, IUsable
 	{
+		public float Duration { get => duration; }
+		public float AnimationDuration { get => animationDuration; }
+		public float AnimationMultiplier { get => animationMultiplier; }
+
+		[Header("Animation Parameter")]
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] float animationDuration = 0.0f;
+		[SerializeField] float animationMultiplier = 1.0f;
+
 		[Header("FarmHoe Parameter")]
 		[SerializeField] GameObject farmPlotPrefab = null;
 		[SerializeField] GameObject farmPlotPreviewPrefab = null;
 
-		TransportableObject transportableObject = null;
 		Transform leftHandTransform = null;
-
 		PreviewObject farmPlotPreview = null;
 
+
+		bool isUsed = false;
 		RaycastHit hit;
 
-		void OnSetHands(Transform rightHand, Transform leftHand)
+		public void SetHanded(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 			leftHandTransform = leftHand;
 		}
+
+		public bool IsUsable()
+		{
+			if (hit.collider != null && hit.collider.CompareTag("Ground"))
+			{
+				var colliders = Physics.OverlapBox(farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
+				foreach (var collider in colliders)
+					if (collider.CompareTag("Obstacle") || collider.CompareTag("FarmPlot"))
+						return false;
+
+				return true;
+			}
+
+			return false;
+		}
+		public void Use()
+		{
+			isUsed = true;
+		}
+		public void Unuse()
+		{
+			isUsed = false;
+		}
+		public void ApplyEffect()
+		{
+			var farmPlot = Instantiate(farmPlotPrefab);
+			farmPlot.transform.position = farmPlotPreview.transform.position;
+		}
+
+		public void PlayAnim(AnimationController animationController)
+		{
+			animationController.CharacterDiggingAnim(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
+		}
+		public void StopAnim(AnimationController animationController)
+		{
+			animationController.CharacterDiggingAnim(false);
+		}
+
 		void OnHasMoved(Vector3 position)
 		{
-			if (isActived) return;
+			if (isUsed) return;
 
 			if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
 			{
@@ -32,7 +79,7 @@ namespace JTTF
 				farmPlotPreview.transform.up = hit.normal;
 			}
 
-			if (IsActivable())
+			if (IsUsable())
 				farmPlotPreview.SetBlueMat();
 			else
 				farmPlotPreview.SetRedMat();
@@ -40,9 +87,6 @@ namespace JTTF
 
 		private void Awake()
 		{
-			transportableObject = GetComponent<TransportableObject>();
-			transportableObject.onSetHands += OnSetHands;
-
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 			OnHasMoved(Player.RoundPosition);
 		}
@@ -60,36 +104,7 @@ namespace JTTF
 			if (farmPlotPreview != null)
 				Destroy(farmPlotPreview.gameObject);
 
-			transportableObject.onSetHands -= OnSetHands;
 			Player.OnHasMoved -= OnHasMoved;
-		}
-
-		public override bool IsActivable()
-		{
-			if (hit.collider != null && hit.collider.CompareTag("Ground"))
-			{
-				var colliders = Physics.OverlapBox(farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
-				foreach (var collider in colliders)
-					if (collider.CompareTag("Obstacle") || collider.CompareTag("FarmPlot"))
-						return false;
-
-				return true;
-			}
-
-			return false;
-		}
-		public override void ApplyEffect()
-		{
-			var farmPlot = Instantiate(farmPlotPrefab);
-			farmPlot.transform.position = farmPlotPreview.transform.position;
-		}
-		public override void PlayAnim(AnimationController animationController)
-		{
-			animationController.CharacterDiggingAnim(true, GetDesiredAnimationSpeed());
-		}
-		public override void StopAnim(AnimationController animationController)
-		{
-			animationController.CharacterDiggingAnim(false);
 		}
 	}
 }

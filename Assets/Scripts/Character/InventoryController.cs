@@ -58,6 +58,10 @@ namespace JTTF
 		{
 			inventory = GetComponent<Inventory>();
 		}
+		private void Start()
+		{
+			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex));
+		}
 		private void Update()
 		{
 			OpeningInput();

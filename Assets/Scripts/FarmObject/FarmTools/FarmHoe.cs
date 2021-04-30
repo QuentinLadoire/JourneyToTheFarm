@@ -22,8 +22,6 @@ namespace JTTF
 		Transform leftHandTransform = null;
 		PreviewObject farmPlotPreview = null;
 
-
-		bool isUsed = false;
 		RaycastHit hit;
 
 		public void SetHanded(Transform rightHand, Transform leftHand)
@@ -48,14 +46,6 @@ namespace JTTF
 		}
 		public void Use()
 		{
-			isUsed = true;
-		}
-		public void Unuse()
-		{
-			isUsed = false;
-		}
-		public void ApplyEffect()
-		{
 			var farmPlot = Instantiate(farmPlotPrefab);
 			farmPlot.transform.position = farmPlotPreview.transform.position;
 		}
@@ -71,8 +61,6 @@ namespace JTTF
 
 		void OnHasMoved(Vector3 position)
 		{
-			if (isUsed) return;
-
 			if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
 			{
 				farmPlotPreview.transform.position = hit.point;

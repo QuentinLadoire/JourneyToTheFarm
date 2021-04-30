@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class ActivableController : MonoBehaviour
+    public class UsableController : MonoBehaviour
     {
 		[SerializeField] ProgressBar progressBar = null;
 
@@ -16,23 +16,21 @@ namespace JTTF
 
 		IUsable usableObject = null;
 
-		void ActivateItem()
+		void UseItem()
 		{
 			isActive = true;
 			currentDuration = usableObject.Duration;
 
 			progressBar.SetVisible(true);
 			usableObject.PlayAnim(animationController);
-			usableObject.Use();
 		}
-		void DesactivateItem()
+		void UnuseItem()
 		{
-			usableObject.ApplyEffect();
+			usableObject.Use();
 
 			isActive = false;
 			progressBar.SetVisible(false);
 			usableObject.StopAnim(animationController);
-			usableObject.Unuse();
 		}
 		void CancelItem()
 		{
@@ -41,7 +39,6 @@ namespace JTTF
 			isActive = false;
 			progressBar.SetVisible(false);
 			usableObject.StopAnim(animationController);
-			usableObject.Unuse();
 		}
 
 		void OnHandedObjectChange(GameObject handedObject)
@@ -50,23 +47,23 @@ namespace JTTF
 				usableObject = handedObject.GetComponent<IUsable>();
 		}
 
-		void ItemInput()
+		void ProcessInput()
 		{
 			if (Input.GetButtonDown("UseTool"))
 				if (usableObject != null && characterController.IsIdle && usableObject.IsUsable())
-					ActivateItem();
+					UseItem();
 		}
 		void UpdateItemDuration()
 		{
 			if (!isActive || usableObject == null) return;
 
 			if (currentDuration <= 0.0f)
-				DesactivateItem();
+				UnuseItem();
 
 			currentDuration -= Time.deltaTime;
 			progressBar.SetPercent( 1 - (currentDuration / usableObject.Duration));
 		}
-
+		
 		private void Awake()
 		{
 			animationController = GetComponent<AnimationController>();
@@ -80,7 +77,7 @@ namespace JTTF
 		{
 			if (Player.HasControl)
 			{
-				ItemInput();
+				ProcessInput();
 
 				UpdateItemDuration();
 			}

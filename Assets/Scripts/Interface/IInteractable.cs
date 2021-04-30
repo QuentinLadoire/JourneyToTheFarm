@@ -4,14 +4,17 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public interface IUsable
+    public interface IInteractable
     {
         public float Duration { get; }
         public float AnimationDuration { get; }
         public float AnimationMultiplier { get; }
 
-        public bool IsUsable();
-        public void Use();
+        public void Select();
+        public void Deselect();
+
+        public bool IsInteractable();
+        public void Interact();
 
         public void PlayAnim(AnimationController animationController);
         public void StopAnim(AnimationController animationController);

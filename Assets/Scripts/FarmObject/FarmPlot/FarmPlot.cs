@@ -4,10 +4,18 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class FarmPlot : SelectableObject
+    public class FarmPlot : SimpleObject, IInteractable
     {
+        public float Duration { get => duration; }
+        public float AnimationDuration { get => animationDuration; }
+        public float AnimationMultiplier { get => animationMultiplier; }
+
         public bool HasSeed { get; private set; } = false;
         public bool IsMature { get; private set; } = false;
+
+        [SerializeField] float duration = 0.0f;
+        [SerializeField] float animationDuration = 0.0f;
+        [SerializeField] float animationMultiplier = 1.0f;
 
         [SerializeField] ProgressBar progressBar = null;
         [SerializeField] GameObject activableImage = null;
@@ -72,26 +80,20 @@ namespace JTTF
                 SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step3").prefab);
         }
 
-		private void Update()
-		{
-            if (!HasSeed) return;
-
-            UpdateGrowingDuration();
-		}
-
-		public override void Select()
+		public void Select()
 		{
             activableImage.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
 		}
-		public override void Deselect()
+		public void Deselect()
 		{
             activableImage.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		}
-		public override bool IsActivable()
+
+		public bool IsInteractable()
 		{
             return IsMature;
 		}
-        public override void ApplyEffect()
+        public void Interact()
 		{
             if (Player.AddItem(plantName, 1, ItemType.Plant) == 0)
             {
@@ -106,13 +108,21 @@ namespace JTTF
                     Destroy(seedObject);
             }
 		}
-        public override void PlayAnim(AnimationController animationController)
+
+        public void PlayAnim(AnimationController animationController)
 		{
-            animationController.CharacterPickUp(true, GetDesiredAnimationSpeed());
+            animationController.CharacterPickUp(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
 		}
-        public override void StopAnim(AnimationController animationController)
+        public void StopAnim(AnimationController animationController)
 		{
             animationController.CharacterPickUp(false);
         }
+
+		private void Update()
+		{
+            if (!HasSeed) return;
+
+            UpdateGrowingDuration();
+		}
     }
 }

@@ -14,7 +14,6 @@ namespace JTTF
 		[SerializeField] float animationDuration = 0.0f;
 		[SerializeField] float animationMultiplier = 1.0f;
 
-		bool isUsed = false;
 		Rock rock = null;
 
 		public void SetHanded(Transform rightHand, Transform leftHand)
@@ -35,14 +34,6 @@ namespace JTTF
 			return false;
 		}
 		public void Use()
-		{
-			isUsed = true;
-		}
-		public void Unuse()
-		{
-			isUsed = true;
-		}
-		public void ApplyEffect()
 		{
 			if (rock != null)
 				rock.Harvest();

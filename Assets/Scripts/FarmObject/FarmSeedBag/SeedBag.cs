@@ -20,7 +20,6 @@ namespace JTTF
 		[SerializeField] float growingDuration = 0.0f;
 		[SerializeField] GameObject seedPreviewPrefab = null;
 
-		bool isUsed = false;
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
 
@@ -28,8 +27,6 @@ namespace JTTF
 
 		void OnHasMoved(Vector3 position)
 		{
-			if (isUsed) return;
-
 			if (seedPreview != null)
 				if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
 				{
@@ -62,16 +59,9 @@ namespace JTTF
 		}
 		public void Use()
 		{
-			isUsed = true;
-		}
-		public void Unuse()
-		{
-			isUsed = false;
-		}
-		public void ApplyEffect()
-		{
 			farmPlot.SetSeed(seedName, growingDuration, plantName);
 		}
+
 		public void PlayAnim(AnimationController animationController)
 		{
 			animationController.CharacterPlantAPlant(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));

@@ -16,8 +16,6 @@ namespace JTTF
 
 		Tree tree = null;
 
-		bool isUsed = false;
-
 		public void SetHanded(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
@@ -36,14 +34,6 @@ namespace JTTF
 			return false;
 		}
 		public void Use()
-		{
-			isUsed = true;
-		}
-		public void Unuse()
-		{
-			isUsed = false;
-		}
-		public void ApplyEffect()
 		{
 			if (tree != null)
 				tree.Harvest();

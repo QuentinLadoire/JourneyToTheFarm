@@ -20,6 +20,8 @@ namespace JTTF
 		public static RecipeDataBase CraftingRecipe { get => instance.craftingController.RecipeDataBase; }
 
 		//CharacterController
+		public static Action OnMoveEnter { get => instance.characterController.onMoveEnter; set => instance.characterController.onMoveEnter = value; }
+		public static Action OnMoveExit { get => instance.characterController.onMoveExit; set => instance.characterController.onMoveExit = value; }
 		public static Action<Vector3> OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
 		//HandController

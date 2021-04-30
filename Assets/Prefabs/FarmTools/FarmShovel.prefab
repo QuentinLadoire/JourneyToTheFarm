@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 617178128329146585}
-  - component: {fileID: 1985255230078145649}
   - component: {fileID: 3398016307462767066}
   m_Layer: 0
   m_Name: FarmShovel
@@ -33,18 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1985255230078145649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617178128329146584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee7a9d176cc1a747a38b0337045425f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3398016307462767066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 2
   animationDuration: 4.8
+  animationMultiplier: 1
   farmPlotPrefab: {fileID: 6047203369850023488, guid: f31b79a01f216f148ab646c588ae0a13, type: 3}
   farmPlotPreviewPrefab: {fileID: 6047203369850023488, guid: ec33b840162ecfc4b92a72fb1fa88e82, type: 3}
 --- !u!1001 &1270319643922252682

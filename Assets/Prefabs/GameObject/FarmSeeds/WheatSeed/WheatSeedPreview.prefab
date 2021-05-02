@@ -62,8 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204cd8bebdde42243b14b5f4ee730b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueMat: {fileID: 2100000, guid: 5a4bf8ecd4716504d88c128bfec56535, type: 2}
-  redMat: {fileID: 2100000, guid: 6bacc339f3b7984459628bbd27c0c0d8, type: 2}
+  blueColor: {r: 0, g: 0.9019608, b: 1, a: 1}
+  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &466463023
 PrefabInstance:
   m_ObjectHideFlags: 0

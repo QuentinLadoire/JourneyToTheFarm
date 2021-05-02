@@ -35,9 +35,9 @@ namespace JTTF
 				}
 
 			if (IsUsable())
-				seedPreview.SetBlueMat();
+				seedPreview.SetBlueColor();
 			else
-				seedPreview.SetRedMat();
+				seedPreview.SetRedColor();
 		}
 
 		public void SetHanded(Transform rightHand, Transform leftHand)

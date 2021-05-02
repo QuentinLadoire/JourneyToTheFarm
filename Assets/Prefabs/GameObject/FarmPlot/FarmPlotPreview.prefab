@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueMat: {fileID: 2100000, guid: 5a4bf8ecd4716504d88c128bfec56535, type: 2}
   redMat: {fileID: 2100000, guid: 6bacc339f3b7984459628bbd27c0c0d8, type: 2}
+  blueColor: {r: 0, g: 0.9019608, b: 1, a: 1}
+  redColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &4423195540901202573
 PrefabInstance:
   m_ObjectHideFlags: 0

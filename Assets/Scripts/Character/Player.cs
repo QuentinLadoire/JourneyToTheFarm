@@ -12,6 +12,7 @@ namespace JTTF
 		public static Vector3 Position { get => instance.transform.position; }
 		public static Vector3 Forward { get => instance.transform.forward; }
 		public static Vector3 RoundPosition { get => instance.characterController.RoundPosition; }
+		public static Vector3 RoundForward { get => instance.transform.forward.RoundToInt(); }
 
 		public static bool HasControl { get => instance.hasControl; }
 		public static Action OnActiveControl { get => instance.onActiveControl; set => instance.onActiveControl = value; }

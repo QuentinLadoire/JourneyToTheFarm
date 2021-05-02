@@ -68,9 +68,9 @@ namespace JTTF
 			}
 
 			if (IsUsable())
-				farmPlotPreview.SetBlueMat();
+				farmPlotPreview.SetBlueColor();
 			else
-				farmPlotPreview.SetRedMat();
+				farmPlotPreview.SetRedColor();
 		}
 
 		private void Awake()

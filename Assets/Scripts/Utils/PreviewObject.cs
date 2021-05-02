@@ -4,22 +4,22 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class PreviewObject : MonoBehaviour
+	public class PreviewObject : SimpleObject
 	{
-		[SerializeField] Material blueMat = null;
-		[SerializeField] Material redMat = null;
+		[SerializeField] Color blueColor = new Color(230, 255, 255);
+		[SerializeField] Color redColor = Color.red;
 
 		MeshRenderer[] meshRenderers = null;
 
-		public void SetBlueMat()
+		public void SetBlueColor()
 		{
 			foreach (var renderer in meshRenderers)
-				renderer.material.color = blueMat.color;
+				renderer.material.color = blueColor;
 		}
-		public void SetRedMat()
+		public void SetRedColor()
 		{
 			foreach (var renderer in meshRenderers)
-				renderer.material.color = redMat.color;
+				renderer.material.color = redColor;
 		}
 		public void SetVisible(bool value)
 		{

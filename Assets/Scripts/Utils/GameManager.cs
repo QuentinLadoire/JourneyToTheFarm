@@ -44,6 +44,7 @@ namespace JTTF
 			Player.AddItem("WheatSeedBag", 1, ItemType.SeedBag);
 			Player.AddItem("Axe", 1, ItemType.Tool);
 			Player.AddItem("Pickaxe", 1, ItemType.Tool);
+			Player.AddItem("Chest", 1, ItemType.Container);
 		}
 		private void Update()
 		{

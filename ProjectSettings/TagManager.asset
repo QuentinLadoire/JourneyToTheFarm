@@ -9,6 +9,7 @@ TagManager:
   - SeedBag
   - Ground
   - Obstacle
+  - Constructible
   layers:
   - Default
   - TransparentFX
@@ -16,13 +17,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Road
+  - Rock
+  - Tree
+  - Pebble
+  - Grass
+  - Hill
   - 
   - 
   - 

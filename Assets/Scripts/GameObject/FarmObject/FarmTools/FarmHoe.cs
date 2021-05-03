@@ -59,9 +59,9 @@ namespace JTTF
 			animationController.CharacterDiggingAnim(false);
 		}
 
-		void OnHasMoved(Vector3 position)
+		void OnHasMoved()
 		{
-			if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
 			{
 				farmPlotPreview.transform.position = hit.point;
 				farmPlotPreview.transform.up = hit.normal;
@@ -76,7 +76,7 @@ namespace JTTF
 		private void Awake()
 		{
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
-			OnHasMoved(Player.RoundPosition);
+			OnHasMoved();
 		}
 		private void Start()
 		{

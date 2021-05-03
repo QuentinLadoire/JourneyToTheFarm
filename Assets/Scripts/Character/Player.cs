@@ -23,7 +23,7 @@ namespace JTTF
 		//CharacterController
 		public static Action OnMoveEnter { get => instance.characterController.onMoveEnter; set => instance.characterController.onMoveEnter = value; }
 		public static Action OnMoveExit { get => instance.characterController.onMoveExit; set => instance.characterController.onMoveExit = value; }
-		public static Action<Vector3> OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
+		public static Action OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
 		//HandController
 		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }
@@ -35,7 +35,7 @@ namespace JTTF
 		//InventoryController
 		public static Action OnInventoryOpen { get => instance.inventoryController.onOpen; set => instance.inventoryController.onOpen = value; }
 		public static Action OnInventoryClose { get => instance.inventoryController.onClose; set => instance.inventoryController.onClose = value; }
-		public static Action<int, string, ItemType> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
+		public static Action<int, string, ItemType, int> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
 
 		//CraftingController
 		public static Action OnCraftingOpen { get => instance.craftingController.onOpen; set => instance.craftingController.onOpen = value; }

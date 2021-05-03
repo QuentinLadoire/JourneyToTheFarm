@@ -10,7 +10,7 @@ namespace JTTF
 		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
 		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
 		public Action<Vector3> onMove = (Vector3) => { /*Debug.Log("OnMovement");*/ };
-		public Action<Vector3> onHasMoved = (Vector3) => { /*Debug.Log("HasMove");*/ };
+		public Action onHasMoved = () => { /*Debug.Log("HasMove");*/ };
 
 		public Vector3 RoundPosition { get; private set; } = Vector3.zero;
 		public bool IsIdle { get; private set; } = true;
@@ -38,7 +38,7 @@ namespace JTTF
 			Vector3 previousRoundPosition = new Vector3(Mathf.RoundToInt(previousPosition.x), Mathf.RoundToInt(previousPosition.y), Mathf.RoundToInt(previousPosition.z));
 			RoundPosition = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
 			if (previousRoundPosition != RoundPosition)
-				onHasMoved.Invoke(RoundPosition);
+				onHasMoved.Invoke();
 
 			previousPosition = transform.position;
 		}

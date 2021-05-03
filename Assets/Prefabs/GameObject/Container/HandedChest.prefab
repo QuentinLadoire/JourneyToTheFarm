@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d220efd0c17c63418e2eab9b64587ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 1
+  animationDuration: 2.567
+  animationMultiplier: 1
   chestPrefab: {fileID: 3487159894583205711, guid: 556331b949d45034283cd7ba03018e92, type: 3}
   chestPreviewPrefab: {fileID: 3487159894583205711, guid: 10782866239e93e4c976e0c6bd4faead, type: 3}
 --- !u!1001 &3103179471920222240

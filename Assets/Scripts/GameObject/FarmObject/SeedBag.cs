@@ -25,10 +25,10 @@ namespace JTTF
 
 		RaycastHit hit;
 
-		void OnHasMoved(Vector3 position)
+		void OnHasMoved()
 		{
 			if (seedPreview != null)
-				if (Physics.Raycast(position + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
+				if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
 				{
 					seedPreview.transform.position = hit.point;
 					seedPreview.transform.up = hit.normal;
@@ -74,7 +74,7 @@ namespace JTTF
 		private void Awake()
 		{
 			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
-			OnHasMoved(Player.RoundPosition);
+			OnHasMoved();
 		}
 		private void Start()
 		{

@@ -25,7 +25,7 @@ namespace JTTF
 			if (amount == 0)
 				inventorySlots[index].SetSprite(null);
 		}
-		void OnScroll(int index, string name, ItemType itemType)
+		void OnScroll(int index, string name, ItemType itemType, int amount)
 		{
 			inventorySlots[selectedSlot].SetSelected(false);
 			inventorySlots[index].SetSelected(true);

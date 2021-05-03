@@ -60,5 +60,17 @@ namespace JTTF
 			animator.SetBool("IsMine", value);
 			animator.speed = speed;
 		}
+		public void CharacterOpening(bool value, float speed = 1.0f)
+		{
+			if (animator == null) { Debug.LogError("Animator is Null"); return; }
+			animator.SetBool("IsOpen", value);
+			animator.speed = speed;
+		}
+		public void CharacterPlacing(bool value, float speed = 1.0f)
+		{
+			if (animator == null) { Debug.LogError("Animator is Null"); return; }
+			animator.SetBool("IsPlace", value);
+			animator.speed = speed;
+		}
 	}
 }

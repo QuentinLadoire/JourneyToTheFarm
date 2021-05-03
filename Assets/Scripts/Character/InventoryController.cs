@@ -10,7 +10,7 @@ namespace JTTF
 		public Action onOpen = () => { /*Debug.Log("OnOpen");*/ };
 		public Action onClose = () => { /*Debug.Log("OnClose");*/ };
 
-		public Action<int, string, ItemType> onScroll = (int index, string itemName, ItemType itemType) => { /*Debug.Log("OnScroll");*/ };
+		public Action<int, string, ItemType, int> onScroll = (int index, string itemName, ItemType itemType, int amount) => { /*Debug.Log("OnScroll");*/ };
 
 		int shortcutIndex = 0;
 		bool isOpen = false;
@@ -23,7 +23,7 @@ namespace JTTF
 			if (shortcutIndex == -1)
 				shortcutIndex = 9;
 
-			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex));
+			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex), inventory.GetItemAmount(shortcutIndex));
 		}
 		void ScrollDown()
 		{
@@ -31,7 +31,7 @@ namespace JTTF
 			if (shortcutIndex == 10)
 				shortcutIndex = 0;
 
-			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex));
+			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex), inventory.GetItemAmount(shortcutIndex));
 		}
 		void ScrollInput()
 		{
@@ -60,7 +60,7 @@ namespace JTTF
 		}
 		private void Start()
 		{
-			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex));
+			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex), inventory.GetItemAmount(shortcutIndex));
 		}
 		private void Update()
 		{

@@ -12,6 +12,15 @@ namespace JTTF
 
 		[SerializeField] ItemDataBase itemDataBase = null;
 
+		public static int GetConstructiblRaycastMask()
+		{
+			return LayerMask.GetMask("Ground", "Road", "Rock", "Tree", "Hill");
+		}
+		public static int GetConstructibleOverlapMask()
+		{
+			return LayerMask.GetMask("Road", "Rock", "Tree", "Pebble", "Grass", "Hill");
+		}
+
 		void OnGameMenuOpen()
 		{
 			Cursor.lockState = CursorLockMode.Confined;

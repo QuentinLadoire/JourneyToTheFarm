@@ -98,6 +98,10 @@ namespace JTTF
 		{
 			return slots[index].ItemType;
 		}
+		public int GetItemAmount(int index)
+		{
+			return slots[index].Amount;
+		}
 
 		int GetEmptySlotIndex()
 		{
@@ -150,10 +154,10 @@ namespace JTTF
 		void RemoveItemAt(int index, int amount)
 		{
 			slots[index].Amount -= amount;
-			if (slots[index].Amount < 0)
-				slots[index].Amount = 0;
-
-			onRemoveItem.Invoke(index, slots[index].ItemName, slots[index].Amount, slots[index].ItemType);
+			if (slots[index].Amount <= 0)
+				ClearItemAt(index);
+			else
+				onRemoveItem.Invoke(index, slots[index].ItemName, slots[index].Amount, slots[index].ItemType);
 		}
 
 		void SwapItem(int index1, int index2)

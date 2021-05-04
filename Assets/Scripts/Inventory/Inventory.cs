@@ -19,12 +19,13 @@ namespace JTTF
 
 	public class Inventory : MonoBehaviour
 	{
-		public const int sizeMax = 40;
-
 		public Action<int, string, int, ItemType> onAddItem = (int index, string name, int amount, ItemType itemType) => { /*Debug.Log("OnAddItem");*/ };
 		public Action<int, string, int, ItemType> onRemoveItem = (int index, string name, int amount, ItemType itemType) => { /*Debug.Log("OnRemoveItem");*/ };
 
-		readonly ItemContainer[] slots = new ItemContainer[sizeMax];
+		public ItemContainer[] Slots => slots;
+
+		public int sizeMax = 40;
+		ItemContainer[] slots = null;
 
 		public int AddItem(string name, int amount, ItemType itemType)
 		{
@@ -169,6 +170,7 @@ namespace JTTF
 
 		private void Awake()
 		{
+			slots = new ItemContainer[sizeMax];
 			for (int i = 0; i < sizeMax; i++)
 				slots[i] = new ItemContainer();
 		}

@@ -25,6 +25,8 @@ namespace JTTF
 		public static Action OnMoveExit { get => instance.characterController.onMoveExit; set => instance.characterController.onMoveExit = value; }
 		public static Action OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
+		public static bool IsIdle => instance.characterController.IsIdle;
+
 		//HandController
 		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }
 

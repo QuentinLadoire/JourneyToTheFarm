@@ -14,12 +14,12 @@ namespace JTTF
 		[SerializeField] float animationDuration = 0.0f;
 		[SerializeField] float animationMultipler = 1.0f;
 
-		[SerializeField] GameObject chestLid = null;
 		[SerializeField] GameObject interactableImage = null;
 
+		bool isOpen = false;
+
 		Inventory inventory = null;
-		Coroutine openingCoroutine = null;
-		Coroutine closingCoroutine = null;
+		Animator animator = null;
 
 		public bool IsInteractable()
 		{
@@ -35,67 +35,50 @@ namespace JTTF
 		{
 			if (interactableImage != null)
 				interactableImage.SetActive(false);
+
+			if (isOpen)
+				CloseChest();
 		}
 		public void Interact()
 		{
-			OpenInventory();
+			OpenChest();
 		}
 
 		public void PlayAnim(AnimationController animationController)
 		{
-			LaunchOpeningAnim(animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultipler));
+			animationController.CharacterOpening(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultipler));
+
+			PlayOpenChestAnim();
 		}
 		public void StopAnim(AnimationController animationController)
 		{
-			LaunchClosingAnim(animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultipler));
+			animationController.CharacterOpening(false);
 		}
 
-		IEnumerator OpeningAnimation(float speed)
+		void PlayOpenChestAnim()
 		{
-			while (transform.eulerAngles.x > -55.0f)
-			{
-				float angle = chestLid.transform.eulerAngles.x + Time.deltaTime * speed;
-				chestLid.transform.eulerAngles -= new Vector3(angle, 0.0f, 0.0f);
-
-				yield return null;
-			}
+			animator.SetBool("IsOpen", true);
 		}
-		IEnumerator ClosingAnimation(float speed)
+		void PlayCloseChestAnim()
 		{
-			while (transform.eulerAngles.x < 0.0f)
-			{
-				float angle = chestLid.transform.eulerAngles.x + Time.deltaTime * speed;
-				chestLid.transform.eulerAngles += new Vector3(angle, 0.0f, 0.0f);
-
-				yield return null;
-			}
+			animator.SetBool("IsOpen", false);
 		}
 
-		void LaunchOpeningAnim(float speed)
+		void OpenChest()
 		{
-			if (closingCoroutine != null)
-				StopCoroutine(closingCoroutine);
-
-			if (openingCoroutine == null)
-				openingCoroutine = StartCoroutine(OpeningAnimation(speed));
+			isOpen = true;
 		}
-		void LaunchClosingAnim(float speed)
+		void CloseChest()
 		{
-			if (openingCoroutine != null)
-				StopCoroutine(openingCoroutine);
-
-			if (closingCoroutine == null)
-				closingCoroutine = StartCoroutine(ClosingAnimation(speed));
-		}
-
-		void OpenInventory()
-		{
-			Debug.Log("OpenInventory");
+			Debug.Log("CloseChest");
+			isOpen = false;
+			PlayCloseChestAnim();
 		}
 
 		private void Awake()
 		{
 			inventory = GetComponent<Inventory>();
+			animator = GetComponent<Animator>();
 		}
 	}
 }

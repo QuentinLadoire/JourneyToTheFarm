@@ -63,6 +63,8 @@ namespace JTTF
 
         void CheckHasNearestInteractableObject()
 		{
+            if (isInteracted) return;
+
             IInteractable nearestInteractable = null;
             float nearestSqrtDistance = 0.0f;
 
@@ -81,18 +83,21 @@ namespace JTTF
 				}
 			}
 
-            if (interactableObject != null)
-                interactableObject.Deselect();
+            if (interactableObject != nearestInteractable)
+            {
+                if (interactableObject != null)
+                    interactableObject.Deselect();
 
-            interactableObject = nearestInteractable;
+                interactableObject = nearestInteractable;
 
-            if (interactableObject != null)
-                interactableObject.Select();
+                if (interactableObject != null)
+                    interactableObject.Select();
+            }
         }
         void ProcessInput()
 		{
             if (Input.GetButton("Interact"))
-                if (interactableObject != null && interactableObject.IsInteractable())
+                if (interactableObject != null && Player.IsIdle && interactableObject.IsInteractable())
                     StartInteraction();
         }
         void UpdateDuration()

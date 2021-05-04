@@ -23,18 +23,29 @@ namespace JTTF
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
 
-		RaycastHit hit;
+		bool IsPlantable()
+		{
+			RaycastHit hit;
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out hit, 5.0f, GameManager.GetPlantableRaycastMask()))
+			{
+				farmPlot = hit.collider.GetComponent<FarmPlot>();
+				if (farmPlot != null)
+					return !farmPlot.HasSeed;
+			}
+
+			return false;
+		}
 
 		void OnHasMoved()
 		{
-			if (seedPreview != null)
-				if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
-				{
-					seedPreview.transform.position = hit.point;
-					seedPreview.transform.up = hit.normal;
-				}
+			RaycastHit hit;
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
+			{
+				seedPreview.transform.position = hit.point;
+				seedPreview.transform.up = hit.normal;
+			}
 
-			if (IsUsable())
+			if (IsPlantable())
 				seedPreview.SetBlueColor();
 			else
 				seedPreview.SetRedColor();
@@ -47,15 +58,7 @@ namespace JTTF
 
 		public bool IsUsable()
 		{
-			var colliders = Physics.OverlapBox(seedPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
-			foreach (var collider in colliders)
-				if (collider.CompareTag("FarmPlot"))
-				{
-					farmPlot = collider.GetComponent<FarmPlot>();
-					return !farmPlot.HasSeed;
-				}
-
-			return false;
+			return IsPlantable();
 		}
 		public void Use()
 		{

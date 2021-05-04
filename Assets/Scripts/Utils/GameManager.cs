@@ -18,7 +18,11 @@ namespace JTTF
 		}
 		public static int GetConstructibleOverlapMask()
 		{
-			return LayerMask.GetMask("Road", "Rock", "Tree", "Pebble", "Grass", "Hill");
+			return LayerMask.GetMask("Road", "Rock", "Tree", "Pebble", "Grass", "Hill", "FarmPlot");
+		}
+		public static int GetPlantableRaycastMask()
+		{
+			return LayerMask.GetMask("FarmPlot");
 		}
 
 		void OnGameMenuOpen()

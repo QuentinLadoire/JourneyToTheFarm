@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2737774421134096321}
   - component: {fileID: 35829473174351683}
   - component: {fileID: 2062091801649897212}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GaugeBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1009766549450506317}
   - component: {fileID: 2879496137991110015}
   - component: {fileID: 2327520426558143635}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ActivableImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 5767101051591978325}
   - component: {fileID: 4053014560964747322}
   - component: {fileID: 8871053077275436067}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 2220945493738021701}
   - component: {fileID: 1243097867889172068}
   - component: {fileID: 3986532559242366821}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,9 +380,9 @@ GameObject:
   - component: {fileID: 6047203369850023495}
   - component: {fileID: 7694135646507602484}
   - component: {fileID: 965380823260221415}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FarmPlot
-  m_TagString: FarmPlot
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,6 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 2
   animationDuration: 9.5
+  animationMultiplier: 1
   progressBar: {fileID: 8871053077275436067}
   activableImage: {fileID: 2649440668117682864}
 --- !u!1 &7355780962928724046
@@ -443,7 +444,7 @@ GameObject:
   - component: {fileID: 1681748023411039025}
   - component: {fileID: 12088849968839181}
   - component: {fileID: 1833607675611541691}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,6 +518,10 @@ PrefabInstance:
     - target: {fileID: 1881119067051248, guid: e5afb862bd113194b946c45951173394, type: 3}
       propertyPath: m_Name
       value: SM_Env_Dirt_Rows_Skirt_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1881119067051248, guid: e5afb862bd113194b946c45951173394, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4316285041283308, guid: e5afb862bd113194b946c45951173394, type: 3}
       propertyPath: m_RootOrder

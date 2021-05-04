@@ -32,17 +32,7 @@ namespace JTTF
 
 		public bool IsUsable()
 		{
-			if (hit.collider != null && hit.collider.CompareTag("Ground"))
-			{
-				var colliders = Physics.OverlapBox(farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.4f, 0.5f, 0.4f));
-				foreach (var collider in colliders)
-					if (collider.CompareTag("Obstacle") || collider.CompareTag("FarmPlot"))
-						return false;
-
-				return true;
-			}
-
-			return false;
+			return IsConstructible();
 		}
 		public void Use()
 		{
@@ -59,15 +49,23 @@ namespace JTTF
 			animationController.CharacterDiggingAnim(false);
 		}
 
+		bool IsConstructible()
+		{
+			var center = farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
+			var halfSize = new Vector3(0.4f, 0.5f, 0.4f);
+			return (hit.transform.CompareTag("Constructible") &&
+				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, GameManager.GetConstructibleOverlapMask()));
+		}
+
 		void OnHasMoved()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit))
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
 			{
 				farmPlotPreview.transform.position = hit.point;
 				farmPlotPreview.transform.up = hit.normal;
 			}
 
-			if (IsUsable())
+			if (IsConstructible())
 				farmPlotPreview.SetBlueColor();
 			else
 				farmPlotPreview.SetRedColor();

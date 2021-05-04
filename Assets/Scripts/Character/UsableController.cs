@@ -43,7 +43,11 @@ namespace JTTF
 
 		void OnHandedObjectChange(GameObject handedObject)
 		{
-			usableObject = null;
+			if (usableObject != null)
+			{
+				CancelItem();
+				usableObject = null;
+			}
 
 			if (handedObject != null)
 				usableObject = handedObject.GetComponent<IUsable>();

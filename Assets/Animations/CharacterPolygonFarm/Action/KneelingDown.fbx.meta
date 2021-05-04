@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 2acbd449a2323ac4b97d57dd6378bf83
+guid: bffd3ef9470e2894a940641b2f1ca690
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: CrouchToStand
+    second: KneelingDown
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: CrouchToStand
+      name: KneelingDown
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 77
+      lastFrame: 83
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

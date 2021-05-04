@@ -39,13 +39,11 @@ namespace JTTF
 		}
 		public void PlayAnim(AnimationController animationController)
 		{
-			Debug.Log("PlayAnim is not implemented");
-			//animationController.CharacterPlacing(true, -animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
+			animationController.CharacterPlacing(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
 		}
 		public void StopAnim(AnimationController animationController)
 		{
-			Debug.Log("StopAnim is not implemented");
-			//animationController.CharacterPlacing(false);
+			animationController.CharacterPlacing(false);
 		}
 
 		bool IsConstructible()

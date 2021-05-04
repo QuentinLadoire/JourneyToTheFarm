@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,11 @@ namespace JTTF
 {
 	public class Chest : SimpleObject, IInteractable
 	{
+		public static Action<Chest> OnOpenChestInventory { get; set; } = (Chest chest) => { /*Debug.Log("OnOpenChestInventory");*/ };
+		public static Action<Chest> OnCloseChestInventory { get; set; } = (Chest chest) => { /*Debug.Log("OnOpenChestInventory");*/ };
+
+		public Inventory Inventory => inventory;
+
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
 		public float AnimationMultiplier => animationMultipler;
@@ -16,14 +22,27 @@ namespace JTTF
 
 		[SerializeField] GameObject interactableImage = null;
 
-		bool isOpen = false;
-
 		Inventory inventory = null;
 		Animator animator = null;
 
-		public bool IsInteractable()
+		void PlayOpenChestAnim()
 		{
-			return inventory != null;
+			animator.SetBool("IsOpen", true);
+		}
+		void PlayCloseChestAnim()
+		{
+			animator.SetBool("IsOpen", false);
+		}
+
+		public void OpenChest()
+		{
+			OnOpenChestInventory.Invoke(this);
+		}
+		public void CloseChest()
+		{
+			PlayCloseChestAnim();
+
+			OnCloseChestInventory.Invoke(this);
 		}
 
 		public void Select()
@@ -35,9 +54,11 @@ namespace JTTF
 		{
 			if (interactableImage != null)
 				interactableImage.SetActive(false);
+		}
 
-			if (isOpen)
-				CloseChest();
+		public bool IsInteractable()
+		{
+			return inventory != null;
 		}
 		public void Interact()
 		{
@@ -53,26 +74,6 @@ namespace JTTF
 		public void StopAnim(AnimationController animationController)
 		{
 			animationController.CharacterOpening(false);
-		}
-
-		void PlayOpenChestAnim()
-		{
-			animator.SetBool("IsOpen", true);
-		}
-		void PlayCloseChestAnim()
-		{
-			animator.SetBool("IsOpen", false);
-		}
-
-		void OpenChest()
-		{
-			isOpen = true;
-		}
-		void CloseChest()
-		{
-			Debug.Log("CloseChest");
-			isOpen = false;
-			PlayCloseChestAnim();
 		}
 
 		private void Awake()

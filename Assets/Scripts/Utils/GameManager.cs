@@ -25,13 +25,39 @@ namespace JTTF
 			return LayerMask.GetMask("FarmPlot");
 		}
 
-		void OnGameMenuOpen()
+		void OnInventoryOpen()
 		{
 			Cursor.lockState = CursorLockMode.Confined;
 
 			Player.DesactiveControl();
 		}
-		void OnGameMenuClose()
+		void OnInventoryClose()
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+
+			Player.ActiveControl();
+		}
+
+		void OnCraftingOpen()
+		{
+			Cursor.lockState = CursorLockMode.Confined;
+
+			Player.DesactiveControl();
+		}
+		void OnCraftingClose()
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+
+			Player.ActiveControl();
+		}
+
+		void OnOpenChestInventory(Chest chest)
+		{
+			Cursor.lockState = CursorLockMode.Confined;
+
+			Player.DesactiveControl();
+		}
+		void OnCloseChestInventory(Chest chest)
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 
@@ -46,12 +72,14 @@ namespace JTTF
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 
-			Player.OnInventoryOpen += OnGameMenuOpen;
-			Player.OnInventoryClose += OnGameMenuClose;
+			Player.OnInventoryOpen += OnInventoryOpen;
+			Player.OnInventoryClose += OnInventoryClose;
 
-			Player.OnCraftingOpen += OnGameMenuOpen;
-			Player.OnCraftingClose += OnGameMenuClose;
+			Player.OnCraftingOpen += OnCraftingOpen;
+			Player.OnCraftingClose += OnCraftingClose;
 
+			Chest.OnOpenChestInventory += OnOpenChestInventory;
+			Chest.OnCloseChestInventory += OnCloseChestInventory;
 
 			Player.AddItem("Shovel", 1, ItemType.Tool);
 			Player.AddItem("WheatSeedBag", 1, ItemType.SeedBag);
@@ -68,11 +96,14 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			Player.OnInventoryOpen -= OnGameMenuOpen;
-			Player.OnInventoryClose -= OnGameMenuClose;
+			Player.OnInventoryOpen -= OnInventoryOpen;
+			Player.OnInventoryClose -= OnInventoryClose;
 
-			Player.OnCraftingOpen -= OnGameMenuOpen;
-			Player.OnCraftingClose -= OnGameMenuClose;
+			Player.OnCraftingOpen -= OnCraftingOpen;
+			Player.OnCraftingClose -= OnCraftingClose;
+
+			Chest.OnOpenChestInventory -= OnOpenChestInventory;
+			Chest.OnCloseChestInventory -= OnCloseChestInventory;
 		}
 	}
 }

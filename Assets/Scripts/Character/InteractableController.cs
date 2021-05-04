@@ -69,7 +69,7 @@ namespace JTTF
             var colliders = Physics.OverlapSphere(transform.position, checkRadius);
             foreach (var collider in colliders)
 			{
-                var interactable = collider.GetComponent<IInteractable>();
+                var interactable = collider.GetComponentInParent<IInteractable>();
                 if (interactable != null && interactable.IsInteractable())
 				{
                     var sqrtDistance = (collider.transform.position - transform.position).sqrMagnitude;

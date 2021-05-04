@@ -23,8 +23,7 @@ namespace JTTF
 
 		public bool IsUsable()
 		{
-			RaycastHit hit;
-			if (Physics.Raycast(Player.Position + new Vector3(0.0f, 0.2f, 0.0f), Player.Forward, out hit, 0.7f))
+			if (Physics.Raycast(Player.Position + new Vector3(0.0f, 0.2f, 0.0f), Player.Forward, out RaycastHit hit, 0.7f))
 			{
 				rock = hit.collider.GetComponentInParent<Rock>();
 				if (rock != null && rock.IsHarvestable())

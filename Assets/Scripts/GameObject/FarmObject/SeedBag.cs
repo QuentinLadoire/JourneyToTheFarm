@@ -6,9 +6,9 @@ namespace JTTF
 {
 	public class SeedBag : SimpleObject, IHandable, IUsable
 	{
-		public float Duration { get => duration; }
-		public float AnimationDuration { get => animationDuration; }
-		public float AnimationMultiplier { get => animationMultiplier; }
+		public float Duration => duration;
+		public float AnimationDuration => animationDuration;
+		public float AnimationMultiplier => animationMultiplier;
 
 		[SerializeField] float duration = 0.0f;
 		[SerializeField] float animationDuration = 0.0f;

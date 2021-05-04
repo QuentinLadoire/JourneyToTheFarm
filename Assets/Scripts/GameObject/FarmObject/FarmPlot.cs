@@ -6,9 +6,9 @@ namespace JTTF
 {
     public class FarmPlot : SimpleObject, IInteractable
     {
-        public float Duration { get => duration; }
-        public float AnimationDuration { get => animationDuration; }
-        public float AnimationMultiplier { get => animationMultiplier; }
+        public float Duration => duration;
+        public float AnimationDuration => animationDuration;
+        public float AnimationMultiplier => animationMultiplier;
 
         public bool HasSeed { get; private set; } = false;
         public bool IsMature { get; private set; } = false;

@@ -6,9 +6,9 @@ namespace JTTF
 {
 	public class FarmHoe : SimpleObject, IHandable, IUsable
 	{
-		public float Duration { get => duration; }
-		public float AnimationDuration { get => animationDuration; }
-		public float AnimationMultiplier { get => animationMultiplier; }
+		public float Duration => duration;
+		public float AnimationDuration => animationDuration;
+		public float AnimationMultiplier => animationMultiplier;
 
 		[Header("Animation Parameter")]
 		[SerializeField] float duration = 0.0f;

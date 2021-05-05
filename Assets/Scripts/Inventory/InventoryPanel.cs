@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace JTTF
 {
     public class InventoryPanel : SimpleObject
     {
-        [SerializeField] InventorySlot[] inventorySlots = null;
+		[SerializeField] Button closeButton = null;
+		[SerializeField] InventorySlot[] inventorySlots = null;
+
+		InventoryController invController = null;
+
+		void OnClick()
+		{
+			if (invController != null)
+				invController.CloseInventory();
+		}
 
         void OnAddItem(int index, string name, int amount, ItemType itemType)
 		{
@@ -25,11 +35,12 @@ namespace JTTF
 				inventorySlots[index - 10].SetSprite(null);
 		}
 
-		void OnInventoryOpen()
+		void OnInventoryOpen(InventoryController inventoryController)
 		{
 			gameObject.SetActive(true);
+			invController = inventoryController;
 		}
-		void OnInventoryClose()
+		void OnInventoryClose(InventoryController inventoryController)
 		{
 			gameObject.SetActive(false);
 		}
@@ -37,6 +48,8 @@ namespace JTTF
 		protected override void Awake()
 		{
 			base.Awake();
+
+			closeButton.onClick.AddListener(OnClick);
 
 			Player.OnAddItem += OnAddItem;
 			Player.OnRemoveItem += OnRemoveItem;

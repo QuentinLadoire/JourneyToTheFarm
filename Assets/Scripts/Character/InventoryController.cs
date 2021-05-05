@@ -7,8 +7,8 @@ namespace JTTF
 {
 	public class InventoryController : MonoBehaviour
 	{
-		public Action onOpen = () => { /*Debug.Log("OnOpen");*/ };
-		public Action onClose = () => { /*Debug.Log("OnClose");*/ };
+		public Action<InventoryController> onOpen = (InventoryController inventoryController) => { /*Debug.Log("OnOpen");*/ };
+		public Action<InventoryController> onClose = (InventoryController inventoryController) => { /*Debug.Log("OnClose");*/ };
 
 		public Action<int, string, ItemType, int> onScroll = (int index, string itemName, ItemType itemType, int amount) => { /*Debug.Log("OnScroll");*/ };
 
@@ -16,6 +16,15 @@ namespace JTTF
 		bool isOpen = false;
 
 		Inventory inventory = null;
+
+		public void OpenInventory()
+		{
+			onOpen.Invoke(this);
+		}
+		public void CloseInventory()
+		{
+			onClose.Invoke(this);
+		}
 
 		void ScrollUp()
 		{
@@ -48,9 +57,9 @@ namespace JTTF
 			{
 				isOpen = !isOpen;
 				if (isOpen)
-					onOpen.Invoke();
+					OpenInventory();
 				else
-					onClose.Invoke();
+					CloseInventory();
 			}
 		}
 

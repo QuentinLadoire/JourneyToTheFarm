@@ -35,8 +35,8 @@ namespace JTTF
 		public static Action<int, string, int, ItemType> OnRemoveItem { get => instance.inventory.onRemoveItem; set => instance.inventory.onRemoveItem = value; }
 
 		//InventoryController
-		public static Action OnInventoryOpen { get => instance.inventoryController.onOpen; set => instance.inventoryController.onOpen = value; }
-		public static Action OnInventoryClose { get => instance.inventoryController.onClose; set => instance.inventoryController.onClose = value; }
+		public static Action<InventoryController> OnInventoryOpen { get => instance.inventoryController.onOpen; set => instance.inventoryController.onOpen = value; }
+		public static Action<InventoryController> OnInventoryClose { get => instance.inventoryController.onClose; set => instance.inventoryController.onClose = value; }
 		public static Action<int, string, ItemType, int> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
 
 		//CraftingController

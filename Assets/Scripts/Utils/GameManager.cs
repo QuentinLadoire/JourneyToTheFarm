@@ -25,13 +25,13 @@ namespace JTTF
 			return LayerMask.GetMask("FarmPlot");
 		}
 
-		void OnInventoryOpen()
+		void OnInventoryOpen(InventoryController inventoryController)
 		{
 			Cursor.lockState = CursorLockMode.Confined;
 
 			Player.DesactiveControl();
 		}
-		void OnInventoryClose()
+		void OnInventoryClose(InventoryController inventoryController)
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 

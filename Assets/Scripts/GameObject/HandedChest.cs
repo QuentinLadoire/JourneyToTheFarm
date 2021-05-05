@@ -54,8 +54,10 @@ namespace JTTF
 				!Physics.CheckBox(center, halfSize, chestPreview.transform.rotation, GameManager.GetConstructibleOverlapMask()));
 		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			if (chestPreviewPrefab != null)
 				chestPreview = Instantiate(chestPreviewPrefab).GetComponent<PreviewObject>();
 		}

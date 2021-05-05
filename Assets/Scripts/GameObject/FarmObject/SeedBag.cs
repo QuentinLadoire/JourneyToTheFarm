@@ -72,8 +72,10 @@ namespace JTTF
 			animationController.CharacterPlantAPlant(false);
 		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
 			OnHasMoved();
 		}

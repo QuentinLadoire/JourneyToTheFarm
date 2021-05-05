@@ -71,8 +71,10 @@ namespace JTTF
 				farmPlotPreview.SetRedColor();
 		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 			OnHasMoved();
 		}

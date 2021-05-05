@@ -21,14 +21,11 @@ namespace JTTF
 			foreach (var renderer in meshRenderers)
 				renderer.material.color = redColor;
 		}
-		public void SetVisible(bool value)
-		{
-			foreach (var renderer in meshRenderers)
-				renderer.enabled = value;
-		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			meshRenderers = GetComponentsInChildren<MeshRenderer>();
 		}
 	}

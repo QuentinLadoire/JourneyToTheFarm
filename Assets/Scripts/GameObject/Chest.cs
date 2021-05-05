@@ -76,8 +76,10 @@ namespace JTTF
 			animationController.CharacterOpening(false);
 		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			inventory = GetComponent<Inventory>();
 			animator = GetComponent<Animator>();
 		}

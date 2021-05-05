@@ -35,8 +35,8 @@ namespace JTTF
 		public static Action<int, string, int, ItemType> OnRemoveItem { get => instance.inventory.onRemoveItem; set => instance.inventory.onRemoveItem = value; }
 
 		//InventoryController
-		public static Action<InventoryController> OnInventoryOpen { get => instance.inventoryController.onOpen; set => instance.inventoryController.onOpen = value; }
-		public static Action<InventoryController> OnInventoryClose { get => instance.inventoryController.onClose; set => instance.inventoryController.onClose = value; }
+		public static Action<PlayerInventoryController> OnInventoryOpen { get => instance.inventoryController.onOpenInventory; set => instance.inventoryController.onOpenInventory = value; }
+		public static Action<PlayerInventoryController> OnInventoryClose { get => instance.inventoryController.onCloseInventory; set => instance.inventoryController.onCloseInventory = value; }
 		public static Action<int, string, ItemType, int> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
 
 		//CraftingController
@@ -89,7 +89,7 @@ namespace JTTF
 
 		CharacterController characterController = null;
 		HandController handController = null;
-		InventoryController inventoryController = null;
+		PlayerInventoryController inventoryController = null;
 		CraftingController craftingController = null;
 		Inventory inventory = null;
 
@@ -101,7 +101,7 @@ namespace JTTF
 		{
 			characterController = GetComponent<CharacterController>();
 			handController = GetComponent<HandController>();
-			inventoryController = GetComponent<InventoryController>();
+			inventoryController = GetComponent<PlayerInventoryController>();
 			craftingController = GetComponent<CraftingController>();
 			inventory = GetComponent<Inventory>();
 

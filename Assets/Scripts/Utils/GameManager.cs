@@ -25,13 +25,13 @@ namespace JTTF
 			return LayerMask.GetMask("FarmPlot");
 		}
 
-		void OnInventoryOpen(InventoryController inventoryController)
+		void OnInventoryOpen(PlayerInventoryController controller)
 		{
 			Cursor.lockState = CursorLockMode.Confined;
 
 			Player.DesactiveControl();
 		}
-		void OnInventoryClose(InventoryController inventoryController)
+		void OnInventoryClose(PlayerInventoryController controller)
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 
@@ -51,13 +51,13 @@ namespace JTTF
 			Player.ActiveControl();
 		}
 
-		void OnOpenChestInventory(Chest chest)
+		void OnOpenChestInventory(ChestInventoryController controller)
 		{
 			Cursor.lockState = CursorLockMode.Confined;
 
 			Player.DesactiveControl();
 		}
-		void OnCloseChestInventory(Chest chest)
+		void OnCloseChestInventory(ChestInventoryController controller)
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 
@@ -78,8 +78,8 @@ namespace JTTF
 			Player.OnCraftingOpen += OnCraftingOpen;
 			Player.OnCraftingClose += OnCraftingClose;
 
-			Chest.OnOpenChestInventory += OnOpenChestInventory;
-			Chest.OnCloseChestInventory += OnCloseChestInventory;
+			Chest.OnOpenInventory += OnOpenChestInventory;
+			Chest.OnCloseInventory += OnCloseChestInventory;
 
 			Player.AddItem("Shovel", 1, ItemType.Tool);
 			Player.AddItem("WheatSeedBag", 1, ItemType.SeedBag);
@@ -102,8 +102,8 @@ namespace JTTF
 			Player.OnCraftingOpen -= OnCraftingOpen;
 			Player.OnCraftingClose -= OnCraftingClose;
 
-			Chest.OnOpenChestInventory -= OnOpenChestInventory;
-			Chest.OnCloseChestInventory -= OnCloseChestInventory;
+			Chest.OnOpenInventory -= OnOpenChestInventory;
+			Chest.OnCloseInventory -= OnCloseChestInventory;
 		}
 	}
 }

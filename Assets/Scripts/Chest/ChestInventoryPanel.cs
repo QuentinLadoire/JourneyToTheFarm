@@ -9,36 +9,36 @@ namespace JTTF
     {
 		[SerializeField] Button closeButton = null;
         [SerializeField] InventorySlot[] inventorySlots = null;
-		Chest currentChest = null;
+		ChestInventoryController inventoryController = null;
 
 		void OnClick()
 		{
-			if (currentChest != null)
-				currentChest.CloseChest();
+			if (inventoryController != null)
+				inventoryController.CloseInventory();
 		}
 
-		void OnChestInventoryOpen(Chest chest)
+		void OnChestInventoryOpen(ChestInventoryController controller)
 		{
-			gameObject.SetActive(true);
+			SetActive(true);
 
-			currentChest = chest;
+			inventoryController = controller;
 
 			SetupPanel();
 		}
-		void OnChestInventoryClose(Chest chest)
+		void OnChestInventoryClose(ChestInventoryController controller)
 		{
-			gameObject.SetActive(false);
+			SetActive(false);
 
 			ClearPanel();
 
-			currentChest = null;
+			inventoryController = null;
 		}
 
 		void SetupPanel()
 		{
-			for (int i = 0; i < currentChest.Inventory.Slots.Length; i++)
+			for (int i = 0; i < inventoryController.Inventory.Slots.Length; i++)
 			{
-				var chestInventorySlot = currentChest.Inventory.Slots[i];
+				var chestInventorySlot = inventoryController.Inventory.Slots[i];
 				var item = GameManager.ItemDataBase.GetItem(chestInventorySlot.ItemType, chestInventorySlot.ItemName);
 				inventorySlots[i].SetSprite(item.sprite);
 				inventorySlots[i].SetAmount(chestInventorySlot.Amount);
@@ -46,10 +46,8 @@ namespace JTTF
 		}
 		void ClearPanel()
 		{
-			for (int i = 0; i < currentChest.Inventory.Slots.Length; i++)
+			for (int i = 0; i < inventorySlots.Length; i++)
 			{
-				var chestInventorySlot = currentChest.Inventory.Slots[i];
-				var item = GameManager.ItemDataBase.GetItem(chestInventorySlot.ItemType, chestInventorySlot.ItemName);
 				inventorySlots[i].SetSprite(null);
 				inventorySlots[i].SetAmount(0);
 			}
@@ -61,13 +59,13 @@ namespace JTTF
 
 			closeButton.onClick.AddListener(OnClick);
 
-			Chest.OnOpenChestInventory += OnChestInventoryOpen;
-			Chest.OnCloseChestInventory += OnChestInventoryClose;
+			Chest.OnOpenInventory += OnChestInventoryOpen;
+			Chest.OnCloseInventory += OnChestInventoryClose;
 		}
         private void OnDestroy()
 		{
-			Chest.OnOpenChestInventory -= OnChestInventoryOpen;
-			Chest.OnCloseChestInventory -= OnChestInventoryClose;
+			Chest.OnOpenInventory -= OnChestInventoryOpen;
+			Chest.OnCloseInventory -= OnChestInventoryClose;
 		}
     }
 }

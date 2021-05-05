@@ -5,25 +5,25 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class InventoryController : MonoBehaviour
+	public class PlayerInventoryController : MonoBehaviour
 	{
-		public Action<InventoryController> onOpen = (InventoryController inventoryController) => { /*Debug.Log("OnOpen");*/ };
-		public Action<InventoryController> onClose = (InventoryController inventoryController) => { /*Debug.Log("OnClose");*/ };
-
+		public Action<PlayerInventoryController> onOpenInventory = (PlayerInventoryController controller) => { /*Debug.Log("OnOpenInventory");*/ };
+		public Action<PlayerInventoryController> onCloseInventory = (PlayerInventoryController controller) => { /*Debug.Log("OnCloseInventory");*/ };
 		public Action<int, string, ItemType, int> onScroll = (int index, string itemName, ItemType itemType, int amount) => { /*Debug.Log("OnScroll");*/ };
 
+		public Inventory Inventory => inventory;
+
+		Inventory inventory = null;
 		int shortcutIndex = 0;
 		bool isOpen = false;
 
-		Inventory inventory = null;
-
 		public void OpenInventory()
 		{
-			onOpen.Invoke(this);
+			onOpenInventory.Invoke(this);
 		}
 		public void CloseInventory()
 		{
-			onClose.Invoke(this);
+			onCloseInventory.Invoke(this);
 		}
 
 		void ScrollUp()
@@ -66,10 +66,6 @@ namespace JTTF
 		private void Awake()
 		{
 			inventory = GetComponent<Inventory>();
-		}
-		private void Start()
-		{
-			onScroll.Invoke(shortcutIndex, inventory.GetItemName(shortcutIndex), inventory.GetItemType(shortcutIndex), inventory.GetItemAmount(shortcutIndex));
 		}
 		private void Update()
 		{

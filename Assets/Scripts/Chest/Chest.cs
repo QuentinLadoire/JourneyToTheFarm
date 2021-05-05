@@ -7,10 +7,10 @@ namespace JTTF
 {
 	public class Chest : SimpleObject, IInteractable
 	{
-		public static Action<Chest> OnOpenChestInventory { get; set; } = (Chest chest) => { /*Debug.Log("OnOpenChestInventory");*/ };
-		public static Action<Chest> OnCloseChestInventory { get; set; } = (Chest chest) => { /*Debug.Log("OnOpenChestInventory");*/ };
+		public static Action<ChestInventoryController> OnOpenInventory { get => ChestInventoryController.onOpenInventory; set => ChestInventoryController.onOpenInventory = value; }
+		public static Action<ChestInventoryController> OnCloseInventory { get => ChestInventoryController.onCloseInventory; set => ChestInventoryController.onCloseInventory = value; }
 
-		public Inventory Inventory => inventory;
+		public Inventory Inventory => inventoryController.Inventory;
 
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
@@ -19,12 +19,15 @@ namespace JTTF
 		[SerializeField] float duration = 0.0f;
 		[SerializeField] float animationDuration = 0.0f;
 		[SerializeField] float animationMultipler = 1.0f;
-
 		[SerializeField] GameObject interactableImage = null;
 
-		Inventory inventory = null;
+		ChestInventoryController inventoryController = null;
 		Animator animator = null;
 
+		void OnCloseChest(ChestInventoryController chestInventoryController)
+		{
+			PlayCloseChestAnim();
+		}
 		void PlayOpenChestAnim()
 		{
 			animator.SetBool("IsOpen", true);
@@ -32,17 +35,6 @@ namespace JTTF
 		void PlayCloseChestAnim()
 		{
 			animator.SetBool("IsOpen", false);
-		}
-
-		public void OpenChest()
-		{
-			OnOpenChestInventory.Invoke(this);
-		}
-		public void CloseChest()
-		{
-			PlayCloseChestAnim();
-
-			OnCloseChestInventory.Invoke(this);
 		}
 
 		public void Select()
@@ -58,11 +50,11 @@ namespace JTTF
 
 		public bool IsInteractable()
 		{
-			return inventory != null;
+			return true;
 		}
 		public void Interact()
 		{
-			OpenChest();
+			inventoryController.OpenInventory();
 		}
 
 		public void PlayAnim(AnimationController animationController)
@@ -80,8 +72,14 @@ namespace JTTF
 		{
 			base.Awake();
 
-			inventory = GetComponent<Inventory>();
+			inventoryController = GetComponent<ChestInventoryController>();
 			animator = GetComponent<Animator>();
+
+			OnCloseInventory += OnCloseChest;
+		}
+		private void OnDestroy()
+		{
+			OnCloseInventory -= OnCloseChest;
 		}
 	}
 }

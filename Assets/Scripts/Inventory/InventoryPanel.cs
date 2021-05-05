@@ -10,12 +10,12 @@ namespace JTTF
 		[SerializeField] Button closeButton = null;
 		[SerializeField] InventorySlot[] inventorySlots = null;
 
-		InventoryController invController = null;
+		PlayerInventoryController inventoryController = null;
 
 		void OnClick()
 		{
-			if (invController != null)
-				invController.CloseInventory();
+			if (inventoryController != null)
+				inventoryController.CloseInventory();
 		}
 
         void OnAddItem(int index, string name, int amount, ItemType itemType)
@@ -35,14 +35,15 @@ namespace JTTF
 				inventorySlots[index - 10].SetSprite(null);
 		}
 
-		void OnInventoryOpen(InventoryController inventoryController)
+		void OnInventoryOpen(PlayerInventoryController controller)
 		{
 			gameObject.SetActive(true);
-			invController = inventoryController;
+			inventoryController = controller;
 		}
-		void OnInventoryClose(InventoryController inventoryController)
+		void OnInventoryClose(PlayerInventoryController controller)
 		{
 			gameObject.SetActive(false);
+			inventoryController = null;
 		}
 
 		protected override void Awake()

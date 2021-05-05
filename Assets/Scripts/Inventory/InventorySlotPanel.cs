@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace JTTF
 {
-	public class InventorySlotPanel : MonoBehaviour
+	public class InventorySlotPanel : SimpleObject
 	{
+		[SerializeField] Image selectedImage = null;
 		[SerializeField] InventorySlot[] inventorySlots = null;
-		int selectedSlot = 0;
 
 		void OnAddItem(int index, string name, int amount, ItemType itemType)
 		{
@@ -27,21 +28,21 @@ namespace JTTF
 		}
 		void OnScroll(int index, string name, ItemType itemType, int amount)
 		{
-			inventorySlots[selectedSlot].SetSelected(false);
-			inventorySlots[index].SetSelected(true);
-
-			selectedSlot = index;
+			SelectSlotAt(index);
 		}
 
-		private void Awake()
+		void SelectSlotAt(int index)
 		{
+			selectedImage.transform.position = inventorySlots[index].transform.position;
+		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+
 			Player.OnAddItem += OnAddItem;
 			Player.OnRemoveItem += OnRemoveItem;
 			Player.OnScroll += OnScroll;
-		}
-		private void Start()
-		{
-			inventorySlots[selectedSlot].SetSelected(true);
 		}
 		private void OnDestroy()
 		{

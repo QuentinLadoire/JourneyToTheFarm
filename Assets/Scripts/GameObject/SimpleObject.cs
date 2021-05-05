@@ -15,6 +15,10 @@ public class SimpleObject : MonoBehaviour
 	{
 		gameObject.SetActive(value);
 	}
+	public void SetParent(Transform parent, bool worldPositionStay)
+	{
+		transform.SetParent(parent, worldPositionStay);
+	}
 	public void Destroy()
 	{
 		Destroy(gameObject);

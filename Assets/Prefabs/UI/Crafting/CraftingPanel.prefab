@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03ec375c80d312942bb60277f3825db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 0
   recipeContent: {fileID: 5658580473652076330}
   recipePaternPrefab: {fileID: 7532997017774429537, guid: 2d91bc0be9222e3418216017a0cc2ec8, type: 3}
   recipeDescription: {fileID: 338108327801122522}

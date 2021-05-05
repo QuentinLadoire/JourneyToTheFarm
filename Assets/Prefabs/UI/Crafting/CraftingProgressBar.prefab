@@ -244,5 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3216fc12c4eeba64ebb10e70aa2b8d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 0
   gaugeBar: {fileID: 3695782451039308907}
   text: {fileID: 3695782450765923866}

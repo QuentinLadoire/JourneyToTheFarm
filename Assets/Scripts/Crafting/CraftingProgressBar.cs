@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class CraftingProgressBar : MonoBehaviour
+    public class CraftingProgressBar : SimpleObject
     {
         [SerializeField] Image gaugeBar = null;
 		[SerializeField] Text text = null;
@@ -42,14 +42,16 @@ namespace JTTF
 			SetPercent(percent);
 		}
 
-		public void Init()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			Player.OnStartCraft += OnStartCraft;
 			Player.OnCancelCraft += OnCancelCraft;
 			Player.OnEndCraft += OnEndCraft;
 			Player.OnCraft += OnCraft;
 		}
-		public void Destroy()
+		private void OnDestroy()
 		{
 			Player.OnStartCraft -= OnStartCraft;
 			Player.OnCancelCraft -= OnCancelCraft;

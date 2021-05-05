@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class RecipeButton : MonoBehaviour
+    public class RecipeButton : SimpleObject
     {
         [SerializeField] Image iconRecipe = null;
         [SerializeField] Text nameRecipe = null;
@@ -14,11 +14,6 @@ namespace JTTF
         Button button = null;
 
         public Action onClick = () => { /*Debug.Log("OnRecipeButtonClick");*/ };
-
-        public void SetParent(Transform parent, bool stayWorldPosition)
-		{
-            transform.SetParent(parent, stayWorldPosition);
-		}
 
         public void Set(Sprite icon, string name)
 		{
@@ -39,8 +34,10 @@ namespace JTTF
             onClick.Invoke();
         }
 
-		private void Awake()
+		protected override void Awake()
 		{
+            base.Awake();
+
             button = GetComponent<Button>();
             button.onClick.AddListener(OnClick);
         }

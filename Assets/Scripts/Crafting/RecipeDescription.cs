@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class RecipeDescription : MonoBehaviour
+    public class RecipeDescription : SimpleObject
     {
         [SerializeField] Image itemIcon = null;
         [SerializeField] Text itemName = null;
@@ -45,8 +45,10 @@ namespace JTTF
             onClick.Invoke();
 		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+            base.Awake();
+
             craftButton.onClick.AddListener(OnClick);
 		}
 	}

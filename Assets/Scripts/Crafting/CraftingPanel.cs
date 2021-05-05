@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class CraftingPanel : MonoBehaviour
+	public class CraftingPanel : SimpleObject
 	{
 		[SerializeField] GameObject recipeContent = null;
 		[SerializeField] GameObject recipePaternPrefab = null;
@@ -66,8 +66,10 @@ namespace JTTF
 			gameObject.SetActive(false);
 		}
 
-		public void Init()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			currentRecipe = Player.CraftingRecipe.Recipes[0];
 			foreach (var recipe in Player.CraftingRecipe.Recipes)
 			{
@@ -85,7 +87,7 @@ namespace JTTF
 			Player.OnAddItem += OnAddItem;
 			Player.OnRemoveItem += OnRemoveItem;
 		}
-		public void Destroy()
+		private void OnDestroy()
 		{
 			Player.OnCraftingOpen -= OnCraftingOpen;
 			Player.OnCraftingClose -= OnCraftingClose;

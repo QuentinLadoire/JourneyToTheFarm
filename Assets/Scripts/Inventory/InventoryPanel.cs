@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class InventoryPanel : MonoBehaviour
+    public class InventoryPanel : SimpleObject
     {
         [SerializeField] InventorySlot[] inventorySlots = null;
 
@@ -34,15 +34,17 @@ namespace JTTF
 			gameObject.SetActive(false);
 		}
 
-		public void Init()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			Player.OnAddItem += OnAddItem;
 			Player.OnRemoveItem += OnRemoveItem;
 
 			Player.OnInventoryOpen += OnInventoryOpen;
 			Player.OnInventoryClose += OnInventoryClose;
 		}
-		public void Destroy()
+		private void OnDestroy()
 		{
 			Player.OnAddItem -= OnAddItem;
 			Player.OnRemoveItem -= OnRemoveItem;

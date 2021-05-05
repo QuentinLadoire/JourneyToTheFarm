@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6133f2ce3346f8a409027cb383e4e1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 0
   closeButton: {fileID: 1169021771096285015}
   inventorySlots:
   - {fileID: 4155136349417162536}

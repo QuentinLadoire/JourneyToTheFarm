@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class ChestInventoryPanel : MonoBehaviour
+    public class ChestInventoryPanel : SimpleObject
     {
 		[SerializeField] Button closeButton = null;
         [SerializeField] InventorySlot[] inventorySlots = null;
@@ -55,14 +55,16 @@ namespace JTTF
 			}
 		}
 
-		public void Init()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			closeButton.onClick.AddListener(OnClick);
 
 			Chest.OnOpenChestInventory += OnChestInventoryOpen;
 			Chest.OnCloseChestInventory += OnChestInventoryClose;
 		}
-        public void Destroy()
+        private void OnDestroy()
 		{
 			Chest.OnOpenChestInventory -= OnChestInventoryOpen;
 			Chest.OnCloseChestInventory -= OnChestInventoryClose;

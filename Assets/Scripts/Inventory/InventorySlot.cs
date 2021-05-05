@@ -18,5 +18,12 @@ namespace JTTF
 		{
 			amountText.text = amount.ToString();
 		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			SetAmount(0);
+		}
 	}
 }

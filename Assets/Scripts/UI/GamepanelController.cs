@@ -13,17 +13,17 @@ namespace JTTF
 
 		private void Start()
 		{
-			inventoryPanel.Init();
+			//inventoryPanel.Init();
+			//chestInventoryPanel.Init();
 			craftingPanel.Init();
 			craftingProgressBar.Init();
-			chestInventoryPanel.Init();
 		}
 		private void OnDestroy()
 		{
-			inventoryPanel.Destroy();
+			//inventoryPanel.Destroy();
+			//chestInventoryPanel.Destroy();
 			craftingPanel.Destroy();
 			craftingProgressBar.Destroy();
-			chestInventoryPanel.Destroy();
 		}
 	}
 }

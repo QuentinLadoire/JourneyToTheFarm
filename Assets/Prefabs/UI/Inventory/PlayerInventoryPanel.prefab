@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97895c79e9eb8184a80f547245e29cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 0
   inventorySlots:
   - {fileID: 4155136349417162536}
   - {fileID: 4155136349184367293}

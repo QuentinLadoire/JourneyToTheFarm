@@ -23,9 +23,21 @@ namespace JTTF
             onCloseInventory.Invoke(this);
 		}
 
+		public int AddItem(string name, ItemType itemType, int amount)
+		{
+			return inventory.AddItem(name, amount, itemType);
+		}
+
 		private void Awake()
 		{
 			inventory = GetComponent<Inventory>();
+		}
+		private void Start()
+		{
+			AddItem("Log", ItemType.Resource, 999);
+			AddItem("Stone", ItemType.Resource, 999);
+			AddItem("WheatSeedBag", ItemType.SeedBag, 999);
+			AddItem("Chest", ItemType.Container, 999);
 		}
 	}
 }

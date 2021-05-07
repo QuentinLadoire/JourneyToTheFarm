@@ -56,7 +56,7 @@ namespace JTTF
 		void ProcessInput()
 		{
 			if (Input.GetButtonDown("UseTool"))
-				if (usableObject != null && characterController.IsIdle && usableObject.IsUsable())
+				if (!usableObject.Equals(null) && characterController.IsIdle && usableObject.IsUsable())
 					UseItem();
 		}
 		void UpdateItemDuration()

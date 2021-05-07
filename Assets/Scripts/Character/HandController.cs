@@ -30,10 +30,6 @@ namespace JTTF
 					handedObject = Instantiate(item.prefab);
 					onHandedObjectChange.Invoke(handedObject);
 				}
-				else
-				{
-					onHandedObjectChange.Invoke(null);
-				}
 			}
 		}
 		void CheckIsHandable()

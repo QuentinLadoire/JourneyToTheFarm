@@ -10,20 +10,20 @@ namespace JTTF
 		[SerializeField] Image selectedImage = null;
 		[SerializeField] InventorySlot[] inventorySlots = null;
 
-		void OnAddItem(int index, string name, int amount, ItemType itemType)
+		void OnAddItem(int index, ItemInfo info)
 		{
 			if (index >= 10) return;
 
-			var item = GameManager.ItemDataBase.GetItem(itemType, name);
+			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
 			inventorySlots[index].SetSprite(item.sprite);
-			inventorySlots[index].SetAmount(amount);
+			inventorySlots[index].SetAmount(info.amount);
 		}
-		void OnRemoveItem(int index, string name, int amount, ItemType itemType)
+		void OnRemoveItem(int index, ItemInfo info)
 		{
 			if (index >= 10) return;
 
-			inventorySlots[index].SetAmount(amount);
-			if (amount == 0)
+			inventorySlots[index].SetAmount(info.amount);
+			if (info.amount == 0)
 				inventorySlots[index].SetSprite(null);
 		}
 		void OnScroll(int index, string name, ItemType itemType, int amount)

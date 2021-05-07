@@ -55,9 +55,9 @@ namespace JTTF
 
 			currentIndex = index;
 		}
-		void OnRemoveItem(int index, string name, int amount, ItemType itemType)
+		void OnRemoveItem(int index, ItemInfo info)
 		{
-			if (currentIndex == index && amount == 0)
+			if (currentIndex == index && info.amount == 0)
 				ClearHandedObject();
 		}
 

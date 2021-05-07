@@ -30,11 +30,9 @@ namespace JTTF
 		//HandController
 		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }
 
-		//Inventory
-		public static Action<int, string, int, ItemType> OnAddItem { get => instance.inventory.onAddItem; set => instance.inventory.onAddItem = value; }
-		public static Action<int, string, int, ItemType> OnRemoveItem { get => instance.inventory.onRemoveItem; set => instance.inventory.onRemoveItem = value; }
-
 		//InventoryController
+		public static Action<int, ItemInfo> OnAddItem { get => instance.inventoryController.onAddItem; set => instance.inventoryController.onAddItem = value; }
+		public static Action<int, ItemInfo> OnRemoveItem { get => instance.inventoryController.onRemoveItem; set => instance.inventoryController.onRemoveItem = value; }
 		public static Action<PlayerInventoryController> OnInventoryOpen { get => instance.inventoryController.onOpenInventory; set => instance.inventoryController.onOpenInventory = value; }
 		public static Action<PlayerInventoryController> OnInventoryClose { get => instance.inventoryController.onCloseInventory; set => instance.inventoryController.onCloseInventory = value; }
 		public static Action<int, string, ItemType, int> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
@@ -48,22 +46,22 @@ namespace JTTF
 		public static Action OnEndCraft { get => instance.craftingController.onEndCraft; set => instance.craftingController.onEndCraft = value; }
 		public static Action<float> OnCraft { get => instance.craftingController.onCraft; set => instance.craftingController.onCraft = value; }
 
+		public static void AddItem(ItemInfo itemInfo)
+		{
+			instance.inventoryController.AddItem(itemInfo);
+		}
+		public static void RemoveItem(ItemInfo itemInfo)
+		{
+			instance.inventoryController.RemoveItem(itemInfo);
+		}
 
 		public static int HowManyItem(string name)
 		{
-			return instance.inventory.HowManyItem(name);
+			return instance.inventoryController.HowManyItem(name);
 		}
-		public static bool HasItem(string name, int amount)
+		public static bool HasItemAmount(string name, int amount)
 		{
-			return instance.inventory.HasItem(name, amount);
-		}
-		public static int AddItem(string name, int amount, ItemType itemType)
-		{
-			return instance.inventory.AddItem(name, amount, itemType);
-		}
-		public static void RemoveItem(string name, int amount)
-		{
-			instance.inventory.RemoveItem(name, amount);
+			return instance.inventoryController.HasItemAmount(name, amount);
 		}
 
 		public static void Craft(Recipe recipe)
@@ -91,7 +89,6 @@ namespace JTTF
 		HandController handController = null;
 		PlayerInventoryController inventoryController = null;
 		CraftingController craftingController = null;
-		Inventory inventory = null;
 
 		bool hasControl = true;
 		Action onActiveControl = () => { /*Debug.Log("OnActiveControl");*/ };
@@ -103,7 +100,6 @@ namespace JTTF
 			handController = GetComponent<HandController>();
 			inventoryController = GetComponent<PlayerInventoryController>();
 			craftingController = GetComponent<CraftingController>();
-			inventory = GetComponent<Inventory>();
 
 			instance = this;
 		}

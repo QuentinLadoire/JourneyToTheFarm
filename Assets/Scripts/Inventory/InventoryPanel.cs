@@ -9,7 +9,6 @@ namespace JTTF
     {
 		[SerializeField] Button closeButton = null;
 		[SerializeField] InventorySlot[] inventorySlots = null;
-
 		PlayerInventoryController inventoryController = null;
 
 		void OnClick()
@@ -18,20 +17,20 @@ namespace JTTF
 				inventoryController.CloseInventory();
 		}
 
-        void OnAddItem(int index, string name, int amount, ItemType itemType)
+        void OnAddItem(int index, ItemInfo info)
 		{
 			if (index < 10) return;
 
-			var item = GameManager.ItemDataBase.GetItem(itemType, name);
+			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
 			inventorySlots[index - 10].SetSprite(item.sprite);
-			inventorySlots[index - 10].SetAmount(amount);
+			inventorySlots[index - 10].SetAmount(info.amount);
 		}
-		void OnRemoveItem(int index, string name, int amount, ItemType itemType)
+		void OnRemoveItem(int index, ItemInfo info)
 		{
 			if (index < 10) return;
 
-			inventorySlots[index - 10].SetAmount(amount);
-			if (amount == 0)
+			inventorySlots[index - 10].SetAmount(info.amount);
+			if (info.amount == 0)
 				inventorySlots[index - 10].SetSprite(null);
 		}
 

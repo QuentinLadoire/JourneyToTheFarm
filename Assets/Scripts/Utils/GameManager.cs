@@ -81,17 +81,21 @@ namespace JTTF
 			Chest.OnOpenInventory += OnOpenChestInventory;
 			Chest.OnCloseInventory += OnCloseChestInventory;
 
-			Player.AddItem("Shovel", 1, ItemType.Tool);
-			Player.AddItem("WheatSeedBag", 1, ItemType.SeedBag);
-			Player.AddItem("Axe", 1, ItemType.Tool);
-			Player.AddItem("Pickaxe", 1, ItemType.Tool);
-			Player.AddItem("Chest", 1, ItemType.Container);
+			Player.AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
+			Player.AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 1));
+			Player.AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
+			Player.AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
+			Player.AddItem(new ItemInfo("Chest", ItemType.Container, 1));
 		}
 		private void Update()
 		{
 			if (Input.GetKeyDown(KeyCode.KeypadPlus))
 			{
-				Player.AddItem("Log", 999, ItemType.Resource);
+				Player.AddItem(new ItemInfo("Log", ItemType.Resource, 999));
+			}
+			if (Input.GetKeyDown(KeyCode.KeypadMinus))
+			{
+				Player.RemoveItem(new ItemInfo("Log", ItemType.Resource, 999));
 			}
 		}
 		private void OnDestroy()

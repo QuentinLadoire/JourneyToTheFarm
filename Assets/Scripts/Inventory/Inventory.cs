@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,78 +18,34 @@ namespace JTTF
 
 	public class Inventory : MonoBehaviour
 	{
-		public Action<int, string, int, ItemType> onAddItem = (int index, string name, int amount, ItemType itemType) => { /*Debug.Log("OnAddItem");*/ };
-		public Action<int, string, int, ItemType> onRemoveItem = (int index, string name, int amount, ItemType itemType) => { /*Debug.Log("OnRemoveItem");*/ };
-
-		public ItemContainer[] Slots => slots;
-
-		public int sizeMax = 40;
+		[SerializeField] int size = 40;
 		ItemContainer[] slots = null;
 
-		public int AddItem(string name, int amount, ItemType itemType)
+		public void AddItemAt(int index, string name, ItemType itemType, int amount)
 		{
-			var index = GetItemIndex(name, true);
-			if (index != -1)
-			{
-				var rest = slots[index].Amount + amount - ItemContainer.AmountMax;
-				AddItemAt(index, amount, itemType);
-
-				if (rest > 0)
-					return AddItem(name, rest, itemType);
-				else
-					return 0;
-			}
-			else
-			{
-				var emptySlotIndex = GetEmptySlotIndex();
-				if (emptySlotIndex != -1)
-				{
-					var rest = amount - ItemContainer.AmountMax;
-					SetItemAt(emptySlotIndex, name, amount, itemType);
-
-					if (rest > 0)
-						return AddItem(name, rest, itemType);
-					else
-						return 0;
-				}
-			}
-
-			return amount;
+			slots[index].ItemName = name;
+			slots[index].ItemType = itemType;
+			slots[index].Amount = amount;
 		}
-		public void RemoveItem(string name, int amount)
+		public void AddItemAt(int index, int amount)
 		{
-			var index = GetItemIndex(name);
-			if (index != -1)
-			{
-				var rest = amount - slots[index].Amount;
-				RemoveItemAt(index, amount);
-
-				if (rest > 0)
-					RemoveItem(name, amount);
-			}
-			else
-			{
-				Debug.Log("Can't remove Item - ItemName : " + name + " - Amount : " + amount + " - Doesn't contain Item");
-			}
+			slots[index].Amount += amount;
+		}
+		public void RemoveItemAt(int index)
+		{
+			slots[index].ItemName = "";
+			slots[index].ItemType = ItemType.None;
+			slots[index].Amount = 0;
+		}
+		public void RemoveItemAt(int index, int amount)
+		{
+			slots[index].Amount -= amount;
 		}
 
-		public bool HasItem(string name, int amount)
+		public int GetSize()
 		{
-			var index = GetItemIndex(name);
-			if (index != -1 && slots[index].Amount >= amount)
-				return true;
-
-			return false;
+			return slots.Length;
 		}
-		public int HowManyItem(string name)
-		{
-			var index = GetItemIndex(name);
-			if (index != -1)
-				return slots[index].Amount;
-
-			return 0;
-		}
-
 		public string GetItemName(int index)
 		{
 			return slots[index].ItemName;
@@ -103,75 +58,76 @@ namespace JTTF
 		{
 			return slots[index].Amount;
 		}
-
-		int GetEmptySlotIndex()
+		public int GetItemIndex(string name)
 		{
-			for (int i = 0; i < sizeMax; i++)
-				if (slots[i].IsEmpty)
+			for (int i = 0; i < slots.Length; i++)
+			{
+				var slot = slots[i];
+				if (!slot.IsEmpty && slot.ItemName == name)
 					return i;
+			}
 
 			return -1;
 		}
-		int GetItemIndex(string name, bool ignoreFullSlot = false)
+		public int GetEmptySlotIndex()
 		{
-			for (int i = 0; i < sizeMax; i++)
+			for (int i = 0; i < slots.Length; i++)
 			{
-				if (!ignoreFullSlot && slots[i].ItemName == name ||
-					ignoreFullSlot && slots[i].ItemName == name && !slots[i].IsFull)
+				var slot = slots[i];
+				if (slot.IsEmpty)
 					return i;
 			}
 
 			return -1;
 		}
 
-		void ClearItemAt(int index)
+		public bool IsEmptyAt(int index)
 		{
-			slots[index].ItemName = "NoName";
-			slots[index].Amount = 0;
-			slots[index].ItemType = ItemType.None;
-
-			onRemoveItem.Invoke(index, slots[index].ItemName, slots[index].Amount, ItemType.None);
+			return slots[index].IsEmpty;
 		}
-		void SetItemAt(int index, string name, int amount, ItemType itemType)
+		public bool IsFull(int index)
 		{
-			slots[index].ItemName = name;
-			slots[index].Amount = amount;
-			slots[index].ItemType = itemType;
-
-			if (slots[index].Amount > ItemContainer.AmountMax)
-				slots[index].Amount = ItemContainer.AmountMax;
-
-			onAddItem.Invoke(index, name, amount, itemType);
+			return slots[index].IsFull;
 		}
 
-		void AddItemAt(int index, int amount, ItemType itemType)
+		public bool HasEmptySlot()
 		{
-			slots[index].Amount += amount;
-			if (slots[index].Amount > ItemContainer.AmountMax)
-				slots[index].Amount = ItemContainer.AmountMax;
+			foreach (var slot in slots)
+				if (slot.IsEmpty)
+					return true;
 
-			onAddItem.Invoke(index, slots[index].ItemName, slots[index].Amount, itemType);
+			return false;
 		}
-		void RemoveItemAt(int index, int amount)
+		public int HowManyItem(string name)
 		{
-			slots[index].Amount -= amount;
-			if (slots[index].Amount <= 0)
-				ClearItemAt(index);
-			else
-				onRemoveItem.Invoke(index, slots[index].ItemName, slots[index].Amount, slots[index].ItemType);
-		}
+			int itemAmount = 0;
+			foreach (var slot in slots)
+				if (!slot.IsEmpty && slot.ItemName == name)
+					itemAmount += slot.Amount;
 
-		void SwapItem(int index1, int index2)
+			return itemAmount;
+		}
+		public bool HasItemAmount(string name, int amount)
 		{
-			var tmp = slots[index1];
-			slots[index1] = slots[index2];
-			slots[index2] = tmp;
+			return (HowManyItem(name) >= amount);
+		}
+		public int HowManyItemCanAdd(string name)
+		{
+			int howManyEmptySlot = 0;
+			int howManyItemAmount = 0;
+			foreach (var slot in slots)
+				if (slot.IsEmpty)
+					howManyEmptySlot++;
+				else if (!slot.IsFull && slot.ItemName == name)
+					howManyItemAmount += ItemContainer.AmountMax - slot.Amount;
+
+			return howManyItemAmount + howManyEmptySlot * ItemContainer.AmountMax;
 		}
 
 		private void Awake()
 		{
-			slots = new ItemContainer[sizeMax];
-			for (int i = 0; i < sizeMax; i++)
+			slots = new ItemContainer[size];
+			for (int i = 0; i < size; i++)
 				slots[i] = new ItemContainer();
 		}
 	}

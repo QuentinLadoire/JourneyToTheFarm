@@ -10,8 +10,6 @@ namespace JTTF
 		public static Action<ChestInventoryController> OnOpenInventory { get => ChestInventoryController.onOpenInventory; set => ChestInventoryController.onOpenInventory = value; }
 		public static Action<ChestInventoryController> OnCloseInventory { get => ChestInventoryController.onCloseInventory; set => ChestInventoryController.onCloseInventory = value; }
 
-		public Inventory Inventory => inventoryController.Inventory;
-
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
 		public float AnimationMultiplier => animationMultipler;

@@ -21,6 +21,7 @@ MonoBehaviour:
     craftDuration: 5
     requirements:
     - name: Log
+      type: 4
       amount: 5
   - name: Furnace
     itemType: 6
@@ -30,4 +31,5 @@ MonoBehaviour:
     craftDuration: 5
     requirements:
     - name: Stone
+      type: 4
       amount: 5

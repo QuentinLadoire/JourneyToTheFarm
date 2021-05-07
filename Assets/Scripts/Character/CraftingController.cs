@@ -47,9 +47,9 @@ namespace JTTF
 		}
         void EndCraft()
 		{
-            Player.AddItem(currentRecipe.name, currentRecipe.amount, currentRecipe.itemType);
+            Player.AddItem(new ItemInfo(currentRecipe.name, currentRecipe.itemType, currentRecipe.amount));
             foreach (var requirement in currentRecipe.requirements)
-                Player.RemoveItem(requirement.name, requirement.amount);
+                Player.RemoveItem(new ItemInfo(requirement.name, requirement.type, requirement.amount));
 
             inCrafting = false;
             currentRecipe = null;
@@ -61,8 +61,8 @@ namespace JTTF
         bool CanCraft(Recipe recipe)
 		{
             foreach (var requirement in recipe.requirements)
-                if (!Player.HasItem(requirement.name, requirement.amount))
-                    return false; 
+                if (!Player.HasItemAmount(requirement.name, requirement.amount))
+                    return false;
 
             return true;
 		}

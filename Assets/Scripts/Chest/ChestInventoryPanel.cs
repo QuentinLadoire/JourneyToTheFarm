@@ -17,11 +17,26 @@ namespace JTTF
 				inventoryController.CloseInventory();
 		}
 
+		void OnAddItem(int index, ItemInfo info)
+		{
+			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
+			inventorySlots[index].SetSprite(item.sprite);
+			inventorySlots[index].SetAmount(info.amount);
+		}
+		void OnRemoveItem(int index, ItemInfo info)
+		{
+			inventorySlots[index].SetAmount(info.amount);
+			if (info.amount == 0)
+				inventorySlots[index].SetSprite(null);
+		}
+
 		void OnChestInventoryOpen(ChestInventoryController controller)
 		{
 			SetActive(true);
 
 			inventoryController = controller;
+			inventoryController.onAddItem += OnAddItem;
+			inventoryController.onRemoveItem += OnRemoveItem;
 
 			SetupPanel();
 		}
@@ -31,17 +46,19 @@ namespace JTTF
 
 			ClearPanel();
 
+			inventoryController.onAddItem -= OnAddItem;
+			inventoryController.onRemoveItem -= OnRemoveItem;
 			inventoryController = null;
 		}
 
 		void SetupPanel()
 		{
-			for (int i = 0; i < inventoryController.Inventory.Slots.Length; i++)
+			for (int i = 0; i < inventoryController.GetInventorySize(); i++)
 			{
-				var chestInventorySlot = inventoryController.Inventory.Slots[i];
-				var item = GameManager.ItemDataBase.GetItem(chestInventorySlot.ItemType, chestInventorySlot.ItemName);
+				var itemInfo = inventoryController.GetItemInfoAt(i);
+				var item = GameManager.ItemDataBase.GetItem(itemInfo.type, itemInfo.name);
 				inventorySlots[i].SetSprite(item.sprite);
-				inventorySlots[i].SetAmount(chestInventorySlot.Amount);
+				inventorySlots[i].SetAmount(itemInfo.amount);
 			}
 		}
 		void ClearPanel()

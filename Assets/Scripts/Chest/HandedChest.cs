@@ -34,7 +34,7 @@ namespace JTTF
 			if (chestPrefab != null)
 			{
 				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
-				Player.RemoveItem("Chest", 1);
+				Player.RemoveItem(new ItemInfo("Chest", ItemType.Container, 1));
 			}
 		}
 		public void PlayAnim(AnimationController animationController)

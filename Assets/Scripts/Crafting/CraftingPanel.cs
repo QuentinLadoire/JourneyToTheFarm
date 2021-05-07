@@ -34,7 +34,7 @@ namespace JTTF
 			Player.Craft(currentRecipe);
 		}
 
-		void OnAddItem(int index, string name, int amount, ItemType itemType)
+		void OnAddItem(int index, ItemInfo info)
 		{
 			string str = "Craft Requirement : ";
 			foreach (var requirement in currentRecipe.requirements)
@@ -44,7 +44,7 @@ namespace JTTF
 			}
 			recipeDescription.SetCraftRequirement(str);
 		}
-		void OnRemoveItem(int index, string name, int amoutn, ItemType itemType)
+		void OnRemoveItem(int index, ItemInfo info)
 		{
 			string str = "Craft Requirement : ";
 			foreach (var requirement in currentRecipe.requirements)

@@ -94,20 +94,19 @@ namespace JTTF
             return IsMature;
 		}
         public void Interact()
-		{
-            if (Player.AddItem(plantName, 1, ItemType.Plant) == 0)
-            {
-                IsMature = false;
-                activableImage.SetActive(false);
+        {
+            Player.AddItem(new ItemInfo(plantName, ItemType.Plant, 1));
 
-                seedName = "NoSeed";
-                plantName = "NoName";
-                HasSeed = false;
+            IsMature = false;
+            activableImage.SetActive(false);
 
-                if (seedObject != null)
-                    Destroy(seedObject);
-            }
-		}
+            seedName = "NoSeed";
+            plantName = "NoName";
+            HasSeed = false;
+
+            if (seedObject != null)
+                Destroy(seedObject);
+        }
 
         public void PlayAnim(AnimationController animationController)
 		{

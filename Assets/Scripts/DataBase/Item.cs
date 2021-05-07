@@ -17,6 +17,21 @@ namespace JTTF
 	}
 
 	[System.Serializable]
+	public struct ItemInfo
+	{
+		public string name;
+		public ItemType type;
+		public int amount;
+
+		public ItemInfo(string name, ItemType type, int amount)
+		{
+			this.name = name;
+			this.type = type;
+			this.amount = amount;
+		}
+	}
+
+	[System.Serializable]
 	public class Item
 	{
 		public static Item Default = new Item();

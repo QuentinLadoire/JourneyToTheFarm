@@ -5,13 +5,6 @@ using UnityEngine;
 namespace JTTF
 {
     [System.Serializable]
-    public struct ItemInfo
-    {
-        public string name;
-        public int amount;
-    }
-
-    [System.Serializable]
     public class Recipe
     {
         public static Recipe Default = new Recipe();

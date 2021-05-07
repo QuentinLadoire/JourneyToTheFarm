@@ -30,7 +30,7 @@ namespace JTTF
 			currentCooldown = harvestableCooldown;
 			currentLifeTime = lifeTime;
 
-			Player.AddItem(logName, logQuantity, ItemType.Resource);
+			Player.AddItem(new ItemInfo(logName, ItemType.Resource, logQuantity));
 
 			rigidbodyModel.isKinematic = false;
 			rigidbodyModel.AddForce(Player.Forward * 5.0f, ForceMode.Impulse);

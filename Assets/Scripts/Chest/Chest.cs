@@ -7,8 +7,8 @@ namespace JTTF
 {
 	public class Chest : SimpleObject, IInteractable
 	{
-		public static Action<ChestInventoryController> OnOpenInventory { get => ChestInventoryController.onOpenInventory; set => ChestInventoryController.onOpenInventory = value; }
-		public static Action<ChestInventoryController> OnCloseInventory { get => ChestInventoryController.onCloseInventory; set => ChestInventoryController.onCloseInventory = value; }
+		public static Action<InventoryController> OnOpenInventory { get => ChestInventoryController.onOpenInventory; set => ChestInventoryController.onOpenInventory = value; }
+		public static Action<InventoryController> OnCloseInventory { get => ChestInventoryController.onCloseInventory; set => ChestInventoryController.onCloseInventory = value; }
 
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
@@ -22,7 +22,7 @@ namespace JTTF
 		ChestInventoryController inventoryController = null;
 		Animator animator = null;
 
-		void OnCloseChest(ChestInventoryController chestInventoryController)
+		void OnCloseChest(InventoryController controller)
 		{
 			PlayCloseChestAnim();
 		}

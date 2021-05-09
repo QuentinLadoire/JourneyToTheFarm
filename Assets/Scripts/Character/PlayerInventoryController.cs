@@ -7,18 +7,18 @@ namespace JTTF
 {
 	public class PlayerInventoryController : InventoryController
 	{
-		public Action<PlayerInventoryController> onOpenInventory = (PlayerInventoryController controller) => { /*Debug.Log("OnOpenInventory");*/ };
-		public Action<PlayerInventoryController> onCloseInventory = (PlayerInventoryController controller) => { /*Debug.Log("OnCloseInventory");*/ };
+		public Action<InventoryController> onOpenInventory = (InventoryController controller) => { /*Debug.Log("OnOpenInventory");*/ };
+		public Action<InventoryController> onCloseInventory = (InventoryController controller) => { /*Debug.Log("OnCloseInventory");*/ };
 		public Action<int, string, ItemType, int> onScroll = (int index, string itemName, ItemType itemType, int amount) => { /*Debug.Log("OnScroll");*/ };
 
 		int shortcutIndex = 0;
 		bool isOpen = false;
 
-		public void OpenInventory()
+		public override void OpenInventory()
 		{
 			onOpenInventory.Invoke(this);
 		}
-		public void CloseInventory()
+		public override void CloseInventory()
 		{
 			onCloseInventory.Invoke(this);
 		}

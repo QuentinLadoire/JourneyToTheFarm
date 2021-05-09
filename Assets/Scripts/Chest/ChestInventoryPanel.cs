@@ -5,84 +5,37 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class ChestInventoryPanel : SimpleObject
+    public class ChestInventoryPanel : InventoryPanel
     {
-		[SerializeField] Button closeButton = null;
-        [SerializeField] InventorySlot[] inventorySlots = null;
-		ChestInventoryController inventoryController = null;
-
-		void OnClick()
+		protected override void OnInventoryOpen(InventoryController controller)
 		{
-			if (inventoryController != null)
-				inventoryController.CloseInventory();
-		}
+			base.OnInventoryOpen(controller);
 
-		void OnAddItem(int index, ItemInfo info)
-		{
-			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
-			inventorySlots[index].SetSprite(item.sprite);
-			inventorySlots[index].SetAmount(info.amount);
-		}
-		void OnRemoveItem(int index, ItemInfo info)
-		{
-			inventorySlots[index].SetAmount(info.amount);
-			if (info.amount == 0)
-				inventorySlots[index].SetSprite(null);
-		}
-
-		void OnChestInventoryOpen(ChestInventoryController controller)
-		{
-			SetActive(true);
-
-			inventoryController = controller;
 			inventoryController.onAddItem += OnAddItem;
 			inventoryController.onRemoveItem += OnRemoveItem;
 
 			SetupPanel();
 		}
-		void OnChestInventoryClose(ChestInventoryController controller)
+		protected override void OnInventoryClose(InventoryController controller)
 		{
-			SetActive(false);
-
-			ClearPanel();
-
 			inventoryController.onAddItem -= OnAddItem;
 			inventoryController.onRemoveItem -= OnRemoveItem;
-			inventoryController = null;
-		}
+			ClearPanel();
 
-		void SetupPanel()
-		{
-			for (int i = 0; i < inventoryController.GetInventorySize(); i++)
-			{
-				var itemInfo = inventoryController.GetItemInfoAt(i);
-				var item = GameManager.ItemDataBase.GetItem(itemInfo.type, itemInfo.name);
-				inventorySlots[i].SetSprite(item.sprite);
-				inventorySlots[i].SetAmount(itemInfo.amount);
-			}
-		}
-		void ClearPanel()
-		{
-			for (int i = 0; i < inventorySlots.Length; i++)
-			{
-				inventorySlots[i].SetSprite(null);
-				inventorySlots[i].SetAmount(0);
-			}
+			base.OnInventoryClose(controller);
 		}
 
 		protected override void Awake()
 		{
 			base.Awake();
 
-			closeButton.onClick.AddListener(OnClick);
-
-			Chest.OnOpenInventory += OnChestInventoryOpen;
-			Chest.OnCloseInventory += OnChestInventoryClose;
+			Chest.OnOpenInventory += OnInventoryOpen;
+			Chest.OnCloseInventory += OnInventoryClose;
 		}
         private void OnDestroy()
 		{
-			Chest.OnOpenInventory -= OnChestInventoryOpen;
-			Chest.OnCloseInventory -= OnChestInventoryClose;
+			Chest.OnOpenInventory -= OnInventoryOpen;
+			Chest.OnCloseInventory -= OnInventoryClose;
 		}
     }
 }

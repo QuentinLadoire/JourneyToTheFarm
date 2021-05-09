@@ -7,14 +7,14 @@ namespace JTTF
 {
     public class ChestInventoryController : InventoryController
     {
-        public static Action<ChestInventoryController> onOpenInventory = (ChestInventoryController controller) => { /*Debug.Log("OnOpenInventory");*/ };
-        public static Action<ChestInventoryController> onCloseInventory = (ChestInventoryController controller) => { /*Debug.Log("OnCloseInventory");*/ };
+        public static Action<InventoryController> onOpenInventory = (InventoryController controller) => { /*Debug.Log("OnOpenInventory");*/ };
+        public static Action<InventoryController> onCloseInventory = (InventoryController controller) => { /*Debug.Log("OnCloseInventory");*/ };
 
-        public void OpenInventory()
+        public override void OpenInventory()
 		{
             onOpenInventory.Invoke(this);
 		}
-        public void CloseInventory()
+        public override void CloseInventory()
 		{
             onCloseInventory.Invoke(this);
 		}

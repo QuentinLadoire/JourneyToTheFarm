@@ -5,12 +5,15 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class InventoryController : MonoBehaviour
+    public abstract class InventoryController : MonoBehaviour
     {
 		public Action<int, ItemInfo> onAddItem = (int index, ItemInfo info) => { /*Debug.Log("OnAddItem");*/ };
 		public Action<int, ItemInfo> onRemoveItem = (int index, ItemInfo info) => { /*Debug.Log("OnRemoveItem");*/ };
 
         protected Inventory inventory = null;
+
+		public abstract void OpenInventory();
+		public abstract void CloseInventory();
 
 		public void AddItemAt(int index, ItemInfo info)
 		{

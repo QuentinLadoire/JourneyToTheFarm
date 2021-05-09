@@ -33,8 +33,8 @@ namespace JTTF
 		//InventoryController
 		public static Action<int, ItemInfo> OnAddItem { get => instance.inventoryController.onAddItem; set => instance.inventoryController.onAddItem = value; }
 		public static Action<int, ItemInfo> OnRemoveItem { get => instance.inventoryController.onRemoveItem; set => instance.inventoryController.onRemoveItem = value; }
-		public static Action<PlayerInventoryController> OnInventoryOpen { get => instance.inventoryController.onOpenInventory; set => instance.inventoryController.onOpenInventory = value; }
-		public static Action<PlayerInventoryController> OnInventoryClose { get => instance.inventoryController.onCloseInventory; set => instance.inventoryController.onCloseInventory = value; }
+		public static Action<InventoryController> OnInventoryOpen { get => instance.inventoryController.onOpenInventory; set => instance.inventoryController.onOpenInventory = value; }
+		public static Action<InventoryController> OnInventoryClose { get => instance.inventoryController.onCloseInventory; set => instance.inventoryController.onCloseInventory = value; }
 		public static Action<int, string, ItemType, int> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
 
 		//CraftingController

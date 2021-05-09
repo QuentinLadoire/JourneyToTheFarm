@@ -7,42 +7,62 @@ namespace JTTF
 {
     public class InventoryPanel : SimpleObject
     {
-		[SerializeField] Button closeButton = null;
-		[SerializeField] InventorySlot[] inventorySlots = null;
-		PlayerInventoryController inventoryController = null;
+		[SerializeField] protected Button closeButton = null;
+		[SerializeField] protected InventorySlot[] inventorySlots = null;
+		[SerializeField] protected int indexOffset = 0;
+		protected InventoryController inventoryController = null;
 
-		void OnClick()
+		protected void OnClick()
 		{
 			if (inventoryController != null)
 				inventoryController.CloseInventory();
 		}
 
-        void OnAddItem(int index, ItemInfo info)
+		protected void OnAddItem(int index, ItemInfo info)
 		{
-			if (index < 10) return;
+			if (index - indexOffset < 0) return;
 
 			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
-			inventorySlots[index - 10].SetSprite(item.sprite);
-			inventorySlots[index - 10].SetAmount(info.amount);
+			inventorySlots[index - indexOffset].SetSprite(item.sprite);
+			inventorySlots[index - indexOffset].SetAmount(info.amount);
 		}
-		void OnRemoveItem(int index, ItemInfo info)
+		protected void OnRemoveItem(int index, ItemInfo info)
 		{
-			if (index < 10) return;
+			if (index - indexOffset < 0) return;
 
-			inventorySlots[index - 10].SetAmount(info.amount);
+			inventorySlots[index - indexOffset].SetAmount(info.amount);
 			if (info.amount == 0)
-				inventorySlots[index - 10].SetSprite(null);
+				inventorySlots[index - indexOffset].SetSprite(null);
 		}
 
-		void OnInventoryOpen(PlayerInventoryController controller)
+		protected virtual void OnInventoryOpen(InventoryController controller)
 		{
-			gameObject.SetActive(true);
+			SetActive(true);
 			inventoryController = controller;
 		}
-		void OnInventoryClose(PlayerInventoryController controller)
+		protected virtual void OnInventoryClose(InventoryController controller)
 		{
-			gameObject.SetActive(false);
+			SetActive(false);
 			inventoryController = null;
+		}
+
+		protected void SetupPanel()
+		{
+			for (int i = 0; i < inventoryController.GetInventorySize(); i++)
+			{
+				var itemInfo = inventoryController.GetItemInfoAt(i);
+				var item = GameManager.ItemDataBase.GetItem(itemInfo.type, itemInfo.name);
+				inventorySlots[i].SetSprite(item.sprite);
+				inventorySlots[i].SetAmount(itemInfo.amount);
+			}
+		}
+		protected void ClearPanel()
+		{
+			for (int i = 0; i < inventorySlots.Length; i++)
+			{
+				inventorySlots[i].SetSprite(null);
+				inventorySlots[i].SetAmount(0);
+			}
 		}
 
 		protected override void Awake()
@@ -50,20 +70,6 @@ namespace JTTF
 			base.Awake();
 
 			closeButton.onClick.AddListener(OnClick);
-
-			Player.OnAddItem += OnAddItem;
-			Player.OnRemoveItem += OnRemoveItem;
-
-			Player.OnInventoryOpen += OnInventoryOpen;
-			Player.OnInventoryClose += OnInventoryClose;
-		}
-		private void OnDestroy()
-		{
-			Player.OnAddItem -= OnAddItem;
-			Player.OnRemoveItem -= OnRemoveItem;
-
-			Player.OnInventoryOpen -= OnInventoryOpen;
-			Player.OnInventoryClose -= OnInventoryClose;
 		}
 	}
 }

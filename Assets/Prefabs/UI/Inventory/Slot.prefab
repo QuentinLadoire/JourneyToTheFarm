@@ -247,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
   iconImage: {fileID: 8516449771003147161}
+  amountImage: {fileID: 300869139017066199}
   amountText: {fileID: 1955269725155206491}
 --- !u!1 &8936814136025878496
 GameObject:

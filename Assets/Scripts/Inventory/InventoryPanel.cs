@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace JTTF
 {
     public class InventoryPanel : SimpleObject
     {
+		public Action<PointerEventData, int, ItemInfo> onBeginDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnBeginDrag");*/ };
+		public Action<PointerEventData, int, ItemInfo> onDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnDrag");*/ };
+		public Action<PointerEventData, int, ItemInfo> onEndDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
+
 		[SerializeField] protected Button closeButton = null;
 		[SerializeField] protected InventorySlot[] inventorySlots = null;
 		[SerializeField] protected int indexOffset = 0;
@@ -16,6 +22,21 @@ namespace JTTF
 		{
 			if (inventoryController != null)
 				inventoryController.CloseInventory();
+		}
+
+		protected void OnSlotBeginDrag(PointerEventData eventData, int index)
+		{
+			inventorySlots[index].SetVisible(false);
+			onBeginDrag.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index + indexOffset));
+		}
+		protected void OnSlotDrag(PointerEventData eventData, int index)
+		{
+			onDrag.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index));
+		}
+		protected void OnSlotEndDrag(PointerEventData eventData, int index)
+		{
+			inventorySlots[index].SetVisible(true);
+			onEndDrag.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index));
 		}
 
 		protected void OnAddItem(int index, ItemInfo info)
@@ -70,6 +91,14 @@ namespace JTTF
 			base.Awake();
 
 			closeButton.onClick.AddListener(OnClick);
+
+			for (int i = 0; i < inventorySlots.Length; i++)
+			{
+				inventorySlots[i].SetIndex(i);
+				inventorySlots[i].onBeginDrag += OnSlotBeginDrag;
+				inventorySlots[i].onDrag += OnSlotDrag;
+				inventorySlots[i].onEndDrag += OnSlotEndDrag;
+			}
 		}
 	}
 }

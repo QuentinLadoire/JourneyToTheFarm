@@ -77,9 +77,9 @@ namespace JTTF
 
 		public void RemoveItemAt(int index)
 		{
-			var itemInfo = new ItemInfo(inventory.GetItemName(index), inventory.GetItemType(index), inventory.GetItemAmount(index));
 			inventory.RemoveItemAt(index);
 
+			var itemInfo = new ItemInfo(inventory.GetItemName(index), inventory.GetItemType(index), inventory.GetItemAmount(index));
 			onRemoveItem.Invoke(index, itemInfo);
 		}
 		public void RemoveItem(ItemInfo info)
@@ -122,6 +122,11 @@ namespace JTTF
 		public int HowManyItem(string name)
 		{
 			return inventory.HowManyItem(name);
+		}
+
+		public bool IsEmptyAt(int index)
+		{
+			return inventory.IsEmptyAt(index);
 		}
 
 		public int GetInventorySize()

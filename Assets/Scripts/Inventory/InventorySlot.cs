@@ -12,6 +12,7 @@ namespace JTTF
 		public Action<PointerEventData, int> onBeginDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnBeginDrag");*/ };
 		public Action<PointerEventData, int> onDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnDrag");*/ };
 		public Action<PointerEventData, int> onEndDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnEndDrag");*/ };
+		public Action<PointerEventData, int> onDrop = (PointerEventData eventData, int index) => { /*Debug.Log("OnDrop");*/ };
 
 		[SerializeField] Image iconImage = null;
 		[SerializeField] Image amountImage = null;
@@ -25,6 +26,16 @@ namespace JTTF
 			amountImage.enabled = value;
 			amountText.enabled = value;
 		}
+		public void SetIconVisible(bool value)
+		{
+			iconImage.enabled = value;
+		}
+		public void SetAmountVisible(bool value)
+		{
+			amountImage.enabled = value;
+			amountText.enabled = value;
+		}
+
 		public void SetSlot(int index, Sprite sprite, int amount)
 		{
 			this.index = index;
@@ -44,10 +55,10 @@ namespace JTTF
 		{
 			amountText.text = amount.ToString();
 
-			if (amount == 0)
-				SetVisible(false);
+			if (amount <= 1)
+				SetAmountVisible(false);
 			else
-				SetVisible(true);
+				SetAmountVisible(true);
 		}
 		public void SetIndex(int index)
 		{
@@ -62,14 +73,13 @@ namespace JTTF
 		{
 			onDrag.Invoke(eventData, index);
 		}
-		public void OnPointerUp(PointerEventData eventData)
+		public void OnEndDrag(PointerEventData eventData)
 		{
 			onEndDrag.Invoke(eventData, index);
 		}
-
 		public void OnDrop(PointerEventData eventData)
 		{
-			//Debug.Log("OnDrop");
+			onDrop.Invoke(eventData, index);
 		}
 
 		protected override void Awake()

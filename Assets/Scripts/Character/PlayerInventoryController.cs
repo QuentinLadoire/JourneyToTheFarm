@@ -16,10 +16,12 @@ namespace JTTF
 
 		public override void OpenInventory()
 		{
+			isOpen = true;
 			onOpenInventory.Invoke(this);
 		}
 		public override void CloseInventory()
 		{
+			isOpen = false;
 			onCloseInventory.Invoke(this);
 		}
 

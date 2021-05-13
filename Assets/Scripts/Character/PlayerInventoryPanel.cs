@@ -10,17 +10,11 @@ namespace JTTF
 		{
 			base.Awake();
 
-			Player.OnAddItem += OnAddItem;
-			Player.OnRemoveItem += OnRemoveItem;
-
 			Player.OnInventoryOpen += OnInventoryOpen;
 			Player.OnInventoryClose += OnInventoryClose;
 		}
 		private void OnDestroy()
 		{
-			Player.OnAddItem -= OnAddItem;
-			Player.OnRemoveItem -= OnRemoveItem;
-
 			Player.OnInventoryOpen -= OnInventoryOpen;
 			Player.OnInventoryClose -= OnInventoryClose;
 		}

@@ -8,90 +8,62 @@ namespace JTTF
 {
 	public class DragAndDropPanel : SimpleObject
 	{
-		[SerializeField] InventoryPanel playerInventoryPanel = null;
-		[SerializeField] InventoryPanel chestInventoryPanel = null;
 		[SerializeField] Image draggedIconImage = null;
 		[SerializeField] Image draggedAmountImage = null;
 		[SerializeField] Text draggedAmountText = null;
 
-		int draggedIndex = -1;
-		ItemInfo draggedItemInfo;
-		InventoryController draggedController = null;
-
-		void OnBeginDrag(PointerEventData eventData, int index, ItemInfo info, InventoryController controller)
+		void SetVisible(bool value)
 		{
-			draggedIndex = index;
-			draggedItemInfo = info;
-			draggedController = controller;
+			SetIconVisible(value);
+			SetAmountVisible(value);
+		}
+		void SetIconVisible(bool value)
+		{
+			draggedIconImage.enabled = value;
+		}
+		void SetAmountVisible(bool value)
+		{
+			draggedAmountImage.enabled = value;
+			draggedAmountText.enabled = value;
+		}
 
-			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
-
-			draggedIconImage.enabled = true;
-			draggedIconImage.sprite = item.sprite;
-
-			if (info.amount > 1)
+		void OnBeginDrag(PointerEventData eventData, ItemInfo info)
+		{
+			if (info.type != ItemType.None)
 			{
-				draggedAmountImage.enabled = true;
-				draggedAmountText.enabled = true;
-				draggedAmountText.text = info.amount.ToString();
-			}
+				var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
+				draggedIconImage.sprite = item.sprite;
+				draggedIconImage.transform.position = eventData.position;
 
+				SetIconVisible(true);
+				if (info.amount > 1)
+					SetAmountVisible(true);
+			}
+		}
+		void OnDrag(PointerEventData eventData, ItemInfo info)
+		{
 			draggedIconImage.transform.position = eventData.position;
 		}
-		void OnDrag(PointerEventData eventData, int index, ItemInfo info, InventoryController controller)
+		void OnEndDrag(PointerEventData eventData, ItemInfo info)
 		{
-			draggedIconImage.rectTransform.position = eventData.position;
-		}
-		void OnEndDrag(PointerEventData eventData, int index, ItemInfo info, InventoryController controller)
-		{
-			draggedIndex = -1;
-			draggedController = null;
-
-			draggedIconImage.enabled = false;
-			draggedIconImage.sprite = null;
-
-			draggedAmountImage.enabled = false;
-			draggedAmountText.enabled = false;
-			draggedAmountText.text = "";
-		}
-		void OnDrop(PointerEventData eventData, int index, ItemInfo info, InventoryController controller)
-		{
-			if (!(index == draggedIndex && controller == draggedController))
-			{
-				controller.AddItemAt(index, draggedItemInfo);
-				draggedController.RemoveItemAt(draggedIndex);
-			}
+			SetVisible(false);
 		}
 
 		protected override void Awake()
 		{
 			base.Awake();
 
-			draggedIconImage.enabled = false;
-			draggedAmountImage.enabled = false;
-			draggedAmountText.enabled = false;
+			SetVisible(false);
 
-			playerInventoryPanel.onBeginDrag += OnBeginDrag;
-			playerInventoryPanel.onDrag += OnDrag;
-			playerInventoryPanel.onEndDrag += OnEndDrag;
-			playerInventoryPanel.onDrop += OnDrop;
-
-			chestInventoryPanel.onBeginDrag += OnBeginDrag;
-			chestInventoryPanel.onDrag += OnDrag;
-			chestInventoryPanel.onEndDrag += OnEndDrag;
-			chestInventoryPanel.onDrop += OnDrop;
+			InventoryPanel.onBeginDrag += OnBeginDrag;
+			InventoryPanel.onDrag += OnDrag;
+			InventoryPanel.onEndDrag += OnEndDrag;
 		}
 		private void OnDestroy()
 		{
-			playerInventoryPanel.onBeginDrag -= OnBeginDrag;
-			playerInventoryPanel.onDrag -= OnDrag;
-			playerInventoryPanel.onEndDrag -= OnEndDrag;
-			playerInventoryPanel.onDrop -= OnDrop;
-
-			chestInventoryPanel.onBeginDrag -= OnBeginDrag;
-			chestInventoryPanel.onDrag -= OnDrag;
-			chestInventoryPanel.onEndDrag -= OnEndDrag;
-			chestInventoryPanel.onDrop -= OnDrop;
+			InventoryPanel.onBeginDrag -= OnBeginDrag;
+			InventoryPanel.onDrag -= OnDrag;
+			InventoryPanel.onEndDrag -= OnEndDrag;
 		}
 	}
 }

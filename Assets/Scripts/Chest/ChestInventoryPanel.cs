@@ -7,24 +7,6 @@ namespace JTTF
 {
     public class ChestInventoryPanel : InventoryPanel
     {
-		protected override void OnInventoryOpen(InventoryController controller)
-		{
-			base.OnInventoryOpen(controller);
-
-			inventoryController.onAddItem += OnAddItem;
-			inventoryController.onRemoveItem += OnRemoveItem;
-
-			SetupPanel();
-		}
-		protected override void OnInventoryClose(InventoryController controller)
-		{
-			inventoryController.onAddItem -= OnAddItem;
-			inventoryController.onRemoveItem -= OnRemoveItem;
-			ClearPanel();
-
-			base.OnInventoryClose(controller);
-		}
-
 		protected override void Awake()
 		{
 			base.Awake();

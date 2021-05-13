@@ -33,13 +33,16 @@ namespace JTTF
 		}
 		public void RemoveItemAt(int index)
 		{
-			slots[index].ItemName = "";
+			slots[index].ItemName = "None";
 			slots[index].ItemType = ItemType.None;
 			slots[index].Amount = 0;
 		}
 		public void RemoveItemAt(int index, int amount)
 		{
-			slots[index].Amount -= amount;
+			if (slots[index].Amount - amount <= 0)
+				RemoveItemAt(index);
+			else
+				slots[index].Amount -= amount;
 		}
 
 		public int GetSize()

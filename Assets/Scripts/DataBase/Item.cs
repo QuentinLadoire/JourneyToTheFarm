@@ -19,6 +19,8 @@ namespace JTTF
 	[System.Serializable]
 	public struct ItemInfo
 	{
+		public static ItemInfo Default => new ItemInfo("None", ItemType.None, 0);
+
 		public string name;
 		public ItemType type;
 		public int amount;
@@ -28,6 +30,15 @@ namespace JTTF
 			this.name = name;
 			this.type = type;
 			this.amount = amount;
+		}
+
+		public static bool operator ==(ItemInfo info1, ItemInfo info2)
+		{
+			return info1.name == info2.name && info1.type == info2.type && info1.amount == info2.amount;
+		}
+		public static bool operator !=(ItemInfo info1, ItemInfo info2)
+		{
+			return info1.name != info2.name || info1.type != info2.type || info1.amount != info2.amount;
 		}
 	}
 

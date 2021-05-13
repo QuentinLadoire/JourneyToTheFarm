@@ -7,109 +7,121 @@ using UnityEngine.EventSystems;
 
 namespace JTTF
 {
-    public class InventoryPanel : SimpleObject
-    {
-		public Action<PointerEventData, int, ItemInfo, InventoryController> onBeginDrag = (PointerEventData eventData, int index, ItemInfo info, InventoryController controller) => { /*Debug.Log("OnBeginDrag");*/ };
-		public Action<PointerEventData, int, ItemInfo, InventoryController> onDrag = (PointerEventData eventData, int index, ItemInfo info, InventoryController controller) => { /*Debug.Log("OnDrag");*/ };
-		public Action<PointerEventData, int, ItemInfo, InventoryController> onEndDrag = (PointerEventData eventData, int index, ItemInfo info, InventoryController controller) => { /*Debug.Log("OnEndDrag");*/ };
-		public Action<PointerEventData, int, ItemInfo, InventoryController> onDrop = (PointerEventData eventData, int index, ItemInfo info, InventoryController controller) => { /*Debug.Log("OnDrop");*/ };
+	struct DraggedItemInfo
+	{
+		public static DraggedItemInfo Default => new DraggedItemInfo(ItemInfo.Default, -1);
 
-		[SerializeField] protected Button closeButton = null;
-		[SerializeField] protected InventorySlot[] inventorySlots = null;
-		[SerializeField] protected int indexOffset = 0;
+		public ItemInfo info;
+		public int index;
+
+		public DraggedItemInfo(ItemInfo info, int index)
+		{
+			this.info = info;
+			this.index = index;
+		}
+
+		public static bool operator ==(DraggedItemInfo info1, DraggedItemInfo info2)
+		{
+			return info1.info == info2.info && info1.index == info2.index;
+		}
+		public static bool operator !=(DraggedItemInfo info1, DraggedItemInfo info2)
+		{
+			return info1.info != info2.info || info1.index != info2.index;
+		}
+	}
+
+	public class InventoryPanel : SimpleObject
+    {
+		public static Action<PointerEventData, ItemInfo> onBeginDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnBeginDrag");*/ };
+		public static Action<PointerEventData, ItemInfo> onDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnDrag");*/ };
+		public static Action<PointerEventData, ItemInfo> onEndDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
+
+		static DraggedItemInfo draggedItemInfo = DraggedItemInfo.Default;
+
+		[SerializeField] Button closeButton = null;
+		[SerializeField] InventorySlot[] inventorySlots = null;
+		[SerializeField] int indexOffset = 0;
 		protected InventoryController inventoryController = null;
 
-		bool hasDrag = false;
-		bool hasDrop = false;
-
-		protected void OnClick()
+		void OnSlotBeginDrag(PointerEventData eventData, int index, ItemInfo info)
 		{
-			if (inventoryController != null)
-				inventoryController.CloseInventory();
+			draggedItemInfo = new DraggedItemInfo(info, index + indexOffset);
+			inventoryController.RemoveItemAt(index + indexOffset);
+
+			onBeginDrag.Invoke(eventData, info);
 		}
-
-		protected void OnSlotBeginDrag(PointerEventData eventData, int index)
+		void OnSlotDrag(PointerEventData eventData, int index, ItemInfo info)
 		{
-			if (!inventoryController.IsEmptyAt(index + indexOffset))
+			onDrag.Invoke(eventData, info);
+		}
+		void OnSlotEndDrag(PointerEventData eventData, int index, ItemInfo info)
+		{
+			if (draggedItemInfo != DraggedItemInfo.Default)
 			{
-				hasDrag = true;
-
-				inventorySlots[index].SetVisible(false);
-
-				onBeginDrag.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index + indexOffset), inventoryController);
+				inventoryController.AddItemAt(draggedItemInfo.index, draggedItemInfo.info);
+				draggedItemInfo = DraggedItemInfo.Default;
 			}
+
+			onEndDrag.Invoke(eventData, info);
 		}
-		protected void OnSlotDrag(PointerEventData eventData, int index)
+		void OnSlotDrop(PointerEventData eventData, int index, ItemInfo info)
 		{
-			if (hasDrag)
-				onDrag.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index), inventoryController);
-		}
-		protected void OnSlotEndDrag(PointerEventData eventData, int index)
-		{
-			if (hasDrag)
-			{
-				hasDrag = false;
-
-				if (!hasDrop)
-					inventorySlots[index].SetVisible(true);
-				else
-					hasDrop = false;
-
-				onEndDrag.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index), inventoryController);
-			}
-		}
-		protected void OnSlotDrop(PointerEventData eventData, int index)
-		{
-			hasDrop = true;
-
-			onDrop.Invoke(eventData, index + indexOffset, inventoryController.GetItemInfoAt(index + indexOffset), inventoryController);
-		}
-
-		protected void OnAddItem(int index, ItemInfo info)
-		{
-			if (index - indexOffset < 0) return;
-
-			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
-			inventorySlots[index - indexOffset].SetSprite(item.sprite);
-			inventorySlots[index - indexOffset].SetAmount(info.amount);
-		}
-		protected void OnRemoveItem(int index, ItemInfo info)
-		{
-			if (index - indexOffset < 0) return;
-
-			var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
-			inventorySlots[index - indexOffset].SetSprite(item.sprite);
-			inventorySlots[index - indexOffset].SetAmount(info.amount);
+			inventoryController.AddItemAt(index + indexOffset, draggedItemInfo.info);
+			draggedItemInfo = DraggedItemInfo.Default;
 		}
 
 		protected virtual void OnInventoryOpen(InventoryController controller)
 		{
 			SetActive(true);
+
 			inventoryController = controller;
+			inventoryController.onAddItem += OnAddItem;
+			inventoryController.onRemoveItem += OnRemoveItem;
+
+			SetupPanel();
 		}
 		protected virtual void OnInventoryClose(InventoryController controller)
 		{
-			SetActive(false);
+			ClearPanel();
+			
+			inventoryController.onAddItem -= OnAddItem;
+			inventoryController.onRemoveItem -= OnRemoveItem;
 			inventoryController = null;
+
+			SetActive(false);
 		}
 
-		protected void SetupPanel()
+		void OnAddItem(int index, ItemInfo info)
 		{
-			for (int i = 0; i < inventoryController.GetInventorySize(); i++)
-			{
-				var itemInfo = inventoryController.GetItemInfoAt(i);
-				var item = GameManager.ItemDataBase.GetItem(itemInfo.type, itemInfo.name);
-				inventorySlots[i].SetSprite(item.sprite);
-				inventorySlots[i].SetAmount(itemInfo.amount);
-			}
+			if (index - indexOffset < 0) return;
+
+			inventorySlots[index - indexOffset].SetItem(info);
 		}
-		protected void ClearPanel()
+		void OnRemoveItem(int index, ItemInfo info)
+		{
+			if (index - indexOffset < 0) return;
+
+			inventorySlots[index - indexOffset].SetItem(info);
+		}
+
+		void SetupPanel()
 		{
 			for (int i = 0; i < inventorySlots.Length; i++)
 			{
-				inventorySlots[i].SetSprite(null);
-				inventorySlots[i].SetAmount(0);
+				var itemInfo = inventoryController.GetItemInfoAt(i + indexOffset);
+				inventorySlots[i].SetItem(itemInfo);
 			}
+		}
+		void ClearPanel()
+		{
+			for (int i = 0; i < inventorySlots.Length; i++)
+				inventorySlots[i].SetItem(ItemInfo.Default);
+		}
+
+		void OnClick()
+		{
+			if (inventoryController != null)
+				inventoryController.CloseInventory();
 		}
 
 		protected override void Awake()

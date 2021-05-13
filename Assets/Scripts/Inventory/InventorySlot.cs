@@ -9,16 +9,17 @@ namespace JTTF
 {
     public class InventorySlot : SimpleObject, IDragable, IDropable
     {
-		public Action<PointerEventData, int> onBeginDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnBeginDrag");*/ };
-		public Action<PointerEventData, int> onDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnDrag");*/ };
-		public Action<PointerEventData, int> onEndDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnEndDrag");*/ };
-		public Action<PointerEventData, int> onDrop = (PointerEventData eventData, int index) => { /*Debug.Log("OnDrop");*/ };
+		public Action<PointerEventData, int, ItemInfo> onBeginDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnBeginDrag");*/ };
+		public Action<PointerEventData, int, ItemInfo> onDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnDrag");*/ };
+		public Action<PointerEventData, int, ItemInfo> onEndDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
+		public Action<PointerEventData, int, ItemInfo> onDrop = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnDrop");*/ };
 
 		[SerializeField] Image iconImage = null;
 		[SerializeField] Image amountImage = null;
 		[SerializeField] Text amountText = null;
 
-		int index = -1;
+		public ItemInfo itemInfo = ItemInfo.Default;
+		public int index = -1;
 
 		public void SetVisible(bool value)
 		{
@@ -36,12 +37,44 @@ namespace JTTF
 			amountText.enabled = value;
 		}
 
-		public void SetSlot(int index, Sprite sprite, int amount)
+		public void SetItem(ItemInfo info)
+		{
+			itemInfo = info;
+
+			if (itemInfo.type != ItemType.None)
+			{
+				var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
+				SetSprite(item.sprite);
+				SetAmount(info.amount);
+			}
+			else
+			{
+				SetSprite(null);
+				SetAmount(0);
+			}
+		}
+		public void SetIndex(int index)
 		{
 			this.index = index;
-			iconImage.sprite = sprite;
-			amountText.text = amount.ToString();
 		}
+
+		public void OnPointerDown(PointerEventData eventData)
+		{
+			onBeginDrag.Invoke(eventData, index, itemInfo);
+		}
+		public void OnDrag(PointerEventData eventData)
+		{
+			onDrag.Invoke(eventData, index, itemInfo);
+		}
+		public void OnEndDrag(PointerEventData eventData)
+		{
+			onEndDrag.Invoke(eventData, index, itemInfo);
+		}
+		public void OnDrop(PointerEventData eventData)
+		{
+			onDrop.Invoke(eventData, index, itemInfo);
+		}
+
 		public void SetSprite(Sprite sprite)
 		{
 			iconImage.sprite = sprite;
@@ -59,27 +92,6 @@ namespace JTTF
 				SetAmountVisible(false);
 			else
 				SetAmountVisible(true);
-		}
-		public void SetIndex(int index)
-		{
-			this.index = index;
-		}
-
-		public void OnPointerDown(PointerEventData eventData)
-		{
-			onBeginDrag.Invoke(eventData, index);
-		}
-		public void OnDrag(PointerEventData eventData)
-		{
-			onDrag.Invoke(eventData, index);
-		}
-		public void OnEndDrag(PointerEventData eventData)
-		{
-			onEndDrag.Invoke(eventData, index);
-		}
-		public void OnDrop(PointerEventData eventData)
-		{
-			onDrop.Invoke(eventData, index);
 		}
 
 		protected override void Awake()

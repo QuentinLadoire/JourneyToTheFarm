@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	struct DraggedItemInfo
+	public struct DraggedItemInfo
 	{
 		public static DraggedItemInfo Default => new DraggedItemInfo(ItemInfo.Default, -1);
 
@@ -167,6 +167,11 @@ namespace JTTF
 				AddItemAt(draggedItemInfo.index, draggedItemInfo.info);
 				draggedItemInfo = DraggedItemInfo.Default;
 			}
+		}
+
+		public DraggedItemInfo GetDraggedItem()
+		{
+			return draggedItemInfo;
 		}
 
 		public bool HasItemAmount(string name, int amount)

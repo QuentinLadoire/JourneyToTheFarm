@@ -13,30 +13,45 @@ namespace JTTF
 		public static Action<PointerEventData, ItemInfo> onDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnDrag");*/ };
 		public static Action<PointerEventData, ItemInfo> onEndDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
 
-		static DraggedItemInfo draggedItemInfo = DraggedItemInfo.Default;
-
 		[SerializeField] Button closeButton = null;
 		[SerializeField] InventorySlot[] inventorySlots = null;
 		[SerializeField] int indexOffset = 0;
 		protected InventoryController inventoryController = null;
 
-		void OnSlotBeginDrag(PointerEventData eventData, int index, ItemInfo info)
+		bool hasDrag = false;
+
+		void OnSlotPointerDown(PointerEventData eventData, int index)
 		{
 			inventoryController.DragItemAt(index + indexOffset);
 
-			onBeginDrag.Invoke(eventData, info);
+			onBeginDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
 		}
-		void OnSlotDrag(PointerEventData eventData, int index, ItemInfo info)
+		void OnSlotBeginDrag(PointerEventData eventData, int index)
 		{
-			onDrag.Invoke(eventData, info);
+			hasDrag = true;
 		}
-		void OnSlotEndDrag(PointerEventData eventData, int index, ItemInfo info)
+		void OnSlotDrag(PointerEventData eventData, int index)
 		{
+			onDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
+		}
+		void OnSlotEndDrag(PointerEventData eventData, int index)
+		{
+			hasDrag = false;
+
 			inventoryController.CancelDrag();
 
-			onEndDrag.Invoke(eventData, info);
+			onEndDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
 		}
-		void OnSlotDrop(PointerEventData eventData, int index, ItemInfo info)
+		void OnSlotPointerUp(PointerEventData eventData, int index)
+		{
+			if (!hasDrag)
+			{
+				inventoryController.CancelDrag();
+
+				onEndDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
+			}
+		}
+		void OnSlotDrop(PointerEventData eventData, int index)
 		{
 			inventoryController.DropItemAt(index + indexOffset);
 		}
@@ -104,9 +119,13 @@ namespace JTTF
 			for (int i = 0; i < inventorySlots.Length; i++)
 			{
 				inventorySlots[i].SetIndex(i);
+
+				inventorySlots[i].onPointerDown += OnSlotPointerDown;
 				inventorySlots[i].onBeginDrag += OnSlotBeginDrag;
 				inventorySlots[i].onDrag += OnSlotDrag;
 				inventorySlots[i].onEndDrag += OnSlotEndDrag;
+				inventorySlots[i].onPointerUp += OnSlotPointerUp;
+
 				inventorySlots[i].onDrop += OnSlotDrop;
 			}
 		}

@@ -9,16 +9,17 @@ namespace JTTF
 {
     public class InventorySlot : SimpleObject, IDragable, IDropable
     {
-		public Action<PointerEventData, int, ItemInfo> onBeginDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnBeginDrag");*/ };
-		public Action<PointerEventData, int, ItemInfo> onDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnDrag");*/ };
-		public Action<PointerEventData, int, ItemInfo> onEndDrag = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
-		public Action<PointerEventData, int, ItemInfo> onDrop = (PointerEventData eventData, int index, ItemInfo info) => { /*Debug.Log("OnDrop");*/ };
+		public Action<PointerEventData, int> onPointerDown = (PointerEventData eventData, int index) => { /*Debug.Log("OnPointerDown");*/ };
+		public Action<PointerEventData, int> onBeginDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnBeginDrag");*/ };
+		public Action<PointerEventData, int> onDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnDrag");*/ };
+		public Action<PointerEventData, int> onEndDrag = (PointerEventData eventData, int index) => { /*Debug.Log("OnEndDrag");*/ };
+		public Action<PointerEventData, int> onPointerUp = (PointerEventData eventData, int index) => { /*Debug.Log("OnPointerUp");*/ };
+		public Action<PointerEventData, int> onDrop = (PointerEventData eventData, int index) => { /*Debug.Log("OnDrop");*/ };
 
 		[SerializeField] Image iconImage = null;
 		[SerializeField] Image amountImage = null;
 		[SerializeField] Text amountText = null;
 
-		public ItemInfo itemInfo = ItemInfo.Default;
 		public int index = -1;
 
 		public void SetVisible(bool value)
@@ -39,9 +40,7 @@ namespace JTTF
 
 		public void SetItem(ItemInfo info)
 		{
-			itemInfo = info;
-
-			if (itemInfo.type != ItemType.None)
+			if (info.type != ItemType.None)
 			{
 				var item = GameManager.ItemDataBase.GetItem(info.type, info.name);
 				SetSprite(item.sprite);
@@ -60,19 +59,28 @@ namespace JTTF
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
-			onBeginDrag.Invoke(eventData, index, itemInfo);
+			onPointerDown.Invoke(eventData, index);
+		}
+		public void OnBeginDrag(PointerEventData eventData)
+		{
+			onBeginDrag.Invoke(eventData, index);
 		}
 		public void OnDrag(PointerEventData eventData)
 		{
-			onDrag.Invoke(eventData, index, itemInfo);
+			onDrag.Invoke(eventData, index);
 		}
 		public void OnEndDrag(PointerEventData eventData)
 		{
-			onEndDrag.Invoke(eventData, index, itemInfo);
+			onEndDrag.Invoke(eventData, index);
 		}
+		public void OnPointerUp(PointerEventData eventData)
+		{
+			onPointerUp.Invoke(eventData, index);
+		}
+
 		public void OnDrop(PointerEventData eventData)
 		{
-			onDrop.Invoke(eventData, index, itemInfo);
+			onDrop.Invoke(eventData, index);
 		}
 
 		public void SetSprite(Sprite sprite)

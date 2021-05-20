@@ -7,29 +7,6 @@ using UnityEngine.EventSystems;
 
 namespace JTTF
 {
-	struct DraggedItemInfo
-	{
-		public static DraggedItemInfo Default => new DraggedItemInfo(ItemInfo.Default, -1);
-
-		public ItemInfo info;
-		public int index;
-
-		public DraggedItemInfo(ItemInfo info, int index)
-		{
-			this.info = info;
-			this.index = index;
-		}
-
-		public static bool operator ==(DraggedItemInfo info1, DraggedItemInfo info2)
-		{
-			return info1.info == info2.info && info1.index == info2.index;
-		}
-		public static bool operator !=(DraggedItemInfo info1, DraggedItemInfo info2)
-		{
-			return info1.info != info2.info || info1.index != info2.index;
-		}
-	}
-
 	public class InventoryPanel : SimpleObject
     {
 		public static Action<PointerEventData, ItemInfo> onBeginDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnBeginDrag");*/ };
@@ -45,8 +22,7 @@ namespace JTTF
 
 		void OnSlotBeginDrag(PointerEventData eventData, int index, ItemInfo info)
 		{
-			draggedItemInfo = new DraggedItemInfo(info, index + indexOffset);
-			inventoryController.RemoveItemAt(index + indexOffset);
+			inventoryController.DragItemAt(index + indexOffset);
 
 			onBeginDrag.Invoke(eventData, info);
 		}
@@ -56,18 +32,13 @@ namespace JTTF
 		}
 		void OnSlotEndDrag(PointerEventData eventData, int index, ItemInfo info)
 		{
-			if (draggedItemInfo != DraggedItemInfo.Default)
-			{
-				inventoryController.AddItemAt(draggedItemInfo.index, draggedItemInfo.info);
-				draggedItemInfo = DraggedItemInfo.Default;
-			}
+			inventoryController.CancelDrag();
 
 			onEndDrag.Invoke(eventData, info);
 		}
 		void OnSlotDrop(PointerEventData eventData, int index, ItemInfo info)
 		{
-			inventoryController.AddItemAt(index + indexOffset, draggedItemInfo.info);
-			draggedItemInfo = DraggedItemInfo.Default;
+			inventoryController.DropItemAt(index + indexOffset);
 		}
 
 		protected virtual void OnInventoryOpen(InventoryController controller)

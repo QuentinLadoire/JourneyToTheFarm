@@ -40,6 +40,22 @@ namespace JTTF
 		{
 			return info1.name != info2.name || info1.type != info2.type || info1.amount != info2.amount;
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is ItemInfo info &&
+				   name == info.name &&
+				   type == info.type &&
+				   amount == info.amount;
+		}
+		public override int GetHashCode()
+		{
+			int hashCode = 1851593700;
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
+			hashCode = hashCode * -1521134295 + type.GetHashCode();
+			hashCode = hashCode * -1521134295 + amount.GetHashCode();
+			return hashCode;
+		}
 	}
 
 	[System.Serializable]

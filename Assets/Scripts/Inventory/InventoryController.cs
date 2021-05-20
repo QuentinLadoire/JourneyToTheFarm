@@ -5,8 +5,47 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public abstract class InventoryController : MonoBehaviour
+	struct DraggedItemInfo
+	{
+		public static DraggedItemInfo Default => new DraggedItemInfo(ItemInfo.Default, -1);
+
+		public ItemInfo info;
+		public int index;
+
+		public DraggedItemInfo(ItemInfo info, int index)
+		{
+			this.info = info;
+			this.index = index;
+		}
+
+		public static bool operator ==(DraggedItemInfo info1, DraggedItemInfo info2)
+		{
+			return info1.info == info2.info && info1.index == info2.index;
+		}
+		public static bool operator !=(DraggedItemInfo info1, DraggedItemInfo info2)
+		{
+			return info1.info != info2.info || info1.index != info2.index;
+		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is DraggedItemInfo info &&
+				   EqualityComparer<ItemInfo>.Default.Equals(this.info, info.info) &&
+				   index == info.index;
+		}
+		public override int GetHashCode()
+		{
+			int hashCode = -522358152;
+			hashCode = hashCode * -1521134295 + info.GetHashCode();
+			hashCode = hashCode * -1521134295 + index.GetHashCode();
+			return hashCode;
+		}
+	}
+
+	public abstract class InventoryController : MonoBehaviour
     {
+		static DraggedItemInfo draggedItemInfo = DraggedItemInfo.Default;
+
 		public Action<int, ItemInfo> onAddItem = (int index, ItemInfo info) => { /*Debug.Log("OnAddItem");*/ };
 		public Action<int, ItemInfo> onRemoveItem = (int index, ItemInfo info) => { /*Debug.Log("OnRemoveItem");*/ };
 
@@ -108,6 +147,25 @@ namespace JTTF
 						}
 					}
 				}
+			}
+		}
+
+		public void DragItemAt(int index)
+		{
+			draggedItemInfo = new DraggedItemInfo(GetItemInfoAt(index), index);
+			RemoveItemAt(index);
+		}
+		public void DropItemAt(int index)
+		{
+			AddItemAt(index, draggedItemInfo.info);
+			draggedItemInfo = DraggedItemInfo.Default;
+		}
+		public void CancelDrag()
+		{
+			if (draggedItemInfo != DraggedItemInfo.Default)
+			{
+				AddItemAt(draggedItemInfo.index, draggedItemInfo.info);
+				draggedItemInfo = DraggedItemInfo.Default;
 			}
 		}
 

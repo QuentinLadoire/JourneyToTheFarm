@@ -81,11 +81,11 @@ namespace JTTF
 			Chest.OnOpenInventory += OnOpenChestInventory;
 			Chest.OnCloseInventory += OnCloseChestInventory;
 
-			Player.AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
-			Player.AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 1));
-			Player.AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
-			Player.AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
-			Player.AddItem(new ItemInfo("Chest", ItemType.Container, 1));
+			//Player.AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
+			//Player.AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 1));
+			//Player.AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
+			//Player.AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
+			//Player.AddItem(new ItemInfo("Chest", ItemType.Container, 1));
 		}
 		private void Update()
 		{

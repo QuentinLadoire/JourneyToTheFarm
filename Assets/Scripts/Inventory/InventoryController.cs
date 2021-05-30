@@ -7,15 +7,17 @@ namespace JTTF
 {
 	public struct DraggedItemInfo
 	{
-		public static DraggedItemInfo Default => new DraggedItemInfo(ItemInfo.Default, -1);
+		public static DraggedItemInfo Default => new DraggedItemInfo(ItemInfo.Default, -1, null);
 
 		public ItemInfo info;
 		public int index;
+		public InventoryController controller;
 
-		public DraggedItemInfo(ItemInfo info, int index)
+		public DraggedItemInfo(ItemInfo info, int index, InventoryController controller)
 		{
 			this.info = info;
 			this.index = index;
+			this.controller = controller;
 		}
 
 		public static bool operator ==(DraggedItemInfo info1, DraggedItemInfo info2)
@@ -152,11 +154,17 @@ namespace JTTF
 
 		public void DragItemAt(int index)
 		{
-			draggedItemInfo = new DraggedItemInfo(GetItemInfoAt(index), index);
+			draggedItemInfo = new DraggedItemInfo(GetItemInfoAt(index), index, this);
 			RemoveItemAt(index);
 		}
 		public void DropItemAt(int index)
 		{
+			var itemInfo = GetItemInfoAt(index);
+			if (itemInfo != ItemInfo.Default)
+			{
+				draggedItemInfo.controller.AddItemAt(draggedItemInfo.index, itemInfo);
+			}
+
 			AddItemAt(index, draggedItemInfo.info);
 			draggedItemInfo = DraggedItemInfo.Default;
 		}

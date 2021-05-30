@@ -77,15 +77,15 @@ namespace JTTF
 			SetActive(false);
 		}
 
-		void OnAddItem(int index, ItemInfo info)
+		protected void OnAddItem(int index, ItemInfo info)
 		{
-			if (index - indexOffset < 0) return;
+			if (index - indexOffset < 0 || index - indexOffset >= inventorySlots.Length) return;
 
 			inventorySlots[index - indexOffset].SetItem(info);
 		}
-		void OnRemoveItem(int index, ItemInfo info)
+		protected void OnRemoveItem(int index, ItemInfo info)
 		{
-			if (index - indexOffset < 0) return;
+			if (index - indexOffset < 0 || index - indexOffset >= inventorySlots.Length) return;
 
 			inventorySlots[index - indexOffset].SetItem(info);
 		}
@@ -114,7 +114,8 @@ namespace JTTF
 		{
 			base.Awake();
 
-			closeButton.onClick.AddListener(OnClick);
+			if (closeButton != null)
+				closeButton.onClick.AddListener(OnClick);
 
 			for (int i = 0; i < inventorySlots.Length; i++)
 			{

@@ -31,6 +31,7 @@ namespace JTTF
 		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }
 
 		//InventoryController
+		public static InventoryController InventoryController { get => instance.inventoryController; }
 		public static Action<int, ItemInfo> OnAddItem { get => instance.inventoryController.onAddItem; set => instance.inventoryController.onAddItem = value; }
 		public static Action<int, ItemInfo> OnRemoveItem { get => instance.inventoryController.onRemoveItem; set => instance.inventoryController.onRemoveItem = value; }
 		public static Action<InventoryController> OnInventoryOpen { get => instance.inventoryController.onOpenInventory; set => instance.inventoryController.onOpenInventory = value; }

@@ -12,6 +12,8 @@ namespace JTTF
 
 		[SerializeField] ItemDataBase itemDataBase = null;
 
+		int openedPanelNB = 0;
+
 		public static int GetConstructiblRaycastMask()
 		{
 			return LayerMask.GetMask("Ground", "Road", "Rock", "Tree", "Hill");
@@ -27,41 +29,56 @@ namespace JTTF
 
 		void OnInventoryOpen(InventoryController controller)
 		{
-			Cursor.lockState = CursorLockMode.Confined;
+			openedPanelNB++;
 
+			Cursor.lockState = CursorLockMode.Confined;
 			Player.DesactiveControl();
 		}
 		void OnInventoryClose(InventoryController controller)
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			openedPanelNB--;
 
-			Player.ActiveControl();
+			if (openedPanelNB == 0)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Player.ActiveControl();
+			}
 		}
 
 		void OnCraftingOpen()
 		{
-			Cursor.lockState = CursorLockMode.Confined;
+			openedPanelNB++;
 
+			Cursor.lockState = CursorLockMode.Confined;
 			Player.DesactiveControl();
 		}
 		void OnCraftingClose()
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			openedPanelNB--;
 
-			Player.ActiveControl();
+			if (openedPanelNB == 0)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Player.ActiveControl();
+			}
 		}
 
 		void OnOpenChestInventory(InventoryController controller)
 		{
-			Cursor.lockState = CursorLockMode.Confined;
+			openedPanelNB++;
 
+			Cursor.lockState = CursorLockMode.Confined;
 			Player.DesactiveControl();
 		}
 		void OnCloseChestInventory(InventoryController controller)
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			openedPanelNB--;
 
-			Player.ActiveControl();
+			if (openedPanelNB == 0)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Player.ActiveControl();
+			}
 		}
 
 		private void Awake()

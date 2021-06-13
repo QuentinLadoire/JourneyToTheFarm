@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1674697094717658101}
   - component: {fileID: 3088693724547309665}
   m_Layer: 5
-  m_Name: ScrollbarInventoryPanel
+  m_Name: ShortcutInventoryPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   - {fileID: 3642206163287572258}
   - {fileID: 362614284523436671}
   indexOffset: 0
+  selectedImage: {fileID: 3307880421699666805}
 --- !u!1 &3307880421699666805
 GameObject:
   m_ObjectHideFlags: 0

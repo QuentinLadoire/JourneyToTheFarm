@@ -51,6 +51,17 @@ namespace JTTF
 
 			currentIndex = index;
 		}
+		void OnAddItem(int index, ItemInfo info)
+		{
+			if (index == currentIndex)
+			{
+				ClearHandedObject();
+
+				InstantiateObject(info.type, info.name, info.amount);
+
+				CheckIsHandable();
+			}
+		}
 		void OnRemoveItem(int index, ItemInfo info)
 		{
 			if (currentIndex == index && info.amount == 0)
@@ -60,11 +71,13 @@ namespace JTTF
 		private void Awake()
 		{
 			Player.OnScroll += OnScroll;
+			Player.OnAddItem += OnAddItem;
 			Player.OnRemoveItem += OnRemoveItem;
 		}
 		private void OnDestroy()
 		{
 			Player.OnScroll -= OnScroll;
+			Player.OnAddItem -= OnAddItem;
 			Player.OnRemoveItem -= OnRemoveItem;
 		}
 	}

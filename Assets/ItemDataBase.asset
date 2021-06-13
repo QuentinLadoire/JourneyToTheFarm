@@ -32,7 +32,7 @@ MonoBehaviour:
   - name: WheatSeedBag
     type: 1
     stackable: 1
-    sprite: {fileID: 21300000, guid: 05458bf22f8428e459d44576841b2c2c, type: 3}
+    sprite: {fileID: 21300000, guid: daa9cd55afab54647a5dbebff3ec4494, type: 3}
     prefab: {fileID: 2183954413004688833, guid: 494760c492ae22e4cbdcea8811b9a190, type: 3}
   seeds:
   - name: WheatSeedStep1

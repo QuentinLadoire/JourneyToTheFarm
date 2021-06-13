@@ -14,7 +14,7 @@ namespace JTTF
 		public static Action<PointerEventData, ItemInfo> onEndDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
 
 		[SerializeField] Button closeButton = null;
-		[SerializeField] InventorySlot[] inventorySlots = null;
+		[SerializeField] protected InventorySlot[] inventorySlots = null;
 		[SerializeField] int indexOffset = 0;
 		protected InventoryController inventoryController = null;
 

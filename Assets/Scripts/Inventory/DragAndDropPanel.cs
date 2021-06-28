@@ -37,7 +37,10 @@ namespace JTTF
 
 				SetIconVisible(true);
 				if (info.amount > 1)
+				{
+					draggedAmountText.text = info.amount.ToString();
 					SetAmountVisible(true);
+				}
 			}
 		}
 		void OnDrag(PointerEventData eventData, ItemInfo info)

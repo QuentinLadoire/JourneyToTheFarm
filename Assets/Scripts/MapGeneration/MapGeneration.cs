@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapGeneration : MonoBehaviour
 {
-	[SerializeField] int squareSize = 1;
+	public MapSetting mapSetting = null;
 
 	MeshFilter meshFilter = null;
 
@@ -87,6 +87,6 @@ public class MapGeneration : MonoBehaviour
 	}
 	private void Start()
 	{
-		meshFilter.mesh = GenerateMesh(squareSize);
+		meshFilter.mesh = GenerateMesh(mapSetting.squareSize);
 	}
 }

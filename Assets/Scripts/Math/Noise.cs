@@ -1,6 +1,6 @@
 using System;
 
-public class Noise
+public static class Noise
 {
 	static readonly int[] perm = {
 		151, 160, 137,  91,  90,  15, 131,  13, 201,  95,  96,  53, 194, 233,
@@ -107,9 +107,9 @@ public class Noise
 		float dy1 = (y - (y0 + 1));
 
 		float u = Fade(dx0);
-		return (Lerp(Lerp(Grad(aa, dx0, dy0), Grad(ba, dx1, dy0), u),
+		return Lerp(Lerp(Grad(aa, dx0, dy0), Grad(ba, dx1, dy0), u),
 						  Lerp(Grad(ab, dx0, dy1), Grad(bb, dx1, dy1), u),
-						  Fade(dy0)) + 1) / 2;
+						  Fade(dy0));
 
 		//int x0 = (int)Math.Floor(x);
 		//int y0 = (int)Math.Floor(y);
@@ -146,7 +146,11 @@ public class Noise
 		//float lerp2 = Lerp(dot2, dot3, Fade(x - x0));
 		//float lerp3 = Lerp(lerp1, lerp2, Fade(y - y0));
 
-		//return (lerp3 + 1) / 2;
+		//return lerp3;
+	}
+	public static float Noise2DNormalized(float x, float y)
+	{
+		return (Noise2D(x, y) + 1) / 2;
 	}
 	public static float Noise3D(float x, float y, float z)
 	{
@@ -178,14 +182,14 @@ public class Noise
 		float u = Fade(dx0);
 		float v = Fade(dy0);
 
-		return (Lerp(Lerp(Lerp(Grad(aaa, dx0, dy0, dz0), Grad(baa, dx1, dy0, dz0), u),
+		return Lerp(Lerp(Lerp(Grad(aaa, dx0, dy0, dz0), Grad(baa, dx1, dy0, dz0), u),
 						  Lerp(Grad(aba, dx0, dy1, dz0), Grad(bba, dx1, dy1, dz0), u),
 						  v),
 
 					 Lerp(Lerp(Grad(aab, dx0, dy0, dz1), Grad(bab, dx1, dy0, dz1), u),
 						  Lerp(Grad(abb, dx0, dy1, dz1), Grad(bbb, dx1, dy1, dz1), u),
 						  v),
-					 Fade(dz0)) + 1) / 2;
+					 Fade(dz0));
 
 		//int x0 = (int)Math.Floor(x);
 		//int y0 = (int)Math.Floor(y);
@@ -259,7 +263,11 @@ public class Noise
 		//
 		//float lerp7 = Lerp(lerp3, lerp6, Fade(z - z0));
 		//
-		//return (lerp7 + 1) / 2;
+		//return lerp7;
+	}
+	public static float Noise3DNormalized(float x, float y, float z)
+	{
+		return (Noise3D(x, y, z) + 1) / 2;
 	}
 
 	public static float CoherentNoise2D(float x, float y, int octaves, float persistance, float lacunarity, float scaleX, float scaleY, int seed)
@@ -283,6 +291,27 @@ public class Noise
 
 		return height / maxHeight;
 	}
+	public static float CoherentNoise2DNormalized(float x, float y, int octaves, float persistance, float lacunarity, float scaleX, float scaleY, int seed)
+	{
+		Random random = new Random(seed);
+
+		float frequency = 1.0f;
+		float amplitude = 1.0f;
+		float height = 0.0f;
+		float maxHeight = 0.0f;
+
+		for (int i = 0; i < octaves; i++)
+		{
+			height += Noise2DNormalized((x + random.Next(-100000, 100000)) / scaleX * frequency,
+							  (y + random.Next(-100000, 100000)) / scaleY * frequency) * amplitude;
+			maxHeight += amplitude;
+
+			frequency *= lacunarity;
+			amplitude *= persistance;
+		}
+
+		return height / maxHeight;
+	}
 	public static float CoherentNoise3D(float x, float y, float z, float octaves, float persistance, float lacunarity, float scaleX, float scaleY, float scaleZ, int seed)
 	{
 		Random random = new Random(seed);
@@ -297,6 +326,28 @@ public class Noise
 			height += Noise3D((x + random.Next(-100000, 100000)) / scaleX * frequency,
 							  (y + random.Next(-100000, 100000)) / scaleY * frequency,
 							  (z + random.Next(-100000, 100000)) / scaleZ * frequency) * amplitude;
+			maxHeight += amplitude;
+
+			frequency *= lacunarity;
+			amplitude *= persistance;
+		}
+
+		return height / maxHeight;
+	}
+	public static float CoherentNoise3DNormalized(float x, float y, float z, float octaves, float persistance, float lacunarity, float scaleX, float scaleY, float scaleZ, int seed)
+	{
+		Random random = new Random(seed);
+
+		float frequency = 1.0f;
+		float amplitude = 1.0f;
+		float height = 0.0f;
+		float maxHeight = 0.0f;
+
+		for (int i = 0; i < octaves; i++)
+		{
+			height += Noise3DNormalized((x + random.Next(-100000, 100000)) / scaleX * frequency,
+										(y + random.Next(-100000, 100000)) / scaleY * frequency,
+										(z + random.Next(-100000, 100000)) / scaleZ * frequency) * amplitude;
 			maxHeight += amplitude;
 
 			frequency *= lacunarity;

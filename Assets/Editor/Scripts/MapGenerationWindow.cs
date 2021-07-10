@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+enum DisplayMode
+{
+	GroundNoise,
+	MountainNoise
+}
+
 public class MapGenerationWindow : EditorWindow
 {
 	float width = 1200.0f;
@@ -13,46 +19,79 @@ public class MapGenerationWindow : EditorWindow
 	Rect rightRect = Rect.zero;
 	Rect lineRect = Rect.zero;
 
-	MapSetting mapSetting = null;
-
 	float textureFactor = 0.90f;
 	Rect textureRect = Rect.zero;
-	int textureResolution = 1;
+	int textureResolution = 256;
 	Rect resolutionRect = Rect.zero;
+
+	Rect enumRect = Rect.zero;
+	DisplayMode displayMode = DisplayMode.GroundNoise;
+
+	MapSetting mapSetting = null;
+	int squareSize = 255;
 
 	Texture mapTexture = null;
 
-	void OnPlayModeStateChanged(PlayModeStateChange stateChange)
+	void DisplayNoiseSetting(NoiseSetting setting, string name)
 	{
-		if (stateChange == PlayModeStateChange.EnteredPlayMode)
-			this.Close();
+		EditorGUILayout.LabelField(name);
+		EditorGUI.indentLevel = 1;
+		{
+			setting.seed = EditorGUILayout.IntField("Seed", setting.seed);
+			setting.octaves = EditorGUILayout.IntField("Octaves", setting.octaves);
+			setting.persistance = EditorGUILayout.Slider("Persistance", setting.persistance, 0.0f, 1.0f);
+			setting.lacunarity = EditorGUILayout.FloatField("Lacunarity", setting.lacunarity);
+			setting.scale = EditorGUILayout.Vector2Field("Scale", setting.scale);
+		}
+		EditorGUI.indentLevel = 0;
 	}
-
-	void Init(string assetPath)
+	void DisplayGroundNoiseTexture(NoiseSetting setting)
 	{
-		mapSetting = AssetDatabase.LoadAssetAtPath<MapSetting>(assetPath);
+		mapTexture = NoiseUtility.GenerateNoiseMap(textureResolution, TextureFormat.RGBAHalf, squareSize, setting);
 	}
-
-	Texture GenerateTexture()
+	void DisplayLeftArea()
 	{
-		int start = -Mathf.FloorToInt(mapSetting.squareSize / 2.0f);
-		int size = Mathf.CeilToInt(mapSetting.squareSize / 2.0f);
+		GUILayout.BeginArea(leftRect);
+		{
+			displayMode = (DisplayMode)EditorGUI.EnumPopup(enumRect, displayMode);
 
-		Texture2D texture = new Texture2D(textureResolution, textureResolution);
-		texture.filterMode = FilterMode.Point;
+			GUI.DrawTexture(textureRect, mapTexture);
 
-		float ratio = mapSetting.squareSize / textureResolution;
-
-		for (int i = 0; i < textureResolution; i++)
-			for (int j = 0; j < textureResolution; j++)
+			textureResolution = EditorGUI.IntField(resolutionRect, "Resolution", textureResolution);
+		}
+		GUILayout.EndArea();
+	}
+	void DisplayRightArea()
+	{
+		GUILayout.BeginArea(rightRect);
+		{
+			EditorGUILayout.BeginVertical();
 			{
-				float noise = Noise.CoherentNoise2D((i + 1) * ratio, (j + 1) * ratio, mapSetting.octaves, mapSetting.persistance, mapSetting.lacunarity, mapSetting.scale.x, mapSetting.scale.y, mapSetting.seed);
-				texture.SetPixel(i, j, Color.Lerp(Color.black, Color.white, noise));
+				mapSetting = (MapSetting)EditorGUILayout.ObjectField("MapSetting", mapSetting, typeof(MapSetting), false);
+				squareSize = EditorGUILayout.IntField("SquareSize", squareSize);
+
+				if (mapSetting != null)
+				{
+					DisplayNoiseSetting(mapSetting.groundNoiseSetting, "Ground Noise Setting");
+					DisplayNoiseSetting(mapSetting.mountainNoiseSetting, "Mountain Noise Setting");
+				}
+
+				if (GUILayout.Button("Generate"))
+				{
+					switch (displayMode)
+					{
+						case DisplayMode.GroundNoise:
+							DisplayGroundNoiseTexture(mapSetting.groundNoiseSetting);
+							break;
+						case DisplayMode.MountainNoise:
+							DisplayGroundNoiseTexture(mapSetting.mountainNoiseSetting);
+							break;
+					}
+				}
 			}
-
-		texture.Apply();
-
-		return texture;
+			EditorGUILayout.EndVertical();
+		}
+		GUILayout.EndArea();
 	}
 
 	private void Awake()
@@ -68,68 +107,23 @@ public class MapGenerationWindow : EditorWindow
 		textureRect.height = textureFactor * leftRect.height;
 		textureRect.center = leftRect.center;
 
+		enumRect = new Rect(textureRect.x, textureRect.y - EditorGUIUtility.singleLineHeight - EditorGUIUtility.standardVerticalSpacing, textureRect.width, EditorGUIUtility.singleLineHeight);
 		resolutionRect = new Rect(textureRect.x, textureRect.yMax + EditorGUIUtility.standardVerticalSpacing, textureRect.width, EditorGUIUtility.singleLineHeight);
 
 		mapTexture = Texture2D.whiteTexture;
-
-		EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-	}
-	private void OnDestroy()
-	{
-		EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 	}
 	private void OnGUI()
 	{
-		GUILayout.BeginArea(leftRect);
-		{
-			GUI.DrawTexture(textureRect, mapTexture);
-
-			textureResolution = EditorGUI.IntField(resolutionRect, "Resolution", textureResolution);
-		}
-		GUILayout.EndArea();
-
+		DisplayLeftArea();
 
 		EditorGUI.DrawRect(lineRect, Color.black);
 
-
-		GUILayout.BeginArea(rightRect);
-		{
-			EditorGUILayout.BeginVertical();
-			{
-				mapSetting = (MapSetting)EditorGUILayout.ObjectField("MapSetting", mapSetting, typeof(MapSetting), false);
-
-				if (mapSetting != null)
-				{
-					EditorGUI.indentLevel = 1;
-					{
-						mapSetting.squareSize = EditorGUILayout.IntField("SquareSize", mapSetting.squareSize);
-						mapSetting.seed = EditorGUILayout.IntField("Seed", mapSetting.seed);
-						mapSetting.octaves = EditorGUILayout.IntField("Octaves", mapSetting.octaves);
-						mapSetting.persistance = EditorGUILayout.FloatField("Persistance", mapSetting.persistance);
-						mapSetting.lacunarity = EditorGUILayout.FloatField("Lacunarity", mapSetting.lacunarity);
-						mapSetting.scale = EditorGUILayout.Vector2Field("Scale", mapSetting.scale);
-					}
-					EditorGUI.indentLevel = 0;
-				}
-
-				if (GUILayout.Button("Generate"))
-				{
-					mapTexture = GenerateTexture();
-				}
-			}
-			EditorGUILayout.EndVertical();
-		}
-		GUILayout.EndArea();
+		DisplayRightArea();
 	}
-
+	
+	[MenuItem("Window/MapSetting")]
 	public static void OpenWindow()
 	{
 		GetWindow<MapGenerationWindow>("MapGeneration");
-	}
-	public static void OpenWindow(string assetPath)
-	{
-		var window = GetWindow<MapGenerationWindow>("MapGeneration");
-
-		window.Init(assetPath);
 	}
 }

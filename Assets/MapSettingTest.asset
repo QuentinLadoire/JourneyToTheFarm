@@ -12,9 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818def7ffd86a54419ae758d9e46ed48, type: 3}
   m_Name: MapSettingTest
   m_EditorClassIdentifier: 
-  squareSize: 512
-  seed: 0
-  octaves: 8
-  persistance: 0.5
-  lacunarity: 2
-  scale: {x: 100, y: 100}
+  groundNoiseSetting:
+    octaves: 4
+    persistance: 0.2
+    lacunarity: 2.66
+    scaleX: 500
+    scaleY: 500
+    scaleZ: 1
+    seed: 0
+  groundHeightMultiplier: 15
+  mountainNoiseSetting:
+    octaves: 4
+    persistance: 0.37
+    lacunarity: 2.5
+    scaleX: 200
+    scaleY: 200
+    scaleZ: 1
+    seed: 0
+  mountainHeightMultiplier: 100

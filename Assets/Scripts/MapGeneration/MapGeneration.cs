@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class MapGeneration : MonoBehaviour
 {
+	public int squareSize = 1;
+
 	public MapSetting mapSetting = null;
 
 	MeshFilter meshFilter = null;
+	MeshRenderer meshRenderer = null;
 
 	int GetVerticesCount(int size)
 	{
@@ -21,62 +24,68 @@ public class MapGeneration : MonoBehaviour
 		return size * size * 2 * 3;
 	}
 
+	float GetGroundHeight(float x, float y)
+	{
+		var groundNoiseSetting = mapSetting.groundNoiseSetting;
+		return NoiseUtility.CoherentNoise2D(x, y, groundNoiseSetting) * mapSetting.groundHeightMultiplier;
+	}
+	float GetMoutainHeight(float x, float y)
+	{
+		var mountainNoiseSetting = mapSetting.mountainNoiseSetting;
+		return Mathf.Clamp01(NoiseUtility.CoherentNoise2D(x, y, mountainNoiseSetting)) * mapSetting.mountainHeightMultiplier;
+	}
+	float GetHeight(float x, float y)
+	{
+		return GetGroundHeight(x, y)  + GetMoutainHeight(x, y);
+	}
+
 	Mesh GenerateMesh(int squareSize)
 	{
 		int size = squareSize + 1;
 		Vector3[] vertices = new Vector3[GetVerticesCount(squareSize)];
 		int[] indices = new int[GetIndicesCount(squareSize)];
-
-		//Debug.Log("Square Size : " + squareSize);
-		//Debug.Log("Size : " + size);
-		//Debug.Log("Vertices Count : " + GetVerticesCount(squareSize));
-		//Debug.Log("Triangles Count : " + GetTrianglesCount(squareSize));
-		//Debug.Log("Indices Count : " + GetIndicesCount(squareSize));
+		Vector2[] uvs = new Vector2[GetVerticesCount(squareSize)];
 
 		int index = 0;
 		for (int i = 0; i < GetVerticesCount(squareSize); i++)
 		{
-			vertices[i] = new Vector3((i % size), 0.0f, (i / size));
-			//Debug.Log("Vertice " + i + " : " + vertices[i]);
+			var height = GetHeight(transform.position.x + i % size, transform.position.z + i / size);
+			vertices[i] = new Vector3((i % size), height, (i / size));
+
+			uvs[i] = new Vector2((float)((float)(i % size) / (float)size), (float)((float)(i / size) / (float)size));
 
 			if ((i % size) < (size - 1))
 			{
 				if ((i / size) < (size - 1))
 				{
 					indices[index] = i;
-					//Debug.Log("Indice " + index + " : " + indices[index]);
 					index++;
 
 					indices[index] = i + squareSize + 1;
-					//Debug.Log("Indice " + index + " : " + indices[index]);
 					index++;
 
 					indices[index] = i + 1;
-					//Debug.Log("Indice " + index + " : " + indices[index]);
 					index++;
 				}
 				if ((i / size) > 0)
 				{
 					indices[index] = i;
-					//Debug.Log("Indice " + index + " : " + indices[index]);
 					index++;
 
 					indices[index] = i + 1;
-					//Debug.Log("Indice " + index + " : " + indices[index]);
 					index++;
 
 					indices[index] = i - squareSize;
-					//Debug.Log("Indice " + index + " : " + indices[index]);
 					index++;
 				}
 			}
 		}
 
-		//Debug.Log("End");
-
 		Mesh mesh = new Mesh();
 		mesh.vertices = vertices;
 		mesh.triangles = indices;
+
+		mesh.RecalculateNormals();
 
 		return mesh;
 	}
@@ -84,9 +93,10 @@ public class MapGeneration : MonoBehaviour
 	private void Awake()
 	{
 		meshFilter = GetComponent<MeshFilter>();
+		meshRenderer = GetComponent<MeshRenderer>();
 	}
 	private void Start()
 	{
-		meshFilter.mesh = GenerateMesh(mapSetting.squareSize);
+		meshFilter.mesh = GenerateMesh(squareSize);
 	}
 }

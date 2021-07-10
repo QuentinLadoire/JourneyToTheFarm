@@ -28,7 +28,7 @@ public class MapGenerationWindow : EditorWindow
 	DisplayMode displayMode = DisplayMode.GroundNoise;
 
 	MapSetting mapSetting = null;
-	int squareSize = 255;
+	int mapSize = 255;
 
 	Texture mapTexture = null;
 
@@ -47,7 +47,7 @@ public class MapGenerationWindow : EditorWindow
 	}
 	void DisplayGroundNoiseTexture(NoiseSetting setting)
 	{
-		mapTexture = NoiseUtility.GenerateNoiseMap(textureResolution, TextureFormat.RGBAHalf, squareSize, setting);
+		mapTexture = NoiseUtility.GenerateNoiseMap(textureResolution, TextureFormat.RGBAHalf, 4, mapSize, setting, Vector2.zero);
 	}
 	void DisplayLeftArea()
 	{
@@ -68,7 +68,7 @@ public class MapGenerationWindow : EditorWindow
 			EditorGUILayout.BeginVertical();
 			{
 				mapSetting = (MapSetting)EditorGUILayout.ObjectField("MapSetting", mapSetting, typeof(MapSetting), false);
-				squareSize = EditorGUILayout.IntField("SquareSize", squareSize);
+				mapSize = EditorGUILayout.IntField("SquareSize", mapSize);
 
 				if (mapSetting != null)
 				{

@@ -273,6 +273,8 @@ public static class Noise
 	public static float CoherentNoise2D(float x, float y, int octaves, float persistance, float lacunarity, float scaleX, float scaleY, int seed)
 	{
 		Random random = new Random(seed);
+		var seedOffsetX = random.Next(-100000, 100000);
+		var seedOffsetY = random.Next(-100000, 100000);
 
 		float frequency = 1.0f;
 		float amplitude = 1.0f;
@@ -281,8 +283,8 @@ public static class Noise
 
 		for (int i = 0; i < octaves; i++)
 		{
-			height += Noise2D((x + random.Next(-100000, 100000)) / scaleX * frequency,
-							  (y + random.Next(-100000, 100000)) / scaleY * frequency) * amplitude;
+			height += Noise2D((x + seedOffsetX) / scaleX * frequency,
+							  (y + seedOffsetY) / scaleY * frequency) * amplitude;
 			maxHeight += amplitude;
 
 			frequency *= lacunarity;

@@ -15,17 +15,17 @@ public class NoiseSetting
 
 public static class NoiseUtility
 {
-	public static Texture2D GenerateNoiseMap(int textureResolution, TextureFormat format, int noiseSize, NoiseSetting setting)
+	public static Texture2D GenerateNoiseMap(int textureResolution, TextureFormat format, int pow, int mapSize, NoiseSetting setting, Vector2 offset)
 	{
 		Texture2D texture = new Texture2D(textureResolution, textureResolution, format, false);
 		texture.filterMode = FilterMode.Point;
 
-		float ratio = (noiseSize + 1) / textureResolution;
+		float ratio = (float)mapSize / (float)textureResolution;
 		for (int i = 0; i < textureResolution; i++)
 			for (int j = 0; j < textureResolution; j++)
 			{
-				float noise = CoherentNoise2DNormalized((i + 1) * ratio, (j + 1) * ratio, setting);
-				texture.SetPixel(i, j, Color.Lerp(Color.black, Color.white, noise));
+				float noise = CoherentNoise2DNormalized(offset.x + (i * ratio), offset.y + (j * ratio), setting);
+				texture.SetPixel(i, j, Color.Lerp(Color.black, Color.white, Mathf.Pow(noise, pow)));
 			}
 
 		texture.Apply();

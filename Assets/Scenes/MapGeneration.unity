@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c986bc254630c4a8b5f3f0605dd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squareSize: 255
+  mapSize: 256
   mapSetting: {fileID: 11400000, guid: 81d7615a0c7c5f649a383f55364413fb, type: 2}
 --- !u!23 &804385379
 MeshRenderer:
@@ -339,7 +339,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 691ce031dffee814b9b677e4cdb869f3, type: 2}
+  - {fileID: 2100000, guid: ada0534b63e40534bb9d42e3c7031ed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c986bc254630c4a8b5f3f0605dd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squareSize: 255
+  mapSize: 256
   mapSetting: {fileID: 11400000, guid: 81d7615a0c7c5f649a383f55364413fb, type: 2}
 --- !u!4 &1215729646
 Transform:
@@ -449,7 +449,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 691ce031dffee814b9b677e4cdb869f3, type: 2}
+  - {fileID: 2100000, guid: ada0534b63e40534bb9d42e3c7031ed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c986bc254630c4a8b5f3f0605dd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squareSize: 255
+  mapSize: 256
   mapSetting: {fileID: 11400000, guid: 81d7615a0c7c5f649a383f55364413fb, type: 2}
 --- !u!23 &1331844275
 MeshRenderer:
@@ -531,7 +531,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 691ce031dffee814b9b677e4cdb869f3, type: 2}
+  - {fileID: 2100000, guid: ada0534b63e40534bb9d42e3c7031ed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c986bc254630c4a8b5f3f0605dd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squareSize: 255
+  mapSize: 256
   mapSetting: {fileID: 11400000, guid: 81d7615a0c7c5f649a383f55364413fb, type: 2}
 --- !u!23 &1374008954
 MeshRenderer:
@@ -627,7 +627,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 691ce031dffee814b9b677e4cdb869f3, type: 2}
+  - {fileID: 2100000, guid: ada0534b63e40534bb9d42e3c7031ed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

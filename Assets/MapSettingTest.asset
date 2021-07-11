@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: MapSettingTest
   m_EditorClassIdentifier: 
   groundNoiseSetting:
-    octaves: 4
-    persistance: 0.2
-    lacunarity: 2.66
-    scale: {x: 500, y: 500}
+    resolution: 256
+    tiling: {x: 1, y: 1}
+    layer: 5
+    lacunarity: 2
+    persistance: 0.5
     seed: 0
   groundHeightMultiplier: 50
   mountainNoiseSetting:
-    octaves: 4
-    persistance: 0.37
+    resolution: 256
+    tiling: {x: 1, y: 1}
+    layer: 4
     lacunarity: 2.5
-    scale: {x: 200, y: 200}
+    persistance: 0.37
     seed: 0
   mountainHeightMultiplier: 200

@@ -6,10 +6,10 @@ using UnityEngine;
 public class MapSetting : ScriptableObject
 {
 	[Header("GroundNoiseMap Setting")]
-	public NoiseSetting groundNoiseSetting = new NoiseSetting();
+	public FractalNoiseSetting groundNoiseSetting = new FractalNoiseSetting();
 	public float groundHeightMultiplier = 15.0f;
 
 	[Header("MountainNoiseMap Setting")]
-	public NoiseSetting mountainNoiseSetting = new NoiseSetting();
+	public FractalNoiseSetting mountainNoiseSetting = new FractalNoiseSetting();
 	public float mountainHeightMultiplier = 100.0f;
 }

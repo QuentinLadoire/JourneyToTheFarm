@@ -27,17 +27,17 @@ public class MapGeneration : MonoBehaviour
 
 	float GetGroundHeight(float x, float y)
 	{
-		var groundNoiseSetting = mapSetting.groundNoiseSetting;
-		return NoiseUtility.CoherentNoise2D(x, y, groundNoiseSetting) * mapSetting.groundHeightMultiplier;
+		var setting = mapSetting.groundNoiseSetting;
+		return NoiseUtility.FractalNoise2D(x, y, setting) * mapSetting.groundHeightMultiplier;
 	}
 	float GetMoutainHeight(float x, float y)
 	{
 		var mountainNoiseSetting = mapSetting.mountainNoiseSetting;
-		return Mathf.Clamp01(NoiseUtility.CoherentNoise2D(x, y, mountainNoiseSetting)) * mapSetting.mountainHeightMultiplier;
+		return Mathf.Clamp01(NoiseUtility.FractalNoise2D(x, y, mountainNoiseSetting)) * mapSetting.mountainHeightMultiplier;
 	}
 	float GetHeight(float x, float y)
 	{
-		return GetGroundHeight(x, y)  + GetMoutainHeight(x, y);
+		return GetGroundHeight(x, y);/* + GetMoutainHeight(x, y);*/
 	}
 
 	Mesh GenerateMesh()
@@ -105,8 +105,10 @@ public class MapGeneration : MonoBehaviour
 	{
 		meshFilter.mesh = GenerateMesh();
 
-		//var mat = new Material(Shader.Find("Shader Graphs/Test"));
-		//mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", NoiseUtility.GenerateNoiseMap(256, TextureFormat.RGBAHalf, mapSize, mapSetting.groundNoiseSetting, new Vector2(transform.position.x, transform.position.z)));
-		//meshRenderer.material = mat;
+		var input = new Vector2(transform.position.x, transform.position.z);
+
+		var mat = new Material(Shader.Find("Shader Graphs/Test"));
+		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", NoiseUtility.GenerateFractalNoiseTexture(input, mapSetting.groundNoiseSetting, 3));
+		meshRenderer.material = mat;
 	}
 }

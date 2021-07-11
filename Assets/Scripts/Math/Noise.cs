@@ -88,7 +88,7 @@ public static class Noise
 		};
 	}
 
-	public static float Noise2D(float x, float y)
+	public static float SimpleNoise2D(float x, float y)
 	{
 		int x0 = (int)Math.Floor(x);
 		int y0 = (int)Math.Floor(y);
@@ -148,11 +148,12 @@ public static class Noise
 
 		//return lerp3;
 	}
-	public static float Noise2DNormalized(float x, float y)
+	public static float SimpleNoise2DNormalized(float x, float y)
 	{
-		return (Noise2D(x, y) + 1) / 2;
+		return (SimpleNoise2D(x, y) + 1) / 2;
 	}
-	public static float Noise3D(float x, float y, float z)
+
+	public static float SimpleNoise3D(float x, float y, float z)
 	{
 		int x0 = (int)Math.Floor(x);
 		int y0 = (int)Math.Floor(y);
@@ -265,12 +266,12 @@ public static class Noise
 		//
 		//return lerp7;
 	}
-	public static float Noise3DNormalized(float x, float y, float z)
+	public static float SimpleNoise3DNormalized(float x, float y, float z)
 	{
-		return (Noise3D(x, y, z) + 1) / 2;
+		return (SimpleNoise3D(x, y, z) + 1) / 2;
 	}
 
-	public static float CoherentNoise2D(float x, float y, int octaves, float persistance, float lacunarity, float scaleX, float scaleY, int seed)
+	public static float FractalNoise2D(float x, float y, int layer, float lacunarity, float persistance, int seed)
 	{
 		Random random = new Random(seed);
 		var seedOffsetX = random.Next(-100000, 100000);
@@ -278,115 +279,53 @@ public static class Noise
 
 		float frequency = 1.0f;
 		float amplitude = 1.0f;
-		float height = 0.0f;
-		float maxHeight = 0.0f;
+		float noise = 0.0f;
+		float maxNoise = 0.0f;
 
-		for (int i = 0; i < octaves; i++)
+		for (int i = 0; i < layer; i++)
 		{
-			height += Noise2D((x + seedOffsetX) / scaleX * frequency,
-							  (y + seedOffsetY) / scaleY * frequency) * amplitude;
-			maxHeight += amplitude;
+			noise += SimpleNoise2D((x + seedOffsetX) * frequency,
+							 (y + seedOffsetY) * frequency) * amplitude;
+			maxNoise += amplitude;
 
 			frequency *= lacunarity;
 			amplitude *= persistance;
 		}
 
-		return height / maxHeight;
+		return noise / maxNoise;
 	}
-	public static float CoherentNoise2DNormalized(float x, float y, int octaves, float persistance, float lacunarity, float scaleX, float scaleY, int seed)
+	public static float FractalNoise2DNormalized(float x, float y, int layer, float lacunarity, float persistance, int seed)
+	{
+		return (FractalNoise2D(x, y, layer, lacunarity, persistance, seed) + 1) / 2.0f;
+	}
+
+	public static float FractalNoise3D(float x, float y, float z, float layer, float lacunarity, float persistance, int seed)
 	{
 		Random random = new Random(seed);
+		var seedOffsetX = random.Next(-100000, 100000);
+		var seedOffsetY = random.Next(-100000, 100000);
+		var seedOffsetZ = random.Next(-100000, 100000);
 
 		float frequency = 1.0f;
 		float amplitude = 1.0f;
-		float height = 0.0f;
-		float maxHeight = 0.0f;
+		float noise = 0.0f;
+		float maxNoise = 0.0f;
 
-		for (int i = 0; i < octaves; i++)
+		for (int i = 0; i < layer; i++)
 		{
-			height += Noise2DNormalized((x + random.Next(-100000, 100000)) / scaleX * frequency,
-							  (y + random.Next(-100000, 100000)) / scaleY * frequency) * amplitude;
-			maxHeight += amplitude;
+			noise += SimpleNoise3D((x + seedOffsetX) * frequency,
+							 (y + seedOffsetY) * frequency,
+							 (z + seedOffsetZ) * frequency) * amplitude;
+			maxNoise += amplitude;
 
 			frequency *= lacunarity;
 			amplitude *= persistance;
 		}
 
-		return height / maxHeight;
+		return noise / maxNoise;
 	}
-	public static float CoherentNoise3D(float x, float y, float z, float octaves, float persistance, float lacunarity, float scaleX, float scaleY, float scaleZ, int seed)
+	public static float FractalNoise3DNormalized(float x, float y, float z, float layer, float lacunarity, float persistance, int seed)
 	{
-		Random random = new Random(seed);
-
-		float frequency = 1.0f;
-		float amplitude = 1.0f;
-		float height = 0.0f;
-		float maxHeight = 0.0f;
-
-		for (int i = 0; i < octaves; i++)
-		{
-			height += Noise3D((x + random.Next(-100000, 100000)) / scaleX * frequency,
-							  (y + random.Next(-100000, 100000)) / scaleY * frequency,
-							  (z + random.Next(-100000, 100000)) / scaleZ * frequency) * amplitude;
-			maxHeight += amplitude;
-
-			frequency *= lacunarity;
-			amplitude *= persistance;
-		}
-
-		return height / maxHeight;
-	}
-	public static float CoherentNoise3DNormalized(float x, float y, float z, float octaves, float persistance, float lacunarity, float scaleX, float scaleY, float scaleZ, int seed)
-	{
-		Random random = new Random(seed);
-
-		float frequency = 1.0f;
-		float amplitude = 1.0f;
-		float height = 0.0f;
-		float maxHeight = 0.0f;
-
-		for (int i = 0; i < octaves; i++)
-		{
-			height += Noise3DNormalized((x + random.Next(-100000, 100000)) / scaleX * frequency,
-										(y + random.Next(-100000, 100000)) / scaleY * frequency,
-										(z + random.Next(-100000, 100000)) / scaleZ * frequency) * amplitude;
-			maxHeight += amplitude;
-
-			frequency *= lacunarity;
-			amplitude *= persistance;
-		}
-
-		return height / maxHeight;
-	}
-
-	public static double Benchmark(int iteration = 10000)
-	{
-		float value = 0.0f;
-		var start = DateTime.Now;
-		for (int i = 0; i < iteration; i++)
-			for (int j = 0; j < iteration; j++)
-			{
-				value += Noise2D(i + 0.5f, j + 0.5f);
-			}
-
-		double delay = DateTime.Now.Subtract(start).TotalSeconds;
-		UnityEngine.Debug.LogError("Delay : " + delay + " / " + value);
-
-		return delay;
-	}
-	public static double Benchmark2(int iteration = 10000)
-	{
-		float value = 0.0f;
-		var start1 = DateTime.Now;
-		for (int i = 0; i < iteration; i++)
-			for (int j = 0; j < iteration; j++)
-			{
-				value += UnityEngine.Mathf.PerlinNoise(i + 0.5f, j + 0.5f);
-			}
-
-		double delay = DateTime.Now.Subtract(start1).TotalSeconds;
-		UnityEngine.Debug.LogError("Delay : " + delay + " / " + value);
-
-		return delay;
+		return (FractalNoise3D(x, y, z, layer, lacunarity, persistance, seed) + 1) / 2.0f;
 	}
 }

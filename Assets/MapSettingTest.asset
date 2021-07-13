@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundNoiseSetting:
     resolution: 256
-    tiling: {x: 1, y: 1}
+    tiling: {x: 2, y: 2}
     layer: 5
     lacunarity: 2
     persistance: 0.5
     seed: 0
-  groundHeightMultiplier: 50
+  groundHeightMultiplier: 10
   mountainNoiseSetting:
     resolution: 256
     tiling: {x: 1, y: 1}
-    layer: 4
-    lacunarity: 2.5
-    persistance: 0.37
+    layer: 5
+    lacunarity: 2.24
+    persistance: 0.651
     seed: 0
   mountainHeightMultiplier: 200

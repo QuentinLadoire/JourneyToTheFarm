@@ -299,7 +299,7 @@ public static class Noise
 		return (FractalNoise2D(x, y, layer, lacunarity, persistance, seed) + 1) / 2.0f;
 	}
 
-	public static float FractalNoise3D(float x, float y, float z, float layer, float lacunarity, float persistance, int seed)
+	public static float FractalNoise3D(float x, float y, float z, int layer, float lacunarity, float persistance, int seed)
 	{
 		Random random = new Random(seed);
 		var seedOffsetX = random.Next(-100000, 100000);
@@ -324,8 +324,86 @@ public static class Noise
 
 		return noise / maxNoise;
 	}
-	public static float FractalNoise3DNormalized(float x, float y, float z, float layer, float lacunarity, float persistance, int seed)
+	public static float FractalNoise3DNormalized(float x, float y, float z, int layer, float lacunarity, float persistance, int seed)
 	{
 		return (FractalNoise3D(x, y, z, layer, lacunarity, persistance, seed) + 1) / 2.0f;
+	}
+
+	public static float TurbulenceNoise2D(float x, float y, int layer, float lacunarity, float persistance, int seed)
+	{
+		Random random = new Random(seed);
+		var seedOffsetX = random.Next(-100000, 100000);
+		var seedOffsetY = random.Next(-100000, 100000);
+
+		x += seedOffsetX;
+		y += seedOffsetY;
+
+		float frequency = 1.0f;
+		float amplitude = 1.0f;
+		float noise = 0.0f;
+		float maxNoise = 0.0f;
+
+		for (int i = 0; i < layer; i++)
+		{
+			noise += Math.Abs(SimpleNoise2D(x * frequency, y * frequency)) * amplitude;
+			maxNoise += amplitude;
+
+			frequency *= lacunarity;
+			amplitude *= persistance;
+		}
+
+		return noise / maxNoise;
+	}
+
+	public static float MarbleNoise2D(float x, float y, float scaleX, float scaleY, int layer, float lacunarity, float persistance, int seed)
+	{
+		Random random = new Random(seed);
+		var seedOffsetX = random.Next(-100000, 100000);
+		var seedOffsetY = random.Next(-100000, 100000);
+
+		x += seedOffsetX;
+		y += seedOffsetY;
+
+		float frequency = 1.0f;
+		float amplitude = 1.0f;
+		float noise = 0.0f;
+
+		for (int i = 0; i < layer; i++)
+		{
+			noise += SimpleNoise2D(x * scaleX * frequency, y * scaleY * frequency) * amplitude;
+
+			frequency *= lacunarity;
+			amplitude *= persistance;
+		}
+
+		return (float)Math.Sin((x + noise * 100.0f) * 2.0f * Math.PI / 200.0f);
+	}
+	public static float MarbleNoise2DNormalized(float x, float y, float scaleX, float scaleY, int layer, float lacunarity, float persistance, int seed)
+	{
+		return (MarbleNoise2D(x, y, scaleX, scaleY, layer, lacunarity, persistance, seed) + 1.0f) / 2.0f;
+	}
+
+	public static float WoodNoise2D(float x, float y, int layer, float lacunarity, float persistance, int seed)
+	{
+		Random random = new Random(seed);
+		var seedOffsetX = random.Next(-100000, 100000);
+		var seedOffsetY = random.Next(-100000, 100000);
+
+		x += seedOffsetX;
+		y += seedOffsetY;
+
+		float frequency = 1.0f;
+		float amplitude = 10.0f;
+		float noise = 0.0f;
+
+		for (int i = 0; i < layer; i++)
+		{
+			noise += SimpleNoise2DNormalized(x * frequency, y * frequency) * amplitude;
+
+			frequency *= lacunarity;
+			amplitude *= persistance;
+		}
+
+		return noise - (int)noise;
 	}
 }

@@ -11,7 +11,7 @@ public class MapGeneration : MonoBehaviour
 
 	MeshFilter meshFilter = null;
 	MeshRenderer meshRenderer = null;
-
+	
 	int GetVerticesCount()
 	{
 		return mapSize * mapSize;
@@ -37,7 +37,7 @@ public class MapGeneration : MonoBehaviour
 	}
 	float GetHeight(float x, float y)
 	{
-		return GetGroundHeight(x, y);/* + GetMoutainHeight(x, y);*/
+		return GetGroundHeight(x, y);
 	}
 
 	Mesh GenerateMesh()
@@ -86,11 +86,13 @@ public class MapGeneration : MonoBehaviour
 			}
 		}
 
-		Mesh mesh = new Mesh();
-		mesh.vertices = vertices;
-		mesh.triangles = indices;
-		mesh.uv = uvs;
-
+		Mesh mesh = new Mesh()
+		{
+			vertices = vertices,
+			triangles = indices,
+			uv = uvs,
+		};
+		
 		mesh.RecalculateNormals();
 
 		return mesh;
@@ -104,7 +106,7 @@ public class MapGeneration : MonoBehaviour
 	private void Start()
 	{
 		meshFilter.mesh = GenerateMesh();
-
+		
 		var input = new Vector2(transform.position.x, transform.position.z);
 
 		var mat = new Material(Shader.Find("Shader Graphs/Test"));

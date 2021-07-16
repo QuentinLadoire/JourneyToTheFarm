@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class SimpleColorSetting
+{
+	public int resolution = 256;
+	public float grayValue = 0.5f;
+}
+[System.Serializable]
 public class SimpleNoiseSetting
 {
 	public int resolution = 256;
@@ -10,7 +16,6 @@ public class SimpleNoiseSetting
 
 	public Vector2 ScaleFactor => tiling / resolution;
 }
-
 [System.Serializable]
 public class FractalNoiseSetting
 {
@@ -28,12 +33,42 @@ public class FractalNoiseSetting
 
 public static class NoiseUtility
 {
-	public static Texture2D GenerateSimpleNoiseTexture(Vector2 input, SimpleNoiseSetting setting, int contrast = 1, int resolution = 256, TextureFormat format = TextureFormat.RGBAHalf)
+	public static Texture2D GenerateTextureFromHeightmap(HeightmapData heightmap, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
-		var texture = new Texture2D(resolution, resolution, format, false);
+		Texture2D texture = new Texture2D(heightmap.resolution, heightmap.resolution, format, false);
+		for (int i = 0; i < heightmap.resolution; i++)
+			for (int j = 0; j < heightmap.resolution; j++)
+			{
+				var value = Mathf.Pow(heightmap.data[i, j], contrast);
+				texture.SetPixel(i, j, new Color(value, value, value));
+			}
 
-		for (int i = 0; i < resolution; i++)
-			for (int j = 0; j < resolution; j++)
+		texture.Apply();
+
+		return texture;
+	}
+
+	public static Texture2D GenerateSimpleColorTexture(SimpleColorSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
+	{
+		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
+
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
+			{
+				var color = Mathf.Pow(setting.grayValue, contrast);
+				texture.SetPixel(i, j, new Color(color, color, color));
+			}
+
+		texture.Apply();
+
+		return texture;
+	}
+	public static Texture2D GenerateSimpleNoiseTexture(Vector2 input, SimpleNoiseSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
+	{
+		var texture = new Texture2D(setting.resolution, setting.resolution, format, false);
+
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
 			{
 				var noise = Mathf.Pow(SimpleNoise2DNormalized(input.x + i, input.y + j, setting), contrast);
 				texture.SetPixel(i, j, new Color(noise, noise, noise));
@@ -43,12 +78,12 @@ public static class NoiseUtility
 
 		return texture;
 	}
-	public static Texture2D GenerateFractalNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, int resolution = 256, TextureFormat format = TextureFormat.RGBAHalf)
+	public static Texture2D GenerateFractalNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
-		Texture2D texture = new Texture2D(resolution, resolution, format, false);
+		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
 
-		for (int i = 0; i < resolution; i++)
-			for (int j = 0; j < resolution; j++)
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
 			{
 				var noise = Mathf.Pow(FractalNoise2DNormalized(input.x + i, input.y + j, setting), contrast);
 				texture.SetPixel(i, j, new Color(noise, noise, noise));
@@ -58,12 +93,12 @@ public static class NoiseUtility
 
 		return texture;
 	}
-	public static Texture2D GenerateTurbulenceNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, int resolution = 256, TextureFormat format = TextureFormat.RGBAHalf)
+	public static Texture2D GenerateTurbulenceNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
-		Texture2D texture = new Texture2D(resolution, resolution, format, false);
+		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
 
-		for (int i = 0; i < resolution; i++)
-			for (int j = 0; j < resolution; j++)
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
 			{
 				var noise = Mathf.Pow(TurbulenceNoise2D(input.x + i, input.y + j, setting), contrast);
 				texture.SetPixel(i, j, new Color(noise, noise, noise));
@@ -73,12 +108,12 @@ public static class NoiseUtility
 
 		return texture;
 	}
-	public static Texture2D GenerateMarbleNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, int resolution = 256, TextureFormat format = TextureFormat.RGBAHalf)
+	public static Texture2D GenerateMarbleNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
-		Texture2D texture = new Texture2D(resolution, resolution, format, false);
+		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
 
-		for (int i = 0; i < resolution; i++)
-			for (int j = 0; j < resolution; j++)
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
 			{
 				var noise = Mathf.Pow(MarbleNoise2DNormalized(input.x + i, input.y + j, setting), contrast);
 				texture.SetPixel(i, j, new Color(noise, noise, noise));
@@ -88,12 +123,12 @@ public static class NoiseUtility
 
 		return texture;
 	}
-	public static Texture2D GenerateWoodNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, int resolution = 256, TextureFormat format = TextureFormat.RGBAHalf)
+	public static Texture2D GenerateWoodNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
-		Texture2D texture = new Texture2D(resolution, resolution, format, false);
+		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
 
-		for (int i = 0; i < resolution; i++)
-			for (int j = 0; j < resolution; j++)
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
 			{
 				var noise = Mathf.Pow(WoodNoise2D(input.x + i, input.y + j, setting), contrast);
 				texture.SetPixel(i, j, new Color(noise, noise, noise));

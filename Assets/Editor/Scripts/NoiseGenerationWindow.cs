@@ -9,8 +9,123 @@ enum DisplayMode
 	FractalNoise,
 	TurbulenceNoise,
 	MarbleNoise,
-	WoodNoise
+	WoodNoise,
+	BlendNoise
 }
+
+#region Layer
+public enum LayerType
+{
+	Default,
+	Color,
+	Noise
+}
+
+public class Layer
+{
+	public virtual LayerType LayerType => LayerType.Default;
+
+	public bool layerSettingFoldout = false;
+	public BlendMode blendMode = BlendMode.Normal;
+	public float opacity = 1.0f;
+
+	public HeightmapData heightmapData = null;
+
+	public virtual void GenerateHeightmap()
+	{
+		
+	}
+
+	void DisplaySetting()
+	{
+		layerSettingFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(layerSettingFoldout, "Layer Setting");
+		if (layerSettingFoldout)
+		{
+			EditorGUI.indentLevel = 1;
+			{
+				blendMode = (BlendMode)EditorGUILayout.EnumPopup("BlendMode", blendMode);
+				opacity = EditorGUILayout.Slider("Opacity", opacity, 0.0f, 1.0f);
+			}
+			EditorGUI.indentLevel = 0;
+		}
+		EditorGUILayout.EndFoldoutHeaderGroup();
+	}
+	public virtual void Display()
+	{
+		DisplaySetting();
+	}
+}
+public class ColorLayer : Layer
+{
+	public override LayerType LayerType => LayerType.Color;
+
+	public bool colorSettingFoldout = false;
+	public SimpleColorSetting setting = new SimpleColorSetting();
+
+	public override void GenerateHeightmap()
+	{
+		heightmapData = HeightmapUtility.GenerateHeightmapFrom(setting);
+	}
+
+	void DisplaySimpleColorSetting()
+	{
+		colorSettingFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(colorSettingFoldout, "Color Setting");
+		if (colorSettingFoldout)
+		{
+			EditorGUI.indentLevel = 1;
+			{
+				setting.resolution = EditorGUILayout.IntField("Resolution", setting.resolution);
+				setting.grayValue = EditorGUILayout.Slider("Color", setting.grayValue, 0.0f, 1.0f);
+			}
+			EditorGUI.indentLevel = 0;
+		}
+		EditorGUILayout.EndFoldoutHeaderGroup();
+	}
+	public override void Display()
+	{
+		base.Display();
+
+		DisplaySimpleColorSetting();
+	}
+}
+public class NoiseLayer : Layer
+{
+	public override LayerType LayerType => LayerType.Noise;
+
+	public bool noiseSettingFoldout = false;
+	public FractalNoiseSetting setting = new FractalNoiseSetting();
+
+	public override void GenerateHeightmap()
+	{
+		heightmapData = HeightmapUtility.GenerateHeightmapFrom(setting);
+	}
+
+	void DisplayFractalNoiseSetting()
+	{
+		noiseSettingFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(noiseSettingFoldout, "Noise Setting");
+		if (noiseSettingFoldout)
+		{
+			EditorGUI.indentLevel = 1;
+			{
+				setting.resolution = EditorGUILayout.IntField("Resolution", setting.resolution);
+				setting.tiling = EditorGUILayout.Vector2Field("Tiling", setting.tiling);
+				setting.layer = EditorGUILayout.IntField("Layer", setting.layer);
+				setting.lacunarity = EditorGUILayout.FloatField("Lacunarity", setting.lacunarity);
+				setting.persistance = EditorGUILayout.Slider("Persistance", setting.persistance, 0.0f, 1.0f);
+				setting.seed = EditorGUILayout.IntField("Seed", setting.seed);
+			}
+			EditorGUI.indentLevel = 0;
+		}
+		EditorGUILayout.EndFoldoutHeaderGroup();
+	}
+	public override void Display()
+	{
+		base.Display();
+
+		DisplayFractalNoiseSetting();
+	}
+}
+#endregion
 
 public class NoiseGenerationWindow : EditorWindow
 {
@@ -20,11 +135,11 @@ public class NoiseGenerationWindow : EditorWindow
 	Rect windowSettingRect = Rect.zero;
 	Rect areaTextureRect = Rect.zero;
 	Rect noiseSettingRect = Rect.zero;
+	Rect noiseLayerListRect = Rect.zero;
 
-	DisplayMode displayMode = DisplayMode.SimpleNoise;
-	int textureResolution = 256;
+	DisplayMode displayMode = DisplayMode.BlendNoise;
 	TextureFormat textureFormat = TextureFormat.RGBAHalf;
-	 int contrast = 3;
+	int contrast = 3;
 
 	Texture noiseTexture = null;
 	Rect textureRect = Rect.zero;
@@ -36,35 +151,12 @@ public class NoiseGenerationWindow : EditorWindow
 	readonly FractalNoiseSetting marbleNoiseSetting = new FractalNoiseSetting();
 	readonly FractalNoiseSetting woodNoiseSetting = new FractalNoiseSetting();
 
-	bool autoGenerate = true;
+	readonly List<Layer> layerList = new List<Layer>();
+
+	bool autoGenerate = false;
 	bool modified = false;
 
-	void InitRect()
-	{
-		windowSettingRect.x = 0.0f;
-		windowSettingRect.y = 0.0f;
-		windowSettingRect.width = width * 0.25f;
-		windowSettingRect.height = height;
-
-		areaTextureRect.x = windowSettingRect.xMax;
-		areaTextureRect.y = 0.0f;
-		areaTextureRect.width = width * 0.50f;
-		areaTextureRect.height = height;
-
-		noiseSettingRect.x = areaTextureRect.xMax;
-		noiseSettingRect.y = 0.0f;
-		noiseSettingRect.width = width * 0.25f;
-		noiseSettingRect.height = height;
-	}
-	void InitTexture()
-	{
-		noiseTexture = Texture2D.whiteTexture;
-
-		textureRect.width = areaTextureRect.width;
-		textureRect.height = areaTextureRect.width;
-		textureRect.center = new Vector2(areaTextureRect.width * 0.5f, areaTextureRect.height * 0.5f);
-	}
-
+	#region CustomGUILayout
 	int IntField(string label, int value)
 	{
 		var tmp = value;
@@ -101,8 +193,55 @@ public class NoiseGenerationWindow : EditorWindow
 
 		return value;
 	}
+	#endregion
 
-	void DisplaySimpleNoiseSetting()
+	void InitRect()
+	{
+		windowSettingRect.x = 0.0f;
+		windowSettingRect.y = 0.0f;
+		windowSettingRect.width = width * 0.25f;
+		windowSettingRect.height = height;
+
+		areaTextureRect.x = windowSettingRect.xMax;
+		areaTextureRect.y = 0.0f;
+		areaTextureRect.width = width * 0.50f;
+		areaTextureRect.height = height;
+
+		noiseSettingRect.x = areaTextureRect.xMax;
+		noiseSettingRect.y = 0.0f;
+		noiseSettingRect.width = width * 0.25f;
+		noiseSettingRect.height = height;
+
+		noiseLayerListRect.x = 0.0f;
+		noiseLayerListRect.y = 17.0f;
+		noiseLayerListRect.width = 300.0f;
+		noiseLayerListRect.height = 300.0f;
+	}
+	void InitTexture()
+	{
+		noiseTexture = Texture2D.whiteTexture;
+
+		textureRect.width = areaTextureRect.width;
+		textureRect.height = areaTextureRect.width;
+		textureRect.center = new Vector2(areaTextureRect.width * 0.5f, areaTextureRect.height * 0.5f);
+	}
+
+	void Test()
+	{
+		foreach (var layer in layerList)
+			layer.GenerateHeightmap();
+
+		HeightmapData bottomLayer = layerList[0].heightmapData;
+		for (int i = 0; i < layerList.Count - 1; i++)
+		{
+			var topLayer = layerList[i + 1].heightmapData;
+			bottomLayer = HeightmapUtility.Blend(bottomLayer, topLayer, layerList[i + 1].blendMode);
+		}
+
+		noiseTexture = NoiseUtility.GenerateTextureFromHeightmap(bottomLayer, contrast, textureFormat);
+	}
+
+	void DisplaySimpleNoiseSettingMode()
 	{
 		GUILayout.Label("Simple Noise Setting");
 
@@ -111,7 +250,7 @@ public class NoiseGenerationWindow : EditorWindow
 
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
-	void DisplayFractalNoiseSetting()
+	void DisplayFractalNoiseSettingMode()
 	{
 		GUILayout.Label("Fractal Noise Setting");
 		fractalNoiseSetting.resolution = IntField("Resolution", fractalNoiseSetting.resolution);
@@ -123,7 +262,7 @@ public class NoiseGenerationWindow : EditorWindow
 		
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
-	void DisplayTurbulenceNoiseSetting()
+	void DisplayTurbulenceNoiseSettingMode()
 	{
 		GUILayout.Label("Turbulence Noise Setting");
 		turbulenceNoiseSetting.resolution = IntField("Resolution", turbulenceNoiseSetting.resolution);
@@ -135,7 +274,7 @@ public class NoiseGenerationWindow : EditorWindow
 
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
-	void DisplayMarbleNoiseSetting()
+	void DisplayMarbleNoiseSettingMode()
 	{
 		GUILayout.Label("Marble Noise Setting");
 		marbleNoiseSetting.resolution = IntField("Resolution", marbleNoiseSetting.resolution);
@@ -147,7 +286,7 @@ public class NoiseGenerationWindow : EditorWindow
 
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
-	void DisplayWoodNoiseSetting()
+	void DisplayWoodNoiseSettingMode()
 	{
 		GUILayout.Label("Wood Noise Setting");
 
@@ -160,6 +299,31 @@ public class NoiseGenerationWindow : EditorWindow
 
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
+	void DisplayBlendNoiseSettingMode()
+	{
+		GUILayout.Label("Blend Noise Setting");
+
+		for (int i = 0; i < layerList.Count; i++)
+		{
+			GUILayout.Label("Layer " + i);
+			layerList[i].Display();
+
+			GUILayout.Space(5.0f);
+		}
+
+		GUILayout.BeginHorizontal();
+		{
+			if (GUILayout.Button("Add Color Layer"))
+			{
+				layerList.Add(new ColorLayer());
+			}
+			if (GUILayout.Button("Add Noise Layer"))
+			{
+				layerList.Add(new NoiseLayer());
+			}
+		}
+		GUILayout.EndHorizontal();
+	}
 
 	void DisplayWindowSetting()
 	{
@@ -167,7 +331,6 @@ public class NoiseGenerationWindow : EditorWindow
 		{
 			GUILayout.Label("Texture Setting");
 			displayMode = (DisplayMode)EditorGUILayout.EnumPopup("Display Mode", displayMode);
-			textureResolution = EditorGUILayout.IntField("Texture Resolution", textureResolution);
 			textureFormat = (TextureFormat)EditorGUILayout.EnumPopup("Texture Format", textureFormat);
 			contrast = EditorGUILayout.IntField("Contrast", contrast);
 		}
@@ -186,30 +349,34 @@ public class NoiseGenerationWindow : EditorWindow
 		GUILayout.BeginArea(noiseSettingRect);
 		{
 			if (displayMode == DisplayMode.SimpleNoise)
-				DisplaySimpleNoiseSetting();
+				DisplaySimpleNoiseSettingMode();
 			else if (displayMode == DisplayMode.FractalNoise)
-				DisplayFractalNoiseSetting();
+				DisplayFractalNoiseSettingMode();
 			else if (displayMode == DisplayMode.TurbulenceNoise)
-				DisplayTurbulenceNoiseSetting();
+				DisplayTurbulenceNoiseSettingMode();
 			else if (displayMode == DisplayMode.MarbleNoise)
-				DisplayMarbleNoiseSetting();
+				DisplayMarbleNoiseSettingMode();
 			else if (displayMode == DisplayMode.WoodNoise)
-				DisplayWoodNoiseSetting();
+				DisplayWoodNoiseSettingMode();
+			else if (displayMode == DisplayMode.BlendNoise)
+				DisplayBlendNoiseSettingMode();
 
 			autoGenerate = GUILayout.Toggle(autoGenerate, "AutoGenerate");
 
 			if (GUILayout.Button("Generate") || (autoGenerate && modified))
 			{
 				if (displayMode == DisplayMode.SimpleNoise)
-					noiseTexture = NoiseUtility.GenerateSimpleNoiseTexture(noiseInput, noiseSetting, contrast, textureResolution, textureFormat);
+					noiseTexture = NoiseUtility.GenerateSimpleNoiseTexture(noiseInput, noiseSetting, contrast, textureFormat);
 				else if (displayMode == DisplayMode.FractalNoise)
-					noiseTexture = NoiseUtility.GenerateFractalNoiseTexture(noiseInput, fractalNoiseSetting, contrast, textureResolution, textureFormat);
+					noiseTexture = NoiseUtility.GenerateFractalNoiseTexture(noiseInput, fractalNoiseSetting, contrast, textureFormat);
 				else if (displayMode == DisplayMode.TurbulenceNoise)
-					noiseTexture = NoiseUtility.GenerateTurbulenceNoiseTexture(noiseInput, turbulenceNoiseSetting, contrast, textureResolution, textureFormat);
+					noiseTexture = NoiseUtility.GenerateTurbulenceNoiseTexture(noiseInput, turbulenceNoiseSetting, contrast, textureFormat);
 				else if (displayMode == DisplayMode.MarbleNoise)
-					noiseTexture = NoiseUtility.GenerateMarbleNoiseTexture(noiseInput, marbleNoiseSetting, contrast, textureResolution, textureFormat);
+					noiseTexture = NoiseUtility.GenerateMarbleNoiseTexture(noiseInput, marbleNoiseSetting, contrast, textureFormat);
 				else if (displayMode == DisplayMode.WoodNoise)
-					noiseTexture = NoiseUtility.GenerateWoodNoiseTexture(noiseInput, woodNoiseSetting, contrast, textureResolution, textureFormat);
+					noiseTexture = NoiseUtility.GenerateWoodNoiseTexture(noiseInput, woodNoiseSetting, contrast, textureFormat);
+				else if (displayMode == DisplayMode.BlendNoise)
+					Test();
 
 				modified = false;
 			}

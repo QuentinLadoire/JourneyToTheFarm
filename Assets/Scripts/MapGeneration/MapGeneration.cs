@@ -1,64 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class MapGeneration : MonoBehaviour
 {
 	public int mapSize = 256;
-
-	public MapSetting mapSetting = null;
+	public int VerticesCount => mapSize * mapSize;
+	public int TrianglesCount => (mapSize - 1) * (mapSize - 1) * 2;
+	public int IndicesCount => (mapSize - 1) * (mapSize - 1) * 2 * 3;
 
 	MeshFilter meshFilter = null;
 	MeshRenderer meshRenderer = null;
-	
-	int GetVerticesCount()
-	{
-		return mapSize * mapSize;
-	}
-	int GetTrianglesCount()
-	{
-		return (mapSize - 1) * (mapSize - 1) * 2;
-	}
-	int GetIndicesCount()
-	{
-		return (mapSize - 1) * (mapSize - 1) * 2 * 3;
-	}
 
-	float GetGroundHeight(float x, float y)
+	void GenerateMesh()
 	{
-		var setting = mapSetting.groundNoiseSetting;
-		return NoiseUtility.FractalNoise2D(x, y, setting) * mapSetting.groundHeightMultiplier;
-	}
-	float GetMoutainHeight(float x, float y)
-	{
-		var mountainNoiseSetting = mapSetting.mountainNoiseSetting;
-		return Mathf.Clamp01(NoiseUtility.FractalNoise2D(x, y, mountainNoiseSetting)) * mapSetting.mountainHeightMultiplier;
-	}
-	float GetHeight(float x, float y)
-	{
-		return GetGroundHeight(x, y);
-	}
-
-	Mesh GenerateMesh()
-	{
-		Vector3[] vertices = new Vector3[GetVerticesCount()];
-		int[] indices = new int[GetIndicesCount()];
-		Vector2[] uvs = new Vector2[GetVerticesCount()];
+		Vector3[] vertices = new Vector3[VerticesCount];
+		int[] indices = new int[IndicesCount];
+		Vector2[] uvs = new Vector2[VerticesCount];
 
 		int index = 0;
-		for (int i = 0; i < GetVerticesCount(); i++)
+		for (int i = 0; i < VerticesCount; i++)
 		{
 			var x = i % mapSize;
 			var z = i / mapSize;
-			var y = GetHeight(transform.position.x + x, transform.position.z + z);
+			var y = 0.0f;
 
+			#region SetPosition
 			vertices[i] = new Vector3(x, y, z);
+			#endregion
 
+			#region SetUVs
 			var uvX = (float)((float)x / (float)mapSize);
 			var uvY = (float)((float)z / (float)mapSize);
 			uvs[i] = new Vector2(uvX, uvY);
-			
+			#endregion
+
+			#region Setindices
 			if (x < (mapSize - 1))
 			{
 				if (z < (mapSize - 1))
@@ -76,14 +53,15 @@ public class MapGeneration : MonoBehaviour
 				{
 					indices[index] = i;
 					index++;
-				
+
 					indices[index] = i + 1;
 					index++;
-				
+
 					indices[index] = i + 1 - mapSize;
 					index++;
 				}
 			}
+			#endregion
 		}
 
 		Mesh mesh = new Mesh()
@@ -92,10 +70,10 @@ public class MapGeneration : MonoBehaviour
 			triangles = indices,
 			uv = uvs,
 		};
-		
+
 		mesh.RecalculateNormals();
 
-		return mesh;
+		meshFilter.mesh = mesh;
 	}
 
 	private void Awake()
@@ -105,12 +83,6 @@ public class MapGeneration : MonoBehaviour
 	}
 	private void Start()
 	{
-		meshFilter.mesh = GenerateMesh();
-		
-		var input = new Vector2(transform.position.x, transform.position.z);
-
-		var mat = new Material(Shader.Find("Shader Graphs/Test"));
-		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", NoiseUtility.GenerateFractalNoiseTexture(input, mapSetting.groundNoiseSetting, 3));
-		meshRenderer.material = mat;
+		GenerateMesh();
 	}
 }

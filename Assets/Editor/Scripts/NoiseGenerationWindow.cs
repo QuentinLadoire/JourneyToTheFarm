@@ -231,14 +231,14 @@ public class NoiseGenerationWindow : EditorWindow
 		foreach (var layer in layerList)
 			layer.GenerateHeightmap();
 
-		HeightmapData bottomLayer = layerList[0].heightmapData;
+		HeightmapData outHeightmap = layerList[0].heightmapData;
 		for (int i = 0; i < layerList.Count - 1; i++)
 		{
-			var topLayer = layerList[i + 1].heightmapData;
-			bottomLayer = HeightmapUtility.Blend(bottomLayer, topLayer, layerList[i + 1].blendMode);
+			var blendLayer = layerList[i + 1];
+			outHeightmap = HeightmapUtility.Blend(outHeightmap, blendLayer.heightmapData, blendLayer.blendMode, blendLayer.opacity);
 		}
 
-		noiseTexture = NoiseUtility.GenerateTextureFromHeightmap(bottomLayer, contrast, textureFormat);
+		noiseTexture = HeightmapUtility.GenerateTextureFromHeightmap(outHeightmap, contrast, textureFormat);
 	}
 
 	void DisplaySimpleNoiseSettingMode()

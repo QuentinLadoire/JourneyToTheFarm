@@ -81,7 +81,7 @@ public static class HeightmapUtility
 
 		return heightmap;
 	}
-	public static HeightmapData MultiplyBlend(HeightmapData layer1, HeightmapData layer2)
+	public static HeightmapData MultiplyBlend(HeightmapData layer1, HeightmapData layer2, float opacity = 1.0f)
 	{
 		HeightmapData heightmap = new HeightmapData()
 		{
@@ -92,12 +92,13 @@ public static class HeightmapUtility
 		for (int i = 0; i < layer1.resolution; i++)
 			for (int j = 0; j < layer1.resolution; j++)
 			{
-				heightmap.data[i, j] = layer1.data[i, j] * layer2.data[i, j];
+				var result = layer1.data[i, j] * layer2.data[i, j];
+				heightmap.data[i, j] = Mathf.Lerp(layer1.data[i, j], result, opacity);
 			}
 
 		return heightmap;
 	}
-	public static HeightmapData DarkenBlend(HeightmapData layer1, HeightmapData layer2)
+	public static HeightmapData DarkenBlend(HeightmapData layer1, HeightmapData layer2, float opacity = 1.0f)
 	{
 		HeightmapData heightmap = new HeightmapData()
 		{
@@ -108,12 +109,13 @@ public static class HeightmapUtility
 		for (int i = 0; i < layer1.resolution; i++)
 			for (int j = 0; j < layer1.resolution; j++)
 			{
-				heightmap.data[i, j] = Mathf.Min(layer1.data[i, j], layer2.data[i, j]);
+				var result = Mathf.Min(layer1.data[i, j], layer2.data[i, j]);
+				heightmap.data[i, j] = Mathf.Lerp(layer1.data[i, j], result, opacity);
 			}
 
 		return heightmap;
 	}
-	public static HeightmapData LightenBlend(HeightmapData layer1, HeightmapData layer2)
+	public static HeightmapData LightenBlend(HeightmapData layer1, HeightmapData layer2, float opacity = 1.0f)
 	{
 		HeightmapData heightmap = new HeightmapData()
 		{
@@ -124,20 +126,36 @@ public static class HeightmapUtility
 		for (int i = 0; i < layer1.resolution; i++)
 			for (int j = 0; j < layer1.resolution; j++)
 			{
-				heightmap.data[i, j] = Mathf.Max(layer1.data[i, j], layer2.data[i, j]);
+				var result = Mathf.Max(layer1.data[i, j], layer2.data[i, j]);
+				heightmap.data[i, j] = Mathf.Lerp(layer1.data[i, j], result, opacity);
 			}
 
 		return heightmap;
 	}
-	public static HeightmapData Blend(HeightmapData layer1, HeightmapData layer2, BlendMode blendMode)
+	public static HeightmapData Blend(HeightmapData layer1, HeightmapData layer2, BlendMode blendMode, float opacity = 1.0f)
 	{
 		return blendMode switch
 		{
 			BlendMode.Normal => NormalBlend(layer1, layer2),
-			BlendMode.Multiply => MultiplyBlend(layer1, layer2),
-			BlendMode.Darken => DarkenBlend(layer1, layer2),
-			BlendMode.Lighten => LightenBlend(layer1, layer2),
+			BlendMode.Multiply => MultiplyBlend(layer1, layer2, opacity),
+			BlendMode.Darken => DarkenBlend(layer1, layer2, opacity),
+			BlendMode.Lighten => LightenBlend(layer1, layer2, opacity),
 			_ => null
 		};
+	}
+
+	public static Texture2D GenerateTextureFromHeightmap(HeightmapData heightmap, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
+	{
+		Texture2D texture = new Texture2D(heightmap.resolution, heightmap.resolution, format, false);
+		for (int i = 0; i < heightmap.resolution; i++)
+			for (int j = 0; j < heightmap.resolution; j++)
+			{
+				var value = Mathf.Pow(heightmap.data[i, j], contrast);
+				texture.SetPixel(i, j, new Color(value, value, value));
+			}
+
+		texture.Apply();
+
+		return texture;
 	}
 }

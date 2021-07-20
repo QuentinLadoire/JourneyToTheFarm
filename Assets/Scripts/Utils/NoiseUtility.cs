@@ -33,21 +33,6 @@ public class FractalNoiseSetting
 
 public static class NoiseUtility
 {
-	public static Texture2D GenerateTextureFromHeightmap(HeightmapData heightmap, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
-	{
-		Texture2D texture = new Texture2D(heightmap.resolution, heightmap.resolution, format, false);
-		for (int i = 0; i < heightmap.resolution; i++)
-			for (int j = 0; j < heightmap.resolution; j++)
-			{
-				var value = Mathf.Pow(heightmap.data[i, j], contrast);
-				texture.SetPixel(i, j, new Color(value, value, value));
-			}
-
-		texture.Apply();
-
-		return texture;
-	}
-
 	public static Texture2D GenerateSimpleColorTexture(SimpleColorSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
 		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);

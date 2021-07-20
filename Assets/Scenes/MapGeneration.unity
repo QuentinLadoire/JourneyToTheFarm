@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 1215729648}
   - component: {fileID: 1215729647}
   - component: {fileID: 1215729645}
-  - component: {fileID: 1215729649}
   m_Layer: 0
   m_Name: MapGeneration
   m_TagString: Untagged
@@ -352,24 +351,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c986bc254630c4a8b5f3f0605dd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flatGround:
+  mapSize: 256
+  flatGroundSetting:
     resolution: 256
     grayValue: 0.58
-  peaks:
+  peaksSetting:
     resolution: 256
-    tiling: {x: 2, y: 2}
-    layer: 5
+    tiling: {x: 1, y: 1}
+    layer: 8
     lacunarity: 2
     persistance: 0.5
     seed: 0
-  valleys:
+  peaksOpacity: 0.45
+  valleysSetting:
     resolution: 256
-    tiling: {x: 2, y: 2}
-    layer: 5
+    tiling: {x: 1, y: 1}
+    layer: 8
     lacunarity: 2
     persistance: 0.5
     seed: 0
-  multiplier: 100
+  valleysOpacity: 0.05
+  heightMultiplier: 1000
+  textureContrast: 2
 --- !u!4 &1215729646
 Transform:
   m_ObjectHideFlags: 0
@@ -403,7 +406,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ada0534b63e40534bb9d42e3c7031ed6, type: 2}
+  - {fileID: 2066914614}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -433,39 +436,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215729644}
   m_Mesh: {fileID: 0}
---- !u!218 &1215729649
-Terrain:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215729644}
-  m_Enabled: 1
-  serializedVersion: 6
-  m_TerrainData: {fileID: 0}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
-  m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
-  m_DrawHeightmap: 1
-  m_DrawInstanced: 0
-  m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 0}
-  m_BakeLightProbesForTrees: 1
-  m_PreserveTreePrototypeLayers: 0
-  m_DeringLightProbesForTrees: 1
-  m_ScaleInLightmap: 1
-  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
-  m_GroupingID: 0
-  m_RenderingLayerMask: 1
-  m_AllowAutoConnect: 0
 --- !u!1 &1914638308
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,3 +529,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!21 &2066914614
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TestShaderGraphMat (Instance)
+  m_Shader: {fileID: -6465566751694194690, guid: 5c3f4a618b2861b4990ec264debf3028, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_2c3a8b8effdf468bbcea3e4da073d2f8:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_dcc01194ebed4494a1e3bbc386c54016:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - Color_81d4fc00414942cd8054e92a9f2f14c0: {r: 0.14509805, g: 0.29411766, b: 0, a: 1}
+    - Color_867930c0a0644ba68e40b7e9dad57687: {r: 0.6078432, g: 0.462745, b: 0.32549015, a: 1}
+  m_BuildTextureStacks: []

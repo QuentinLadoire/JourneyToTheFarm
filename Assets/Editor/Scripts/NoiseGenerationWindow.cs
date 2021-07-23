@@ -97,7 +97,7 @@ public class NoiseLayer : Layer
 
 	public override void GenerateHeightmap()
 	{
-		heightmapData = HeightmapUtility.GenerateHeightmapFrom(setting);
+		heightmapData = HeightmapUtility.GenerateHeightmapFrom(Vector2.zero, setting);
 	}
 
 	void DisplayFractalNoiseSetting()

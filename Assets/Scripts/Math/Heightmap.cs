@@ -32,7 +32,7 @@ public static class HeightmapUtility
 
 		return heightmap;
 	}
-	public static HeightmapData GenerateHeightmapFrom(SimpleNoiseSetting setting)
+	public static HeightmapData GenerateHeightmapFrom(Vector2 offset, SimpleNoiseSetting setting)
 	{
 		HeightmapData heightmap = new HeightmapData()
 		{
@@ -43,12 +43,12 @@ public static class HeightmapUtility
 		for (int i = 0; i < setting.resolution; i++)
 			for (int j = 0; j < setting.resolution; j++)
 			{
-				heightmap.data[i, j] = NoiseUtility.SimpleNoise2DNormalized(i, j, setting);
+				heightmap.data[i, j] = NoiseUtility.SimpleNoise2DNormalized(i + offset.x, j + offset.y, setting);
 			}
 
 		return heightmap;
 	}
-	public static HeightmapData GenerateHeightmapFrom(FractalNoiseSetting setting)
+	public static HeightmapData GenerateHeightmapFrom(Vector2 offset, FractalNoiseSetting setting)
 	{
 		HeightmapData heightmap = new HeightmapData()
 		{
@@ -59,7 +59,7 @@ public static class HeightmapUtility
 		for (int i = 0; i < setting.resolution; i++)
 			for (int j = 0; j < setting.resolution; j++)
 			{
-				heightmap.data[i, j] = NoiseUtility.FractalNoise2DNormalized(i, j, setting);
+				heightmap.data[i, j] = NoiseUtility.FractalNoise2DNormalized(i + offset.x, j + offset.y, setting);
 			}
 
 		return heightmap;

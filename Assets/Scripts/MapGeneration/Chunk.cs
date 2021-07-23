@@ -102,7 +102,7 @@ public class Chunk : MonoBehaviour
 			return;
 
 		var mat = new Material(meshRenderer.material);
-		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap));
+		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap, 2));
 		meshRenderer.material = mat;
 	}
 

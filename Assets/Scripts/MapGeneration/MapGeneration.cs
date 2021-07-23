@@ -14,19 +14,21 @@ public class MapGenerationSetting
 	[Header("Peaks Setting")]
 	public FractalNoiseSetting peaksSetting = new FractalNoiseSetting
 	{
-		tiling = new Vector2(10.0f, 10.0f)
+		tiling = new Vector2(1.0f, 1.0f),
+		layer = 8
 	};
-	[Range(0.0f, 1.0f)] public float peaksOpacity = 0.2f;
+	[Range(0.0f, 1.0f)] public float peaksOpacity = 0.45f;
 
 	[Header("Valleys Setting")]
 	public FractalNoiseSetting valleysSetting = new FractalNoiseSetting
 	{
-		tiling = new Vector2(10.0f, 10.0f)
+		tiling = new Vector2(1.0f, 1.0f),
+		layer = 8
 	};
-	[Range(0.0f, 1.0f)] public float valleysOpacity = 0.1f;
+	[Range(0.0f, 1.0f)] public float valleysOpacity = 0.05f;
 
 	[Space]
-	public float heightMultiplier = 100.0f;
+	public float heightMultiplier = 1000.0f;
 
 	public HeightmapData ComputeHeightmap(Vector2 offset)
 	{
@@ -43,7 +45,7 @@ public class MapGenerationSetting
 
 public class MapGeneration : MonoBehaviour
 {
-	public int mapSize = 10;
+	public int mapSize = 5;
 	public MapGenerationSetting setting = new MapGenerationSetting();
 	public GameObject chunkPrefab = null;
 
@@ -56,7 +58,9 @@ public class MapGeneration : MonoBehaviour
 
 		var newChunk = Instantiate(chunkPrefab).GetComponent<Chunk>();
 		newChunk.transform.parent = transform;
-		newChunk.transform.position = new Vector3(x * Chunk.chunkSize, 0.0f, y * Chunk.chunkSize);
+
+		//-1 because mesh vertices are between 0 to chunkSize - 1, so we need to substract 1 to chunk collide between them
+		newChunk.transform.position = new Vector3(x * (Chunk.chunkSize - 1), 0.0f, y * (Chunk.chunkSize - 1));
 
 		newChunk.setting = setting;
 

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e630bd7d8bd37489f61aadeb4bb5cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treePrefab: {fileID: 6224860918498618724, guid: f6c43120eea852e4090160e59340780e, type: 3}
   setting:
     flatGroundSetting:
       resolution: 256
@@ -115,3 +116,11 @@ MonoBehaviour:
       seed: 0
     valleysOpacity: 0.1
     heightMultiplier: 100
+    treesSetting:
+      resolution: 256
+      tiling: {x: 100, y: 100}
+      layer: 3
+      lacunarity: 2
+      persistance: 0.3
+      seed: 0
+    treeHeight: 0.01

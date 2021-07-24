@@ -65,4 +65,12 @@ MonoBehaviour:
       seed: 0
     valleysOpacity: 0.05
     heightMultiplier: 1000
+    treesSetting:
+      resolution: 256
+      tiling: {x: 100, y: 100}
+      layer: 3
+      lacunarity: 2
+      persistance: 0.05
+      seed: 0
+    treeHeight: 0.2
   chunkPrefab: {fileID: 4958360302141346764, guid: 98c6f723ccc847c409a0109329b98170, type: 3}

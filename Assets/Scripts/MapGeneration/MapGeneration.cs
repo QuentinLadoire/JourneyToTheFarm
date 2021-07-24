@@ -30,6 +30,15 @@ public class MapGenerationSetting
 	[Space]
 	public float heightMultiplier = 1000.0f;
 
+	[Header("Tree Setting")]
+	public FractalNoiseSetting treesSetting = new FractalNoiseSetting
+	{
+		tiling = new Vector2(100.0f, 100.0f),
+		layer = 3,
+		persistance = 0.05f
+	};
+	[Range(0.0f, 1.0f)] public float treeHeight = 0.2f;
+
 	public HeightmapData ComputeHeightmap(Vector2 offset)
 	{
 		var flatHeightmap = HeightmapUtility.GenerateHeightmapFrom(flatGroundSetting);
@@ -40,6 +49,10 @@ public class MapGenerationSetting
 		heightmap = HeightmapUtility.MultiplyBlend(heightmap, valleysHeightmap, valleysOpacity);
 
 		return heightmap;
+	}
+	public HeightmapData ComputeTreeHeightmap(Vector2 offset)
+	{
+		return HeightmapUtility.GenerateHeightmapFrom(offset, treesSetting);
 	}
 }
 

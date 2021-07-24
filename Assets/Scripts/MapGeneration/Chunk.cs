@@ -9,6 +9,8 @@ public class Chunk : MonoBehaviour
 	public int TrianglesCount => (chunkSize - 1) * (chunkSize - 1) * 2;
 	public int IndicesCount => (chunkSize - 1) * (chunkSize - 1) * 2 * 3;
 
+	public GameObject treePrefab = null;
+
 	[HideInInspector]
 	public MapGenerationSetting setting = null;
 
@@ -16,10 +18,21 @@ public class Chunk : MonoBehaviour
 	MeshRenderer meshRenderer = null;
 
 	HeightmapData heightmap = null;
+	HeightmapData treeHeightmap = null;
 
 	float GetHeight(int x, int y)
 	{
 		return heightmap.data[x, y] * setting.heightMultiplier - setting.heightMultiplier * 0.5f;
+	}
+
+	void CreateNewTree(int x, int y)
+	{
+		if (treePrefab == null)
+			return;
+
+		var newTreePrefab = Instantiate(treePrefab);
+		newTreePrefab.transform.parent = transform;
+		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
 	}
 
     void ComputeHeightmap()
@@ -105,6 +118,27 @@ public class Chunk : MonoBehaviour
 		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap, 2));
 		meshRenderer.material = mat;
 	}
+	void GenerateTreeHeightmap()
+	{
+		if (setting == null)
+			return;
+
+		var offset = new Vector2(transform.position.x, transform.position.z);
+		treeHeightmap = setting.ComputeTreeHeightmap(offset);
+	}
+	void GenerateTree()
+	{
+		if (heightmap == null || treeHeightmap == null || treePrefab == null)
+			return;
+
+		for (int i = 0; i < treeHeightmap.resolution; i++)
+			for (int j = 0; j < treeHeightmap.resolution; j++)
+			{
+				var height = treeHeightmap.data[i, j];
+				if (height < setting.treeHeight)
+					CreateNewTree(i, j);
+			}
+	}
 
 	private void Awake()
 	{
@@ -116,5 +150,7 @@ public class Chunk : MonoBehaviour
 		ComputeHeightmap();
 		GenerateMesh();
 		GenerateTexture();
+		GenerateTreeHeightmap();
+		GenerateTree();
 	}
 }

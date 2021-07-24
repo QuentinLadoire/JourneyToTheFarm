@@ -153,6 +153,9 @@ public class NoiseGenerationWindow : EditorWindow
 
 	readonly List<Layer> layerList = new List<Layer>();
 
+	float simpleNoiseValue = 0.0f;
+	float fractalNoiseValue = 0.0f;
+
 	bool autoGenerate = false;
 	bool modified = false;
 
@@ -226,7 +229,15 @@ public class NoiseGenerationWindow : EditorWindow
 		textureRect.center = new Vector2(areaTextureRect.width * 0.5f, areaTextureRect.height * 0.5f);
 	}
 
-	void Test()
+	void GenerateSimpleNoise()
+	{
+		noiseTexture = NoiseUtility.GenerateSimpleNoiseTexture(noiseInput, noiseSetting, simpleNoiseValue, contrast, textureFormat);
+	}
+	void GenerateFractalNoise()
+	{
+		noiseTexture = NoiseUtility.GenerateFractalNoiseTexture(noiseInput, fractalNoiseSetting, fractalNoiseValue, contrast, textureFormat);
+	}
+	void GenerateBlendNoise()
 	{
 		foreach (var layer in layerList)
 			layer.GenerateHeightmap();
@@ -249,6 +260,8 @@ public class NoiseGenerationWindow : EditorWindow
 		noiseSetting.tiling = Vector2Field("Tiling", noiseSetting.tiling);
 
 		noiseInput = Vector2Field("Input", noiseInput);
+
+		simpleNoiseValue = Slider("Value", simpleNoiseValue, 0.0f, 1.0f);
 	}
 	void DisplayFractalNoiseSettingMode()
 	{
@@ -261,6 +274,8 @@ public class NoiseGenerationWindow : EditorWindow
 		fractalNoiseSetting.seed = IntField("Seed", fractalNoiseSetting.seed);
 		
 		noiseInput = Vector2Field("Input", noiseInput);
+
+		fractalNoiseValue = Slider("Value", fractalNoiseValue, 0.0f, 1.0f);
 	}
 	void DisplayTurbulenceNoiseSettingMode()
 	{
@@ -366,9 +381,9 @@ public class NoiseGenerationWindow : EditorWindow
 			if (GUILayout.Button("Generate") || (autoGenerate && modified))
 			{
 				if (displayMode == DisplayMode.SimpleNoise)
-					noiseTexture = NoiseUtility.GenerateSimpleNoiseTexture(noiseInput, noiseSetting, contrast, textureFormat);
+					GenerateSimpleNoise();
 				else if (displayMode == DisplayMode.FractalNoise)
-					noiseTexture = NoiseUtility.GenerateFractalNoiseTexture(noiseInput, fractalNoiseSetting, contrast, textureFormat);
+					GenerateFractalNoise();
 				else if (displayMode == DisplayMode.TurbulenceNoise)
 					noiseTexture = NoiseUtility.GenerateTurbulenceNoiseTexture(noiseInput, turbulenceNoiseSetting, contrast, textureFormat);
 				else if (displayMode == DisplayMode.MarbleNoise)
@@ -376,7 +391,7 @@ public class NoiseGenerationWindow : EditorWindow
 				else if (displayMode == DisplayMode.WoodNoise)
 					noiseTexture = NoiseUtility.GenerateWoodNoiseTexture(noiseInput, woodNoiseSetting, contrast, textureFormat);
 				else if (displayMode == DisplayMode.BlendNoise)
-					Test();
+					GenerateBlendNoise();
 
 				modified = false;
 			}

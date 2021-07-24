@@ -63,6 +63,25 @@ public static class NoiseUtility
 
 		return texture;
 	}
+	public static Texture2D GenerateSimpleNoiseTexture(Vector2 input, SimpleNoiseSetting setting, float value, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
+	{
+		var texture = new Texture2D(setting.resolution, setting.resolution, format, false);
+
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
+			{
+				var noise = Mathf.Pow(SimpleNoise2DNormalized(input.x + i, input.y + j, setting), contrast);
+
+				if (noise < value)
+					texture.SetPixel(i, j, Color.green);
+				else
+					texture.SetPixel(i, j, new Color(noise, noise, noise));
+			}
+
+		texture.Apply();
+
+		return texture;
+	}
 	public static Texture2D GenerateFractalNoiseTexture(Vector2 input, FractalNoiseSetting setting, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
 	{
 		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
@@ -72,6 +91,27 @@ public static class NoiseUtility
 			{
 				var noise = Mathf.Pow(FractalNoise2DNormalized(input.x + i, input.y + j, setting), contrast);
 				texture.SetPixel(i, j, new Color(noise, noise, noise));
+			}
+
+		texture.Apply();
+
+		return texture;
+	}
+	public static Texture2D GenerateFractalNoiseTexture(Vector2 input, FractalNoiseSetting setting, float value, int contrast = 1, TextureFormat format = TextureFormat.RGBAHalf)
+	{
+		Texture2D texture = new Texture2D(setting.resolution, setting.resolution, format, false);
+
+		for (int i = 0; i < setting.resolution; i++)
+			for (int j = 0; j < setting.resolution; j++)
+			{
+				var noise = FractalNoise2DNormalized(input.x + i, input.y + j, setting);
+				if (noise < value)
+					texture.SetPixel(i, j, Color.green);
+				else
+				{
+					noise = Mathf.Pow(noise, contrast);
+					texture.SetPixel(i, j, new Color(noise, noise, noise));
+				}
 			}
 
 		texture.Apply();

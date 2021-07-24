@@ -38,6 +38,7 @@ public class MapGenerationSetting
 		persistance = 0.05f
 	};
 	[Range(0.0f, 1.0f)] public float treeHeight = 0.2f;
+	[Range(0.0f, 1.0f)] public float treeHeight2 = 0.24f;
 
 	public HeightmapData ComputeHeightmap(Vector2 offset)
 	{

@@ -10,12 +10,14 @@ public class Chunk : MonoBehaviour
 	public int IndicesCount => (chunkSize - 1) * (chunkSize - 1) * 2 * 3;
 
 	public GameObject treePrefab = null;
+	public GameObject treePrefab2 = null;
 
 	[HideInInspector]
 	public MapGenerationSetting setting = null;
 
 	MeshFilter meshFilter = null;
 	MeshRenderer meshRenderer = null;
+	MeshCollider meshCollider = null;
 
 	HeightmapData heightmap = null;
 	HeightmapData treeHeightmap = null;
@@ -32,10 +34,21 @@ public class Chunk : MonoBehaviour
 
 		var newTreePrefab = Instantiate(treePrefab);
 		newTreePrefab.transform.parent = transform;
+		newTreePrefab.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
+		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
+	}
+	void CreateNewTree2(int x, int y)
+	{
+		if (treePrefab2 == null)
+			return;
+
+		var newTreePrefab = Instantiate(treePrefab2);
+		newTreePrefab.transform.parent = transform;
+		newTreePrefab.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
 		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
 	}
 
-    void ComputeHeightmap()
+	void ComputeHeightmap()
 	{
 		if (setting == null)
 			return;
@@ -108,6 +121,7 @@ public class Chunk : MonoBehaviour
 		mesh.RecalculateNormals();
 
 		meshFilter.mesh = mesh;
+		meshCollider.sharedMesh = mesh;
 	}
 	void GenerateTexture()
 	{
@@ -115,7 +129,7 @@ public class Chunk : MonoBehaviour
 			return;
 
 		var mat = new Material(meshRenderer.material);
-		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap, 2));
+		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap));
 		meshRenderer.material = mat;
 	}
 	void GenerateTreeHeightmap()
@@ -135,8 +149,13 @@ public class Chunk : MonoBehaviour
 			for (int j = 0; j < treeHeightmap.resolution; j++)
 			{
 				var height = treeHeightmap.data[i, j];
-				if (height < setting.treeHeight)
-					CreateNewTree(i, j);
+				if (heightmap.data[i, j] < 0.4875)//Grass Height
+				{
+					if (height < setting.treeHeight)
+						CreateNewTree(i, j);
+					else if (height < setting.treeHeight2)
+						CreateNewTree2(i, j);
+				}
 			}
 	}
 
@@ -144,6 +163,7 @@ public class Chunk : MonoBehaviour
 	{
 		meshFilter = GetComponent<MeshFilter>();
 		meshRenderer = GetComponent<MeshRenderer>();
+		meshCollider = GetComponent<MeshCollider>();
 	}
 	private void Start()
 	{

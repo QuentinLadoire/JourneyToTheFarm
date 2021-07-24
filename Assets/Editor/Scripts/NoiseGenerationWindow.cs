@@ -137,7 +137,7 @@ public class NoiseGenerationWindow : EditorWindow
 	Rect noiseSettingRect = Rect.zero;
 	Rect noiseLayerListRect = Rect.zero;
 
-	DisplayMode displayMode = DisplayMode.BlendNoise;
+	DisplayMode displayMode = DisplayMode.FractalNoise;
 	TextureFormat textureFormat = TextureFormat.RGBAHalf;
 	int contrast = 3;
 
@@ -153,8 +153,8 @@ public class NoiseGenerationWindow : EditorWindow
 
 	readonly List<Layer> layerList = new List<Layer>();
 
-	float simpleNoiseValue = 0.0f;
 	float fractalNoiseValue = 0.0f;
+	float fractalNoiseValueBis = 0.0f;
 
 	bool autoGenerate = false;
 	bool modified = false;
@@ -231,11 +231,11 @@ public class NoiseGenerationWindow : EditorWindow
 
 	void GenerateSimpleNoise()
 	{
-		noiseTexture = NoiseUtility.GenerateSimpleNoiseTexture(noiseInput, noiseSetting, simpleNoiseValue, contrast, textureFormat);
+		noiseTexture = NoiseUtility.GenerateSimpleNoiseTexture(noiseInput, noiseSetting, contrast, textureFormat);
 	}
 	void GenerateFractalNoise()
 	{
-		noiseTexture = NoiseUtility.GenerateFractalNoiseTexture(noiseInput, fractalNoiseSetting, fractalNoiseValue, contrast, textureFormat);
+		noiseTexture = NoiseUtility.GenerateFractalNoiseTexture(noiseInput, fractalNoiseSetting, fractalNoiseValue, fractalNoiseValueBis, contrast, textureFormat);
 	}
 	void GenerateBlendNoise()
 	{
@@ -260,8 +260,6 @@ public class NoiseGenerationWindow : EditorWindow
 		noiseSetting.tiling = Vector2Field("Tiling", noiseSetting.tiling);
 
 		noiseInput = Vector2Field("Input", noiseInput);
-
-		simpleNoiseValue = Slider("Value", simpleNoiseValue, 0.0f, 1.0f);
 	}
 	void DisplayFractalNoiseSettingMode()
 	{
@@ -276,6 +274,7 @@ public class NoiseGenerationWindow : EditorWindow
 		noiseInput = Vector2Field("Input", noiseInput);
 
 		fractalNoiseValue = Slider("Value", fractalNoiseValue, 0.0f, 1.0f);
+		fractalNoiseValueBis = Slider("Value", fractalNoiseValueBis, 0.0f, 1.0f);
 	}
 	void DisplayTurbulenceNoiseSettingMode()
 	{

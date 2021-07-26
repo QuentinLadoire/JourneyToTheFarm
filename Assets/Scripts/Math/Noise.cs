@@ -57,11 +57,11 @@ public static class Noise
 	{
 		return (hash & 0x3) switch
 		{
-			0x2 => x + y,
-			0x3 => -x + y,
-			0x1 => x - y,
-			0x0 => -x - y,
-			_ => 0
+			0x0 => x + y,
+			0x1 => -x + y,
+			0x2 => x - y,
+			0x3 => -x - y,
+			_ => 0 // never happens
 		};
 	}
 	static float Grad(int hash, float x, float y, float z)

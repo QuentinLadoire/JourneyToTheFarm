@@ -43,34 +43,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c986bc254630c4a8b5f3f0605dd7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 5
+  mapSize: 2
   setting:
-    flatGroundSetting:
-      resolution: 256
-      grayValue: 0.5
-    peaksSetting:
-      resolution: 256
-      tiling: {x: 1, y: 1}
-      layer: 8
-      lacunarity: 2
-      persistance: 0.5
-      seed: 0
-    peaksOpacity: 0.45
-    valleysSetting:
-      resolution: 256
-      tiling: {x: 1, y: 1}
-      layer: 8
-      lacunarity: 2
-      persistance: 0.5
-      seed: 0
-    valleysOpacity: 0.05
-    heightMultiplier: 1000
-    treesSetting:
-      resolution: 256
-      tiling: {x: 100, y: 100}
-      layer: 3
-      lacunarity: 2
-      persistance: 0.05
-      seed: 0
-    treeHeight: 0.2
+    terrainSetting:
+      flatGroundSetting:
+        resolution: 256
+        grayValue: 0.5
+      peaksSetting:
+        resolution: 256
+        tiling: {x: 1, y: 1}
+        layer: 8
+        lacunarity: 2
+        persistance: 0.5
+        seed: 0
+      peaksOpacity: 0.45
+      valleysSetting:
+        resolution: 256
+        tiling: {x: 1, y: 1}
+        layer: 8
+        lacunarity: 2
+        persistance: 0.5
+        seed: 0
+      valleysOpacity: 0.05
+      heightMultiplier: 1000
+    treeSetting:
+      noiseSetting:
+        resolution: 256
+        tiling: {x: 100, y: 100}
+        layer: 3
+        lacunarity: 2
+        persistance: 0.05
+        seed: 0
+      tree_01Prefab: {fileID: 2886750638256978063, guid: 13677884ead7ca842a32cd35648b9d69, type: 3}
+      tree_01Min: 0
+      tree_01Max: 0.2
+      tree_02Prefab: {fileID: 6224860918498618724, guid: f6c43120eea852e4090160e59340780e, type: 3}
+      tree_02Min: 0.2
+      tree_02Max: 0.24
   chunkPrefab: {fileID: 4958360302141346764, guid: 98c6f723ccc847c409a0109329b98170, type: 3}

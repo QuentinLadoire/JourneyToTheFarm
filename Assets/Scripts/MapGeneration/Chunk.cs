@@ -9,9 +9,6 @@ public class Chunk : MonoBehaviour
 	public int TrianglesCount => (chunkSize - 1) * (chunkSize - 1) * 2;
 	public int IndicesCount => (chunkSize - 1) * (chunkSize - 1) * 2 * 3;
 
-	public GameObject treePrefab = null;
-	public GameObject treePrefab2 = null;
-
 	[HideInInspector]
 	public MapGenerationSetting setting = null;
 
@@ -24,25 +21,25 @@ public class Chunk : MonoBehaviour
 
 	float GetHeight(int x, int y)
 	{
-		return heightmap.data[x, y] * setting.heightMultiplier - setting.heightMultiplier * 0.5f;
+		return heightmap.data[x, y] * setting.terrainSetting.heightMultiplier - setting.terrainSetting.heightMultiplier * 0.5f;
 	}
 
-	void CreateNewTree(int x, int y)
+	void CreateNewTree_01(int x, int y)
 	{
-		if (treePrefab == null)
+		if (setting.treeSetting.tree_01Prefab == null)
 			return;
 
-		var newTreePrefab = Instantiate(treePrefab);
+		var newTreePrefab = Instantiate(setting.treeSetting.tree_01Prefab);
 		newTreePrefab.transform.parent = transform;
 		newTreePrefab.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
 		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
 	}
-	void CreateNewTree2(int x, int y)
+	void CreateNewTree_02(int x, int y)
 	{
-		if (treePrefab2 == null)
+		if (setting.treeSetting.tree_02Prefab == null)
 			return;
 
-		var newTreePrefab = Instantiate(treePrefab2);
+		var newTreePrefab = Instantiate(setting.treeSetting.tree_02Prefab);
 		newTreePrefab.transform.parent = transform;
 		newTreePrefab.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
 		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
@@ -142,7 +139,7 @@ public class Chunk : MonoBehaviour
 	}
 	void GenerateTree()
 	{
-		if (heightmap == null || treeHeightmap == null || treePrefab == null)
+		if (heightmap == null || treeHeightmap == null)
 			return;
 
 		for (int i = 0; i < treeHeightmap.resolution; i++)
@@ -151,10 +148,10 @@ public class Chunk : MonoBehaviour
 				var height = treeHeightmap.data[i, j];
 				if (heightmap.data[i, j] < 0.4875)//Grass Height
 				{
-					if (height < setting.treeHeight)
-						CreateNewTree(i, j);
-					else if (height < setting.treeHeight2)
-						CreateNewTree2(i, j);
+					if (setting.treeSetting.tree_01Min < height && height < setting.treeSetting.tree_01Max)
+						CreateNewTree_01(i, j);
+					else if (setting.treeSetting.tree_02Min < height && height < setting.treeSetting.tree_02Max)
+						CreateNewTree_02(i, j);
 				}
 			}
 	}

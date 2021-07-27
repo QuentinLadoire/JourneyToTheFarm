@@ -18,6 +18,8 @@ public class Chunk : MonoBehaviour
 
 	HeightmapData heightmap = null;
 	HeightmapData treeHeightmap = null;
+	HeightmapData rockHeightmap = null;
+	HeightmapData grassHeightmap = null;
 
 	float GetHeight(int x, int y)
 	{
@@ -31,8 +33,13 @@ public class Chunk : MonoBehaviour
 
 		var newTreePrefab = Instantiate(setting.treeSetting.tree_01Prefab);
 		newTreePrefab.transform.parent = transform;
-		newTreePrefab.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
 		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
+
+		var randomAngle = Random.Range(0.0f, 360.0f);
+		newTreePrefab.transform.eulerAngles = new Vector3(0.0f, randomAngle, 0.0f);
+
+		var randomScale = Random.Range(2.0f, 4.0f);
+		newTreePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 	}
 	void CreateNewTree_02(int x, int y)
 	{
@@ -41,8 +48,45 @@ public class Chunk : MonoBehaviour
 
 		var newTreePrefab = Instantiate(setting.treeSetting.tree_02Prefab);
 		newTreePrefab.transform.parent = transform;
-		newTreePrefab.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
 		newTreePrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
+
+		var randomAngle = Random.Range(0.0f, 360.0f);
+		newTreePrefab.transform.eulerAngles = new Vector3(0.0f, randomAngle, 0.0f);
+
+		var randomScale = Random.Range(2.0f, 4.0f);
+		newTreePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+	}
+
+	void CreateNewRock_05(int x, int y)
+	{
+		if (setting.rockSetting.rock_05Prefab == null)
+			return;
+
+		var newRockPrefab = Instantiate(setting.rockSetting.rock_05Prefab);
+		newRockPrefab.transform.parent = transform;
+		newRockPrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
+
+		var randomAngle = Random.Range(0.0f, 360.0f);
+		newRockPrefab.transform.eulerAngles = new Vector3(0.0f, randomAngle, 0.0f);
+
+		var randomScale = Random.Range(5.0f, 15.0f);
+		newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+	}
+
+	void CreateNewGrass_Patch_05(int x, int y)
+	{
+		if (setting.grassSetting.grass_Patch_02Prefab == null)
+			return;
+
+		var newRockPrefab = Instantiate(setting.grassSetting.grass_Patch_02Prefab);
+		newRockPrefab.transform.parent = transform;
+		newRockPrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
+
+		var randomAngle = Random.Range(0.0f, 360.0f);
+		newRockPrefab.transform.eulerAngles = new Vector3(0.0f, randomAngle, 0.0f);
+
+		var randomScale = Random.Range(0.2f, 0.8f);
+		newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 	}
 
 	void ComputeHeightmap()
@@ -129,7 +173,7 @@ public class Chunk : MonoBehaviour
 		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap));
 		meshRenderer.material = mat;
 	}
-	void GenerateTreeHeightmap()
+	void ComputeTreeHeightmap()
 	{
 		if (setting == null)
 			return;
@@ -148,10 +192,56 @@ public class Chunk : MonoBehaviour
 				var height = treeHeightmap.data[i, j];
 				if (heightmap.data[i, j] < 0.4875)//Grass Height
 				{
-					if (setting.treeSetting.tree_01Min < height && height < setting.treeSetting.tree_01Max)
-						CreateNewTree_01(i, j);
-					else if (setting.treeSetting.tree_02Min < height && height < setting.treeSetting.tree_02Max)
+					if (setting.treeSetting.tree_02Min < height && height < setting.treeSetting.tree_02Max)
 						CreateNewTree_02(i, j);
+				}
+			}
+	}
+	void ComputeRockHeightmap()
+	{
+		if (setting == null)
+			return;
+
+		var offset = new Vector2(transform.position.x, transform.position.z);
+		rockHeightmap = setting.ComputeRockHeightmap(offset);
+	}
+	void GenerateRock()
+	{
+		if (heightmap == null || rockHeightmap == null)
+			return;
+
+		for (int i = 0; i < rockHeightmap.resolution; i++)
+			for (int j = 0; j < rockHeightmap.resolution; j++)
+			{
+				var height = rockHeightmap.data[i, j];
+				if (heightmap.data[i, j] < 0.4875)//Grass Height
+				{
+					if (setting.rockSetting.rock_05Min < height && height < setting.rockSetting.rock_05Max)
+						CreateNewRock_05(i, j);
+				}
+			}
+	}
+	void ComputeGrassHeightmap()
+	{
+		if (setting == null)
+			return;
+
+		var offset = new Vector2(transform.position.x, transform.position.z);
+		grassHeightmap = setting.ComputeGrassHeightmap(offset);
+	}
+	void GenerateGrass()
+	{
+		if (heightmap == null || grassHeightmap == null)
+			return;
+
+		for (int i = 0; i < grassHeightmap.resolution; i++)
+			for (int j = 0; j < grassHeightmap.resolution; j++)
+			{
+				var height = grassHeightmap.data[i, j];
+				if (heightmap.data[i, j] < 0.4875)//Grass Height
+				{
+					if (setting.grassSetting.grass_Patch_02Min < height && height < setting.grassSetting.grass_Patch_02Max)
+						CreateNewGrass_Patch_05(i, j);
 				}
 			}
 	}
@@ -164,10 +254,20 @@ public class Chunk : MonoBehaviour
 	}
 	private void Start()
 	{
+		Random.InitState((int)(transform.position.x + transform.position.y));
+
 		ComputeHeightmap();
 		GenerateMesh();
+
 		GenerateTexture();
-		GenerateTreeHeightmap();
+
+		ComputeTreeHeightmap();
 		GenerateTree();
+
+		ComputeRockHeightmap();
+		GenerateRock();
+
+		ComputeGrassHeightmap();
+		GenerateGrass();
 	}
 }

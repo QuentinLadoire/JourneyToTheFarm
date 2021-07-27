@@ -53,10 +53,44 @@ public class TreeSetting
 }
 
 [System.Serializable]
+public class RockSetting
+{
+	public FractalNoiseSetting noiseSetting = new FractalNoiseSetting
+	{
+		tiling = new Vector2(100.0f, 100.0f),
+		layer = 3,
+		persistance = 0.05f
+	};
+
+	[Header("Rock_05")]
+	public GameObject rock_05Prefab = null;
+	public float rock_05Min = 0.0f;
+	public float rock_05Max = 0.15f;
+}
+
+[System.Serializable]
+public class GrassSetting
+{
+	public FractalNoiseSetting noiseSetting = new FractalNoiseSetting
+	{
+		tiling = new Vector2(100.0f, 100.0f),
+		layer = 3,
+		persistance = 0.05f
+	};
+
+	[Header("Grass_Patch_02")]
+	public GameObject grass_Patch_02Prefab = null;
+	public float grass_Patch_02Min = 0.24f;
+	public float grass_Patch_02Max = 0.3f;
+}
+
+[System.Serializable]
 public class MapGenerationSetting
 {
 	public TerrainSetting terrainSetting = new TerrainSetting();
 	public TreeSetting treeSetting = new TreeSetting();
+	public RockSetting rockSetting = new RockSetting();
+	public GrassSetting grassSetting = new GrassSetting();
 
 	public HeightmapData ComputeHeightmap(Vector2 offset)
 	{
@@ -72,6 +106,14 @@ public class MapGenerationSetting
 	public HeightmapData ComputeTreeHeightmap(Vector2 offset)
 	{
 		return HeightmapUtility.GenerateHeightmapFrom(offset, treeSetting.noiseSetting);
+	}
+	public HeightmapData ComputeRockHeightmap(Vector2 offset)
+	{
+		return HeightmapUtility.GenerateHeightmapFrom(offset, rockSetting.noiseSetting);
+	}
+	public HeightmapData ComputeGrassHeightmap(Vector2 offset)
+	{
+		return HeightmapUtility.GenerateHeightmapFrom(offset, grassSetting.noiseSetting);
 	}
 }
 

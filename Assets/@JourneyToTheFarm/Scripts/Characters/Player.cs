@@ -30,7 +30,7 @@ namespace JTTF
 		public static Vector3 Direction => instance.characterController.Direction;
 
 		//HandController
-		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }
+		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onEquipedObjectChange; set => instance.handController.onEquipedObjectChange = value; }
 
 		//InventoryController
 		public static InventoryController InventoryController { get => instance.inventoryController; }
@@ -89,7 +89,7 @@ namespace JTTF
 
 
 		CharacterController characterController = null;
-		HandController handController = null;
+		EquipableObjectController handController = null;
 		PlayerInventoryController inventoryController = null;
 		CraftingController craftingController = null;
 
@@ -100,11 +100,18 @@ namespace JTTF
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
-			handController = GetComponent<HandController>();
+			handController = GetComponent<EquipableObjectController>();
 			inventoryController = GetComponent<PlayerInventoryController>();
 			craftingController = GetComponent<CraftingController>();
 
 			instance = this;
+		}
+
+		private void Start()
+		{
+			AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
+			AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
+			AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
 		}
 	}
 }

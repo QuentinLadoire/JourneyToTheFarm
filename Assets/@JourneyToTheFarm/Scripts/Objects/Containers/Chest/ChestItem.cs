@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class ChestItem : CustomBehaviour, IHandable, IUsable
+	public class ChestItem : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
@@ -20,7 +20,7 @@ namespace JTTF
 		RaycastHit hit;
 		PreviewObject chestPreview = null;
 
-		public void SetHanded(Transform rightHand, Transform leftHand)
+		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 		}

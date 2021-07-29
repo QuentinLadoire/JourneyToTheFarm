@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Pickaxe : CustomBehaviour, IHandable, IUsable
+	public class Pickaxe : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
@@ -16,7 +16,7 @@ namespace JTTF
 
 		Rock rock = null;
 
-		public void SetHanded(Transform rightHand, Transform leftHand)
+		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 		}

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public interface IHandable
+    public interface IEquipable
     {
-        public void SetHanded(Transform rightHand, Transform leftHand);
+        public void Equip(Transform rightHand, Transform leftHand);
     }
 }

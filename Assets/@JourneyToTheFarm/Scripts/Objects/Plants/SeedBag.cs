@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedBag : CustomBehaviour, IHandable, IUsable
+	public class SeedBag : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
@@ -49,7 +49,7 @@ namespace JTTF
 				seedPreview.SetRedColor();
 		}
 
-		public void SetHanded(Transform rightHand, Transform leftHand)
+		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 		}

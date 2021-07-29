@@ -5,20 +5,20 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class HandController : MonoBehaviour
+	public class EquipableObjectController : MonoBehaviour
 	{
-		public Action<GameObject> onHandedObjectChange = (GameObject handedObject) => { /*Debug.Log("OnHandedObjectChange");*/ };
+		public Action<GameObject> onEquipedObjectChange = (GameObject equipedObject) => { /*Debug.Log("OnEquipedObjectChange");*/ };
 
 		[SerializeField] Transform rightHand = null;
 		[SerializeField] Transform leftHand = null;
 
 		int currentIndex = 0;
-		GameObject handedObject = null;
+		GameObject equipedObject = null;
 
-		void ClearHandedObject()
+		void ClearEquipedObject()
 		{
-			if (handedObject != null)
-				Destroy(handedObject);
+			if (equipedObject != null)
+				Destroy(equipedObject);
 		}
 		void InstantiateObject(ItemType itemType, string name, int amount)
 		{
@@ -27,27 +27,27 @@ namespace JTTF
 				var item = GameManager.ItemDataBase.GetItem(itemType, name);
 				if (item != Item.Default && item.prefab != null)
 				{
-					handedObject = Instantiate(item.prefab);
-					onHandedObjectChange.Invoke(handedObject);
+					equipedObject = Instantiate(item.prefab);
+					onEquipedObjectChange.Invoke(equipedObject);
 				}
 			}
 		}
-		void CheckIsHandable()
+		void CheckIsEquipable()
 		{
-			if (handedObject == null) return;
+			if (equipedObject == null) return;
 
-			var handable = handedObject.GetComponent<IHandable>();
+			var handable = equipedObject.GetComponent<IEquipable>();
 			if (handable != null)
-				handable.SetHanded(rightHand, leftHand);
+				handable.Equip(rightHand, leftHand);
 		}
 
 		void OnScroll(int index, string name, ItemType itemType, int amount)
 		{
-			ClearHandedObject();
+			ClearEquipedObject();
 
 			InstantiateObject(itemType, name, amount);
 
-			CheckIsHandable();
+			CheckIsEquipable();
 
 			currentIndex = index;
 		}
@@ -55,17 +55,17 @@ namespace JTTF
 		{
 			if (index == currentIndex)
 			{
-				ClearHandedObject();
+				ClearEquipedObject();
 
 				InstantiateObject(info.type, info.name, info.amount);
 
-				CheckIsHandable();
+				CheckIsEquipable();
 			}
 		}
 		void OnRemoveItem(int index, ItemInfo info)
 		{
 			if (currentIndex == index && info.amount == 0)
-				ClearHandedObject();
+				ClearEquipedObject();
 		}
 
 		private void Awake()

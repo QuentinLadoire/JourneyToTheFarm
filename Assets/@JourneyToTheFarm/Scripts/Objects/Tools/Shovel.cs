@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Shovel : CustomBehaviour, IHandable, IUsable
+	public class Shovel : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
 		public float AnimationDuration => animationDuration;
@@ -24,7 +24,7 @@ namespace JTTF
 
 		RaycastHit hit;
 
-		public void SetHanded(Transform rightHand, Transform leftHand)
+		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 			leftHandTransform = leftHand;
@@ -53,7 +53,7 @@ namespace JTTF
 		{
 			var center = farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
 			var halfSize = new Vector3(0.4f, 0.5f, 0.4f);
-			return (hit.transform.CompareTag("Constructible") &&
+			return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
 				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, GameManager.GetConstructibleOverlapMask()));
 		}
 

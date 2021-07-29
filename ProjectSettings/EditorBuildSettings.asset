@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/JourneyToTheFarm.unity
+    path: Assets/@JourneyToTheFarm/GameAssets/Scenes/SandBox/SandBox.unity
     guid: 5d5ac645c8f7dbd41b6635ff517abc68
   m_configObjects: {}

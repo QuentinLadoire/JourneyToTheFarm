@@ -12,13 +12,17 @@ namespace JTTF
 		{
 			animator = GetComponentInChildren<Animator>();
 		}
+		private void Update()
+		{
+			MovementAnimation(Player.Direction);
+		}
 
 		public float GetDesiredAnimationSpeed(float duration, float durationMax, float multiplier)
 		{
 			return (duration == 0 ? 1.0f : durationMax / duration) * multiplier;
 		}
 
-		public void CharacterMouvementAnim(Vector3 direction, float speed = 1.0f)
+		public void MovementAnimation(Vector3 direction, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 

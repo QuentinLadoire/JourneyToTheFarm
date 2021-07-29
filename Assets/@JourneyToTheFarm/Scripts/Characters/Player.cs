@@ -22,10 +22,12 @@ namespace JTTF
 
 		//CharacterController
 		public static Action OnMoveEnter { get => instance.characterController.onMoveEnter; set => instance.characterController.onMoveEnter = value; }
+		public static Action<Vector3> OnMove { get => instance.characterController.onMove; set => instance.characterController.onMove = value; }
 		public static Action OnMoveExit { get => instance.characterController.onMoveExit; set => instance.characterController.onMoveExit = value; }
 		public static Action OnHasMoved { get => instance.characterController.onHasMoved; set => instance.characterController.onHasMoved = value; }
 
 		public static bool IsIdle => instance.characterController.IsIdle;
+		public static Vector3 Direction => instance.characterController.Direction;
 
 		//HandController
 		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onHandedObjectChange; set => instance.handController.onHandedObjectChange = value; }

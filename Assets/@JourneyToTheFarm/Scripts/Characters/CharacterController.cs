@@ -15,6 +15,7 @@ namespace JTTF
 
 		public bool IsIdle => direction == Vector3.zero;
 		public Vector3 RoundPosition => transform.position.RoundToInt();
+		public Vector3 Direction => direction;
 
 		public GameObject followingCamera = null;
 		public float moveSpeed = 5.0f;

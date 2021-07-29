@@ -18,6 +18,8 @@ namespace JTTF
 
 		protected override void Awake()
 		{
+			base.Awake();
+
 			backgroundImage = GetComponent<Image>();
 		}
 	}

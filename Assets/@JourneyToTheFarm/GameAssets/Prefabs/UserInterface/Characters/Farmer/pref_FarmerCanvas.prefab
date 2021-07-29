@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7108171463986348906}
   - component: {fileID: 7108171463986348907}
   m_Layer: 5
-  m_Name: FarmerCanvas
+  m_Name: pref_FarmerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.675, y: 2.106}
+  m_AnchoredPosition: {x: -0.3, y: 1.75}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7108171463986348905
@@ -166,14 +166,6 @@ PrefabInstance:
     - target: {fileID: 7005376049109348834, guid: 0e58fbebd650b4c4a9b0d96aa47afe91, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7005376049109348834, guid: 0e58fbebd650b4c4a9b0d96aa47afe91, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7005376049109348834, guid: 0e58fbebd650b4c4a9b0d96aa47afe91, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7005376049109348834, guid: 0e58fbebd650b4c4a9b0d96aa47afe91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

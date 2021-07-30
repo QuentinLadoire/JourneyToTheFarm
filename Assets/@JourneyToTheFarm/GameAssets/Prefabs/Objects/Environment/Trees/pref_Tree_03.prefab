@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8790271628033873526}
   - component: {fileID: 8125427418566741529}
   - component: {fileID: 535868238262431151}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3754391895156924036}
   - component: {fileID: 5808897034456001638}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7464767169598507062}
   - component: {fileID: 3879294733739027227}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pref_Tree_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +205,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logName: Log
   logQuantity: 3
-  harvestableCooldown: 30
   lifeTime: 10
   modelObject: {fileID: 25634655669079461}

@@ -10,6 +10,8 @@ namespace JTTF
 		public ActionType ActionType => ActionType.Plant;
 
 		[Header("SeedBag parameter")]
+		public LayerMask raycastLayer = -1;
+		public LayerMask plantableLayer = -1;
 		public float duration = 0.0f;
 		public string seedName = "NoName";
 		public string plantName = "NoName";
@@ -35,7 +37,7 @@ namespace JTTF
 
 		bool IsPlantable()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, GameManager.GetPlantableRaycastMask()))
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, plantableLayer))
 			{
 				farmPlot = hit.collider.GetComponent<FarmPlot>();
 				if (farmPlot != null)
@@ -46,7 +48,7 @@ namespace JTTF
 		}
 		void UpdatePreview()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
 			{
 				seedPreview.transform.position = hit.point;
 				seedPreview.transform.up = hit.normal;

@@ -13,6 +13,7 @@ namespace JTTF
         public void Deselect();
 
         public bool IsInteractable();
+        public void StartToInteract();
         public void Interact();
     }
 }

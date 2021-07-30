@@ -32,6 +32,7 @@ namespace JTTF
             inInteraction = true;
             currentDuration = interactableObject.Duration;
             farmerProgressBar.SetActive(true);
+            interactableObject.StartToInteract();
 
             onStartToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
         }

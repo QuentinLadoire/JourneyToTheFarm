@@ -11,6 +11,8 @@ namespace JTTF
 
 		[Header("Shovel Parameters")]
 		public float duration = 0.0f;
+		public LayerMask raycastLayer = -1;
+		public LayerMask overlapLayer = -1;
 		public GameObject farmPlotPrefab = null;
 		public GameObject farmPlotPreviewPrefab = null;
 
@@ -41,11 +43,11 @@ namespace JTTF
 			var center = farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
 			var halfSize = new Vector3(0.4f, 0.5f, 0.4f);
 			return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
-				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, GameManager.GetConstructibleOverlapMask()));
+				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, overlapLayer));
 		}
 		void UpdatePreview()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, raycastLayer))
 			{
 				farmPlotPreview.transform.position = hit.point;
 				farmPlotPreview.transform.up = hit.normal;

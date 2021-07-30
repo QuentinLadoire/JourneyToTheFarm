@@ -15,19 +15,6 @@ namespace JTTF
 
 		int openedPanelCount = 0;
 
-		public static int GetConstructiblRaycastMask()
-		{
-			return LayerMask.GetMask("Ground", "Road", "Rock", "Tree", "Hill", "Terrain");
-		}
-		public static int GetConstructibleOverlapMask()
-		{
-			return LayerMask.GetMask("Road", "Rock", "Tree", "Pebble", "Grass", "Hill", "FarmPlot");
-		}
-		public static int GetPlantableRaycastMask()
-		{
-			return LayerMask.GetMask("FarmPlot");
-		}
-
 		void OnInventoryOpen(InventoryController controller)
 		{
 			openedPanelCount++;

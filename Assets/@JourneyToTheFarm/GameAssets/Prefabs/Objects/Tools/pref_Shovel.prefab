@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 617178128329146585}
   - component: {fileID: 3398016307462767066}
   m_Layer: 0
-  m_Name: FarmShovel
+  m_Name: pref_Shovel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,9 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4937326d2c1b946b5431b8ee79b9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 1
   duration: 2
-  animationDuration: 4.8
-  animationMultiplier: 1
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  overlapLayer:
+    serializedVersion: 2
+    m_Bits: 897
   farmPlotPrefab: {fileID: 6047203369850023488, guid: f31b79a01f216f148ab646c588ae0a13, type: 3}
   farmPlotPreviewPrefab: {fileID: 6047203369850023488, guid: ec33b840162ecfc4b92a72fb1fa88e82, type: 3}
 --- !u!1001 &1270319643922252682

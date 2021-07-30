@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5189669789892812769}
   - component: {fileID: 5189669789892812768}
   - component: {fileID: 5189669789892812775}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5189669790895673463}
   - component: {fileID: 5189669790895673456}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pref_Rock_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,5 +142,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stoneName: Stone
   stoneQuantity: 3
-  harvestableCooldown: 30
   modelObject: {fileID: 5189669789892812773}

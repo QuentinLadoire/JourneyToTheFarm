@@ -48,10 +48,13 @@ namespace JTTF
 		{
 			return true;
 		}
+		public void StartToInteract()
+		{
+			PlayOpenChestAnim();
+		}
 		public void Interact()
 		{
 			inventoryController.OpenInventory();
-			PlayOpenChestAnim();
 		}
 
 		protected override void Awake()

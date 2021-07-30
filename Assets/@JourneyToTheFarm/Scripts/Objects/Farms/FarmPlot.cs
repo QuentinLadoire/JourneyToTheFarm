@@ -90,6 +90,10 @@ namespace JTTF
 		{
             return IsMature;
 		}
+        public void StartToInteract()
+        {
+            //nothing here
+        }
         public void Interact()
         {
             Player.AddItem(new ItemInfo(plantName, ItemType.Plant, 1));

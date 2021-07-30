@@ -37,6 +37,11 @@ namespace JTTF
 		public static Action<ActionType, float> OnUseObject { get => instance.usableObjectController.onUseObject; set => instance.usableObjectController.onUseObject = value; }
 		public static Action<ActionType, float> OnStopToUseObject { get => instance.usableObjectController.onStopToUseObject; set => instance.usableObjectController.onStopToUseObject = value; }
 
+		//InteractabeController
+		public static Action<ActionType, float> OnStartToInteract { get => instance.interactableController.onStartToInteract; set => instance.interactableController.onStartToInteract = value; }
+		public static Action<ActionType, float> OnInteract { get => instance.interactableController.onInteract; set => instance.interactableController.onInteract = value; }
+		public static Action<ActionType, float> OnStopToInteract { get => instance.interactableController.onStopToInteract; set => instance.interactableController.onStopToInteract = value; }
+
 		//InventoryController
 		public static InventoryController InventoryController { get => instance.inventoryController; }
 		public static Action<int, ItemInfo> OnAddItem { get => instance.inventoryController.onAddItem; set => instance.inventoryController.onAddItem = value; }
@@ -96,6 +101,7 @@ namespace JTTF
 		CharacterController characterController = null;
 		EquipableObjectController equipableObjectController = null;
 		UsableObjectController usableObjectController = null;
+		InteractableController interactableController = null;
 		PlayerInventoryController inventoryController = null;
 		CraftingController craftingController = null;
 
@@ -108,6 +114,7 @@ namespace JTTF
 			characterController = GetComponent<CharacterController>();
 			equipableObjectController = GetComponent<EquipableObjectController>();
 			usableObjectController = GetComponent<UsableObjectController>();
+			interactableController = GetComponent<InteractableController>();
 			inventoryController = GetComponent<PlayerInventoryController>();
 			craftingController = GetComponent<CraftingController>();
 
@@ -120,6 +127,7 @@ namespace JTTF
 			AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
 			AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
 			AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 1));
+			AddItem(new ItemInfo("Chest", ItemType.Container, 2));
 		}
 	}
 }

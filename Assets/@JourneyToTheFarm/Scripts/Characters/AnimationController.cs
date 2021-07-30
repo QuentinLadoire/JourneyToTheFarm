@@ -46,6 +46,9 @@ namespace JTTF
 		{
 			Player.OnStartToUseObject += OnStartToUseObject;
 			Player.OnStopToUseObject += OnStopToUseObject;
+
+			Player.OnStartToInteract += OnStartToInteract;
+			Player.OnStopToInteract += OnStopToInteract;
 		}
 		private void Update()
 		{
@@ -56,6 +59,9 @@ namespace JTTF
 		{
 			Player.OnStartToUseObject -= OnStartToUseObject;
 			Player.OnStopToUseObject -= OnStopToUseObject;
+
+			Player.OnStartToInteract -= OnStartToInteract;
+			Player.OnStopToInteract -= OnStopToInteract;
 		}
 
 		public float GetDesiredAnimationSpeed(float duration, float durationMax, float multiplier)
@@ -67,6 +73,30 @@ namespace JTTF
 		{
 			inAction = true;
 
+			PlayActionAnimation(actionType, duration);
+		}
+		void OnStopToUseObject(ActionType actionType, float duration)
+		{
+			inAction = false;
+
+			StopActionAnimation(actionType);
+		}
+
+		void OnStartToInteract(ActionType actionType, float duration)
+		{
+			inAction = true;
+
+			PlayActionAnimation(actionType, duration);
+		}
+		void OnStopToInteract(ActionType actionType, float duration)
+		{
+			inAction = false;
+
+			StopActionAnimation(actionType);
+		}
+
+		void PlayActionAnimation(ActionType actionType, float duration)
+		{
 			switch (actionType)
 			{
 				case ActionType.Dig:
@@ -89,14 +119,20 @@ namespace JTTF
 					PlaceAnimation(true, GetDesiredAnimationSpeed(duration, placeAnimationDuration, placeAnimationMultiplier));
 					break;
 
+				case ActionType.Pick:
+					PickAnimation(true, GetDesiredAnimationSpeed(duration, pickAnimationDuration, pickAnimationMultiplier));
+					break;
+
+				case ActionType.Open:
+					OpenAnimation(true, GetDesiredAnimationSpeed(duration, openAnimationDuration, openAnimationMultiplier));
+					break;
+
 				case ActionType.None:
 					break;
 			}
 		}
-		void OnStopToUseObject(ActionType actionType, float duration)
+		void StopActionAnimation(ActionType actionType)
 		{
-			inAction = false;
-
 			switch (actionType)
 			{
 				case ActionType.Dig:
@@ -117,6 +153,14 @@ namespace JTTF
 
 				case ActionType.Place:
 					PlaceAnimation(false);
+					break;
+
+				case ActionType.Pick:
+					PickAnimation(false);
+					break;
+
+				case ActionType.Open:
+					OpenAnimation(false);
 					break;
 
 				case ActionType.None:

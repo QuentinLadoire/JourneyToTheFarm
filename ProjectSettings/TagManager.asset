@@ -17,15 +17,15 @@ TagManager:
   - Player
   - Water
   - UI
-  - Ground
-  - Road
+  - Terrain
+  - FarmPlot
   - Rock
   - Tree
-  - Pebble
-  - Grass
-  - Hill
-  - FarmPlot
-  - Terrain
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

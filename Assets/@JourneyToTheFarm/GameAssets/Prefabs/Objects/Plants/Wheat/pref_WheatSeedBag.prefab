@@ -240,9 +240,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  plantableLayer:
+    serializedVersion: 2
+    m_Bits: 128
   duration: 2
-  animationDuration: 7.5
-  animationMultiplier: 1
   seedName: WheatSeed
   plantName: Wheat
   growingDuration: 10

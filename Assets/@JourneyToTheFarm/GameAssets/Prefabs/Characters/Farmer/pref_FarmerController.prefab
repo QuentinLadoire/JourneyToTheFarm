@@ -191,8 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb8d8df1d220fb4a8533139f9abb276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressBar: {fileID: 9140679923030670542}
   checkRadius: 2
+  farmerProgressBar: {fileID: 9140679923030670542}
 --- !u!1001 &2053496005051982593
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6047203369850023495}
   - component: {fileID: 7694135646507602484}
   - component: {fileID: 965380823260221415}
-  m_Layer: 13
+  m_Layer: 7
   m_Name: pref_FarmPlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,10 +61,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
   duration: 2
-  animationDuration: 4.833
-  animationMultiplier: 1
-  progressBar: {fileID: 543869184067344205}
   activableImage: {fileID: 2649440668117682864}
+  progressBar: {fileID: 543869184067344205}
 --- !u!1001 &4622846667929321902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78,7 +76,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1881119067051248, guid: e5afb862bd113194b946c45951173394, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4316285041283308, guid: e5afb862bd113194b946c45951173394, type: 3}
       propertyPath: m_RootOrder
@@ -234,9 +232,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1344985790840354082, guid: 7b94bd252c5683545ad1410166348999, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2234965051532206156, guid: 7b94bd252c5683545ad1410166348999, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4591044461404147173, guid: 7b94bd252c5683545ad1410166348999, type: 3}
       propertyPath: m_Name
       value: pref_FarmPlotCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4591044461404147173, guid: 7b94bd252c5683545ad1410166348999, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6761168919038206642, guid: 7b94bd252c5683545ad1410166348999, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8503927964490388317, guid: 7b94bd252c5683545ad1410166348999, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b94bd252c5683545ad1410166348999, type: 3}

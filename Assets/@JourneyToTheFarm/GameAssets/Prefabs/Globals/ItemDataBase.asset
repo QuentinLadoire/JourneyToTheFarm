@@ -33,7 +33,7 @@ MonoBehaviour:
     type: 1
     stackable: 1
     sprite: {fileID: 21300000, guid: daa9cd55afab54647a5dbebff3ec4494, type: 3}
-    prefab: {fileID: 2183954413004688833, guid: 494760c492ae22e4cbdcea8811b9a190, type: 3}
+    prefab: {fileID: 4945689059156840016, guid: bc99919396765e546b4c3c0c25ed3cd4, type: 3}
   seeds:
   - name: WheatSeedStep1
     type: 2

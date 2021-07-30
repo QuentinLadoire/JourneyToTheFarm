@@ -38,6 +38,10 @@ namespace JTTF
 			if (equipedObject != null)
 				usableObject = equipedObject.GetComponent<IUsable>();
 		}
+		void OnMoveEnter()
+		{
+			StopToUseObject();
+		}
 
 		bool CanUseObject()
 		{
@@ -90,7 +94,7 @@ namespace JTTF
 		{
 			Player.OnHandedObjectChange += OnEquipedObjectChange;
 
-			Player.OnMoveEnter += StopToUseObject;
+			Player.OnMoveEnter += OnMoveEnter;
 		}
 		private void Update()
 		{
@@ -105,7 +109,7 @@ namespace JTTF
 		{
 			Player.OnHandedObjectChange -= OnEquipedObjectChange;
 
-			Player.OnMoveEnter -= StopToUseObject;
+			Player.OnMoveEnter -= OnMoveEnter;
 		}
 	}
 }

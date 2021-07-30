@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,64 +7,65 @@ namespace JTTF
 {
     public class InteractableController : MonoBehaviour
     {
-        [SerializeField] FarmerProgressBar progressBar = null;
+        public Action<ActionType, float> onStartToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStartToInteract");*/ };
+        public Action<ActionType, float> onInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnInteract");*/ };
+        public Action<ActionType, float> onStopToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToInteract");*/ };
 
-        [SerializeField] float checkRadius = 1.0f;
+        public float checkRadius = 1.0f;
+        public FarmerProgressBar farmerProgressBar = null;
 
-        AnimationController animationController = null;
-
-        IInteractable interactableObject = null;
-
-        bool isInteracted = false;
+        bool inInteraction = false;
         float currentDuration = 0.0f;
+        IInteractable interactableObject = null;
 
         void OnMoveEnter()
 		{
-            CancelInteraction();
+            StopInteraction();
 		}
 
+        bool CanInteractObject()
+		{
+            return interactableObject != null && !interactableObject.Equals(null) && Player.IsIdle && interactableObject.IsInteractable();
+        }
         void StartInteraction()
 		{
-            if (isInteracted) return;
-
-            isInteracted = true;
-
+            inInteraction = true;
             currentDuration = interactableObject.Duration;
+            farmerProgressBar.SetActive(true);
 
-            progressBar.SetActive(true);
-
-            interactableObject.PlayAnim(animationController);
+            onStartToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
         }
-        void EndInteraction()
+        void UpdateInteractionTime()
 		{
-            if (!isInteracted) return;
+            if (!inInteraction) return;
 
-            isInteracted = false;
+            if (currentDuration <= 0.0f)
+                Interact();
+            currentDuration -= Time.deltaTime;
 
-            currentDuration = 0.0f;
-
-            progressBar.SetActive(false);
-
-            interactableObject.StopAnim(animationController);
+            farmerProgressBar.SetPercent(1 - (currentDuration / interactableObject.Duration));
+        }
+        void Interact()
+		{
+            StopInteraction();
 
             interactableObject.Interact();
-		}
-        void CancelInteraction()
+            onInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
+        }
+        void StopInteraction()
 		{
-            if (!isInteracted) return;
+            if (!inInteraction) return;
 
-            isInteracted = false;
-
+            inInteraction = false;
             currentDuration = 0.0f;
+            farmerProgressBar.SetActive(false);
 
-            progressBar.SetActive(false);
-
-            interactableObject.StopAnim(animationController);
+            onStopToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
 		}
 
         void CheckHasNearestInteractableObject()
 		{
-            if (isInteracted) return;
+            if (inInteraction) return;
 
             IInteractable nearestInteractable = null;
             float nearestSqrtDistance = 0.0f;
@@ -96,26 +98,12 @@ namespace JTTF
         }
         void ProcessInput()
 		{
-            if (Input.GetButton("Interact"))
-                if (interactableObject != null && Player.IsIdle && interactableObject.IsInteractable())
-                    StartInteraction();
+            if (Input.GetButton("Interact") && CanInteractObject())
+                StartInteraction();
         }
-        void UpdateDuration()
-		{
-            if (!isInteracted || interactableObject == null) return;
-
-            if (currentDuration <= 0.0f)
-                EndInteraction();
-
-            currentDuration -= Time.deltaTime;
-
-            progressBar.SetPercent(1.0f - (currentDuration / interactableObject.Duration));
-		}
 
 		private void Awake()
 		{
-            animationController = GetComponent<AnimationController>();
-
             Player.OnMoveEnter += OnMoveEnter;
 		}
 		private void Update()
@@ -126,7 +114,7 @@ namespace JTTF
 
                 ProcessInput();
 
-                UpdateDuration();
+                UpdateInteractionTime();
 			}
 		}
 		private void OnDestroy()

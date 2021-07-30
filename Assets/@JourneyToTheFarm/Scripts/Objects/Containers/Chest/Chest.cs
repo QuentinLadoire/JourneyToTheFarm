@@ -11,13 +11,11 @@ namespace JTTF
 		public static Action<InventoryController> OnCloseInventory { get => ChestInventoryController.onCloseInventory; set => ChestInventoryController.onCloseInventory = value; }
 
 		public float Duration => duration;
-		public float AnimationDuration => animationDuration;
-		public float AnimationMultiplier => animationMultipler;
+		public ActionType ActionType => ActionType.Open;
 
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] float animationDuration = 0.0f;
-		[SerializeField] float animationMultipler = 1.0f;
-		[SerializeField] GameObject interactableImage = null;
+		[Header("Chest Parameters")]
+		public float duration = 0.0f;
+		public GameObject interactableImage = null;
 
 		ChestInventoryController inventoryController = null;
 		Animator animator = null;
@@ -53,17 +51,7 @@ namespace JTTF
 		public void Interact()
 		{
 			inventoryController.OpenInventory();
-		}
-
-		public void PlayAnim(AnimationController animationController)
-		{
-			animationController.OpenAnimation(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultipler));
-
 			PlayOpenChestAnim();
-		}
-		public void StopAnim(AnimationController animationController)
-		{
-			animationController.OpenAnimation(false);
 		}
 
 		protected override void Awake()

@@ -7,18 +7,15 @@ namespace JTTF
     public class FarmPlot : CustomBehaviour, IInteractable
     {
         public float Duration => duration;
-        public float AnimationDuration => animationDuration;
-        public float AnimationMultiplier => animationMultiplier;
+        public ActionType ActionType => ActionType.Pick;
 
         public bool HasSeed { get; private set; } = false;
         public bool IsMature { get; private set; } = false;
 
-        [SerializeField] float duration = 0.0f;
-        [SerializeField] float animationDuration = 0.0f;
-        [SerializeField] float animationMultiplier = 1.0f;
-
-        [SerializeField] FarmPlotProgressBar progressBar = null;
-        [SerializeField] GameObject activableImage = null;
+        [Header("FarmPlot Parameters")]
+        public float duration = 0.0f;
+        public GameObject activableImage = null;
+        public FarmPlotProgressBar progressBar = null;
 
         GameObject seedObject = null;
 
@@ -106,15 +103,6 @@ namespace JTTF
 
             if (seedObject != null)
                 Destroy(seedObject);
-        }
-
-        public void PlayAnim(AnimationController animationController)
-		{
-            animationController.PickAnimation(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
-		}
-        public void StopAnim(AnimationController animationController)
-		{
-            animationController.PickAnimation(false);
         }
 
 		private void Update()

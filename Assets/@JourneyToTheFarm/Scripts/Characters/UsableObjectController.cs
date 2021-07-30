@@ -5,16 +5,6 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public enum ActionType
-	{
-		None = -1,
-		Dig,
-		Cut,
-		Mine,
-		Plant,
-		Place
-	}
-
     public class UsableObjectController : MonoBehaviour
     {
 		public Action<ActionType, float> onStartToUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnStartToUseObejct");*/ };

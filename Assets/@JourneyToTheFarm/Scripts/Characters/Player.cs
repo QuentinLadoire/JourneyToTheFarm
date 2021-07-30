@@ -119,6 +119,7 @@ namespace JTTF
 			AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
 			AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
 			AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
+			AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 1));
 		}
 	}
 }

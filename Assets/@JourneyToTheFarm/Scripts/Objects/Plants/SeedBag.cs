@@ -33,6 +33,7 @@ namespace JTTF
 		public void Use()
 		{
 			farmPlot.SetSeed(seedName, growingDuration, plantName);
+			Player.RemoveItem(new ItemInfo(seedName + "Bag", ItemType.SeedBag, 1));
 		}
 
 		bool IsPlantable()

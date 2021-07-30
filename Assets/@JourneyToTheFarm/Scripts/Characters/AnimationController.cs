@@ -6,24 +6,31 @@ namespace JTTF
 {
     public class AnimationController : MonoBehaviour
     {
+		[Header("DigAnimation")]
 		public float digAnimationDuration = 0.0f;
 		public float digAnimationMultiplier = 1.0f;
 
+		[Header("CutAnimation")]
 		public float cutAnimationDuration = 0.0f;
 		public float cutAnimationMultiplier = 1.0f;
 
+		[Header("MineAnimation")]
 		public float mineAnimationDuration = 0.0f;
 		public float mineAnimationMultiplier = 1.0f;
 
+		[Header("PlantAnimation")]
 		public float plantAnimationDuration = 0.0f;
 		public float plantAnimationMultiplier = 1.0f;
 
+		[Header("PlaceAnimation")]
 		public float placeAnimationDuration = 0.0f;
 		public float placeAnimationMultiplier = 1.0f;
 
+		[Header("OpenAnimation")]
 		public float openAnimationDuration = 0.0f;
 		public float openAnimationMultiplier = 1.0f;
 
+		[Header("PickAnimation")]
 		public float pickAnimationDuration = 0.0f;
 		public float pickAnimationMultiplier = 1.0f;
 
@@ -75,11 +82,11 @@ namespace JTTF
 					break;
 
 				case ActionType.Plant:
-					PlantAnimation(true, GetDesiredAnimationSpeed(duration, plantAnimationDuration, digAnimationMultiplier));
+					PlantAnimation(true, GetDesiredAnimationSpeed(duration, plantAnimationDuration, plantAnimationMultiplier));
 					break;
 
 				case ActionType.Place:
-					PlaceAnimation(true, GetDesiredAnimationSpeed(duration, placeAnimationDuration, digAnimationMultiplier));
+					PlaceAnimation(true, GetDesiredAnimationSpeed(duration, placeAnimationDuration, placeAnimationMultiplier));
 					break;
 
 				case ActionType.None:

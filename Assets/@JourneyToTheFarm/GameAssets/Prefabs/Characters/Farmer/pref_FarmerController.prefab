@@ -112,16 +112,16 @@ MonoBehaviour:
   digAnimationDuration: 4.833
   digAnimationMultiplier: 1
   cutAnimationDuration: 2.4
-  cutAnimationMultiplier: 1
+  cutAnimationMultiplier: 3
   mineAnimationDuration: 2.267
-  mineAnimationMultiplier: 1
+  mineAnimationMultiplier: 3
   plantAnimationDuration: 7.567
   plantAnimationMultiplier: 1
   placeAnimationDuration: 4.667
   placeAnimationMultiplier: 1
   openAnimationDuration: 8.933
   openAnimationMultiplier: 1
-  pickAnimationDuration: 9567
+  pickAnimationDuration: 9.567
   pickAnimationMultiplier: 1
 --- !u!114 &8636174614087022271
 MonoBehaviour:

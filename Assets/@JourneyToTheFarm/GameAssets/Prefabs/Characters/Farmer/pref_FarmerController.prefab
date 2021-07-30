@@ -109,6 +109,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c3aae791e017c45b80949a7b440c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  digAnimationDuration: 4.833
+  digAnimationMultiplier: 1
+  cutAnimationDuration: 2.4
+  cutAnimationMultiplier: 1
+  mineAnimationDuration: 2.267
+  mineAnimationMultiplier: 1
+  plantAnimationDuration: 7.567
+  plantAnimationMultiplier: 1
+  placeAnimationDuration: 4.667
+  placeAnimationMultiplier: 1
+  openAnimationDuration: 8.933
+  openAnimationMultiplier: 1
+  pickAnimationDuration: 9567
+  pickAnimationMultiplier: 1
 --- !u!114 &8636174614087022271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +165,7 @@ MonoBehaviour:
   jumpForce: 5
   layer:
     serializedVersion: 2
-    m_Bits: 16375
+    m_Bits: 32759
 --- !u!114 &3869149710092022336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8d4a4d43b232547850654f63b94941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressBar: {fileID: 0}
+  farmerProgressBar: {fileID: 9140679923030670542}
 --- !u!114 &4757551126152681482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb8d8df1d220fb4a8533139f9abb276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressBar: {fileID: 0}
+  progressBar: {fileID: 9140679923030670542}
   checkRadius: 2
 --- !u!1001 &2053496005051982593
 PrefabInstance:
@@ -188,7 +202,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7108171463986348900, guid: 7af30a4a65a87df42bae261f3abbc1d9, type: 3}
       propertyPath: m_Name
-      value: FarmerCanvas
+      value: pref_FarmerCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7108171463986348900, guid: 7af30a4a65a87df42bae261f3abbc1d9, type: 3}
       propertyPath: m_Layer
@@ -279,6 +293,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7108171465186811851, guid: 7af30a4a65a87df42bae261f3abbc1d9, type: 3}
+      propertyPath: m_Name
+      value: pref_FarmerProgressBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7108171465186811851, guid: 7af30a4a65a87df42bae261f3abbc1d9, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
@@ -289,6 +307,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7108171463986348904, guid: 7af30a4a65a87df42bae261f3abbc1d9, type: 3}
   m_PrefabInstance: {fileID: 2053496005051982593}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9140679923030670542 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7108171465186811855, guid: 7af30a4a65a87df42bae261f3abbc1d9, type: 3}
+  m_PrefabInstance: {fileID: 2053496005051982593}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668457f6c0f1cd04f9775cbf6964c449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7181768473722939871
 PrefabInstance:
   m_ObjectHideFlags: 0

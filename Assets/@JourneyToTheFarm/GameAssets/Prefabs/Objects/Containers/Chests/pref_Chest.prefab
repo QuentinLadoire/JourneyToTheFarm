@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2941441597295126968}
   - component: {fileID: 8316745556017677916}
   - component: {fileID: 5879586332190562236}
-  - component: {fileID: 5173090468751653776}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -101,18 +100,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5173090468751653776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596636852686996538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ede2a5bbb21b24083aa36b17d7b21f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1829790098866254650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140,7 +127,7 @@ GameObject:
   - component: {fileID: -1122982543272860632}
   - component: {fileID: 7772301519014029599}
   m_Layer: 0
-  m_Name: Chest
+  m_Name: pref_Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

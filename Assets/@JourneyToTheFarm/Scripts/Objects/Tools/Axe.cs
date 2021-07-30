@@ -7,12 +7,10 @@ namespace JTTF
 	public class Axe : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
-		public float AnimationDuration => animationDuration;
-		public float AnimationMultiplier => animationMultiplier;
+		public ActionType ActionType => ActionType.Cut;
 
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] float animationDuration = 0.0f;
-		[SerializeField] float animationMultiplier = 0.0f;
+		[Header("Axe Parameters")]
+		public float duration = 0.0f;
 
 		Tree tree = null;
 
@@ -36,15 +34,6 @@ namespace JTTF
 		{
 			if (tree != null)
 				tree.Harvest();
-		}
-
-		public void PlayAnim(AnimationController animationController)
-		{
-			animationController.CharacterCutting(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
-		}
-		public void StopAnim(AnimationController animationController)
-		{
-			animationController.CharacterCutting(false);
 		}
 	}
 }

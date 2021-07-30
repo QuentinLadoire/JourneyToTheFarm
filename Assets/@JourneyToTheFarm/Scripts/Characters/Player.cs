@@ -29,8 +29,13 @@ namespace JTTF
 		public static bool IsIdle => instance.characterController.IsIdle;
 		public static Vector3 Direction => instance.characterController.Direction;
 
-		//HandController
-		public static Action<GameObject> OnHandedObjectChange { get => instance.handController.onEquipedObjectChange; set => instance.handController.onEquipedObjectChange = value; }
+		//EquipableObjectController
+		public static Action<GameObject> OnHandedObjectChange { get => instance.equipableObjectController.onEquipedObjectChange; set => instance.equipableObjectController.onEquipedObjectChange = value; }
+
+		//UsableObjectController
+		public static Action<ActionType, float> OnStartToUseObject { get => instance.usableObjectController.onStartToUseObject; set => instance.usableObjectController.onStartToUseObject = value; }
+		public static Action<ActionType, float> OnUseObject { get => instance.usableObjectController.onUseObject; set => instance.usableObjectController.onUseObject = value; }
+		public static Action<ActionType, float> OnStopToUseObject { get => instance.usableObjectController.onStopToUseObject; set => instance.usableObjectController.onStopToUseObject = value; }
 
 		//InventoryController
 		public static InventoryController InventoryController { get => instance.inventoryController; }
@@ -89,7 +94,8 @@ namespace JTTF
 
 
 		CharacterController characterController = null;
-		EquipableObjectController handController = null;
+		EquipableObjectController equipableObjectController = null;
+		UsableObjectController usableObjectController = null;
 		PlayerInventoryController inventoryController = null;
 		CraftingController craftingController = null;
 
@@ -100,7 +106,8 @@ namespace JTTF
 		private void Awake()
 		{
 			characterController = GetComponent<CharacterController>();
-			handController = GetComponent<EquipableObjectController>();
+			equipableObjectController = GetComponent<EquipableObjectController>();
+			usableObjectController = GetComponent<UsableObjectController>();
 			inventoryController = GetComponent<PlayerInventoryController>();
 			craftingController = GetComponent<CraftingController>();
 

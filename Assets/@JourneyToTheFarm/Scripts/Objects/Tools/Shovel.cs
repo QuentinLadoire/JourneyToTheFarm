@@ -7,17 +7,12 @@ namespace JTTF
 	public class Shovel : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
-		public float AnimationDuration => animationDuration;
-		public float AnimationMultiplier => animationMultiplier;
+		public ActionType ActionType => ActionType.Dig;
 
-		[Header("Animation Parameter")]
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] float animationDuration = 0.0f;
-		[SerializeField] float animationMultiplier = 1.0f;
-
-		[Header("FarmHoe Parameter")]
-		[SerializeField] GameObject farmPlotPrefab = null;
-		[SerializeField] GameObject farmPlotPreviewPrefab = null;
+		[Header("Shovel Parameters")]
+		public float duration = 0.0f;
+		public GameObject farmPlotPrefab = null;
+		public GameObject farmPlotPreviewPrefab = null;
 
 		Transform leftHandTransform = null;
 		PreviewObject farmPlotPreview = null;
@@ -38,15 +33,7 @@ namespace JTTF
 		{
 			var farmPlot = Instantiate(farmPlotPrefab);
 			farmPlot.transform.position = farmPlotPreview.transform.position;
-		}
-
-		public void PlayAnim(AnimationController animationController)
-		{
-			animationController.CharacterDiggingAnim(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
-		}
-		public void StopAnim(AnimationController animationController)
-		{
-			animationController.CharacterDiggingAnim(false);
+			farmPlot.transform.up = farmPlotPreview.transform.up;
 		}
 
 		bool IsConstructible()
@@ -56,8 +43,7 @@ namespace JTTF
 			return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
 				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, GameManager.GetConstructibleOverlapMask()));
 		}
-
-		void OnHasMoved()
+		void UpdatePreview()
 		{
 			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
 			{
@@ -76,14 +62,11 @@ namespace JTTF
 			base.Awake();
 
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
-			OnHasMoved();
-		}
-		private void Start()
-		{
-			Player.OnHasMoved += OnHasMoved;
 		}
 		private void Update()
 		{
+			UpdatePreview();
+
 			if (leftHandTransform != null)
 				transform.up = leftHandTransform.position - transform.position;
 		}
@@ -91,8 +74,6 @@ namespace JTTF
 		{
 			if (farmPlotPreview != null)
 				Destroy(farmPlotPreview.gameObject);
-
-			Player.OnHasMoved -= OnHasMoved;
 		}
 	}
 }

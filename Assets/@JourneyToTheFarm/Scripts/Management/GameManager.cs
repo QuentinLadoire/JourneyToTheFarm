@@ -9,6 +9,7 @@ namespace JTTF
 		static GameManager instance = null;
 
 		public static ItemDataBase ItemDataBase { get => instance.itemDataBase; }
+		public static Camera playerCamera = null;
 
 		[SerializeField] ItemDataBase itemDataBase = null;
 
@@ -16,7 +17,7 @@ namespace JTTF
 
 		public static int GetConstructiblRaycastMask()
 		{
-			return LayerMask.GetMask("Ground", "Road", "Rock", "Tree", "Hill");
+			return LayerMask.GetMask("Ground", "Road", "Rock", "Tree", "Hill", "Terrain");
 		}
 		public static int GetConstructibleOverlapMask()
 		{

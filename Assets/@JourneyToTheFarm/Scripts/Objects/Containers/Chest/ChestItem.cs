@@ -7,15 +7,12 @@ namespace JTTF
 	public class ChestItem : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
-		public float AnimationDuration => animationDuration;
-		public float AnimationMultiplier => animationMultiplier;
+		public ActionType ActionType => ActionType.Place;
 
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] float animationDuration = 0.0f;
-		[SerializeField] float animationMultiplier = 1.0f;
-
-		[SerializeField] GameObject chestPrefab = null;
-		[SerializeField] GameObject chestPreviewPrefab = null;
+		[Header("Chest Parameters")]
+		public float duration = 0.0f;
+		public GameObject chestPrefab = null;
+		public GameObject chestPreviewPrefab = null;
 
 		RaycastHit hit;
 		PreviewObject chestPreview = null;
@@ -36,14 +33,6 @@ namespace JTTF
 				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
 				Player.RemoveItem(new ItemInfo("Chest", ItemType.Container, 1));
 			}
-		}
-		public void PlayAnim(AnimationController animationController)
-		{
-			animationController.CharacterPlacing(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
-		}
-		public void StopAnim(AnimationController animationController)
-		{
-			animationController.CharacterPlacing(false);
 		}
 
 		bool IsConstructible()
@@ -81,12 +70,6 @@ namespace JTTF
 		{
 			if (chestPreview != null)
 				chestPreview.Destroy();
-		}
-
-		private void OnDrawGizmos()
-		{
-			Gizmos.matrix = chestPreview.transform.localToWorldMatrix;
-			Gizmos.DrawWireCube(new Vector3(0.0f, 0.2355309f, 0.0f), new Vector3(1.234013f, 0.4710618f, 0.7313852f));
 		}
 	}
 }

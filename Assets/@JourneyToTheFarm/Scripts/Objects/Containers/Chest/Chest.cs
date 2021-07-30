@@ -57,13 +57,13 @@ namespace JTTF
 
 		public void PlayAnim(AnimationController animationController)
 		{
-			animationController.CharacterOpening(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultipler));
+			animationController.OpenAnimation(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultipler));
 
 			PlayOpenChestAnim();
 		}
 		public void StopAnim(AnimationController animationController)
 		{
-			animationController.CharacterOpening(false);
+			animationController.OpenAnimation(false);
 		}
 
 		protected override void Awake()

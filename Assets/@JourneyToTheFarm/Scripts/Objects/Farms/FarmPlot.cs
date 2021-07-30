@@ -17,7 +17,7 @@ namespace JTTF
         [SerializeField] float animationDuration = 0.0f;
         [SerializeField] float animationMultiplier = 1.0f;
 
-        [SerializeField] FarmerProgressBar progressBar = null;
+        [SerializeField] FarmPlotProgressBar progressBar = null;
         [SerializeField] GameObject activableImage = null;
 
         GameObject seedObject = null;
@@ -110,11 +110,11 @@ namespace JTTF
 
         public void PlayAnim(AnimationController animationController)
 		{
-            animationController.CharacterPickUp(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
+            animationController.PickAnimation(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
 		}
         public void StopAnim(AnimationController animationController)
 		{
-            animationController.CharacterPickUp(false);
+            animationController.PickAnimation(false);
         }
 
 		private void Update()

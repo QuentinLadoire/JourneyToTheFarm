@@ -7,47 +7,17 @@ namespace JTTF
 	public class SeedBag : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
-		public float AnimationDuration => animationDuration;
-		public float AnimationMultiplier => animationMultiplier;
-
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] float animationDuration = 0.0f;
-		[SerializeField] float animationMultiplier = 1.0f;
+		public ActionType ActionType => ActionType.Plant;
 
 		[Header("SeedBag parameter")]
-		[SerializeField] string seedName = "NoName";
-		[SerializeField] string plantName = "NoName";
-		[SerializeField] float growingDuration = 0.0f;
-		[SerializeField] GameObject seedPreviewPrefab = null;
+		public float duration = 0.0f;
+		public string seedName = "NoName";
+		public string plantName = "NoName";
+		public float growingDuration = 0.0f;
+		public GameObject seedPreviewPrefab = null;
 
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
-
-		bool IsPlantable()
-		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, GameManager.GetPlantableRaycastMask()))
-			{
-				farmPlot = hit.collider.GetComponent<FarmPlot>();
-				if (farmPlot != null)
-					return !farmPlot.HasSeed;
-			}
-
-			return false;
-		}
-
-		void OnHasMoved()
-		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
-			{
-				seedPreview.transform.position = hit.point;
-				seedPreview.transform.up = hit.normal;
-			}
-
-			if (IsPlantable())
-				seedPreview.SetBlueColor();
-			else
-				seedPreview.SetRedColor();
-		}
 
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
@@ -63,13 +33,29 @@ namespace JTTF
 			farmPlot.SetSeed(seedName, growingDuration, plantName);
 		}
 
-		public void PlayAnim(AnimationController animationController)
+		bool IsPlantable()
 		{
-			animationController.CharacterPlantAPlant(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, GameManager.GetPlantableRaycastMask()))
+			{
+				farmPlot = hit.collider.GetComponent<FarmPlot>();
+				if (farmPlot != null)
+					return !farmPlot.HasSeed;
+			}
+
+			return false;
 		}
-		public void StopAnim(AnimationController animationController)
+		void UpdatePreview()
 		{
-			animationController.CharacterPlantAPlant(false);
+			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, GameManager.GetConstructiblRaycastMask()))
+			{
+				seedPreview.transform.position = hit.point;
+				seedPreview.transform.up = hit.normal;
+			}
+
+			if (IsPlantable())
+				seedPreview.SetBlueColor();
+			else
+				seedPreview.SetRedColor();
 		}
 
 		protected override void Awake()
@@ -77,18 +63,15 @@ namespace JTTF
 			base.Awake();
 
 			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
-			OnHasMoved();
 		}
-		private void Start()
+		private void Update()
 		{
-			Player.OnHasMoved += OnHasMoved;
+			UpdatePreview();
 		}
 		private void OnDestroy()
 		{
 			if (seedPreview != null)
 				Destroy(seedPreview.gameObject);
-
-			Player.OnHasMoved -= OnHasMoved;
 		}
 	}
 }

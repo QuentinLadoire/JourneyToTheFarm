@@ -7,12 +7,10 @@ namespace JTTF
 	public class Pickaxe : CustomBehaviour, IEquipable, IUsable
 	{
 		public float Duration => duration;
-		public float AnimationDuration => animationDuration;
-		public float AnimationMultiplier => animationMultiplier;
+		public ActionType ActionType => ActionType.Mine;
 
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] float animationDuration = 0.0f;
-		[SerializeField] float animationMultiplier = 1.0f;
+		[Header("Pickaxe")]
+		public float duration = 0.0f;
 
 		Rock rock = null;
 
@@ -36,14 +34,6 @@ namespace JTTF
 		{
 			if (rock != null)
 				rock.Harvest();
-		}
-		public void PlayAnim(AnimationController animationController)
-		{
-			animationController.CharacterMining(true, animationController.GetDesiredAnimationSpeed(duration, animationDuration, animationMultiplier));
-		}
-		public void StopAnim(AnimationController animationController)
-		{
-			animationController.CharacterMining(false);
 		}
 	}
 }

@@ -23,8 +23,7 @@ namespace JTTF
 		}
 		void CameraFarOffset()
 		{
-			RaycastHit hit;
-			if (Physics.Raycast(transform.position, -cameraObject.transform.forward, out hit, -farOffset))
+			if (Physics.Raycast(transform.position, -cameraObject.transform.forward, out RaycastHit hit, -farOffset))
 				cameraObject.transform.position = hit.point;
 			else
 				cameraObject.transform.localPosition = cameraObject.transform.forward * farOffset;
@@ -36,6 +35,10 @@ namespace JTTF
 			transform.position = Vector3.MoveTowards(transform.position, followingObject.transform.position + followingOffset, speed * Time.deltaTime);
 		}
 
+		private void Awake()
+		{
+			GameManager.playerCamera = cameraObject.GetComponent<Camera>();
+		}
 		private void Update()
 		{
 			if (Player.HasControl)

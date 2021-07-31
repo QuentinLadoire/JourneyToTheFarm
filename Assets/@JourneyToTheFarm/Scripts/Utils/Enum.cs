@@ -10,6 +10,7 @@ namespace JTTF
 		Plant,
 		Place,
 		Pick,
-		Open
+		Open,
+		Mow
 	}
 }

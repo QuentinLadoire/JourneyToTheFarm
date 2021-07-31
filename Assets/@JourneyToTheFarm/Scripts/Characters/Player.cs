@@ -11,6 +11,7 @@ namespace JTTF
 
 		public static Vector3 Position { get => instance.transform.position; }
 		public static Vector3 Forward { get => instance.transform.forward; }
+		public static Vector3 Right => instance.transform.right;
 		public static Vector3 RoundPosition { get => instance.characterController.RoundPosition; }
 		public static Vector3 RoundForward { get => instance.transform.forward.RoundToInt(); }
 
@@ -126,7 +127,8 @@ namespace JTTF
 			AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
 			AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
 			AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
-			AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 1));
+			AddItem(new ItemInfo("Scythe", ItemType.Tool, 1));
+			AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 20));
 			AddItem(new ItemInfo("Chest", ItemType.Container, 2));
 		}
 	}

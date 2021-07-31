@@ -28,6 +28,11 @@ MonoBehaviour:
     stackable: 0
     sprite: {fileID: 21300000, guid: 1dd993c72c365b24ea76332773cd5f7c, type: 3}
     prefab: {fileID: 7881681813644691100, guid: 555f02f56e3056140bf828ca2343a3c3, type: 3}
+  - name: Scythe
+    type: 0
+    stackable: 0
+    sprite: {fileID: 21300000, guid: 5b59547b46e1cdd4b94463368637ef18, type: 3}
+    prefab: {fileID: 6847284123856463911, guid: e7f4fb8bcb3eac34e9cc488d53afb1f0, type: 3}
   seedBags:
   - name: WheatSeedBag
     type: 1

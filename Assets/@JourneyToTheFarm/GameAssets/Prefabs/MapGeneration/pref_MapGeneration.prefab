@@ -99,7 +99,7 @@ MonoBehaviour:
         lacunarity: 2
         persistance: 0.05
         seed: 0
-      grass_Patch_02Prefab: {fileID: 1829557882967740, guid: d68c69e2093d0df439a8aabd018a2b85, type: 3}
+      grass_Patch_02Prefab: {fileID: 4336188589945499858, guid: d7b7c0b200546984fba858f28f0758e0, type: 3}
       grass_Patch_02Min: 0.24
       grass_Patch_02Max: 0.3
   chunkPrefab: {fileID: 4958360302141346764, guid: 98c6f723ccc847c409a0109329b98170, type: 3}

@@ -1,134 +1,74 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 namespace JTTF
 {
-	public class InventoryPanel : CustomBehaviour
+    public class InventoryPanel : CustomBehaviour
     {
-		public static Action<PointerEventData, ItemInfo> onBeginDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnBeginDrag");*/ };
-		public static Action<PointerEventData, ItemInfo> onDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnDrag");*/ };
-		public static Action<PointerEventData, ItemInfo> onEndDrag = (PointerEventData eventData, ItemInfo info) => { /*Debug.Log("OnEndDrag");*/ };
+        public Button closeButton = null;
+        public Transform[] slotTransforms = null;
+        public GameObject itemTemplate = null;
 
-		[SerializeField] Button closeButton = null;
-		[SerializeField] protected InventorySlot[] inventorySlots = null;
-		[SerializeField] int indexOffset = 0;
-		protected InventoryController inventoryController = null;
+        ItemUI[] itemArray = null;
+        PlayerInventoryController controller = null;
 
-		bool hasDrag = false;
-
-		void OnSlotPointerDown(PointerEventData eventData, int index)
+        void FillItemArray()
 		{
-			inventoryController.DragItemAt(index + indexOffset);
+            if (itemArray == null) return;
 
-			onBeginDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
-		}
-		void OnSlotBeginDrag(PointerEventData eventData, int index)
-		{
-			hasDrag = true;
-		}
-		void OnSlotDrag(PointerEventData eventData, int index)
-		{
-			onDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
-		}
-		void OnSlotEndDrag(PointerEventData eventData, int index)
-		{
-			hasDrag = false;
-
-			inventoryController.CancelDrag();
-
-			onEndDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
-		}
-		void OnSlotPointerUp(PointerEventData eventData, int index)
-		{
-			if (!hasDrag)
+            var inventory = controller.Inventory;
+            for (int i = 0; i < itemArray.Length; i++)
 			{
-				inventoryController.CancelDrag();
-
-				onEndDrag.Invoke(eventData, inventoryController.GetDraggedItem().info);
+                if (inventory.ItemArray[i] != null)
+                {
+                    itemArray[i] = Instantiate(itemTemplate).GetComponent<ItemUI>();
+                    itemArray[i].SetParent(slotTransforms[i], false);
+                    itemArray[i].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                    itemArray[i].SetItem(inventory.ItemArray[i]);
+                    itemArray[i].SetActive(true);
+                }
 			}
 		}
-		void OnSlotDrop(PointerEventData eventData, int index)
+        void ClearItemArray()
 		{
-			inventoryController.DropItemAt(index + indexOffset);
-		}
+            if (itemArray == null) return;
 
-		protected virtual void OnInventoryOpen(InventoryController controller)
-		{
-			SetActive(true);
-
-			inventoryController = controller;
-			inventoryController.onAddItem += OnAddItem;
-			inventoryController.onRemoveItem += OnRemoveItem;
-
-			SetupPanel();
-		}
-		protected virtual void OnInventoryClose(InventoryController controller)
-		{
-			ClearPanel();
-			
-			inventoryController.onAddItem -= OnAddItem;
-			inventoryController.onRemoveItem -= OnRemoveItem;
-			inventoryController = null;
-
-			SetActive(false);
-		}
-
-		protected void OnAddItem(int index, ItemInfo info)
-		{
-			if (index - indexOffset < 0 || index - indexOffset >= inventorySlots.Length) return;
-
-			inventorySlots[index - indexOffset].SetItem(info);
-		}
-		protected void OnRemoveItem(int index, ItemInfo info)
-		{
-			if (index - indexOffset < 0 || index - indexOffset >= inventorySlots.Length) return;
-
-			inventorySlots[index - indexOffset].SetItem(info);
-		}
-
-		void SetupPanel()
-		{
-			for (int i = 0; i < inventorySlots.Length; i++)
+            for (int i = 0; i < itemArray.Length; i++)
 			{
-				var itemInfo = inventoryController.GetItemInfoAt(i + indexOffset);
-				inventorySlots[i].SetItem(itemInfo);
+                if (itemArray[i] != null)
+                    itemArray[i].Destroy();
 			}
 		}
-		void ClearPanel()
+        void SetupItemArray()
 		{
-			for (int i = 0; i < inventorySlots.Length; i++)
-				inventorySlots[i].SetItem(ItemInfo.Default);
-		}
+            if (controller == null) return;
 
-		void OnClick()
+            ClearItemArray();
+            FillItemArray();
+        }
+
+        public void SetInventoryController(PlayerInventoryController controller)
 		{
-			if (inventoryController != null)
-				inventoryController.CloseInventory();
-		}
+            this.controller = controller;
 
-		protected override void Awake()
+            SetupItemArray();
+        }
+
+        void OnClickButton()
+        {
+            if (controller != null)
+                controller.CloseInventory();
+        }
+
+        protected override void Awake()
 		{
-			base.Awake();
+            base.Awake();
 
-			if (closeButton != null)
-				closeButton.onClick.AddListener(OnClick);
-
-			for (int i = 0; i < inventorySlots.Length; i++)
-			{
-				inventorySlots[i].SetIndex(i);
-
-				inventorySlots[i].onPointerDown += OnSlotPointerDown;
-				inventorySlots[i].onBeginDrag += OnSlotBeginDrag;
-				inventorySlots[i].onDrag += OnSlotDrag;
-				inventorySlots[i].onEndDrag += OnSlotEndDrag;
-				inventorySlots[i].onPointerUp += OnSlotPointerUp;
-
-				inventorySlots[i].onDrop += OnSlotDrop;
-			}
+            closeButton.onClick.AddListener(OnClickButton);
+            itemArray = new ItemUI[slotTransforms.Length];
+            itemArray.Fill(null);
 		}
 	}
 }

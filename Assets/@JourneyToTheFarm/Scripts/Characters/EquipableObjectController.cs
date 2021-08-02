@@ -20,18 +20,18 @@ namespace JTTF
 			if (equipedObject != null)
 				Destroy(equipedObject);
 		}
-		void InstantiateObject(ItemType itemType, string name, int amount)
-		{
-			if (amount >= 1)
-			{
-				var item = GameManager.ItemDataBase.GetItem(itemType, name);
-				if (item != Item.Default && item.prefab != null)
-				{
-					equipedObject = Instantiate(item.prefab);
-					onEquipedObjectChange.Invoke(equipedObject);
-				}
-			}
-		}
+		//void InstantiateObject(ItemType itemType, string name, int amount)
+		//{
+		//	if (amount >= 1)
+		//	{
+		//		var item = GameManager.ItemDataBase.GetItem(itemType, name);
+		//		if (item != Item.Default && item.prefab != null)
+		//		{
+		//			equipedObject = Instantiate(item.prefab);
+		//			onEquipedObjectChange.Invoke(equipedObject);
+		//		}
+		//	}
+		//}
 		void CheckIsEquipable()
 		{
 			if (equipedObject == null) return;
@@ -41,44 +41,40 @@ namespace JTTF
 				handable.Equip(rightHand, leftHand);
 		}
 
-		void OnScroll(int index, string name, ItemType itemType, int amount)
-		{
-			ClearEquipedObject();
-
-			InstantiateObject(itemType, name, amount);
-
-			CheckIsEquipable();
-
-			currentIndex = index;
-		}
-		void OnAddItem(int index, ItemInfo info)
-		{
-			if (index == currentIndex)
-			{
-				ClearEquipedObject();
-
-				InstantiateObject(info.type, info.name, info.amount);
-
-				CheckIsEquipable();
-			}
-		}
-		void OnRemoveItem(int index, ItemInfo info)
-		{
-			if (currentIndex == index && info.amount == 0)
-				ClearEquipedObject();
-		}
+		//void OnScroll(int index, string name, ItemType itemType, int amount)
+		//{
+		//	ClearEquipedObject();
+		//
+		//	InstantiateObject(itemType, name, amount);
+		//
+		//	CheckIsEquipable();
+		//
+		//	currentIndex = index;
+		//}
+		//void OnAddItem(int index, ItemInfo info)
+		//{
+		//	if (index == currentIndex)
+		//	{
+		//		ClearEquipedObject();
+		//
+		//		InstantiateObject(info.type, info.name, info.amount);
+		//
+		//		CheckIsEquipable();
+		//	}
+		//}
+		//void OnRemoveItem(int index, ItemInfo info)
+		//{
+		//	if (currentIndex == index && info.amount == 0)
+		//		ClearEquipedObject();
+		//}
 
 		private void Awake()
 		{
-			Player.OnScroll += OnScroll;
-			Player.OnAddItem += OnAddItem;
-			Player.OnRemoveItem += OnRemoveItem;
+
 		}
 		private void OnDestroy()
 		{
-			Player.OnScroll -= OnScroll;
-			Player.OnAddItem -= OnAddItem;
-			Player.OnRemoveItem -= OnRemoveItem;
+
 		}
 	}
 }

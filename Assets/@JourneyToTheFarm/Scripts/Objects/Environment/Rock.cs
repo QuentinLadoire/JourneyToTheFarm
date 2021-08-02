@@ -21,7 +21,7 @@ namespace JTTF
 			isHarvested = true;
 			Destroy(gameObject);
 
-			Player.AddItem(new ItemInfo(stoneName, ItemType.Resource, stoneQuantity));
+			//Player.AddItem(new ItemInfo(stoneName, ItemType.Resource, stoneQuantity));
 		}
 	}
 }

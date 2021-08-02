@@ -19,8 +19,6 @@ namespace JTTF
 		public static Action OnActiveControl { get => instance.onActiveControl; set => instance.onActiveControl = value; }
 		public static Action OnDesactiveControl { get => instance.onDesactiveControl; set => instance.onDesactiveControl = value; }
 
-		public static RecipeDataBase CraftingRecipe { get => instance.craftingController.RecipeDataBase; }
-
 		//CharacterController
 		public static Action OnMoveEnter { get => instance.characterController.onMoveEnter; set => instance.characterController.onMoveEnter = value; }
 		public static Action<Vector3> OnMove { get => instance.characterController.onMove; set => instance.characterController.onMove = value; }
@@ -43,48 +41,13 @@ namespace JTTF
 		public static Action<ActionType, float> OnInteract { get => instance.interactableController.onInteract; set => instance.interactableController.onInteract = value; }
 		public static Action<ActionType, float> OnStopToInteract { get => instance.interactableController.onStopToInteract; set => instance.interactableController.onStopToInteract = value; }
 
-		//InventoryController
-		public static InventoryController InventoryController { get => instance.inventoryController; }
-		public static Action<int, ItemInfo> OnAddItem { get => instance.inventoryController.onAddItem; set => instance.inventoryController.onAddItem = value; }
-		public static Action<int, ItemInfo> OnRemoveItem { get => instance.inventoryController.onRemoveItem; set => instance.inventoryController.onRemoveItem = value; }
-		public static Action<InventoryController> OnInventoryOpen { get => instance.inventoryController.onOpenInventory; set => instance.inventoryController.onOpenInventory = value; }
-		public static Action<InventoryController> OnInventoryClose { get => instance.inventoryController.onCloseInventory; set => instance.inventoryController.onCloseInventory = value; }
-		public static Action<int, string, ItemType, int> OnScroll { get => instance.inventoryController.onScroll; set => instance.inventoryController.onScroll = value; }
-
-		//CraftingController
-		public static Action OnCraftingOpen { get => instance.craftingController.onOpen; set => instance.craftingController.onOpen = value; }
-		public static Action OnCraftingClose { get => instance.craftingController.onClose; set => instance.craftingController.onClose = value; }
-
-		public static Action<Recipe> OnStartCraft { get => instance.craftingController.onStartCraft; set => instance.craftingController.onStartCraft = value; }
-		public static Action OnCancelCraft { get => instance.craftingController.onCancelCraft; set => instance.craftingController.onCancelCraft = value; }
-		public static Action OnEndCraft { get => instance.craftingController.onEndCraft; set => instance.craftingController.onEndCraft = value; }
-		public static Action<float> OnCraft { get => instance.craftingController.onCraft; set => instance.craftingController.onCraft = value; }
-
-		public static void AddItem(ItemInfo itemInfo)
-		{
-			instance.inventoryController.AddItem(itemInfo);
-		}
-		public static void RemoveItem(ItemInfo itemInfo)
-		{
-			instance.inventoryController.RemoveItem(itemInfo);
-		}
-
 		public static int HowManyItem(string name)
 		{
-			return instance.inventoryController.HowManyItem(name);
+			return 0;
 		}
 		public static bool HasItemAmount(string name, int amount)
 		{
-			return instance.inventoryController.HasItemAmount(name, amount);
-		}
-
-		public static void Craft(Recipe recipe)
-		{
-			instance.craftingController.StartCraft(recipe);
-		}
-		public static void CancelCraft()
-		{
-			instance.craftingController.CancelCraft();
+			return false;
 		}
 
 		public static void ActiveControl()
@@ -103,8 +66,6 @@ namespace JTTF
 		EquipableObjectController equipableObjectController = null;
 		UsableObjectController usableObjectController = null;
 		InteractableController interactableController = null;
-		PlayerInventoryController inventoryController = null;
-		CraftingController craftingController = null;
 
 		bool hasControl = true;
 		Action onActiveControl = () => { /*Debug.Log("OnActiveControl");*/ };
@@ -116,20 +77,8 @@ namespace JTTF
 			equipableObjectController = GetComponent<EquipableObjectController>();
 			usableObjectController = GetComponent<UsableObjectController>();
 			interactableController = GetComponent<InteractableController>();
-			inventoryController = GetComponent<PlayerInventoryController>();
-			craftingController = GetComponent<CraftingController>();
 
 			instance = this;
-		}
-
-		private void Start()
-		{
-			AddItem(new ItemInfo("Shovel", ItemType.Tool, 1));
-			AddItem(new ItemInfo("Axe", ItemType.Tool, 1));
-			AddItem(new ItemInfo("Pickaxe", ItemType.Tool, 1));
-			AddItem(new ItemInfo("Scythe", ItemType.Tool, 1));
-			AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, 20));
-			AddItem(new ItemInfo("Chest", ItemType.Container, 2));
 		}
 	}
 }

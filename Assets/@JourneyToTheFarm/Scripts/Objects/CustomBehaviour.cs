@@ -13,6 +13,7 @@ public class CustomBehaviour : MonoBehaviour
 
 	public void SetActive(bool value)
 	{
+		isActiveOnAwake = true;
 		gameObject.SetActive(value);
 	}
 	public void SetParent(Transform parent, bool worldPositionStay)

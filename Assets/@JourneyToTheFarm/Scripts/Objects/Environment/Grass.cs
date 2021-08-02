@@ -12,7 +12,7 @@ namespace JTTF
         public void Harvest()
 		{
             if (Random.value < dropRate)
-                Player.AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, Random.Range(1, 6)));
+                //Player.AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, Random.Range(1, 6)));
 
             Destroy();
 		}

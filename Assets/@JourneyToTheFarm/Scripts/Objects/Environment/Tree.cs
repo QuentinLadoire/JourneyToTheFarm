@@ -25,7 +25,7 @@ namespace JTTF
 			currentLifeTime = lifeTime;
 			rigidbodyModel.isKinematic = false;
 
-			Player.AddItem(new ItemInfo(logName, ItemType.Resource, logQuantity));
+			//Player.AddItem(new ItemInfo(logName, ItemType.Resource, logQuantity));
 		}
 
 		void UpdateVisibleModel()

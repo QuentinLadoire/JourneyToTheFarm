@@ -40,7 +40,7 @@ namespace JTTF
             growingDurationMax = growingDuration;
             currentGrowingDuration = growingDuration;
 
-			seedObject = Instantiate(GameManager.ItemDataBase.GetSeed(this.seedName + "Step1").prefab);
+			//seedObject = Instantiate(GameManager.ItemDataBase.GetSeed(this.seedName + "Step1").prefab);
             seedObject.transform.SetParent(transform, false);
 
             progressBar.SetActive(true);
@@ -71,10 +71,10 @@ namespace JTTF
             progressBar.SetPercent(GetPercentGrowing());
 
             float percentValue = GetTruncatePercentGrowing();
-            if (percentValue == 0.5f)
-                SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step2").prefab);
-            else if (percentValue == 1.0f)
-                SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step3").prefab);
+            //if (percentValue == 0.5f)
+            //    SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step2").prefab);
+            //else if (percentValue == 1.0f)
+            //    SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step3").prefab);
         }
 
 		public void Select()
@@ -96,7 +96,7 @@ namespace JTTF
         }
         public void Interact()
         {
-            Player.AddItem(new ItemInfo(plantName, ItemType.Plant, 1));
+            //Player.AddItem(new ItemInfo(plantName, ItemType.Plant, 1));
 
             IsMature = false;
             activableImage.SetActive(false);

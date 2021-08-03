@@ -7,12 +7,12 @@ namespace JTTF
     public class Grass : CustomBehaviour
     {
         [Header("Grass Parameters")]
-        [Range(0.0f, 1.0f)] public float dropRate = 1.0f;
+        [Range(0.0f, 1.0f)] [SerializeField] float dropRate = 1.0f;
 
-        public void Harvest()
+        public void Harvest(Player player)
 		{
             if (Random.value < dropRate)
-                //Player.AddItem(new ItemInfo("WheatSeedBag", ItemType.SeedBag, Random.Range(1, 6)));
+                player.InventoryController.AddItem(new Item("WheatSeed", ItemType.Seed, Random.Range(1, 6)));
 
             Destroy();
 		}

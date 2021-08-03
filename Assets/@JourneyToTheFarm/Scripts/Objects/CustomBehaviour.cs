@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CustomBehaviour : MonoBehaviour
 {
-	public bool isActiveOnAwake = true;
+	[SerializeField] bool isActiveOnAwake = true;
 
 	protected virtual void Awake()
 	{

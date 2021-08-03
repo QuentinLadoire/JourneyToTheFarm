@@ -6,9 +6,8 @@ namespace JTTF
 {
     public class Rock : MonoBehaviour
     {
-		public string stoneName = "Stone";
-		public int stoneQuantity = 3;
-		public GameObject modelObject = null;
+		[SerializeField] string stoneName = "Stone";
+		[SerializeField] int stoneQuantity = 3;
 
 		bool isHarvested = false;
 
@@ -16,12 +15,12 @@ namespace JTTF
 		{
 			return !isHarvested;
 		}
-		public void Harvest()
+		public void Harvest(Player player)
 		{
 			isHarvested = true;
 			Destroy(gameObject);
 
-			//Player.AddItem(new ItemInfo(stoneName, ItemType.Resource, stoneQuantity));
+			player.InventoryController.AddItem(new Item(stoneName, ItemType.Resource, stoneQuantity));
 		}
 	}
 }

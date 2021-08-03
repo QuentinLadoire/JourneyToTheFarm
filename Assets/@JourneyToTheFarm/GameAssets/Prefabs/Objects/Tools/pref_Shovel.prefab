@@ -51,7 +51,7 @@ MonoBehaviour:
     m_Bits: 64
   overlapLayer:
     serializedVersion: 2
-    m_Bits: 897
+    m_Bits: 1921
   farmPlotPrefab: {fileID: 6047203369850023488, guid: f31b79a01f216f148ab646c588ae0a13, type: 3}
   farmPlotPreviewPrefab: {fileID: 6047203369850023488, guid: ec33b840162ecfc4b92a72fb1fa88e82, type: 3}
 --- !u!1 &938624531489022509

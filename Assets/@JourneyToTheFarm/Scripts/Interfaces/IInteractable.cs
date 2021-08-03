@@ -14,6 +14,6 @@ namespace JTTF
 
         public bool IsInteractable();
         public void StartToInteract();
-        public void Interact();
+        public void Interact(Player player);
     }
 }

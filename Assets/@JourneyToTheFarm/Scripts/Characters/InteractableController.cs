@@ -7,12 +7,14 @@ namespace JTTF
 {
     public class InteractableController : MonoBehaviour
     {
+        public Player OwnerPlayer { get; private set; }
+
         public Action<ActionType, float> onStartToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStartToInteract");*/ };
         public Action<ActionType, float> onInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnInteract");*/ };
         public Action<ActionType, float> onStopToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToInteract");*/ };
 
-        public float checkRadius = 1.0f;
-        public FarmerProgressBar farmerProgressBar = null;
+        [SerializeField] float checkRadius = 1.0f;
+        [SerializeField] FarmerProgressBar farmerProgressBar = null;
 
         bool inInteraction = false;
         float currentDuration = 0.0f;
@@ -25,7 +27,7 @@ namespace JTTF
 
         bool CanInteractObject()
 		{
-            return interactableObject != null && !interactableObject.Equals(null) && Player.IsIdle && interactableObject.IsInteractable();
+            return interactableObject != null && !interactableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && interactableObject.IsInteractable();
         }
         void StartInteraction()
 		{
@@ -50,7 +52,7 @@ namespace JTTF
 		{
             StopInteraction();
 
-            interactableObject.Interact();
+            interactableObject.Interact(OwnerPlayer);
             onInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
         }
         void StopInteraction()
@@ -105,11 +107,13 @@ namespace JTTF
 
 		private void Awake()
 		{
-            Player.OnMoveEnter += OnMoveEnter;
+            OwnerPlayer = GetComponent<Player>();
+
+            OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
 		}
 		private void Update()
 		{
-			if (Player.HasControl)
+			if (OwnerPlayer.CharacterController.HasControl)
 			{
                 CheckHasNearestInteractableObject();
 
@@ -120,7 +124,7 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-            Player.OnMoveEnter -= OnMoveEnter;
+            OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
 		}
 	}
 }

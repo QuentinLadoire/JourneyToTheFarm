@@ -7,18 +7,18 @@ namespace JTTF
 {
     public class InventoryPanel : CustomBehaviour
     {
-        public Button closeButton = null;
-        public Transform[] slotTransforms = null;
-        public GameObject itemTemplate = null;
+        [SerializeField] Button closeButton = null;
+        [SerializeField] Transform[] slotTransforms = null;
+        [SerializeField] GameObject itemTemplate = null;
 
         ItemUI[] itemArray = null;
-        PlayerInventoryController controller = null;
+        PlayerInventoryController playerController = null;
+        ChestInventoryController chestController = null;
 
-        void FillItemArray()
+        void FillItemArray(Inventory inventory)
 		{
             if (itemArray == null) return;
 
-            var inventory = controller.Inventory;
             for (int i = 0; i < itemArray.Length; i++)
 			{
                 if (inventory.ItemArray[i] != null)
@@ -41,25 +41,32 @@ namespace JTTF
                     itemArray[i].Destroy();
 			}
 		}
-        void SetupItemArray()
+        void SetupItemArray(Inventory inventory)
 		{
-            if (controller == null) return;
-
             ClearItemArray();
-            FillItemArray();
+            FillItemArray(inventory);
         }
 
         public void SetInventoryController(PlayerInventoryController controller)
 		{
-            this.controller = controller;
+            playerController = controller;
 
-            SetupItemArray();
+            SetupItemArray(playerController.Inventory);
+        }
+        public void SetInventoryController(ChestInventoryController controller)
+		{
+            chestController = controller;
+
+            SetupItemArray(chestController.Inventory);
         }
 
         void OnClickButton()
         {
-            if (controller != null)
-                controller.CloseInventory();
+            if (playerController != null)
+                playerController.CloseInventory();
+
+            if (chestController != null)
+                chestController.CloseInventory();
         }
 
         protected override void Awake()

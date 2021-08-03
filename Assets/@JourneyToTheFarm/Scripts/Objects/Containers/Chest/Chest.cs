@@ -11,10 +11,16 @@ namespace JTTF
 		public ActionType ActionType => ActionType.Open;
 
 		[Header("Chest Parameters")]
-		public float duration = 0.0f;
-		public GameObject interactableImage = null;
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] GameObject interactableImage = null;
 
 		Animator animator = null;
+		ChestInventoryController inventoryController = null;
+
+		void OnInventoryClose()
+		{
+			PlayCloseChestAnim();
+		}
 
 		void PlayOpenChestAnim()
 		{
@@ -44,9 +50,9 @@ namespace JTTF
 		{
 			PlayOpenChestAnim();
 		}
-		public void Interact()
+		public void Interact(Player player)
 		{
-			
+			inventoryController.OpenInventory();
 		}
 
 		protected override void Awake()
@@ -54,6 +60,15 @@ namespace JTTF
 			base.Awake();
 
 			animator = GetComponent<Animator>();
+			inventoryController = GetComponent<ChestInventoryController>();
+		}
+		private void Start()
+		{
+			inventoryController.onInventotyClose += OnInventoryClose;
+		}
+		private void OnDestroy()
+		{
+			inventoryController.onInventotyClose -= OnInventoryClose;
 		}
 	}
 }

@@ -6,10 +6,10 @@ namespace JTTF
 {
     public class Tree : MonoBehaviour
     {
-        public string logName = "Log";
-		public int logQuantity = 3;
-		public float lifeTime = 0.0f;
-		public GameObject modelObject = null;
+        [SerializeField] string logName = "Log";
+		[SerializeField] int logQuantity = 3;
+		[SerializeField] float lifeTime = 0.0f;
+		[SerializeField] GameObject modelObject = null;
 
 		Rigidbody rigidbodyModel = null;
 		float currentLifeTime = 0.0f;
@@ -19,13 +19,13 @@ namespace JTTF
 		{
             return !isHarvested;
 		}
-		public void Harvest()
+		public void Harvest(Player player)
 		{
 			isHarvested = true;
 			currentLifeTime = lifeTime;
 			rigidbodyModel.isKinematic = false;
 
-			//Player.AddItem(new ItemInfo(logName, ItemType.Resource, logQuantity));
+			player.InventoryController.AddItem(new Item(logName, ItemType.Resource, logQuantity));
 		}
 
 		void UpdateVisibleModel()

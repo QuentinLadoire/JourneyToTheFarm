@@ -6,65 +6,40 @@ namespace JTTF
 {
     public class AnimationController : MonoBehaviour
     {
+		public Player OwnerPlayer { get; private set; }
+
 		[Header("DigAnimation")]
-		public float digAnimationDuration = 0.0f;
-		public float digAnimationMultiplier = 1.0f;
+		[SerializeField] float digAnimationDuration = 0.0f;
+		[SerializeField] float digAnimationMultiplier = 1.0f;
 
 		[Header("CutAnimation")]
-		public float cutAnimationDuration = 0.0f;
-		public float cutAnimationMultiplier = 1.0f;
+		[SerializeField] float cutAnimationDuration = 0.0f;
+		[SerializeField] float cutAnimationMultiplier = 1.0f;
 
 		[Header("MineAnimation")]
-		public float mineAnimationDuration = 0.0f;
-		public float mineAnimationMultiplier = 1.0f;
+		[SerializeField] float mineAnimationDuration = 0.0f;
+		[SerializeField] float mineAnimationMultiplier = 1.0f;
 
 		[Header("PlantAnimation")]
-		public float plantAnimationDuration = 0.0f;
-		public float plantAnimationMultiplier = 1.0f;
+		[SerializeField] float plantAnimationDuration = 0.0f;
+		[SerializeField] float plantAnimationMultiplier = 1.0f;
 
 		[Header("PlaceAnimation")]
-		public float placeAnimationDuration = 0.0f;
-		public float placeAnimationMultiplier = 1.0f;
+		[SerializeField] float placeAnimationDuration = 0.0f;
+		[SerializeField] float placeAnimationMultiplier = 1.0f;
 
 		[Header("OpenAnimation")]
-		public float openAnimationDuration = 0.0f;
-		public float openAnimationMultiplier = 1.0f;
+		[SerializeField] float openAnimationDuration = 0.0f;
+		[SerializeField] float openAnimationMultiplier = 1.0f;
 
 		[Header("PickAnimation")]
-		public float pickAnimationDuration = 0.0f;
-		public float pickAnimationMultiplier = 1.0f;
+		[SerializeField] float pickAnimationDuration = 0.0f;
+		[SerializeField] float pickAnimationMultiplier = 1.0f;
 
 		Animator animator = null;
-
 		bool inAction = false;
 
-		private void Awake()
-		{
-			animator = GetComponentInChildren<Animator>();
-		}
-		private void Start()
-		{
-			Player.OnStartToUseObject += OnStartToUseObject;
-			Player.OnStopToUseObject += OnStopToUseObject;
-
-			Player.OnStartToInteract += OnStartToInteract;
-			Player.OnStopToInteract += OnStopToInteract;
-		}
-		private void Update()
-		{
-			if (!inAction)
-				MovementAnimation(Player.Direction);
-		}
-		private void OnDestroy()
-		{
-			Player.OnStartToUseObject -= OnStartToUseObject;
-			Player.OnStopToUseObject -= OnStopToUseObject;
-
-			Player.OnStartToInteract -= OnStartToInteract;
-			Player.OnStopToInteract -= OnStopToInteract;
-		}
-
-		public float GetDesiredAnimationSpeed(float duration, float durationMax, float multiplier)
+		float GetDesiredAnimationSpeed(float duration, float durationMax, float multiplier)
 		{
 			return (duration == 0 ? 1.0f : durationMax / duration) * multiplier;
 		}
@@ -168,7 +143,7 @@ namespace JTTF
 			}
 		}
 
-		public void MovementAnimation(Vector3 direction, float speed = 1.0f)
+		void MovementAnimation(Vector3 direction, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
@@ -177,50 +152,77 @@ namespace JTTF
 			animator.SetFloat("DirectionY", localDirection.z);
 			animator.speed = speed;
 		}
-		public void DigAnimation(bool value, float speed = 1.0f)
+		void DigAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			
 			animator.SetBool("IsDig", value);
 			animator.speed = speed;
 		}
-		public void CutAnimation(bool value, float speed = 1.0f)
+		void CutAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsCut", value);
 			animator.speed = speed;
 		}
-		public void MineAnimation(bool value, float speed = 1.0f)
+		void MineAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsMine", value);
 			animator.speed = speed;
 		}
-		public void PlantAnimation(bool value, float speed = 1.0f)
+		void PlantAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
 			animator.SetBool("IsPlant", value);
 			animator.speed = speed;
 		}
-		public void PlaceAnimation(bool value, float speed = 1.0f)
+		void PlaceAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsPlace", value);
 			animator.speed = speed;
 		}
-		public void OpenAnimation(bool value, float speed = 1.0f)
+		void OpenAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsOpen", value);
 			animator.speed = speed;
 		}
-		public void PickAnimation(bool value, float speed = 1.0f)
+		void PickAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 
 			animator.SetBool("IsPick", value);
 			animator.speed = speed;
+		}
+
+		private void Awake()
+		{
+			OwnerPlayer = GetComponent<Player>();
+			animator = GetComponentInChildren<Animator>();
+		}
+		private void Start()
+		{
+			OwnerPlayer.UsableObjectController.onStartToUseObject += OnStartToUseObject;
+			OwnerPlayer.UsableObjectController.onStopToUseObject += OnStopToUseObject;
+
+			OwnerPlayer.InteractableController.onStartToInteract += OnStartToInteract;
+			OwnerPlayer.InteractableController.onStopToInteract += OnStopToInteract;
+		}
+		private void Update()
+		{
+			if (!inAction)
+				MovementAnimation(OwnerPlayer.CharacterController.Direction);
+		}
+		private void OnDestroy()
+		{
+			OwnerPlayer.UsableObjectController.onStartToUseObject -= OnStartToUseObject;
+			OwnerPlayer.UsableObjectController.onStopToUseObject -= OnStopToUseObject;
+
+			OwnerPlayer.InteractableController.onStartToInteract -= OnStartToInteract;
+			OwnerPlayer.InteractableController.onStopToInteract -= OnStopToInteract;
 		}
 	}
 }

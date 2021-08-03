@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Scythe : CustomBehaviour, IEquipable, IUsable
+	public class Scythe : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Mow;
 
@@ -13,7 +15,12 @@ namespace JTTF
 		public float duration = 0.0f;
 		public LayerMask overlapLayer = -1;
 
-		List<Grass> grassList = new List<Grass>();
+		readonly List<Grass> grassList = new List<Grass>();
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
 
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
@@ -23,13 +30,12 @@ namespace JTTF
 		public bool IsUsable()
 		{
 			CheckMowGrass();
-			Debug.Log(grassList.Count);
 			return grassList.Count > 0;
 		}
 		public void Use()
 		{
 			foreach (var grass in grassList)
-				grass.Harvest();
+				grass.Harvest(OwnerPlayer);
 
 			grassList.Clear();
 		}
@@ -38,11 +44,11 @@ namespace JTTF
 		{
 			grassList.Clear();
 
-			var colliders = Physics.OverlapSphere(Player.Position, 1.5f, overlapLayer);
+			var colliders = Physics.OverlapSphere(OwnerPlayer.transform.position, 1.5f, overlapLayer);
 			foreach (var collider in colliders)
 			{
-				var colliderDirection = collider.transform.position - Player.Position;
-				var dot = Vector3.Dot(colliderDirection, Player.Forward);
+				var colliderDirection = collider.transform.position - OwnerPlayer.transform.position;
+				var dot = Vector3.Dot(colliderDirection, OwnerPlayer.transform.forward);
 				if (dot > 0.0f)
 				{
 					var grass = collider.GetComponentInParent<Grass>();

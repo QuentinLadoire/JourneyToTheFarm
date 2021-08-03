@@ -7,30 +7,41 @@ namespace JTTF
 {
 	public class CharacterController : MonoBehaviour
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
 		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
-		public Action<Vector3> onMove = (Vector3) => { /*Debug.Log("OnMovement");*/ };
 		public Action onHasMoved = () => { /*Debug.Log("HasMove");*/ };
 		public Action onHasJump = () => { /*Debug.Log("HasJump");*/ };
 
+		public bool HasControl { get; private set; } = true;
 		public bool IsIdle => direction == Vector3.zero;
 		public Vector3 RoundPosition => transform.position.RoundToInt();
+		public Vector3 RoundForward => transform.forward.RoundToInt();
 		public Vector3 Direction => direction;
 
-		public GameObject followingCamera = null;
-		public float moveSpeed = 5.0f;
-		public float jumpForce = 5.0f;
+		[SerializeField] TPCameraController cameraController = null;
+		[SerializeField] float moveSpeed = 5.0f;
+		[SerializeField] float jumpForce = 5.0f;
+		[SerializeField] LayerMask layer = -1;
 
-		public LayerMask layer = -1;
-
+		GameObject followingCamera = null;
 		new Rigidbody rigidbody = null;
-
 		bool wantJump = false;
 		bool hasJump = false;
 
 		Vector3 direction = Vector3.zero;
 		Vector3 previousDirection = Vector3.zero;
 		Vector3 previousPosition = Vector3.zero;
+
+		public void ActiveControl()
+		{
+			HasControl = true;
+		}
+		public void DesactiveControl()
+		{
+			HasControl = false;
+		}
 
 		void ProcessInput()
 		{
@@ -72,9 +83,6 @@ namespace JTTF
 			if (direction == Vector3.zero && previousDirection != Vector3.zero)
 				onMoveExit.Invoke();
 
-			if (direction != Vector3.zero)
-				onMove.Invoke(direction);
-
 			Vector3 previousRoundPosition = previousPosition.RoundToInt();
 			if (previousRoundPosition != RoundPosition)
 				onHasMoved.Invoke();
@@ -85,11 +93,17 @@ namespace JTTF
 
 		private void Awake()
 		{
+			OwnerPlayer = GetComponent<Player>();
 			rigidbody = GetComponent<Rigidbody>();
+		}
+		private void Start()
+		{
+			cameraController.SetOwner(OwnerPlayer);
+			followingCamera = cameraController.CameraObject;
 		}
 		private void Update()
 		{
-			if (Player.HasControl)
+			if (HasControl)
 				ProcessInput();
 
 			ProcessRotation();

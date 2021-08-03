@@ -7,11 +7,13 @@ namespace JTTF
 {
     public class UsableObjectController : MonoBehaviour
     {
+		public Player OwnerPlayer { get; private set; }
+
 		public Action<ActionType, float> onStartToUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnStartToUseObejct");*/ };
 		public Action<ActionType, float> onUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnUseObject");*/ };
 		public Action<ActionType, float> onStopToUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToUseObject");*/ };
 
-		public FarmerProgressBar farmerProgressBar = null;
+		[SerializeField] FarmerProgressBar farmerProgressBar = null;
 
 		bool inUse = false;
 		IUsable usableObject = null;
@@ -35,7 +37,7 @@ namespace JTTF
 
 		bool CanUseObject()
 		{
-			return usableObject != null && !usableObject.Equals(null) && Player.IsIdle && usableObject.IsUsable();
+			return usableObject != null && !usableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && usableObject.IsUsable();
 		}
 		void StartToUseObject()
 		{
@@ -82,13 +84,14 @@ namespace JTTF
 
 		private void Awake()
 		{
-			Player.OnHandedObjectChange += OnEquipedObjectChange;
+			OwnerPlayer = GetComponent<Player>();
 
-			Player.OnMoveEnter += OnMoveEnter;
+			OwnerPlayer.ShortcutController.onEquipedObjectChange += OnEquipedObjectChange;
+			OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
 		}
 		private void Update()
 		{
-			if (Player.HasControl)
+			if (OwnerPlayer.CharacterController.HasControl)
 			{
 				ProcessInput();
 
@@ -97,9 +100,8 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			Player.OnHandedObjectChange -= OnEquipedObjectChange;
-
-			Player.OnMoveEnter -= OnMoveEnter;
+			OwnerPlayer.ShortcutController.onEquipedObjectChange -= OnEquipedObjectChange;
+			OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
 		}
 	}
 }

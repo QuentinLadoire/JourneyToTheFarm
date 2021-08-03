@@ -123,7 +123,7 @@ public class MapGeneration : MonoBehaviour
 	public MapGenerationSetting setting = new MapGenerationSetting();
 	public GameObject chunkPrefab = null;
 
-	List<Chunk> chunkList = new List<Chunk>();
+	readonly List<Chunk> chunkList = new List<Chunk>();
 
 	void CreateNewChunk(int x, int y)
 	{

@@ -10,7 +10,7 @@ namespace JTTF
 
 		public static GamePanel GamePanel => instance.gamePanel;
 
-		public GamePanel gamePanel = null;
+		[SerializeField] GamePanel gamePanel = null;
 
 		private void Awake()
 		{

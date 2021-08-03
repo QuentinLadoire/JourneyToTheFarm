@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Shovel : CustomBehaviour, IEquipable, IUsable
+	public class Shovel : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Dig;
 
@@ -20,6 +22,11 @@ namespace JTTF
 		PreviewObject farmPlotPreview = null;
 
 		RaycastHit hit;
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
 
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
@@ -47,7 +54,7 @@ namespace JTTF
 		}
 		void UpdatePreview()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, raycastLayer))
+			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, raycastLayer))
 			{
 				farmPlotPreview.transform.position = hit.point;
 				farmPlotPreview.transform.up = hit.normal;

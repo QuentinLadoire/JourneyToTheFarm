@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Pickaxe : CustomBehaviour, IEquipable, IUsable
+	public class Pickaxe : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Mine;
 
@@ -14,6 +16,11 @@ namespace JTTF
 
 		Rock rock = null;
 
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
@@ -21,7 +28,7 @@ namespace JTTF
 
 		public bool IsUsable()
 		{
-			if (Physics.Raycast(Player.Position + new Vector3(0.0f, 0.2f, 0.0f), Player.Forward, out RaycastHit hit, 0.7f))
+			if (Physics.Raycast(OwnerPlayer.transform.position + new Vector3(0.0f, 0.2f, 0.0f), OwnerPlayer.transform.forward, out RaycastHit hit, 0.7f))
 			{
 				rock = hit.collider.GetComponentInParent<Rock>();
 				if (rock != null && rock.IsHarvestable())
@@ -33,7 +40,7 @@ namespace JTTF
 		public void Use()
 		{
 			if (rock != null)
-				rock.Harvest();
+				rock.Harvest(OwnerPlayer);
 		}
 	}
 }

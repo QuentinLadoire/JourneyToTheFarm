@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Axe : CustomBehaviour, IEquipable, IUsable
+	public class Axe : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Cut;
 
@@ -14,6 +16,11 @@ namespace JTTF
 
 		Tree tree = null;
 
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
@@ -21,7 +28,7 @@ namespace JTTF
 
 		public bool IsUsable()
 		{
-			if (Physics.Raycast(Player.Position + Vector3.up, Player.Forward, out RaycastHit hit, 1.0f))
+			if (Physics.Raycast(OwnerPlayer.transform.position + Vector3.up, OwnerPlayer.transform.forward, out RaycastHit hit, 1.0f))
 			{
 				tree = hit.collider.GetComponentInParent<Tree>();
 				if (tree != null && tree.IsHarvestable())
@@ -33,7 +40,7 @@ namespace JTTF
 		public void Use()
 		{
 			if (tree != null)
-				tree.Harvest();
+				tree.Harvest(OwnerPlayer);
 		}
 	}
 }

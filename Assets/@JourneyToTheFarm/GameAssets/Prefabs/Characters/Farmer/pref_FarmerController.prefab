@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 4110536171662277972}
   - component: {fileID: 4110536171662277974}
   - component: {fileID: 6185104794461755559}
-  - component: {fileID: 3246865237047442774}
-  - component: {fileID: 5518234966276075095}
-  - component: {fileID: 1265649284977294238}
   - component: {fileID: 4110536171662277973}
+  - component: {fileID: 1265649284977294238}
+  - component: {fileID: 1644365230994723854}
+  - component: {fileID: 5518234966276075095}
   - component: {fileID: 3869149710092022336}
   - component: {fileID: 4757551126152681482}
-  - component: {fileID: 1644365230994723854}
   m_Layer: 3
   m_Name: pref_FarmerController
   m_TagString: Untagged
@@ -69,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c33b28073fb934ea511fb00595bf71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3246865237047442774
+--- !u!114 &4110536171662277973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,24 +77,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4110536171662277979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aefa6071b436c764f9dab5dc700d01ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 87662442adadba94796e7a1ffb546f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeMax: 30
---- !u!114 &5518234966276075095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4110536171662277979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708337208589fdf40b97a3b939c07117, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightHand: {fileID: 983905971478607599}
-  leftHand: {fileID: 4913610656055954098}
+  followingCamera: {fileID: 0}
+  moveSpeed: 5
+  jumpForce: 5
+  layer:
+    serializedVersion: 2
+    m_Bits: 32759
 --- !u!114 &1265649284977294238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +112,7 @@ MonoBehaviour:
   openAnimationMultiplier: 1
   pickAnimationDuration: 9.567
   pickAnimationMultiplier: 1
---- !u!114 &4110536171662277973
+--- !u!114 &1644365230994723854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,15 +121,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 4110536171662277979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87662442adadba94796e7a1ffb546f4d, type: 3}
+  m_Script: {fileID: 11500000, guid: f41d7f0d86395114e877ba4bfeb3dacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followingCamera: {fileID: 0}
-  moveSpeed: 5
-  jumpForce: 5
-  layer:
-    serializedVersion: 2
-    m_Bits: 32759
+--- !u!114 &5518234966276075095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110536171662277979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708337208589fdf40b97a3b939c07117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHand: {fileID: 983905971478607599}
+  leftHand: {fileID: 4913610656055954098}
 --- !u!114 &3869149710092022336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,18 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkRadius: 2
   farmerProgressBar: {fileID: 9140679923030670542}
---- !u!114 &1644365230994723854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4110536171662277979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41d7f0d86395114e877ba4bfeb3dacd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2053496005051982593
 PrefabInstance:
   m_ObjectHideFlags: 0

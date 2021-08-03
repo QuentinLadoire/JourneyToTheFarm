@@ -4,19 +4,18 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory
     {
         public Item[] ItemArray => itemArray;
+        public int SizeMax => itemArray.Length;
 
-        public int sizeMax = 0;
-
-        Item[] itemArray = null;
+        readonly Item[] itemArray = null;
 
         public bool AddItem(Item item)
 		{
             if (item.IsStackable)
 			{
-                for (int i = 0; i < sizeMax; i++)
+                for (int i = 0; i < SizeMax; i++)
                     if (itemArray[i] != null && itemArray[i].name == item.name)
                     {
                         itemArray[i].amount += item.amount;
@@ -24,7 +23,7 @@ namespace JTTF
                     }
 			}
 
-            for (int i = 0; i < sizeMax; i++)
+            for (int i = 0; i < SizeMax; i++)
                 if (itemArray[i] == null)
                 {
                     itemArray[i] = item;
@@ -35,7 +34,7 @@ namespace JTTF
 		}
         public bool RemoveItem(Item item)
 		{
-            for (int i = 0; i < sizeMax; i++)
+            for (int i = 0; i < SizeMax; i++)
 			{
                 if (itemArray[i] != null && itemArray[i].name == item.name)
                 {
@@ -50,11 +49,10 @@ namespace JTTF
             return false;
 		}
 
-		private void Awake()
+		public Inventory(int size)
 		{
-            itemArray = new Item[sizeMax];
-            for (int i = 0; i < sizeMax; i++)
-                itemArray[i] = null;
+            itemArray = new Item[size];
+            itemArray.Fill(null);
 		}
 	}
 }

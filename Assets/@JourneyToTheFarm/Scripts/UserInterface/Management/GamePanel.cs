@@ -6,7 +6,9 @@ namespace JTTF
 {
     public class GamePanel : MonoBehaviour
     {
-        public InventoryPanel playerInventoryPanel = null;
+        [SerializeField] InventoryPanel playerInventoryPanel = null;
+        [SerializeField] InventoryPanel chestInventoryPanel = null;
+        [SerializeField] ShortcutInventoryPanel shortcutInventoryPanel = null;
 
         public void OpenPlayerInventory(PlayerInventoryController controller)
 		{
@@ -16,6 +18,21 @@ namespace JTTF
         public void ClosePlayerInventory()
 		{
             playerInventoryPanel.SetActive(false);
+		}
+
+        public void OpenChestInventory(ChestInventoryController controller)
+		{
+            chestInventoryPanel.SetInventoryController(controller);
+            chestInventoryPanel.SetActive(true);
+		}
+        public void CloseChestInventory()
+		{
+            chestInventoryPanel.SetActive(false);
+        }
+
+        public void InitShortcutInventory(ShortcutInventoryController controller)
+		{
+            shortcutInventoryPanel.SetInventoryController(controller);
 		}
     }
 }

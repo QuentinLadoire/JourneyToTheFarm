@@ -6,21 +6,34 @@ namespace JTTF
 {
     public class PlayerInventoryController : MonoBehaviour
     {
+		public Player Player { get; private set; }
 		public Inventory Inventory => inventory;
 
-        Inventory inventory = null;
-
+		readonly Inventory inventory = new Inventory(30);
 		bool isOpen = false;
 
 		public void OpenInventory()
 		{
 			isOpen = true;
 			CanvasManager.GamePanel.OpenPlayerInventory(this);
+			GameManager.ActiveCursor();
+			Player.CharacterController.DesactiveControl();
 		}
 		public void CloseInventory()
 		{
 			isOpen = false;
 			CanvasManager.GamePanel.ClosePlayerInventory();
+			GameManager.DesactiveCursor();
+			Player.CharacterController.ActiveControl();
+		}
+
+		public bool AddItem(Item item)
+		{
+			return inventory.AddItem(item);
+		}
+		public bool RemoveItem(Item item)
+		{
+			return inventory.RemoveItem(item);
 		}
 
 		void ProcessInput()
@@ -36,7 +49,7 @@ namespace JTTF
 
 		private void Awake()
 		{
-			inventory = GetComponent<Inventory>();
+			Player = GetComponent<Player>();
 		}
 		private void Start()
 		{

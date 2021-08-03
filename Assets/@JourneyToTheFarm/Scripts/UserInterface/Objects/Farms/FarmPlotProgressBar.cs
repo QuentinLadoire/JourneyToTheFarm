@@ -8,19 +8,11 @@ namespace JTTF
     public class FarmPlotProgressBar : CustomBehaviour
     {
         [Header("FarmPlotProgressBar")]
-        public Image backgroundImage = null;
-        public Image gaugeImage = null;
+        [SerializeField] Image gaugeImage = null;
 
         public void SetPercent(float percent)
         {
             gaugeImage.fillAmount = Mathf.Clamp(percent, 0.0f, 1.0f);
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            backgroundImage = GetComponent<Image>();
         }
     }
 }

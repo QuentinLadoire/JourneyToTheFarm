@@ -10,10 +10,20 @@ namespace JTTF
 
 		public static DataBase DataBase => instance.dataBase;
 		public static Camera playerCamera = null;
+		public static Player player = null;
+
+		public static void ActiveCursor()
+		{
+			Cursor.lockState = CursorLockMode.Confined;
+			Cursor.visible = true;
+		}
+		public static void DesactiveCursor()
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+		}
 
 		[SerializeField] DataBase dataBase = null;
-
-		int openedPanelCount = 0;
 
 		private void Awake()
 		{

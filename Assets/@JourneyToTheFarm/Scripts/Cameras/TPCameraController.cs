@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class TPCameraController : MonoBehaviour
+	public class TPCameraController : MonoBehaviour, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+		public GameObject CameraObject => cameraObject;
+
 		[SerializeField] GameObject cameraObject = null;
 		[SerializeField] GameObject followingObject = null;
 
@@ -15,6 +18,11 @@ namespace JTTF
 		[SerializeField] float farOffset = -5.0f;
 
 		[SerializeField] Vector3 followingOffset = Vector3.zero;
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
 
 		void CameraRotation()
 		{
@@ -41,7 +49,7 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			if (Player.HasControl)
+			if (OwnerPlayer.CharacterController.HasControl)
 				CameraRotation();
 
 			CameraFarOffset();

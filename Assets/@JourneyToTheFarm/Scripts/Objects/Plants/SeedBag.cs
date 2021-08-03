@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedBag : CustomBehaviour, IEquipable, IUsable
+	public class SeedBag : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Plant;
 
@@ -21,6 +23,11 @@ namespace JTTF
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
 
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
@@ -33,12 +40,12 @@ namespace JTTF
 		public void Use()
 		{
 			farmPlot.SetSeed(seedName, growingDuration, plantName);
-			
+			OwnerPlayer.ShortcutController.RemoveItem(new Item(seedName, ItemType.Seed, 1));
 		}
 
 		bool IsPlantable()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, plantableLayer))
+			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, plantableLayer))
 			{
 				farmPlot = hit.collider.GetComponent<FarmPlot>();
 				if (farmPlot != null)
@@ -49,7 +56,9 @@ namespace JTTF
 		}
 		void UpdatePreview()
 		{
-			if (Physics.Raycast(Player.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
+			if (OwnerPlayer == null) return;
+
+			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
 			{
 				seedPreview.transform.position = hit.point;
 				seedPreview.transform.up = hit.normal;

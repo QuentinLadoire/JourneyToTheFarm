@@ -13,9 +13,9 @@ namespace JTTF
         public bool IsMature { get; private set; } = false;
 
         [Header("FarmPlot Parameters")]
-        public float duration = 0.0f;
-        public GameObject activableImage = null;
-        public FarmPlotProgressBar progressBar = null;
+        [SerializeField] float duration = 0.0f;
+        [SerializeField] GameObject activableImage = null;
+        [SerializeField] FarmPlotProgressBar progressBar = null;
 
         GameObject seedObject = null;
 
@@ -40,7 +40,7 @@ namespace JTTF
             growingDurationMax = growingDuration;
             currentGrowingDuration = growingDuration;
 
-			//seedObject = Instantiate(GameManager.ItemDataBase.GetSeed(this.seedName + "Step1").prefab);
+			seedObject = Instantiate(GameManager.DataBase.GetItemAsset(this.seedName + "Step1", ItemType.Seed).prefab);
             seedObject.transform.SetParent(transform, false);
 
             progressBar.SetActive(true);
@@ -71,10 +71,10 @@ namespace JTTF
             progressBar.SetPercent(GetPercentGrowing());
 
             float percentValue = GetTruncatePercentGrowing();
-            //if (percentValue == 0.5f)
-            //    SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step2").prefab);
-            //else if (percentValue == 1.0f)
-            //    SetSeedObject(GameManager.ItemDataBase.GetSeed(seedName + "Step3").prefab);
+            if (percentValue == 0.5f)
+                SetSeedObject(GameManager.DataBase.GetItemAsset(seedName + "Step2", ItemType.Seed).prefab);
+            else if (percentValue == 1.0f)
+                SetSeedObject(GameManager.DataBase.GetItemAsset(seedName + "Step3", ItemType.Seed).prefab);
         }
 
 		public void Select()
@@ -94,9 +94,9 @@ namespace JTTF
         {
             //nothing here
         }
-        public void Interact()
+        public void Interact(Player player)
         {
-            //Player.AddItem(new ItemInfo(plantName, ItemType.Plant, 1));
+            player.InventoryController.AddItem(new Item(plantName, ItemType.Resource, 1));
 
             IsMature = false;
             activableImage.SetActive(false);

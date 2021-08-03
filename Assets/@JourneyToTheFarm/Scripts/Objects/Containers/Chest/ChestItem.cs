@@ -4,20 +4,27 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class ChestItem : CustomBehaviour, IEquipable, IUsable
+	public class ChestItem : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
+		public Player OwnerPlayer { get; private set; }
+
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Place;
 
 		[Header("Chest Parameters")]
-		public float duration = 0.0f;
-		public LayerMask raycastLayer = -1;
-		public LayerMask overlapLayer = -1;
-		public GameObject chestPrefab = null;
-		public GameObject chestPreviewPrefab = null;
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] LayerMask raycastLayer = -1;
+		[SerializeField] LayerMask overlapLayer = -1;
+		[SerializeField] GameObject chestPrefab = null;
+		[SerializeField] GameObject chestPreviewPrefab = null;
 
 		RaycastHit hit;
 		PreviewObject chestPreview = null;
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
 
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
@@ -33,7 +40,7 @@ namespace JTTF
 			if (chestPrefab != null)
 			{
 				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
-
+				OwnerPlayer.ShortcutController.RemoveItem(new Item("Chest", ItemType.Container, 1));
 			}
 		}
 
@@ -56,11 +63,11 @@ namespace JTTF
 		{
 			if (chestPreview == null) return;
 
-			var ray = new Ray((Player.Position + Player.Forward + new Vector3(0.0f, 2.0f, 0.0f)).RoundToInt(), Vector3.down);
+			var ray = new Ray((OwnerPlayer.transform.position + OwnerPlayer.transform.forward + new Vector3(0.0f, 2.0f, 0.0f)).RoundToInt(), Vector3.down);
 			if (Physics.Raycast(ray, out hit, 5.0f, raycastLayer))
 			{
 				chestPreview.transform.position = hit.point;
-				chestPreview.transform.forward = -Player.RoundForward;
+				chestPreview.transform.forward = -OwnerPlayer.CharacterController.RoundForward;
 
 				if (IsConstructible())
 					chestPreview.SetBlueColor();

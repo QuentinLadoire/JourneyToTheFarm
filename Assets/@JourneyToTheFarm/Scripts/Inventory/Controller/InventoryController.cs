@@ -12,7 +12,7 @@ namespace JTTF
         protected Inventory inventory = null;
 
 		public Inventory Inventory => inventory;
-		public Action onInventoryChange = () => { Debug.Log("OnInventoryChange"); };
+		public Action onInventoryChange = () => { /*Debug.Log("OnInventoryChange");*/ };
 
 		protected virtual void Awake()
 		{
@@ -22,14 +22,33 @@ namespace JTTF
 		public bool AddItem(Item item)
 		{
 			bool value = inventory.AddItem(item);
-			onInventoryChange.Invoke();
+			if (value)
+				onInventoryChange.Invoke();
 
 			return value;
 		}
 		public bool RemoveItem(Item item)
 		{
 			bool value = inventory.RemoveItem(item);
-			onInventoryChange.Invoke();
+			if (value)
+				onInventoryChange.Invoke();
+
+			return value;
+		}
+
+		public bool AddItemAt(int index, Item item)
+		{
+			var value = inventory.AddItemAt(index, item);
+			if (value)
+				onInventoryChange.Invoke();
+
+			return value;
+		}
+		public bool RemoveItemAt(int index)
+		{
+			var value = inventory.RemoveItemAt(index);
+			if (value)
+				onInventoryChange.Invoke();
 
 			return value;
 		}

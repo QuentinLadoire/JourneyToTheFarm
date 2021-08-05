@@ -5,5 +5,4 @@ using UnityEngine.EventSystems;
 
 public interface IDragable : IPointerDownHandler, IBeginDragHandler, IDragHandler, IPointerUpHandler, IEndDragHandler
 {
-	public bool Droppped { get; set; }
 }

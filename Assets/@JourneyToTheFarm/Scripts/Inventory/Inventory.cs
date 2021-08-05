@@ -11,6 +11,11 @@ namespace JTTF
 
         readonly Item[] itemArray = null;
 
+        bool IndexIsGood(int index)
+		{
+            return index >= 0 && index < SizeMax;
+		}
+
         public bool AddItem(Item item)
 		{
             if (item.IsStackable)
@@ -44,6 +49,27 @@ namespace JTTF
 
                     return true;
                 }
+			}
+
+            return false;
+		}
+
+        public bool AddItemAt(int index, Item item)
+		{
+            if (IndexIsGood(index))
+            {
+                ItemArray[index] = item;
+                return true;
+            }
+
+            return false;
+		}
+        public bool RemoveItemAt(int index)
+		{
+            if (IndexIsGood(index))
+			{
+                ItemArray[index] = null;
+                return true;
 			}
 
             return false;

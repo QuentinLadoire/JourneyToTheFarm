@@ -5,26 +5,37 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-	public class ItemUI : UIBehaviour, IDragable
+	public class ItemUI : UIBehaviour, IDragable, IDropable
 	{
 		[SerializeField] Image itemIcon = null;
 		[SerializeField] Text itemAmount = null;
 
+		int index = -1;
 		Item item = null;
+		InventoryPanel ownerPanel = null;
 		Transform previousParent = null;
-		Vector3 previousPosition = Vector3.zero;
+		Vector2 previousPosition = Vector2.zero;
 
 		public Item Item => item;
-		public bool Droppped { get; set; } = false;
+		public int Index => index;
+		public InventoryPanel OwnerPanel => ownerPanel;
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			previousParent = transform.parent;
+			previousPosition = RectTransform.anchoredPosition;
+		}
 
 		public void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
 		{
-			previousParent = transform.parent;
-			previousPosition = transform.position;
+			CanvasManager.GamePanel.ParentToDragAndDropPanel(transform);
+			transform.position = eventData.position;
 		}
 		public void OnBeginDrag(UnityEngine.EventSystems.PointerEventData eventData)
 		{
-			CanvasManager.GamePanel.ParentToDragAndDropPanel(transform);
+			
 		}
 		public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData)
 		{
@@ -32,21 +43,35 @@ namespace JTTF
 		}
 		public void OnPointerUp(UnityEngine.EventSystems.PointerEventData eventData)
 		{
+			transform.SetParent(previousParent, false);
+			RectTransform.anchoredPosition = previousPosition;
+		}
+		public void OnDrop(UnityEngine.EventSystems.PointerEventData eventData)
+		{
+			var draggedObject = eventData.pointerDrag;
+			if (draggedObject != null)
+			{
+				var itemUI = draggedObject.GetComponent<ItemUI>();
+				if (itemUI != null)
+				{
+					var itemTmp = new Item(item.name, item.type, item.amount);
 
+					ownerPanel.AddItemAt(index, itemUI.item);
+					itemUI.RemoveSelfItemFromInventory();
+
+					itemUI.OwnerPanel.AddItemAt(itemUI.Index, itemTmp);
+				}
+			}
 		}
 		public void OnEndDrag(UnityEngine.EventSystems.PointerEventData eventData)
 		{
-			if (!Droppped)
-			{
-				transform.SetParent(previousParent, false);
-				transform.position = previousPosition;
-			}
-
-			Droppped = false;
+			
 		}
 
 		public void SetItem(Item item)
 		{
+			this.item = item;
+
 			if (item == null)
 			{
 				itemIcon.sprite = Item.Default.Sprite;
@@ -62,11 +87,17 @@ namespace JTTF
 				SetActive(true);
 			}
 		}
-		public void Init(Item item)
+		public void Init(int index, InventoryPanel owner)
 		{
-			this.item = item;
+			this.index = index;
+			ownerPanel = owner;
+		}
+		public bool RemoveSelfItemFromInventory()
+		{
+			if (ownerPanel != null)
+				return ownerPanel.RemoveItemAt(index);
 
-			SetItem(item);
+			return false;
 		}
 	}
 }

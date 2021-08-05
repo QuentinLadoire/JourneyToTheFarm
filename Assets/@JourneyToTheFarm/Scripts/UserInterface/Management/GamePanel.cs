@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class GamePanel : MonoBehaviour
+    public class GamePanel : UIBehaviour
     {
         [SerializeField] InventoryPanel playerInventoryPanel = null;
         [SerializeField] InventoryPanel chestInventoryPanel = null;

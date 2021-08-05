@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class InventoryPanel : CustomBehaviour
+    public class InventoryPanel : UIBehaviour
     {
         [SerializeField] Button closeButton = null;
         [SerializeField] Transform[] slotTransforms = null;
@@ -25,7 +25,7 @@ namespace JTTF
                 {
                     itemArray[i] = Instantiate(itemTemplate).GetComponent<ItemUI>();
                     itemArray[i].SetParent(slotTransforms[i], false);
-                    itemArray[i].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                    itemArray[i].RectTransform.anchoredPosition = Vector2.zero;
                     itemArray[i].SetItem(inventory.ItemArray[i]);
                     itemArray[i].SetActive(true);
                 }

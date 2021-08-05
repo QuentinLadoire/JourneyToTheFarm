@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-	public class FarmPlotCanvas : MonoBehaviour
+	public class FarmPlotCanvas : UIBehaviour
 	{
 		Canvas canvas = null;
 		new Camera camera = null;
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			canvas = GetComponent<Canvas>();
 		}
 		private void Start()

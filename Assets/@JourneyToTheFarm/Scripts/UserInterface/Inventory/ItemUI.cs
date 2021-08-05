@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-    public class ItemUI : CustomBehaviour
+    public class ItemUI : UIBehaviour
     {
         [SerializeField] Image itemIcon = null;
         [SerializeField] Text itemAmount = null;

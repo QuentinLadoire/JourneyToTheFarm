@@ -13,6 +13,8 @@ namespace JTTF
         public List<ItemAsset> containerItems = new List<ItemAsset>();
         public List<ItemAsset> workbenchItems = new List<ItemAsset>();
 
+        public ItemAsset DefaultItemAsset = new ItemAsset();
+
         ItemAsset GetToolItemAsset(string name)
 		{
             foreach (var item in toolItems)
@@ -62,7 +64,7 @@ namespace JTTF
                 ItemType.Resource => GetRessourceItemAsset(name),
                 ItemType.Container => GetContainerItemAsset(name),
                 ItemType.Workbench => GetWorkbenchItemAsset(name),
-                _ => null
+                _ => DefaultItemAsset
             };
 		}
     }

@@ -8,7 +8,8 @@ namespace JTTF
     {
         [SerializeField] InventoryPanel playerInventoryPanel = null;
         [SerializeField] InventoryPanel chestInventoryPanel = null;
-        [SerializeField] ShortcutInventoryPanel shortcutInventoryPanel = null;
+        [SerializeField] InventoryPanel shortcutInventoryPanel = null;
+        [SerializeField] GameObject dragAndDropPanel = null;
 
         public void OpenPlayerInventory(PlayerInventoryController controller)
 		{
@@ -33,6 +34,12 @@ namespace JTTF
         public void InitShortcutInventory(ShortcutInventoryController controller)
 		{
             shortcutInventoryPanel.SetInventoryController(controller);
+		}
+
+        public void ParentToDragAndDropPanel(Transform transform)
+		{
+            if (transform != null)
+                transform.SetParent(dragAndDropPanel.transform, true);
 		}
     }
 }

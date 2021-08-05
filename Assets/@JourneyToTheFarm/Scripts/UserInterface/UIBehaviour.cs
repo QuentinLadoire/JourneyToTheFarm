@@ -5,13 +5,22 @@ using UnityEngine.UI;
 
 public class UIBehaviour : CustomBehaviour
 {
-	public RectTransform RectTransform => rectTransform;
+	public RectTransform RectTransform => GetRectTransform();
 	RectTransform rectTransform = null;
+
+	RectTransform GetRectTransform()
+	{
+		if (rectTransform == null)
+			rectTransform = GetComponent<RectTransform>();
+
+		return rectTransform;
+	}
 
 	protected override void Awake()
 	{
 		base.Awake();
 
-		rectTransform = GetComponent<RectTransform>();
+		if (rectTransform == null)
+			rectTransform = GetComponent<RectTransform>();
 	}
 }

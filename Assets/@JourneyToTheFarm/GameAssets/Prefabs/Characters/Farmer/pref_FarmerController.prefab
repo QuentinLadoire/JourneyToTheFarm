@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5518234966276075095}
   - component: {fileID: 3869149710092022336}
   - component: {fileID: 4757551126152681482}
+  - component: {fileID: 1436786526447741699}
   m_Layer: 3
   m_Name: pref_FarmerController
   m_TagString: Untagged
@@ -80,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87662442adadba94796e7a1ffb546f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followingCamera: {fileID: 0}
+  cameraController: {fileID: 0}
   moveSpeed: 5
   jumpForce: 5
   layer:
@@ -136,8 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708337208589fdf40b97a3b939c07117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHand: {fileID: 983905971478607599}
-  leftHand: {fileID: 4913610656055954098}
 --- !u!114 &3869149710092022336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +164,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkRadius: 2
   farmerProgressBar: {fileID: 9140679923030670542}
+--- !u!114 &1436786526447741699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110536171662277979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1b2360464256c4ea529ff84a257826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHand: {fileID: 983905971478607599}
+  leftHand: {fileID: 4913610656055954098}
 --- !u!1001 &2053496005051982593
 PrefabInstance:
   m_ObjectHideFlags: 0

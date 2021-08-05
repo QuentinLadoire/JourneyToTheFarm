@@ -5,13 +5,11 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class ChestInventoryController : MonoBehaviour
+    public class ChestInventoryController : InventoryController, IOpenable, IClosable
     {
-        public Inventory Inventory => inventory;
+		protected override int InventorySize => 30;
 
 		public Action onInventotyClose = () => { /*Debug.Log("OnInventoryClose");*/ };
-
-        readonly Inventory inventory = new Inventory(30);
 
 		public void OpenInventory()
 		{

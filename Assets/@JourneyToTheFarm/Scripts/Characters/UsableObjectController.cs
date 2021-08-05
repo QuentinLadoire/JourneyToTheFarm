@@ -86,7 +86,7 @@ namespace JTTF
 		{
 			OwnerPlayer = GetComponent<Player>();
 
-			OwnerPlayer.ShortcutController.onEquipedObjectChange += OnEquipedObjectChange;
+			OwnerPlayer.EquipableController.onEquipedObjectChange += OnEquipedObjectChange;
 			OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
 		}
 		private void Update()
@@ -100,7 +100,7 @@ namespace JTTF
 		}
 		private void OnDestroy()
 		{
-			OwnerPlayer.ShortcutController.onEquipedObjectChange -= OnEquipedObjectChange;
+			OwnerPlayer.EquipableController.onEquipedObjectChange -= OnEquipedObjectChange;
 			OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
 		}
 	}

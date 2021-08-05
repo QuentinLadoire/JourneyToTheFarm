@@ -13,6 +13,7 @@ namespace JTTF
         public ShortcutInventoryController ShortcutController { get; private set; }
         public UsableObjectController UsableObjectController { get; private set; }
         public InteractableController InteractableController { get; private set; }
+        public EquipableController EquipableController { get; private set; }
 
         private void Awake()
 		{
@@ -24,6 +25,7 @@ namespace JTTF
             ShortcutController = GetComponent<ShortcutInventoryController>();
             UsableObjectController = GetComponent<UsableObjectController>();
             InteractableController = GetComponent<InteractableController>();
+            EquipableController = GetComponent<EquipableController>();
 		}
 	}
 }

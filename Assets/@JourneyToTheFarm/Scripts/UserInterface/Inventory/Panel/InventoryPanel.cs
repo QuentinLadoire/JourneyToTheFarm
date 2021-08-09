@@ -57,6 +57,20 @@ namespace JTTF
 
             Init();
         }
+        public bool AddItem(Item item)
+		{
+            if (controller != null)
+                return controller.AddItem(item);
+
+            return false;
+		}
+        public bool RemoveItem(Item item)
+		{
+            if (controller != null)
+                return controller.RemoveItem(item);
+
+            return false;
+		}
         public bool AddItemAt(int index, Item item)
 		{
             if (controller != null)

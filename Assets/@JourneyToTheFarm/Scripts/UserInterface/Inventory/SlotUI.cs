@@ -17,7 +17,7 @@ namespace JTTF
 				var itemUI = draggedObject.GetComponent<ItemUI>();
 				if (itemUI != null)
 				{
-					if (!(itemUI.OwnerPanel == ownerPanel && itemUI.Index == index))
+					if (!(itemUI.OwnerPanel == ownerPanel && itemUI.Index == index)) //move item
 					{
 						ownerPanel.AddItemAt(index, itemUI.Item);
 						itemUI.RemoveSelfItemFromInventory();

@@ -54,12 +54,20 @@ namespace JTTF
 				var itemUI = draggedObject.GetComponent<ItemUI>();
 				if (itemUI != null)
 				{
-					var itemTmp = new Item(item.name, item.type, item.amount);
+					if (itemUI.item.name != item.name) //switch item when they are not identical 
+					{
+						var itemTmp = new Item(item.name, item.type, item.amount);
 
-					ownerPanel.AddItemAt(index, itemUI.item);
-					itemUI.RemoveSelfItemFromInventory();
+						ownerPanel.AddItemAt(index, itemUI.item);
+						itemUI.RemoveSelfItemFromInventory();
 
-					itemUI.OwnerPanel.AddItemAt(itemUI.Index, itemTmp);
+						itemUI.OwnerPanel.AddItemAt(itemUI.Index, itemTmp);
+					}
+					else //stack item when they are identical
+					{
+						ownerPanel.AddItem(itemUI.item);
+						itemUI.RemoveSelfItemFromInventory();
+					}
 				}
 			}
 		}

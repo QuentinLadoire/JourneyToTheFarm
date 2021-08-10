@@ -52,5 +52,29 @@ namespace JTTF
 
 			return value;
 		}
+
+		public int StackItemAt(int index, int amount)
+		{
+			var value = inventory.StackItemAt(index, amount);
+			if (value != -1)
+				onInventoryChange.Invoke();
+
+			return value;
+		}
+		public int UnstackItemAt(int index, int amount)
+		{
+			var value = inventory.UnstackItemAt(index, amount);
+			if (value != -1)
+				onInventoryChange.Invoke();
+
+			return value;
+		}
+
+		public void SwitchItem(int index, InventoryController other, int otherIndex)
+		{
+			var toMove = inventory.ItemArray[index];
+			AddItemAt(index, other.Inventory.ItemArray[otherIndex]);
+			other.AddItemAt(otherIndex, toMove);
+		}
 	}
 }

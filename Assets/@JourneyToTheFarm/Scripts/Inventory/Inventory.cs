@@ -15,13 +15,17 @@ namespace JTTF
 		{
             return index >= 0 && index < SizeMax;
 		}
+        void ClearItemAt(int index)
+		{
+            itemArray[index] = Item.None;
+		}
 
         public bool AddItem(Item item)
 		{
             if (item.IsStackable)
 			{
                 for (int i = 0; i < SizeMax; i++)
-                    if (itemArray[i] != null && itemArray[i].name == item.name)
+                    if (itemArray[i] != Item.None && itemArray[i].name == item.name)
                     {
                         itemArray[i].amount += item.amount;
                         return true;
@@ -29,7 +33,7 @@ namespace JTTF
 			}
 
             for (int i = 0; i < SizeMax; i++)
-                if (itemArray[i] == null)
+                if (itemArray[i] == Item.None)
                 {
                     itemArray[i] = item;
                     return true;
@@ -45,7 +49,7 @@ namespace JTTF
                 {
                     itemArray[i].amount -= item.amount;
                     if (itemArray[i].amount <= 0)
-                        itemArray[i] = null;
+                        itemArray[i] = Item.None;
 
                     return true;
                 }
@@ -68,17 +72,54 @@ namespace JTTF
 		{
             if (IndexIsGood(index))
 			{
-                ItemArray[index] = null;
+                ClearItemAt(index);
                 return true;
 			}
 
             return false;
 		}
 
+        public int StackItemAt(int index, int amount)
+		{
+            if (IndexIsGood(index) && itemArray[index].IsStackable)
+			{
+                itemArray[index].amount += amount;
+                if (itemArray[index].amount > itemArray[index].StackCount)
+                {
+                    var rest = itemArray[index].amount - itemArray[index].StackCount;
+                    itemArray[index].amount = itemArray[index].StackCount;
+
+                    return rest;
+                }
+
+                return 0;
+			}
+
+            return -1;
+		}
+        public int UnstackItemAt(int index, int amount)
+		{
+            if (IndexIsGood(index) && itemArray[index].IsStackable)
+            {
+                itemArray[index].amount -= amount;
+                if (itemArray[index].amount < 0)
+				{
+                    var rest = -itemArray[index].amount;
+                    ClearItemAt(index);
+
+                    return rest;
+				}
+
+                return 0;
+            }
+
+            return -1;
+        }
+
 		public Inventory(int size)
 		{
             itemArray = new Item[size];
-            itemArray.Fill(null);
+            itemArray.Fill(Item.None);
 		}
 	}
 }

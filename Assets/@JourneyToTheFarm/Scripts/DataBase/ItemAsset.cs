@@ -20,6 +20,7 @@ namespace JTTF
 		public string name = "NoName";
 		public ItemType type = ItemType.None;
 		public bool stackable = true;
+		public int stackCount = 32;
 		public Sprite sprite = null;
 		public GameObject prefab = null;
 	}

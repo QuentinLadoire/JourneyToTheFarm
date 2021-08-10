@@ -4,40 +4,60 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SlotUI : UIBehaviour, IDropable
+	public class SlotUI : UIBehaviour, IDragable, IDropable
 	{
-		int index = -1;
-		InventoryPanel ownerPanel = null;
+		[SerializeField] ItemUI itemUI = null;
 
-		public void OnDrop(UnityEngine.EventSystems.PointerEventData eventData)
-		{
-			var draggedObject = eventData.pointerDrag;
-			if (draggedObject != null)
-			{
-				var itemUI = draggedObject.GetComponent<ItemUI>();
-				if (itemUI != null)
-				{
-					if (!(itemUI.OwnerPanel == ownerPanel && itemUI.Index == index)) //move item
-					{
-						ownerPanel.AddItemAt(index, itemUI.Item);
-						itemUI.RemoveSelfItemFromInventory();
-					}
-				}
-			}
-		}
+		int index = -1;
+		Item item = Item.None;
+		InventoryPanel ownerPanel = null;
 
 		public void Init(int index, InventoryPanel owner)
 		{
 			this.index = index;
 			ownerPanel = owner;
 		}
-
-		public bool RemoveSelfItemFromInventory()
+		public void SetItem(Item item)
 		{
-			if (ownerPanel != null)
-				return ownerPanel.RemoveItemAt(index);
+			this.item = item;
+			itemUI.SetItem(item);
+		}
 
-			return false;
+		public void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
+		{
+			CanvasManager.GamePanel.ParentToDragAndDropPanel(itemUI.transform);
+			itemUI.transform.position = eventData.position;
+		}
+		public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData)
+		{
+			itemUI.transform.position = eventData.position;
+		}
+		public void OnPointerUp(UnityEngine.EventSystems.PointerEventData eventData)
+		{
+			itemUI.transform.SetParent(transform, false);
+			itemUI.RectTransform.anchoredPosition = Vector2.zero;
+		}
+		public void OnDrop(UnityEngine.EventSystems.PointerEventData eventData)
+		{
+			var draggedObject = eventData.pointerDrag;
+			if (draggedObject != null)
+			{
+				var draggedSlotUI = draggedObject.GetComponent<SlotUI>();
+				if (draggedSlotUI != null)
+				{
+					if (draggedSlotUI != this) //if not him self
+					{
+						if (draggedSlotUI.item.name == item.name)
+						{
+							var rest = ownerPanel.Controller.StackItemAt(index, draggedSlotUI.item.amount);
+							if (rest != -1)
+								draggedSlotUI.ownerPanel.Controller.UnstackItemAt(draggedSlotUI.index, draggedSlotUI.item.amount - rest);
+						}
+						else
+							ownerPanel.Controller.SwitchItem(index, draggedSlotUI.ownerPanel.Controller, draggedSlotUI.index);
+					}
+				}
+			}
 		}
 	}
 }

@@ -9,9 +9,10 @@ namespace JTTF
     {
         [Header("Inventory Panel Parameters")]
         [SerializeField] protected SlotUI[] slotArray = null;
-        [SerializeField] protected ItemUI[] itemArray = null;
 
         protected InventoryController controller = null;
+
+        public InventoryController Controller => controller;
 
         void OnInventoryChange()
 		{
@@ -22,8 +23,8 @@ namespace JTTF
         {
             if (controller == null) return;
 
-            for (int i = 0; i < itemArray.Length; i++)
-                itemArray[i].SetItem(controller.Inventory.ItemArray[i]);
+            for (int i = 0; i < slotArray.Length; i++)
+                slotArray[i].SetItem(controller.Inventory.ItemArray[i]);
         }
 
         protected virtual void Init()
@@ -40,10 +41,7 @@ namespace JTTF
             base.Awake();
 
             for (int i = 0; i < slotArray.Length; i++)
-            {
                 slotArray[i].Init(i, this);
-                itemArray[i].Init(i, this);
-            }
         }
 		private void OnDestroy()
 		{
@@ -57,33 +55,5 @@ namespace JTTF
 
             Init();
         }
-        public bool AddItem(Item item)
-		{
-            if (controller != null)
-                return controller.AddItem(item);
-
-            return false;
-		}
-        public bool RemoveItem(Item item)
-		{
-            if (controller != null)
-                return controller.RemoveItem(item);
-
-            return false;
-		}
-        public bool AddItemAt(int index, Item item)
-		{
-            if (controller != null)
-                return controller.AddItemAt(index, item);
-
-            return false;
-		}
-        public bool RemoveItemAt(int index)
-		{
-            if (controller != null)
-                return controller.RemoveItemAt(index);
-
-            return false;
-		}
     }
 }

@@ -6,10 +6,13 @@ namespace JTTF
 {
     public class GamePanel : UIBehaviour
     {
+        [SerializeField] PlayerPanel playerPanel = null;
         [SerializeField] InventoryPanel playerInventoryPanel = null;
         [SerializeField] InventoryPanel chestInventoryPanel = null;
         [SerializeField] InventoryPanel shortcutInventoryPanel = null;
         [SerializeField] GameObject dragAndDropPanel = null;
+
+        public PlayerPanel PlayerPanel => playerPanel;
 
         public void OpenPlayerInventory(PlayerInventoryController controller)
 		{

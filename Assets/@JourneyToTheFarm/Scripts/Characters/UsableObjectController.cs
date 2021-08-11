@@ -13,7 +13,7 @@ namespace JTTF
 		public Action<ActionType, float> onUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnUseObject");*/ };
 		public Action<ActionType, float> onStopToUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToUseObject");*/ };
 
-		[SerializeField] FarmerProgressBar farmerProgressBar = null;
+		PlayerProgressBar playerProgressBar = null;
 
 		bool inUse = false;
 		IUsable usableObject = null;
@@ -43,7 +43,7 @@ namespace JTTF
 		{
 			inUse = true;
 			currentDuration = usableObject.Duration;
-			farmerProgressBar.SetActive(true);
+			playerProgressBar.SetActive(true);
 
 			onStartToUseObject.Invoke(usableObject.ActionType, usableObject.Duration);
 		}
@@ -55,7 +55,7 @@ namespace JTTF
 				UseObject();
 			currentDuration -= Time.deltaTime;
 
-			farmerProgressBar.SetPercent(1 - (currentDuration / usableObject.Duration));
+			playerProgressBar.SetPercent(1 - (currentDuration / usableObject.Duration));
 		}
 		void UseObject()
 		{
@@ -70,7 +70,7 @@ namespace JTTF
 			{
 				inUse = false;
 				currentDuration = 0.0f;
-				farmerProgressBar.SetActive(false);
+				playerProgressBar.SetActive(false);
 
 				onStopToUseObject.Invoke(usableObject.ActionType, usableObject.Duration);
 			}
@@ -88,6 +88,8 @@ namespace JTTF
 
 			OwnerPlayer.EquipableController.onEquipedObjectChange += OnEquipedObjectChange;
 			OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
+
+			playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
 		}
 		private void Update()
 		{

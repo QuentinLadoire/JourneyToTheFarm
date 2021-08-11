@@ -14,11 +14,11 @@ namespace JTTF
         public Action<ActionType, float> onStopToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToInteract");*/ };
 
         [SerializeField] float checkRadius = 1.0f;
-        [SerializeField] FarmerProgressBar farmerProgressBar = null;
 
         bool inInteraction = false;
         float currentDuration = 0.0f;
         IInteractable interactableObject = null;
+        PlayerProgressBar playerProgressBar = null;
 
         void OnMoveEnter()
 		{
@@ -33,7 +33,7 @@ namespace JTTF
 		{
             inInteraction = true;
             currentDuration = interactableObject.Duration;
-            farmerProgressBar.SetActive(true);
+            playerProgressBar.SetActive(true);
             interactableObject.StartToInteract();
 
             onStartToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
@@ -46,7 +46,7 @@ namespace JTTF
                 Interact();
             currentDuration -= Time.deltaTime;
 
-            farmerProgressBar.SetPercent(1 - (currentDuration / interactableObject.Duration));
+            playerProgressBar.SetPercent(1 - (currentDuration / interactableObject.Duration));
         }
         void Interact()
 		{
@@ -61,7 +61,7 @@ namespace JTTF
 
             inInteraction = false;
             currentDuration = 0.0f;
-            farmerProgressBar.SetActive(false);
+            playerProgressBar.SetActive(false);
 
             onStopToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
 		}
@@ -110,6 +110,8 @@ namespace JTTF
             OwnerPlayer = GetComponent<Player>();
 
             OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
+
+            playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
 		}
 		private void Update()
 		{

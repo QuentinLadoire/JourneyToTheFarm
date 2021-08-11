@@ -42,5 +42,13 @@ namespace JTTF
 			if (tree != null)
 				tree.Harvest(OwnerPlayer);
 		}
+
+		private void Update()
+		{
+			if (tree != null)
+			{
+
+			}
+		}
 	}
 }

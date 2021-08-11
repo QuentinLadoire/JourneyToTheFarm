@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace JTTF
 {
-	public class FarmerProgressBar : UIBehaviour
+	public class PlayerProgressBar : UIBehaviour
 	{
 		[Header("FarmerProgressBar")]
 		[SerializeField] Image gaugeImage = null;

@@ -8,8 +8,8 @@ namespace JTTF
     {
         public float Duration { get; }
         public ActionType ActionType { get; }
+        public bool IsUsable { get; }
 
-        public bool IsUsable();
         public void Use();
     }
 }

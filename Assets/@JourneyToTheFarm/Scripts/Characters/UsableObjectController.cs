@@ -37,7 +37,7 @@ namespace JTTF
 
 		bool CanUseObject()
 		{
-			return usableObject != null && !usableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && usableObject.IsUsable();
+			return usableObject != null && !usableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && usableObject.IsUsable;
 		}
 		void StartToUseObject()
 		{

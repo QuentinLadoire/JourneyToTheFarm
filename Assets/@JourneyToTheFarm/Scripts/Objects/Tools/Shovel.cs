@@ -10,6 +10,7 @@ namespace JTTF
 
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Dig;
+		public bool IsUsable => isUsable;
 
 		[Header("Shovel Parameters")]
 		public float duration = 0.0f;
@@ -18,32 +19,12 @@ namespace JTTF
 		public GameObject farmPlotPrefab = null;
 		public GameObject farmPlotPreviewPrefab = null;
 
+		bool isUsable = false;
 		Transform leftHandTransform = null;
 		PreviewObject farmPlotPreview = null;
+		PlayerInteractionText interactionText = null;
 
 		RaycastHit hit;
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
-		}
-
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-			leftHandTransform = leftHand;
-		}
-
-		public bool IsUsable()
-		{
-			return IsConstructible();
-		}
-		public void Use()
-		{
-			var farmPlot = Instantiate(farmPlotPrefab);
-			farmPlot.transform.position = farmPlotPreview.transform.position;
-			farmPlot.transform.up = farmPlotPreview.transform.up;
-		}
 
 		bool IsConstructible()
 		{
@@ -51,6 +32,22 @@ namespace JTTF
 			var halfSize = new Vector3(0.4f, 0.5f, 0.4f);
 			return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
 				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, overlapLayer));
+		}
+		void CheckIsUsable()
+		{
+			if (IsConstructible())
+			{
+				interactionText.SetText("Press E to Dig");
+				interactionText.SetActive(true);
+
+				isUsable = true;
+			}
+			else
+			{
+				interactionText.SetActive(false);
+
+				isUsable = false;
+			}
 		}
 		void UpdatePreview()
 		{
@@ -70,11 +67,15 @@ namespace JTTF
 		{
 			base.Awake();
 
+			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
+
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 		}
 		private void Update()
 		{
 			UpdatePreview();
+
+			CheckIsUsable();
 
 			if (leftHandTransform != null)
 				transform.up = leftHandTransform.position - transform.position;
@@ -83,6 +84,27 @@ namespace JTTF
 		{
 			if (farmPlotPreview != null)
 				Destroy(farmPlotPreview.gameObject);
+
+			if (interactionText != null)
+				interactionText.SetActive(false);
+		}
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
+		public void Equip(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+			leftHandTransform = leftHand;
+		}
+
+		public void Use()
+		{
+			var farmPlot = Instantiate(farmPlotPrefab);
+			farmPlot.transform.position = farmPlotPreview.transform.position;
+			farmPlot.transform.up = farmPlotPreview.transform.up;
 		}
 	}
 }

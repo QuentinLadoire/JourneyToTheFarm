@@ -22,11 +22,11 @@ namespace JTTF
         }
 		private void Start()
 		{
-			OwnerPlayer.ShortcutController.onScroll += OnScroll;
+			OwnerPlayer.ShortcutController.onSelectedSlotChange += OnSelectedSlotChange;
 		}
 		private void OnDestroy()
 		{
-			OwnerPlayer.ShortcutController.onScroll -= OnScroll;
+			OwnerPlayer.ShortcutController.onSelectedSlotChange -= OnSelectedSlotChange;
 		}
 
 		void ClearEquipedObject()
@@ -36,7 +36,7 @@ namespace JTTF
 		}
 		void InstantiateObject(Item item)
 		{
-			if (item != null)
+			if (item != Item.None)
 			{
 				equipedObject = Instantiate(item.Prefab);
 
@@ -68,7 +68,7 @@ namespace JTTF
 			CheckIsEquipable();
 		}
 
-		void OnScroll(int index, Item item)
+		void OnSelectedSlotChange(int index, Item item)
 		{
 			ChangeEquipedObject(item);
 		}

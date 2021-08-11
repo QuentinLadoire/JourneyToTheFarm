@@ -10,35 +10,15 @@ namespace JTTF
 
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Mow;
+		public bool IsUsable => isUsable;
 
 		[Header("Scythe Parameters")]
 		public float duration = 0.0f;
 		public LayerMask overlapLayer = -1;
 
+		bool isUsable = false;
+		PlayerInteractionText interactionText = null;
 		readonly List<Grass> grassList = new List<Grass>();
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
-		}
-
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
-
-		public bool IsUsable()
-		{
-			CheckMowGrass();
-			return grassList.Count > 0;
-		}
-		public void Use()
-		{
-			foreach (var grass in grassList)
-				grass.Harvest(OwnerPlayer);
-
-			grassList.Clear();
-		}
 
 		void CheckMowGrass()
 		{
@@ -56,6 +36,58 @@ namespace JTTF
 						grassList.Add(grass);
 				}
 			}
+		}
+		void CheckIsUsable()
+		{
+			CheckMowGrass();
+
+			if (grassList.Count > 0)
+			{
+				interactionText.SetText("Press E to Mow");
+				interactionText.SetActive(true);
+
+				isUsable = true;
+			}
+			else
+			{
+				interactionText.SetActive(false);
+
+				isUsable = false;
+			}
+		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
+		}
+		private void Update()
+		{
+			CheckIsUsable();
+		}
+		private void OnDestroy()
+		{
+			if (interactionText != null)
+				interactionText.SetActive(false);
+		}
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
+		public void Equip(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+		}
+
+		public void Use()
+		{
+			foreach (var grass in grassList)
+				grass.Harvest(OwnerPlayer);
+
+			grassList.Clear();
 		}
 	}
 }

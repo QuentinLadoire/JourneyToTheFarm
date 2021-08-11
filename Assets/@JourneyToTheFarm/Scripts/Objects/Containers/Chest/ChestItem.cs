@@ -10,6 +10,7 @@ namespace JTTF
 
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Place;
+		public bool IsUsable => isUsable;
 
 		[Header("Chest Parameters")]
 		[SerializeField] float duration = 0.0f;
@@ -19,30 +20,9 @@ namespace JTTF
 		[SerializeField] GameObject chestPreviewPrefab = null;
 
 		RaycastHit hit;
+		bool isUsable = false;
 		PreviewObject chestPreview = null;
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
-		}
-
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
-
-		public bool IsUsable()
-		{
-			return IsConstructible();
-		}
-		public void Use()
-		{
-			if (chestPrefab != null)
-			{
-				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
-				OwnerPlayer.ShortcutController.RemoveItem(new Item("Chest", ItemType.Container, 1));
-			}
-		}
+		PlayerInteractionText interactionText = null;
 
 		bool IsConstructible()
 		{
@@ -51,10 +31,28 @@ namespace JTTF
 			return (hit.transform.CompareTag("Constructible") &&
 				!Physics.CheckBox(center, halfSize, chestPreview.transform.rotation, overlapLayer));
 		}
+		void CheckIsUsable()
+		{
+			if (IsConstructible())
+			{
+				interactionText.SetText("Press E to Place");
+				interactionText.SetActive(true);
+
+				isUsable = true;
+			}
+			else
+			{
+				interactionText.SetActive(false);
+
+				isUsable = false;
+			}
+		}
 
 		protected override void Awake()
 		{
 			base.Awake();
+
+			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
 
 			if (chestPreviewPrefab != null)
 				chestPreview = Instantiate(chestPreviewPrefab).GetComponent<PreviewObject>();
@@ -69,16 +67,40 @@ namespace JTTF
 				chestPreview.transform.position = hit.point;
 				chestPreview.transform.forward = -OwnerPlayer.CharacterController.RoundForward;
 
-				if (IsConstructible())
+				if (isUsable)
 					chestPreview.SetBlueColor();
 				else
 					chestPreview.SetRedColor();
 			}
+
+			CheckIsUsable();
 		}
 		private void OnDestroy()
 		{
 			if (chestPreview != null)
 				chestPreview.Destroy();
+
+			if (interactionText != null)
+				interactionText.SetActive(false);
+		}
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
+		public void Equip(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+		}
+
+		public void Use()
+		{
+			if (chestPrefab != null)
+			{
+				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
+				OwnerPlayer.ShortcutController.RemoveItem(new Item("Chest", ItemType.Container, 1));
+			}
 		}
 	}
 }

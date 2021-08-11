@@ -10,6 +10,7 @@ namespace JTTF
 
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Plant;
+		public bool IsUsable => isUsable;
 
 		[Header("SeedBag parameter")]
 		public LayerMask raycastLayer = -1;
@@ -20,28 +21,10 @@ namespace JTTF
 		public float growingDuration = 0.0f;
 		public GameObject seedPreviewPrefab = null;
 
+		bool isUsable = false;
 		FarmPlot farmPlot = null;
 		PreviewObject seedPreview = null;
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
-		}
-
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
-
-		public bool IsUsable()
-		{
-			return IsPlantable();
-		}
-		public void Use()
-		{
-			farmPlot.SetSeed(seedName, growingDuration, plantName);
-			OwnerPlayer.ShortcutController.RemoveItem(new Item(seedName, ItemType.Seed, 1));
-		}
+		PlayerInteractionText interactionText = null;
 
 		bool IsPlantable()
 		{
@@ -54,6 +37,22 @@ namespace JTTF
 
 			return false;
 		}
+		void CheckIsUsable()
+		{
+			if (IsPlantable())
+			{
+				interactionText.SetText("Press E to Plant");
+				interactionText.SetActive(true);
+
+				isUsable = true;
+			}
+			else
+			{
+				interactionText.SetActive(false);
+
+				isUsable = false;
+			}
+		}
 		void UpdatePreview()
 		{
 			if (OwnerPlayer == null) return;
@@ -64,7 +63,7 @@ namespace JTTF
 				seedPreview.transform.up = hit.normal;
 			}
 
-			if (IsPlantable())
+			if (isUsable)
 				seedPreview.SetBlueColor();
 			else
 				seedPreview.SetRedColor();
@@ -74,16 +73,39 @@ namespace JTTF
 		{
 			base.Awake();
 
+			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
+
 			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
 		}
 		private void Update()
 		{
+			CheckIsUsable();
+
 			UpdatePreview();
 		}
 		private void OnDestroy()
 		{
 			if (seedPreview != null)
 				Destroy(seedPreview.gameObject);
+
+			if (interactionText != null)
+				interactionText.SetActive(false);
+		}
+
+		public void SetOwner(Player owner)
+		{
+			OwnerPlayer = owner;
+		}
+
+		public void Equip(Transform rightHand, Transform leftHand)
+		{
+			transform.SetParent(rightHand, false);
+		}
+
+		public void Use()
+		{
+			farmPlot.SetSeed(seedName, growingDuration, plantName);
+			OwnerPlayer.ShortcutController.RemoveItem(new Item(seedName, ItemType.Seed, 1));
 		}
 	}
 }

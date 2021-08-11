@@ -35,7 +35,7 @@ namespace JTTF
             sController = controller as ShortcutInventoryController;
             if (sController != null)
             {
-                sController.onScroll += OnScroll;
+                sController.onSelectedSlotChange += OnScroll;
                 sController.onInventoryChange += OnInventoryChange;
             }
         }
@@ -44,7 +44,7 @@ namespace JTTF
 		{
             if (sController != null)
             {
-                sController.onScroll -= OnScroll;
+                sController.onSelectedSlotChange -= OnScroll;
                 sController.onInventoryChange -= OnInventoryChange;
             }
 		}

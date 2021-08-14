@@ -52,7 +52,7 @@ namespace JTTF
 			inventory.AddItem(new Item("Axe", ItemType.Tool, 1));
 			inventory.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
 			inventory.AddItem(new Item("Scythe", ItemType.Tool, 1));
-			inventory.AddItem(new Item("WheatSeed", ItemType.Seed, 20));
+			inventory.AddItem(new Item("WheatSeed", ItemType.Seed, 4));
 			inventory.AddItem(new Item("Chest", ItemType.Container, 1));
 
 			CanvasManager.GamePanel.InitShortcutInventory(this);
@@ -62,6 +62,13 @@ namespace JTTF
 		private void Update()
 		{
 			ProcessInput();
+		}
+
+		public void ConsumeSelectedItem()
+		{
+			UnstackItemAt(currentIndex, 1);
+			if (inventory.ItemArray[currentIndex] == Item.None)
+				onSelectedSlotChange.Invoke(currentIndex, inventory.ItemArray[currentIndex]);
 		}
 	}
 }

@@ -105,7 +105,7 @@ namespace JTTF
 		public void Use()
 		{
 			farmPlot.SetSeed(seedName, growingDuration, plantName);
-			OwnerPlayer.ShortcutController.RemoveItem(new Item(seedName, ItemType.Seed, 1));
+			OwnerPlayer.ShortcutController.ConsumeSelectedItem();
 		}
 	}
 }

@@ -99,7 +99,7 @@ namespace JTTF
 			if (chestPrefab != null)
 			{
 				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
-				OwnerPlayer.ShortcutController.RemoveItem(new Item("Chest", ItemType.Container, 1));
+				OwnerPlayer.ShortcutController.ConsumeSelectedItem();
 			}
 		}
 	}

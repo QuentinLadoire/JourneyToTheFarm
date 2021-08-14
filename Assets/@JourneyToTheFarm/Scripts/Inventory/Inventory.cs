@@ -99,10 +99,10 @@ namespace JTTF
 		}
         public int UnstackItemAt(int index, int amount)
 		{
-            if (IndexIsGood(index) && itemArray[index].IsStackable)
+            if (IndexIsGood(index))
             {
                 itemArray[index].amount -= amount;
-                if (itemArray[index].amount < 0)
+                if (itemArray[index].amount <= 0)
 				{
                     var rest = -itemArray[index].amount;
                     ClearItemAt(index);

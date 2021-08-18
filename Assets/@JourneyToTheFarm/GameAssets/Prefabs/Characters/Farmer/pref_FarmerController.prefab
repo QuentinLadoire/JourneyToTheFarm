@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8d4a4d43b232547850654f63b94941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  farmerProgressBar: {fileID: 0}
 --- !u!114 &4757551126152681482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,8 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb8d8df1d220fb4a8533139f9abb276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkRadius: 2
-  farmerProgressBar: {fileID: 0}
+  checkRadius: 1
 --- !u!114 &1436786526447741699
 MonoBehaviour:
   m_ObjectHideFlags: 0

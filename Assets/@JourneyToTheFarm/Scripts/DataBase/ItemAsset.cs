@@ -23,5 +23,6 @@ namespace JTTF
 		public int stackCount = 32;
 		public Sprite sprite = null;
 		public GameObject prefab = null;
+		public GameObject collectiblePrefab = null;
 	}
 }

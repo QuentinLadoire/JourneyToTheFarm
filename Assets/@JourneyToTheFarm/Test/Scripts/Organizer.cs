@@ -7,10 +7,9 @@ namespace Test
 	[ExecuteInEditMode]
 	public class Organizer : MonoBehaviour
     {
-		[SerializeField] Vector2 cellSize = Vector2.one;
-		[SerializeField] Vector2 spacing = Vector2.zero;
-		[SerializeField] int columnCount = 6;
-		[SerializeField] float dephtPosition = -10;
+		public Vector2 cellSize = Vector2.one;
+		public Vector2 spacing = Vector2.zero;
+		public int columnCount = 6;
 
 		Vector2 GetOrganizedPosition(int index)
 		{
@@ -20,13 +19,6 @@ namespace Test
 			return new Vector2(x, y);
 		}
 
-		void PlaceCamera()
-		{
-			if (columnCount == 0) return;
-
-			var tmp = (GetOrganizedPosition(columnCount * columnCount - 1) + cellSize * 0.5f) * 0.5f;
-			Camera.main.transform.position = new Vector3(tmp.x, tmp.y, dephtPosition);
-		}
 		void Organize()
 		{
 			if (columnCount == 0) return;
@@ -56,10 +48,8 @@ namespace Test
 
 		private void Update()
 		{
-			PlaceCamera();
 			Organize();
 		}
-
 		private void OnDrawGizmos()
 		{
 			var rect = new Rect();
@@ -88,6 +78,15 @@ namespace Test
 				var center = GetOrganizedPosition(i);
 				Gizmos.DrawCube(center, cellSize);
 			}
+		}
+
+		public Vector2 GetCenterPosition()
+		{
+			return (GetOrganizedPosition(columnCount * columnCount - 1) + cellSize * 0.5f) * 0.5f;
+		}
+		public Vector2 GetSize()
+		{
+			return GetOrganizedPosition(columnCount * columnCount - 1) + cellSize * 0.5f;
 		}
 	}
 }

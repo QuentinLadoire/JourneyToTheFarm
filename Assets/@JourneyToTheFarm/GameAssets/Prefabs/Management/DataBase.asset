@@ -48,7 +48,7 @@ MonoBehaviour:
     stackCount: 32
     sprite: {fileID: 1161201145128540330, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 4945689059156840016, guid: bc99919396765e546b4c3c0c25ed3cd4, type: 3}
-    collectiblePrefab: {fileID: 0}
+    collectiblePrefab: {fileID: 2250426983672534979, guid: 7aab7b8ee91dafe418a5493fbb3df86d, type: 3}
   - name: WheatSeedStep1
     type: 1
     stackable: 1
@@ -82,16 +82,16 @@ MonoBehaviour:
     type: 2
     stackable: 1
     stackCount: 32
-    sprite: {fileID: 21300000, guid: 89dbbd5733cd9554c8a96c9e95a238c3, type: 3}
+    sprite: {fileID: 7576617242518483205, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 0}
-    collectiblePrefab: {fileID: 0}
+    collectiblePrefab: {fileID: 2159632743182267763, guid: c1f6809c26d5e5d45946d32027069da0, type: 3}
   - name: Stone
     type: 2
     stackable: 1
     stackCount: 32
-    sprite: {fileID: 21300000, guid: 1ae720b7effcbee4ebe74e69a17611d9, type: 3}
+    sprite: {fileID: 7374845061861626600, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 0}
-    collectiblePrefab: {fileID: 0}
+    collectiblePrefab: {fileID: 9000154906002084342, guid: 2bf6648fd0f6bf74bb3fc6b3b05238ac, type: 3}
   containerItems:
   - name: Chest
     type: 3

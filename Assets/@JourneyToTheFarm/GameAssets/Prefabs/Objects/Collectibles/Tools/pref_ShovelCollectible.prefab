@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5113671042240961030}
   - component: {fileID: 5113671042240961031}
   - component: {fileID: 5113671042240961049}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pref_ShovelCollectible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 5113671042368466908}
   - component: {fileID: 5113671042368466906}
   - component: {fileID: 5113671042368466909}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

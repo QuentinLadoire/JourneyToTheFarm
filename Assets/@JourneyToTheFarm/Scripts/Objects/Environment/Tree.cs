@@ -25,7 +25,13 @@ namespace JTTF
 			currentLifeTime = lifeTime;
 			rigidbodyModel.isKinematic = false;
 
-			player.InventoryController.AddItem(new Item(logName, ItemType.Resource, logQuantity));
+			var collectiblePrefab = new Item(logName, ItemType.Resource, 1).CollectiblePrefab;
+			if (collectiblePrefab != null)
+				for (int i = 0; i < logQuantity; i++)
+				{
+					var collectible = Instantiate(collectiblePrefab);
+					collectible.transform.position = transform.position + Vector3.up * 0.5f;
+				}
 		}
 
 		void UpdateVisibleModel()

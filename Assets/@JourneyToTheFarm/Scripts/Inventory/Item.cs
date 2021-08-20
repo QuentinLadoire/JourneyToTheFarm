@@ -20,6 +20,7 @@ namespace JTTF
 		public int StackCount => GameManager.DataBase.GetItemAsset(name, type).stackCount;
         public Sprite Sprite => GameManager.DataBase.GetItemAsset(name, type).sprite;
         public GameObject Prefab => GameManager.DataBase.GetItemAsset(name, type).prefab;
+		public GameObject CollectiblePrefab => GameManager.DataBase.GetItemAsset(name, type).collectiblePrefab;
 
 		public Item(string name, ItemType type, int amount)
 		{

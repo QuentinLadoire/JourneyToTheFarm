@@ -48,13 +48,6 @@ namespace JTTF
 		}
 		private void Start()
 		{
-			inventory.AddItem(new Item("Shovel", ItemType.Tool, 1));
-			inventory.AddItem(new Item("Axe", ItemType.Tool, 1));
-			inventory.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
-			inventory.AddItem(new Item("Scythe", ItemType.Tool, 1));
-			inventory.AddItem(new Item("WheatSeed", ItemType.SeedPacket, 4));
-			inventory.AddItem(new Item("Chest", ItemType.Container, 1));
-
 			CanvasManager.GamePanel.InitShortcutInventory(this);
 
 			onSelectedSlotChange.Invoke(currentIndex, inventory.ItemArray[currentIndex]); //Call for Instantiate the item at game start, if item exist

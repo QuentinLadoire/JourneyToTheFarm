@@ -33,15 +33,15 @@ namespace JTTF
 		{
 			if (equipedObject != null)
 				Destroy(equipedObject);
+
+			equipedObject = null;
 		}
 		void InstantiateObject(Item item)
 		{
-			if (item != Item.None)
-			{
+			if (item != Item.None && item.Prefab != null)
 				equipedObject = Instantiate(item.Prefab);
 
-				onEquipedObjectChange.Invoke(equipedObject);
-			}
+			onEquipedObjectChange.Invoke(equipedObject);
 		}
 		void CheckIsEquipable()
 		{

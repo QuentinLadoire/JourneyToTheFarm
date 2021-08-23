@@ -21,7 +21,7 @@ namespace JTTF
                 if (item.name == name)
                     return item;
 
-            return null;
+            return DefaultItemAsset;
 		}
         ItemAsset GetSeedItemAsset(string name)
 		{
@@ -29,7 +29,7 @@ namespace JTTF
                 if (item.name == name)
                     return item;
 
-            return null;
+            return DefaultItemAsset;
 		}
         ItemAsset GetRessourceItemAsset(string name)
 		{
@@ -37,7 +37,7 @@ namespace JTTF
                 if (item.name == name)
                     return item;
 
-            return null;
+            return DefaultItemAsset;
 		}
         ItemAsset GetContainerItemAsset(string name)
 		{
@@ -45,7 +45,7 @@ namespace JTTF
                 if (item.name == name)
                     return item;
 
-            return null;
+            return DefaultItemAsset;
 		}
         ItemAsset GetWorkbenchItemAsset(string name)
 		{
@@ -53,7 +53,7 @@ namespace JTTF
                 if (item.name == name)
                     return item;
 
-            return null;
+            return DefaultItemAsset;
 		}
         public ItemAsset GetItemAsset(string name, ItemType type)
 		{

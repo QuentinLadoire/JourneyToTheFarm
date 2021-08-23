@@ -24,7 +24,7 @@ namespace JTTF
 			inventory.AddItem(new Item("Axe", ItemType.Tool, 1));
 			inventory.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
 			inventory.AddItem(new Item("Scythe", ItemType.Tool, 1));
-			inventory.AddItem(new Item("WheatSeed", ItemType.Seed, 20));
+			inventory.AddItem(new Item("WheatSeed", ItemType.SeedPacket, 20));
 			inventory.AddItem(new Item("Log", ItemType.Resource, 50));
 			inventory.AddItem(new Item("Stone", ItemType.Resource, 50));
 		}

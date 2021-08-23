@@ -8,7 +8,7 @@ namespace JTTF
 	{
 		None = -1,
 		Tool,
-		Seed,
+		SeedPacket,
 		Resource,
 		Container,
 		Workbench

@@ -13,15 +13,10 @@ namespace JTTF
 		{
             if (Random.value < dropRate)
             {
-                var collectiblePrefab = new Item("WheatSeed", ItemType.Seed, 1).CollectiblePrefab;
-                if (collectiblePrefab != null)
+                var amount = Random.Range(1, 6);
+                for (int i = 0; i < amount; i++)
                 {
-                    var amount = Random.Range(1, 6);
-                    for (int i = 0; i < amount; i++)
-                    {
-                        var collectible = Instantiate(collectiblePrefab);
-                        collectible.transform.position = transform.position + Vector3.up * 0.5f;
-                    }
+                    World.DropItem(new Item("WheatPacket", ItemType.SeedPacket, 1), transform.position + Vector3.up * 0.5f);
                 }
             }
 

@@ -52,7 +52,7 @@ namespace JTTF
 			inventory.AddItem(new Item("Axe", ItemType.Tool, 1));
 			inventory.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
 			inventory.AddItem(new Item("Scythe", ItemType.Tool, 1));
-			inventory.AddItem(new Item("WheatSeed", ItemType.Seed, 4));
+			inventory.AddItem(new Item("WheatSeed", ItemType.SeedPacket, 4));
 			inventory.AddItem(new Item("Chest", ItemType.Container, 1));
 
 			CanvasManager.GamePanel.InitShortcutInventory(this);

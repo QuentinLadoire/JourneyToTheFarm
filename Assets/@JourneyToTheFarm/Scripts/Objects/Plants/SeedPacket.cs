@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedBag : CustomBehaviour, IEquipable, IUsable, IOwnable
+	public class SeedPacket : CustomBehaviour, IEquipable, IUsable, IOwnable
 	{
 		public Player OwnerPlayer { get; private set; }
 

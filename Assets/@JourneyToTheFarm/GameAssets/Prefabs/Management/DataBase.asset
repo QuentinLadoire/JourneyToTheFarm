@@ -19,57 +19,36 @@ MonoBehaviour:
     stackCount: 1
     sprite: {fileID: 184950751378207249, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 617178128329146584, guid: 7489ea9a46ed1a04e81012efb9f569a6, type: 3}
-    collectiblePrefab: {fileID: 5113671042240961051, guid: 51c9dcc9b7cad7946a36cdbf9ffbbf47, type: 3}
+    collectiblePrefab: {fileID: 6620940546699967219, guid: 1cce8d83c79383d4c8f37910ba382d12, type: 3}
   - name: Axe
     type: 0
     stackable: 0
     stackCount: 1
     sprite: {fileID: 1202984965197363600, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 2669426836222288937, guid: 32f5742d5bc79184294fe646f5b06f3a, type: 3}
-    collectiblePrefab: {fileID: 3383159466067629439, guid: 36401ecffcac399489f11babfad028f5, type: 3}
+    collectiblePrefab: {fileID: 6076238132858656390, guid: f761c2eb3d97ef44e8dfc715a043edbe, type: 3}
   - name: Pickaxe
     type: 0
     stackable: 0
     stackCount: 1
     sprite: {fileID: 5543941588292853863, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 7881681813644691100, guid: 555f02f56e3056140bf828ca2343a3c3, type: 3}
-    collectiblePrefab: {fileID: 7310182157494870444, guid: 47317564e933f124bb9023f0ef255122, type: 3}
+    collectiblePrefab: {fileID: 6515589933403640815, guid: d77a92a316decaa42953b4208c8ef40f, type: 3}
   - name: Scythe
     type: 0
     stackable: 0
     stackCount: 1
     sprite: {fileID: -1863859237976802683, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 6847284123856463911, guid: e7f4fb8bcb3eac34e9cc488d53afb1f0, type: 3}
-    collectiblePrefab: {fileID: 8646722128192092566, guid: 56f60264d3ad4f642b6fdd62c427e120, type: 3}
-  seedItems:
-  - name: WheatSeed
+    collectiblePrefab: {fileID: 131756214871153971, guid: d3268eea7964f0844b2b71d481b8c510, type: 3}
+  seedPackets:
+  - name: WheatPacket
     type: 1
     stackable: 1
     stackCount: 32
     sprite: {fileID: 1161201145128540330, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 4945689059156840016, guid: bc99919396765e546b4c3c0c25ed3cd4, type: 3}
-    collectiblePrefab: {fileID: 2250426983672534979, guid: 7aab7b8ee91dafe418a5493fbb3df86d, type: 3}
-  - name: WheatSeedStep1
-    type: 1
-    stackable: 1
-    stackCount: 32
-    sprite: {fileID: 0}
-    prefab: {fileID: 1958678361418349235, guid: d07d3bccaaacf184fbcc021606291690, type: 3}
-    collectiblePrefab: {fileID: 0}
-  - name: WheatSeedStep2
-    type: 1
-    stackable: 1
-    stackCount: 32
-    sprite: {fileID: 0}
-    prefab: {fileID: 5932287620901492098, guid: 040ec7a06c4a6f6488039491a3675233, type: 3}
-    collectiblePrefab: {fileID: 0}
-  - name: WheatSeedStep3
-    type: 1
-    stackable: 1
-    stackCount: 32
-    sprite: {fileID: 0}
-    prefab: {fileID: 8525681458234279196, guid: f3c0a5afb3cfeac4eb4af08146516b00, type: 3}
-    collectiblePrefab: {fileID: 0}
+    collectiblePrefab: {fileID: 5973666107590985792, guid: beed7085b2b4e2d4db2829a5da30cee9, type: 3}
   ressourceItems:
   - name: Wheat
     type: 2
@@ -84,14 +63,14 @@ MonoBehaviour:
     stackCount: 32
     sprite: {fileID: 7576617242518483205, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 0}
-    collectiblePrefab: {fileID: 2159632743182267763, guid: c1f6809c26d5e5d45946d32027069da0, type: 3}
+    collectiblePrefab: {fileID: 156677386196180210, guid: ac9beccde55de89468d5d844e27a757b, type: 3}
   - name: Stone
     type: 2
     stackable: 1
     stackCount: 32
     sprite: {fileID: 7374845061861626600, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 0}
-    collectiblePrefab: {fileID: 9000154906002084342, guid: 2bf6648fd0f6bf74bb3fc6b3b05238ac, type: 3}
+    collectiblePrefab: {fileID: 6173685925090403888, guid: 5f5b38758ae578e4b89baa9cd434d01f, type: 3}
   containerItems:
   - name: Chest
     type: 3

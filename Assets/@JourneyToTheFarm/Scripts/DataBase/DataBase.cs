@@ -8,7 +8,7 @@ namespace JTTF
     public class DataBase : ScriptableObject
     {
         public List<ItemAsset> toolItems = new List<ItemAsset>();
-        public List<ItemAsset> seedItems = new List<ItemAsset>();
+        public List<ItemAsset> seedPackets = new List<ItemAsset>();
         public List<ItemAsset> ressourceItems = new List<ItemAsset>();
         public List<ItemAsset> containerItems = new List<ItemAsset>();
         public List<ItemAsset> workbenchItems = new List<ItemAsset>();
@@ -25,7 +25,7 @@ namespace JTTF
 		}
         ItemAsset GetSeedItemAsset(string name)
 		{
-            foreach (var item in seedItems)
+            foreach (var item in seedPackets)
                 if (item.name == name)
                     return item;
 
@@ -60,7 +60,7 @@ namespace JTTF
             return type switch
             {
                 ItemType.Tool => GetToolItemAsset(name),
-                ItemType.Seed => GetSeedItemAsset(name),
+                ItemType.SeedPacket => GetSeedItemAsset(name),
                 ItemType.Resource => GetRessourceItemAsset(name),
                 ItemType.Container => GetContainerItemAsset(name),
                 ItemType.Workbench => GetWorkbenchItemAsset(name),

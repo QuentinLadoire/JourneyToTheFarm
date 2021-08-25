@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Axe : OwnableBehaviour, IEquipable, IUsable
+	public class Axe : EquipableBehaviour, IUsable
 	{
 		[Header("Axe Parameters")]
 		public float duration = 0.0f;
@@ -52,11 +52,6 @@ namespace JTTF
 		{
 			if (interactionText != null)
 				interactionText.SetActive(false);
-		}
-
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
 		}
 
 		public void Use()

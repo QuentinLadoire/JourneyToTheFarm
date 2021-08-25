@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Scythe : OwnableBehaviour, IEquipable, IUsable
+	public class Scythe : EquipableBehaviour, IUsable
 	{
 		[Header("Scythe Parameters")]
 		[SerializeField] float duration = 0.0f;
@@ -68,11 +68,6 @@ namespace JTTF
 		{
 			if (interactionText != null)
 				interactionText.SetActive(false);
-		}
-
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
 		}
 
 		public void Use()

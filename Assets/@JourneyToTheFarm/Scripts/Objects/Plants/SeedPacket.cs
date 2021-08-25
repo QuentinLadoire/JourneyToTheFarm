@@ -4,26 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	[System.Serializable]
-	public struct SeedInfo
-	{
-		public static SeedInfo None = new SeedInfo("NoName", 0.0f, null, null);
-
-		public string name;
-		public float growDuration;
-		public GameObject seedPreviewPrefab;
-		public GameObject[] seedStepPrefabs;
-
-		public SeedInfo(string name, float growDuration, GameObject seedPreviewPrefab, GameObject[] seedStepPrefabs)
-		{
-			this.name = name;
-			this.growDuration = growDuration;
-			this.seedPreviewPrefab = seedPreviewPrefab;
-			this.seedStepPrefabs = seedStepPrefabs;
-		}
-	}
-
-	public class SeedPacket : OwnableBehaviour, IEquipable, IUsable
+	public class SeedPacket : EquipableBehaviour, IUsable
 	{
 		[SerializeField] float duration = 1.0f;
 		[SerializeField] SeedInfo seedInfo = SeedInfo.None;
@@ -80,10 +61,6 @@ namespace JTTF
 				Destroy(seedPreview);
 		}
 
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
 		public void Use()
 		{
 			if (farmPlot != null)

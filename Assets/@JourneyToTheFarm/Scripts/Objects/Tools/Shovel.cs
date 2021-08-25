@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Shovel : OwnableBehaviour, IEquipable, IUsable
+	public class Shovel : EquipableBehaviour, IUsable
 	{
 		[Header("Shovel Parameters")]
 		[SerializeField] float duration = 0.0f;
@@ -87,9 +87,10 @@ namespace JTTF
 				interactionText.SetActive(false);
 		}
 
-		public void Equip(Transform rightHand, Transform leftHand)
+		public override void Equip(Transform rightHand, Transform leftHand)
 		{
-			transform.SetParent(rightHand, false);
+			base.Equip(rightHand, leftHand);
+
 			leftHandTransform = leftHand;
 		}
 

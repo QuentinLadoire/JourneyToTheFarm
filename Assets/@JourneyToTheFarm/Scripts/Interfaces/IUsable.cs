@@ -6,9 +6,9 @@ namespace JTTF
 {
     public interface IUsable
     {
-        public float Duration { get; }
-        public ActionType ActionType { get; }
         public bool IsUsable { get; }
+        public float ActionDuration { get; }
+        public ActionType ActionType { get; }
 
         public void Use();
     }

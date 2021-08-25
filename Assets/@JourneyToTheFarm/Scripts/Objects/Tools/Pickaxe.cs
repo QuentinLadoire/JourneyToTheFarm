@@ -4,18 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Pickaxe : EquipableBehaviour, IUsable
+	public class Pickaxe : UsableBehaviour
 	{
-		[Header("Pickaxe")]
-		public float duration = 0.0f;
-
 		Rock rock = null;
-		bool isUsable = false;
 		PlayerInteractionText interactionText = null;
-
-		public bool IsUsable => isUsable;
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Mine;
 
 		void CheckIsUsable()
 		{
@@ -54,7 +46,7 @@ namespace JTTF
 				interactionText.SetActive(false);
 		}
 
-		public void Use()
+		public override void Use()
 		{
 			if (rock != null)
 				rock.Harvest(OwnerPlayer);

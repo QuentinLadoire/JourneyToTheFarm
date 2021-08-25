@@ -4,23 +4,17 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Shovel : EquipableBehaviour, IUsable
+	public class Shovel : UsableBehaviour
 	{
-		[Header("Shovel Parameters")]
-		[SerializeField] float duration = 0.0f;
+		[Header("Shovel Settings")]
 		[SerializeField] LayerMask raycastLayer = -1;
 		[SerializeField] LayerMask overlapLayer = -1;
 		[SerializeField] GameObject farmPlotPrefab = null;
 		[SerializeField] GameObject farmPlotPreviewPrefab = null;
 
-		bool isUsable = false;
 		Transform leftHandTransform = null;
 		PreviewObject farmPlotPreview = null;
 		PlayerInteractionText interactionText = null;
-
-		public bool IsUsable => isUsable;
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Dig;
 
 		RaycastHit hit;
 
@@ -94,7 +88,7 @@ namespace JTTF
 			leftHandTransform = leftHand;
 		}
 
-		public void Use()
+		public override void Use()
 		{
 			var farmPlot = Instantiate(farmPlotPrefab);
 			farmPlot.transform.position = farmPlotPreview.transform.position;

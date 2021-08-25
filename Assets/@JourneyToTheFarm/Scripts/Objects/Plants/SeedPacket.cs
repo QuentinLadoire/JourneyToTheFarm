@@ -4,20 +4,16 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedPacket : EquipableBehaviour, IUsable
+	public class SeedPacket : UsableBehaviour
 	{
-		[SerializeField] float duration = 1.0f;
+		[Header("SeedPacket Settings")]
 		[SerializeField] SeedInfo seedInfo = SeedInfo.None;
 
-		bool isUsable = false;
 		FarmPlot farmPlot = null;
 		GameObject seedPreview = null;
 		PlayerInteractionText interactionText = null;
 
-		public bool IsUsable => isUsable;
 		public SeedInfo SeedInfo => seedInfo;
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Plant;
 		
 		void CheckIsUsable()
 		{
@@ -61,7 +57,7 @@ namespace JTTF
 				Destroy(seedPreview);
 		}
 
-		public void Use()
+		public override void Use()
 		{
 			if (farmPlot != null)
 			{

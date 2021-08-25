@@ -4,19 +4,13 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Scythe : EquipableBehaviour, IUsable
+	public class Scythe : UsableBehaviour
 	{
-		[Header("Scythe Parameters")]
-		[SerializeField] float duration = 0.0f;
+		[Header("Scythe Settings")]
 		[SerializeField] LayerMask overlapLayer = -1;
 
-		bool isUsable = false;
 		PlayerInteractionText interactionText = null;
 		readonly List<Grass> grassList = new List<Grass>();
-
-		public bool IsUsable => isUsable;
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Mow;
 
 		void CheckMowGrass()
 		{
@@ -70,7 +64,7 @@ namespace JTTF
 				interactionText.SetActive(false);
 		}
 
-		public void Use()
+		public override void Use()
 		{
 			foreach (var grass in grassList)
 				grass.Harvest(OwnerPlayer);

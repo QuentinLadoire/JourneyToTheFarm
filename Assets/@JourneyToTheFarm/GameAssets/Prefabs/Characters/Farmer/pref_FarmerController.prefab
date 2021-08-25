@@ -101,9 +101,9 @@ MonoBehaviour:
   digAnimationDuration: 4.833
   digAnimationMultiplier: 1
   cutAnimationDuration: 2.4
-  cutAnimationMultiplier: 3
+  cutAnimationMultiplier: 2
   mineAnimationDuration: 2.267
-  mineAnimationMultiplier: 3
+  mineAnimationMultiplier: 2
   plantAnimationDuration: 7.567
   plantAnimationMultiplier: 1
   placeAnimationDuration: 4.667

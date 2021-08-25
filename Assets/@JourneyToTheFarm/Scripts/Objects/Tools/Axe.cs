@@ -4,18 +4,10 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Axe : EquipableBehaviour, IUsable
+	public class Axe : UsableBehaviour
 	{
-		[Header("Axe Parameters")]
-		public float duration = 0.0f;
-
 		Tree tree = null;
-		bool isUsable = false;
 		PlayerInteractionText interactionText = null;
-
-		public bool IsUsable => isUsable;
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Cut;
 
 		void CheckIsUsable()
 		{
@@ -54,7 +46,7 @@ namespace JTTF
 				interactionText.SetActive(false);
 		}
 
-		public void Use()
+		public override void Use()
 		{
 			if (tree != null)
 				tree.Harvest(OwnerPlayer);

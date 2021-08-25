@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
-  duration: 1
+  actionDuration: 1
+  actionType: 3
   seedInfo:
     name: Wheat
     growDuration: 5

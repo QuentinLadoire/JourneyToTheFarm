@@ -42,16 +42,16 @@ namespace JTTF
 		void StartToUseObject()
 		{
 			inUse = true;
-			currentDuration = usableObject.Duration;
+			currentDuration = usableObject.ActionDuration;
 			playerProgressBar.SetActive(true);
 
-			onStartToUseObject.Invoke(usableObject.ActionType, usableObject.Duration);
+			onStartToUseObject.Invoke(usableObject.ActionType, usableObject.ActionDuration);
 		}
 		void UpdateUseTime()
 		{
 			if (!inUse) return;
 
-			playerProgressBar.SetPercent(1 - (currentDuration / usableObject.Duration));
+			playerProgressBar.SetPercent(1 - (currentDuration / usableObject.ActionDuration));
 
 			if (currentDuration <= 0.0f)
 				UseObject();
@@ -62,7 +62,7 @@ namespace JTTF
 			StopToUseObject();
 
 			var actionType = usableObject.ActionType;
-			var duration = usableObject.Duration;
+			var duration = usableObject.ActionDuration;
 
 			usableObject.Use();
 			onUseObject.Invoke(actionType, duration);
@@ -75,7 +75,7 @@ namespace JTTF
 				currentDuration = 0.0f;
 				playerProgressBar.SetActive(false);
 
-				onStopToUseObject.Invoke(usableObject.ActionType, usableObject.Duration);
+				onStopToUseObject.Invoke(usableObject.ActionType, usableObject.ActionDuration);
 			}
 		}
 

@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
-  duration: 0
+  actionDuration: 2
+  actionType: 7
   overlapLayer:
     serializedVersion: 2
     m_Bits: 1024

@@ -4,23 +4,17 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Chest : OwnableBehaviour, IEquipable, IUsable
+	public class Chest : UsableBehaviour
 	{
-		[Header("Chest Parameters")]
-		[SerializeField] float duration = 0.0f;
+		[Header("Chest Settings")]
 		[SerializeField] LayerMask raycastLayer = -1;
 		[SerializeField] LayerMask overlapLayer = -1;
 		[SerializeField] GameObject chestPrefab = null;
 		[SerializeField] GameObject chestPreviewPrefab = null;
 
 		RaycastHit hit;
-		bool isUsable = false;
 		PreviewObject chestPreview = null;
 		PlayerInteractionText interactionText = null;
-
-		public bool IsUsable => isUsable;
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Place;
 
 		bool IsConstructible()
 		{
@@ -82,12 +76,7 @@ namespace JTTF
 				interactionText.SetActive(false);
 		}
 
-		public void Equip(Transform rightHand, Transform leftHand)
-		{
-			transform.SetParent(rightHand, false);
-		}
-
-		public void Use()
+		public override void Use()
 		{
 			if (chestPrefab != null)
 			{

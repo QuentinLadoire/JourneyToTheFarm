@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
+  actionDuration: 2
+  actionType: 0
   duration: 2
   raycastLayer:
     serializedVersion: 2

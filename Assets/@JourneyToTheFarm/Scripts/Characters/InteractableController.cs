@@ -20,6 +20,8 @@ namespace JTTF
         IInteractable interactableObject = null;
         PlayerProgressBar playerProgressBar = null;
 
+        public IInteractable InteractableObject => interactableObject;
+
         void OnMoveEnter()
 		{
             StopInteraction();
@@ -77,7 +79,7 @@ namespace JTTF
             foreach (var collider in colliders)
 			{
                 var interactable = collider.GetComponentInParent<IInteractable>();
-                if (interactable != null && interactable.IsInteractable())
+                if (interactable != null)
 				{
                     var sqrtDistance = (collider.transform.position - transform.position).sqrMagnitude;
                     if (nearestInteractable == null || sqrtDistance < nearestSqrtDistance)
@@ -95,7 +97,7 @@ namespace JTTF
 
                 interactableObject = nearestInteractable;
 
-                if (interactableObject != null)
+                if (interactableObject != null && interactableObject.IsInteractable())
                     interactableObject.Select();
             }
         }

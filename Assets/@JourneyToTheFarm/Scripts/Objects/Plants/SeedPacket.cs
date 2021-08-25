@@ -4,69 +4,62 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class SeedPacket : CustomBehaviour, IEquipable, IUsable, IOwnable
+	[System.Serializable]
+	public struct SeedInfo
 	{
-		public Player OwnerPlayer { get; private set; }
+		public static SeedInfo None = new SeedInfo("NoName", 0.0f, null, null);
 
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Plant;
-		public bool IsUsable => isUsable;
+		public string name;
+		public float growDuration;
+		public GameObject seedPreviewPrefab;
+		public GameObject[] seedStepPrefabs;
 
-		[Header("SeedBag parameter")]
-		public LayerMask raycastLayer = -1;
-		public LayerMask plantableLayer = -1;
-		public float duration = 0.0f;
-		public string seedName = "NoName";
-		public string plantName = "NoName";
-		public float growingDuration = 0.0f;
-		public GameObject seedPreviewPrefab = null;
+		public SeedInfo(string name, float growDuration, GameObject seedPreviewPrefab, GameObject[] seedStepPrefabs)
+		{
+			this.name = name;
+			this.growDuration = growDuration;
+			this.seedPreviewPrefab = seedPreviewPrefab;
+			this.seedStepPrefabs = seedStepPrefabs;
+		}
+	}
+
+	public class SeedPacket : CustomBehaviour, IEquipable, IOwnable, IUsable
+	{
+		[SerializeField] float duration = 1.0f;
+		[SerializeField] SeedInfo seedInfo = SeedInfo.None;
 
 		bool isUsable = false;
 		FarmPlot farmPlot = null;
-		PreviewObject seedPreview = null;
+		GameObject seedPreview = null;
 		PlayerInteractionText interactionText = null;
 
-		bool IsPlantable()
-		{
-			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + new Vector3(0.0f, 2.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, plantableLayer))
-			{
-				farmPlot = hit.collider.GetComponent<FarmPlot>();
-				if (farmPlot != null)
-					return !farmPlot.HasSeed;
-			}
+		public bool IsUsable => isUsable;
+		public SeedInfo SeedInfo => seedInfo;
+		public float Duration => duration;
+		public ActionType ActionType => ActionType.Plant;
+		public Player OwnerPlayer { get; private set; }
 
-			return false;
-		}
 		void CheckIsUsable()
 		{
-			if (IsPlantable())
+			var tmp = OwnerPlayer.InteractableController.InteractableObject as FarmPlot;
+			if (tmp != farmPlot)
 			{
-				interactionText.SetText("Press E to Plant");
-				interactionText.SetActive(true);
-
-				isUsable = true;
-			}
-			else
-			{
+				farmPlot = tmp;
+				isUsable = false;
+				seedPreview.SetActive(false);
 				interactionText.SetActive(false);
 
-				isUsable = false;
-			}
-		}
-		void UpdatePreview()
-		{
-			if (OwnerPlayer == null) return;
+				if (farmPlot != null && !farmPlot.HasSeed)
+				{
+					seedPreview.transform.position = farmPlot.transform.position;
+					seedPreview.SetActive(true);
 
-			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
-			{
-				seedPreview.transform.position = hit.point;
-				seedPreview.transform.up = hit.normal;
-			}
+					interactionText.SetText("Press E to Plant");
+					interactionText.SetActive(true);
 
-			if (isUsable)
-				seedPreview.SetBlueColor();
-			else
-				seedPreview.SetRedColor();
+					isUsable = true;
+				}
+			}
 		}
 
 		protected override void Awake()
@@ -75,37 +68,39 @@ namespace JTTF
 
 			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
 
-			seedPreview = Instantiate(seedPreviewPrefab).GetComponent<PreviewObject>();
+			seedPreview = Instantiate(seedInfo.seedPreviewPrefab);
+			seedPreview.SetActive(false);
 		}
 		private void Update()
 		{
 			CheckIsUsable();
-
-			UpdatePreview();
 		}
 		private void OnDestroy()
 		{
 			if (seedPreview != null)
-				Destroy(seedPreview.gameObject);
-
-			if (interactionText != null)
-				interactionText.SetActive(false);
+				Destroy(seedPreview);
 		}
 
 		public void SetOwner(Player owner)
 		{
 			OwnerPlayer = owner;
 		}
-
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);
 		}
-
 		public void Use()
 		{
-			farmPlot.SetSeed(seedName, growingDuration, plantName);
-			OwnerPlayer.ShortcutController.ConsumeSelectedItem();
+			if (farmPlot != null)
+			{
+				farmPlot.SetSeed(seedInfo);
+
+				isUsable = false;
+				seedPreview.SetActive(false);
+				interactionText.SetActive(false);
+
+				OwnerPlayer.ShortcutController.ConsumeSelectedItem();
+			}
 		}
 	}
 }

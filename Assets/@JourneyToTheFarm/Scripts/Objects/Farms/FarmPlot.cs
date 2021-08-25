@@ -6,75 +6,63 @@ namespace JTTF
 {
     public class FarmPlot : CustomBehaviour, IInteractable
     {
-        public float Duration => duration;
-        public ActionType ActionType => ActionType.Pick;
-
-        public bool HasSeed { get; private set; } = false;
-        public bool IsMature { get; private set; } = false;
-
         [Header("FarmPlot Parameters")]
         [SerializeField] float duration = 0.0f;
         [SerializeField] GameObject activableImage = null;
         [SerializeField] FarmPlotProgressBar progressBar = null;
 
+        int currentIndex = -1;
         GameObject seedObject = null;
+        float currentGrowDuration = 0.0f;
+        SeedInfo seedInfo = SeedInfo.None;
 
-        string seedName = "NoSeed";
-        string plantName = "NoName";
-        float growingDurationMax = 10.0f;
-        float currentGrowingDuration = 0.0f;
+        public bool HasSeed { get; private set; } = false;
+        public bool IsMature { get; private set; } = false;
 
-        public float GetPercentGrowing()
+        public float Duration => duration;
+        public ActionType ActionType => ActionType.Pick;
+
+		private void Update()
 		{
-            return 1 - currentGrowingDuration / growingDurationMax;
+			if (HasSeed && !IsMature)
+			{
+                if (currentGrowDuration <= 0.0f)
+                {
+                    IsMature = true;
+                    progressBar.SetActive(false);
+                    activableImage.SetActive(true);
+                }
+                currentGrowDuration -= Time.deltaTime;
+
+                var currentPercent = 1 - (currentGrowDuration / seedInfo.growDuration);
+                var index = (int)((seedInfo.seedStepPrefabs.Length - 1) * currentPercent);
+
+                progressBar.SetPercent(currentPercent);
+                if (index != currentIndex)
+                {
+                    if (seedObject != null)
+                        Destroy(seedObject);
+
+                    seedObject = Instantiate(seedInfo.seedStepPrefabs[index]);
+                    seedObject.transform.position = Vector3.zero;
+                    seedObject.transform.SetParent(transform, false);
+
+                    currentIndex = index;
+                }
+			}
 		}
-        public float GetTruncatePercentGrowing()
-		{
-            return (int)((1 - currentGrowingDuration / growingDurationMax) * 10) / 10.0f;
-        }
-        public void SetSeed(string seedName, float growingDuration, string plantName)
-		{
-            HasSeed = true;
-            this.seedName = seedName;
-            this.plantName = plantName;
-            growingDurationMax = growingDuration;
-            currentGrowingDuration = growingDuration;
 
-			seedObject = Instantiate(GameManager.DataBase.GetItemAsset(this.seedName + "Step1", ItemType.SeedPacket).prefab);
-            seedObject.transform.SetParent(transform, false);
+		public void SetSeed(SeedInfo seedInfo)
+		{
+            this.seedInfo = seedInfo;
+
+            HasSeed = true;
+            currentIndex = -1;
+            currentGrowDuration = seedInfo.growDuration;
 
             progressBar.SetActive(true);
-        }
-
-        void SetSeedObject(GameObject prefab)
-		{
-            if (prefab == null) return;
-
-            if (seedObject != null)
-                Destroy(seedObject);
-
-            seedObject = Instantiate(prefab);
-            seedObject.transform.SetParent(transform, false);
-		}
-        void UpdateGrowingDuration()
-		{
-            if (IsMature) return;
-
-            if (currentGrowingDuration <= 0.0f)
-            {
-                IsMature = true;
-                progressBar.SetActive(false);
-                activableImage.SetActive(true);
-            }
-            currentGrowingDuration -= Time.deltaTime;
-
-            progressBar.SetPercent(GetPercentGrowing());
-
-            float percentValue = GetTruncatePercentGrowing();
-            if (percentValue == 0.5f)
-                SetSeedObject(GameManager.DataBase.GetItemAsset(seedName + "Step2", ItemType.SeedPacket).prefab);
-            else if (percentValue == 1.0f)
-                SetSeedObject(GameManager.DataBase.GetItemAsset(seedName + "Step3", ItemType.SeedPacket).prefab);
+            progressBar.SetPercent(1.0f);
+            activableImage.SetActive(false);
         }
 
 		public void Select()
@@ -96,24 +84,23 @@ namespace JTTF
         }
         public void Interact(Player player)
         {
-            player.InventoryController.AddItem(new Item(plantName, ItemType.Resource, 1));
+            if (World.DropItem(new Item(seedInfo.name, ItemType.Resource, 1), transform.position) == null)
+			{
+                if (!player.ShortcutController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1)))
+				{
+                    player.InventoryController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1));
+				}
+			}
 
-            IsMature = false;
             activableImage.SetActive(false);
 
-            seedName = "NoSeed";
-            plantName = "NoName";
+            currentIndex = -1;
+            if (seedObject != null) Destroy(seedObject);
+            currentGrowDuration = 0.0f;
+            seedInfo = SeedInfo.None;
+
+            IsMature = false;
             HasSeed = false;
-
-            if (seedObject != null)
-                Destroy(seedObject);
         }
-
-		private void Update()
-		{
-            if (!HasSeed) return;
-
-            UpdateGrowingDuration();
-		}
     }
 }

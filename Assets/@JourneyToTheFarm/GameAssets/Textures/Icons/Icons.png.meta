@@ -26,6 +26,9 @@ TextureImporter:
   - first:
       213: 7374845061861626600
     second: StoneIcon
+  - first:
+      213: -6931339683150358059
+    second: WheatIcon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -270,7 +273,7 @@ TextureImporter:
         width: 256
         height: 256
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -278,6 +281,27 @@ TextureImporter:
       bones: []
       spriteID: 8e25ec99286b85660800000000000000
       internalID: 7374845061861626600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WheatIcon
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d91140384feecf90800000000000000
+      internalID: -6931339683150358059
       vertices: []
       indices: 
       edges: []

@@ -12,6 +12,7 @@ namespace JTTF
 
         GameObject equipedObject = null;
 
+		public GameObject EquipedObject => equipedObject;
         public Player OwnerPlayer { get; private set; } = null;
 
         public Action<GameObject> onEquipedObjectChange = (GameObject) => { /*Debug.Log("OnEquipedObjectChange");*/ };

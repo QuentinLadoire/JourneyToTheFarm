@@ -51,18 +51,21 @@ namespace JTTF
 		{
 			if (!inUse) return;
 
+			playerProgressBar.SetPercent(1 - (currentDuration / usableObject.Duration));
+
 			if (currentDuration <= 0.0f)
 				UseObject();
 			currentDuration -= Time.deltaTime;
-
-			playerProgressBar.SetPercent(1 - (currentDuration / usableObject.Duration));
 		}
 		void UseObject()
 		{
 			StopToUseObject();
 
+			var actionType = usableObject.ActionType;
+			var duration = usableObject.Duration;
+
 			usableObject.Use();
-			onUseObject.Invoke(usableObject.ActionType, usableObject.Duration);
+			onUseObject.Invoke(actionType, duration);
 		}
 		void StopToUseObject()
 		{

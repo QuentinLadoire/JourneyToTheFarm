@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4945689059156840017}
   - component: {fileID: 4945689059156840022}
   m_Layer: 0
-  m_Name: pref_WheatBag
+  m_Name: pref_WheatPacket
   m_TagString: SeedBag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,14 +126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
-  raycastLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  plantableLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  duration: 2
-  seedName: WheatSeed
-  plantName: Wheat
-  growingDuration: 10
-  seedPreviewPrefab: {fileID: 1958678361418349235, guid: 33722e848afe4d74faabe7cf24239f08, type: 3}
+  duration: 1
+  seedInfo:
+    name: Wheat
+    growDuration: 5
+    seedPreviewPrefab: {fileID: 1958678361418349235, guid: 33722e848afe4d74faabe7cf24239f08, type: 3}
+    seedStepPrefabs:
+    - {fileID: 9213947403575454389, guid: 83fcb0379fa802848bbdf9abd815872a, type: 3}
+    - {fileID: 6935387169717251825, guid: d07d3bccaaacf184fbcc021606291690, type: 3}
+    - {fileID: 5531454515972779376, guid: 040ec7a06c4a6f6488039491a3675233, type: 3}
+    - {fileID: 8920104340475481578, guid: f3c0a5afb3cfeac4eb4af08146516b00, type: 3}
+    - {fileID: 265630820187437164, guid: 5b717f36d57469342bbbf3ce35b8a307, type: 3}

@@ -35,6 +35,7 @@ namespace JTTF
             ShortcutController.AddItem(new Item("Scythe", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("WheatPacket", ItemType.SeedPacket, 4));
             ShortcutController.AddItem(new Item("Chest", ItemType.Container, 1));
+            ShortcutController.AddItem(new Item("Wheat", ItemType.Resource, 50));
         }
 	}
 }

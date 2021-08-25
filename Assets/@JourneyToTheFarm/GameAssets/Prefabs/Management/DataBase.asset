@@ -54,7 +54,7 @@ MonoBehaviour:
     type: 2
     stackable: 1
     stackCount: 32
-    sprite: {fileID: 21300000, guid: 05458bf22f8428e459d44576841b2c2c, type: 3}
+    sprite: {fileID: -6931339683150358059, guid: 7ea6ac00a8f4f664fb753bb7420b530d, type: 3}
     prefab: {fileID: 0}
     collectiblePrefab: {fileID: 0}
   - name: Log

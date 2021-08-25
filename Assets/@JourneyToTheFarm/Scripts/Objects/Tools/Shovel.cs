@@ -4,25 +4,23 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Shovel : CustomBehaviour, IEquipable, IUsable, IOwnable
+	public class Shovel : OwnableBehaviour, IEquipable, IUsable
 	{
-		public Player OwnerPlayer { get; private set; }
-
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Dig;
-		public bool IsUsable => isUsable;
-
 		[Header("Shovel Parameters")]
-		public float duration = 0.0f;
-		public LayerMask raycastLayer = -1;
-		public LayerMask overlapLayer = -1;
-		public GameObject farmPlotPrefab = null;
-		public GameObject farmPlotPreviewPrefab = null;
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] LayerMask raycastLayer = -1;
+		[SerializeField] LayerMask overlapLayer = -1;
+		[SerializeField] GameObject farmPlotPrefab = null;
+		[SerializeField] GameObject farmPlotPreviewPrefab = null;
 
 		bool isUsable = false;
 		Transform leftHandTransform = null;
 		PreviewObject farmPlotPreview = null;
 		PlayerInteractionText interactionText = null;
+
+		public bool IsUsable => isUsable;
+		public float Duration => duration;
+		public ActionType ActionType => ActionType.Dig;
 
 		RaycastHit hit;
 
@@ -87,11 +85,6 @@ namespace JTTF
 
 			if (interactionText != null)
 				interactionText.SetActive(false);
-		}
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
 		}
 
 		public void Equip(Transform rightHand, Transform leftHand)

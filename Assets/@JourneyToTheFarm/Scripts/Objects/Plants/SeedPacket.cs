@@ -23,7 +23,7 @@ namespace JTTF
 		}
 	}
 
-	public class SeedPacket : CustomBehaviour, IEquipable, IOwnable, IUsable
+	public class SeedPacket : OwnableBehaviour, IEquipable, IUsable
 	{
 		[SerializeField] float duration = 1.0f;
 		[SerializeField] SeedInfo seedInfo = SeedInfo.None;
@@ -37,8 +37,7 @@ namespace JTTF
 		public SeedInfo SeedInfo => seedInfo;
 		public float Duration => duration;
 		public ActionType ActionType => ActionType.Plant;
-		public Player OwnerPlayer { get; private set; }
-
+		
 		void CheckIsUsable()
 		{
 			var tmp = OwnerPlayer.InteractableController.InteractableObject as FarmPlot;
@@ -81,10 +80,6 @@ namespace JTTF
 				Destroy(seedPreview);
 		}
 
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
-		}
 		public void Equip(Transform rightHand, Transform leftHand)
 		{
 			transform.SetParent(rightHand, false);

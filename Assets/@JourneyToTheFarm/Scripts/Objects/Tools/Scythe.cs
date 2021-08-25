@@ -4,21 +4,19 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Scythe : CustomBehaviour, IEquipable, IUsable, IOwnable
+	public class Scythe : OwnableBehaviour, IEquipable, IUsable
 	{
-		public Player OwnerPlayer { get; private set; }
-
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Mow;
-		public bool IsUsable => isUsable;
-
 		[Header("Scythe Parameters")]
-		public float duration = 0.0f;
-		public LayerMask overlapLayer = -1;
+		[SerializeField] float duration = 0.0f;
+		[SerializeField] LayerMask overlapLayer = -1;
 
 		bool isUsable = false;
 		PlayerInteractionText interactionText = null;
 		readonly List<Grass> grassList = new List<Grass>();
+
+		public bool IsUsable => isUsable;
+		public float Duration => duration;
+		public ActionType ActionType => ActionType.Mow;
 
 		void CheckMowGrass()
 		{
@@ -70,11 +68,6 @@ namespace JTTF
 		{
 			if (interactionText != null)
 				interactionText.SetActive(false);
-		}
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
 		}
 
 		public void Equip(Transform rightHand, Transform leftHand)

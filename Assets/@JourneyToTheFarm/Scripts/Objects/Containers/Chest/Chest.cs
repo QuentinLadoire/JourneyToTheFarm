@@ -4,14 +4,8 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Chest : CustomBehaviour, IEquipable, IUsable, IOwnable
+	public class Chest : OwnableBehaviour, IEquipable, IUsable
 	{
-		public Player OwnerPlayer { get; private set; }
-
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Place;
-		public bool IsUsable => isUsable;
-
 		[Header("Chest Parameters")]
 		[SerializeField] float duration = 0.0f;
 		[SerializeField] LayerMask raycastLayer = -1;
@@ -23,6 +17,10 @@ namespace JTTF
 		bool isUsable = false;
 		PreviewObject chestPreview = null;
 		PlayerInteractionText interactionText = null;
+
+		public bool IsUsable => isUsable;
+		public float Duration => duration;
+		public ActionType ActionType => ActionType.Place;
 
 		bool IsConstructible()
 		{
@@ -82,11 +80,6 @@ namespace JTTF
 
 			if (interactionText != null)
 				interactionText.SetActive(false);
-		}
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
 		}
 
 		public void Equip(Transform rightHand, Transform leftHand)

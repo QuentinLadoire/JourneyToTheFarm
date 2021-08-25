@@ -4,20 +4,18 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class Pickaxe : CustomBehaviour, IEquipable, IUsable, IOwnable
+	public class Pickaxe : OwnableBehaviour, IEquipable, IUsable
 	{
-		public Player OwnerPlayer { get; private set; }
-
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Mine;
-		public bool IsUsable => isUsable;
-
 		[Header("Pickaxe")]
 		public float duration = 0.0f;
 
 		Rock rock = null;
 		bool isUsable = false;
 		PlayerInteractionText interactionText = null;
+
+		public bool IsUsable => isUsable;
+		public float Duration => duration;
+		public ActionType ActionType => ActionType.Mine;
 
 		void CheckIsUsable()
 		{
@@ -54,11 +52,6 @@ namespace JTTF
 		{
 			if (interactionText != null)
 				interactionText.SetActive(false);
-		}
-
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
 		}
 
 		public void Equip(Transform rightHand, Transform leftHand)

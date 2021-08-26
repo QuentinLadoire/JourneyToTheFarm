@@ -11,7 +11,6 @@ namespace JTTF
 
 		FarmPlot farmPlot = null;
 		GameObject seedPreview = null;
-		PlayerInteractionText interactionText = null;
 
 		public SeedInfo SeedInfo => seedInfo;
 		
@@ -28,15 +27,15 @@ namespace JTTF
 		{
 			if (IsUsable)
 			{
-				interactionText.SetText("Press E to Harvest");
-				interactionText.SetActive(true);
+				InteractionText.SetText("Press E to Harvest");
+				InteractionText.SetActive(true);
 
 				seedPreview.transform.position = farmPlot.transform.position;
 				seedPreview.SetActive(true);
 			}
 			else
 			{
-				interactionText.SetActive(false);
+				InteractionText.SetActive(false);
 
 				seedPreview.SetActive(false);
 			}
@@ -45,8 +44,6 @@ namespace JTTF
 		protected override void Awake()
 		{
 			base.Awake();
-
-			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
 
 			seedPreview = Instantiate(seedInfo.seedPreviewPrefab);
 			seedPreview.SetActive(false);
@@ -57,7 +54,7 @@ namespace JTTF
 
 			UpdateFeedback();
 		}
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
 			if (seedPreview != null)
 				Destroy(seedPreview);

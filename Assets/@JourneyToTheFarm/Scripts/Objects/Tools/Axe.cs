@@ -7,37 +7,37 @@ namespace JTTF
 	public class Axe : UsableBehaviour
 	{
 		Tree tree = null;
-		PlayerInteractionText interactionText = null;
+
+		private void UpdateFeedback()
+		{
+			if (IsUsable)
+			{
+				InteractionText.SetText("Press E to Cut");
+				InteractionText.SetActive(true);
+			}
+			else
+			{
+				InteractionText.SetActive(false);
+			}
+		}
 
 		protected override bool CheckIsUsable()
 		{
-			interactionText.SetActive(false);
-
 			if (Physics.Raycast(OwnerPlayer.transform.position + Vector3.up, OwnerPlayer.transform.forward, out RaycastHit hit, 1.0f))
 			{
 				tree = hit.collider.GetComponentInParent<Tree>();
 				if (tree != null && tree.IsHarvestable())
-				{
-					interactionText.SetText("Press E to Cut");
-					interactionText.SetActive(true);
-
 					return true;
-				}
 			}
 
 			return false;
 		}
 
-		protected override void Awake()
+		protected override void Update()
 		{
-			base.Awake();
+			base.Update();
 
-			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
-		}
-		private void OnDestroy()
-		{
-			if (interactionText != null)
-				interactionText.SetActive(false);
+			UpdateFeedback();
 		}
 
 		public override void Use()

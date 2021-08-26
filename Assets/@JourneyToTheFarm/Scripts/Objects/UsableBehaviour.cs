@@ -11,14 +11,26 @@ namespace JTTF
 		[SerializeField] ActionType actionType = ActionType.None;
 
 		bool isUsable = false;
+		PlayerInteractionText interactionText = null;
 
 		public bool IsUsable => isUsable;
 		public float ActionDuration => actionDuration;
 		public ActionType ActionType => actionType;
+		public PlayerInteractionText InteractionText => interactionText;
 
+		protected override void Awake()
+		{
+			base.Awake();
+
+			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
+		}
 		protected virtual void Update()
 		{
 			isUsable = CheckIsUsable();
+		}
+		protected virtual void OnDestroy()
+		{
+			interactionText.SetActive(false);
 		}
 
 		protected virtual bool CheckIsUsable()

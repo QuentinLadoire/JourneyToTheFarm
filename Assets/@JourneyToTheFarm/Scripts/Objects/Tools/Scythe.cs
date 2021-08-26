@@ -9,10 +9,9 @@ namespace JTTF
 		[Header("Scythe Settings")]
 		[SerializeField] LayerMask overlapLayer = -1;
 
-		PlayerInteractionText interactionText = null;
 		readonly List<Grass> grassList = new List<Grass>();
 
-		void CheckMowGrass()
+		private void CheckOverlapGrass()
 		{
 			grassList.Clear();
 
@@ -29,33 +28,31 @@ namespace JTTF
 				}
 			}
 		}
+		private void UpdateFeedback()
+		{
+			if (IsUsable)
+			{
+				InteractionText.SetText("Press E to Mow");
+				InteractionText.SetActive(true);
+			}
+			else
+			{
+				InteractionText.SetActive(false);
+			}
+		}
+
 		protected override bool CheckIsUsable()
 		{
-			CheckMowGrass();
+			CheckOverlapGrass();
 
-			interactionText.SetActive(false);
-
-			if (grassList.Count > 0)
-			{
-				interactionText.SetText("Press E to Mow");
-				interactionText.SetActive(true);
-
-				return true;
-			}
-
-			return false;
+			return (grassList.Count > 0);
 		}
 
-		protected override void Awake()
+		protected override void Update()
 		{
-			base.Awake();
+			base.Update();
 
-			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
-		}
-		private void OnDestroy()
-		{
-			if (interactionText != null)
-				interactionText.SetActive(false);
+			UpdateFeedback();
 		}
 
 		public override void Use()

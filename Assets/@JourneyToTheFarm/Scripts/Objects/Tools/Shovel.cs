@@ -14,69 +14,63 @@ namespace JTTF
 
 		Transform leftHandTransform = null;
 		PreviewObject farmPlotPreview = null;
-		PlayerInteractionText interactionText = null;
-
-		RaycastHit hit;
-
-		bool IsConstructible()
+		
+		private bool IsConstructible()
 		{
-			var center = farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
-			var halfSize = new Vector3(0.4f, 0.5f, 0.4f);
-			return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
-				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, overlapLayer));
-		}
-		protected override bool CheckIsUsable()
-		{
-			interactionText.SetActive(false);
-
-			if (IsConstructible())
+			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + Vector3.up, Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
 			{
-				interactionText.SetText("Press E to Dig");
-				interactionText.SetActive(true);
+				farmPlotPreview.transform.position = hit.point;
+				farmPlotPreview.transform.up = hit.normal;
 
-				return true;
+				var center = farmPlotPreview.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
+				var halfSize = new Vector3(0.4f, 0.5f, 0.4f);
+				return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
+					!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, overlapLayer));
 			}
 
 			return false;
 		}
-		void UpdatePreview()
+		private void UpdateFeedback()
 		{
-			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + new Vector3(0.0f, 1.0f, 0.0f), Vector3.down, out hit, 5.0f, raycastLayer))
+			if (IsUsable)
 			{
-				farmPlotPreview.transform.position = hit.point;
-				farmPlotPreview.transform.up = hit.normal;
-			}
-
-			if (IsConstructible())
 				farmPlotPreview.SetBlueColor();
+
+				InteractionText.SetText("Press E to Dig");
+				InteractionText.SetActive(true);
+			}
 			else
+			{
 				farmPlotPreview.SetRedColor();
+
+				InteractionText.SetActive(false);
+			}
+		}
+
+		protected override bool CheckIsUsable()
+		{
+			return IsConstructible();
 		}
 
 		protected override void Awake()
 		{
 			base.Awake();
 
-			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
-
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 		}
 		protected override void Update()
 		{
-			UpdatePreview();
-
 			base.Update();
+
+			UpdateFeedback();
 
 			if (leftHandTransform != null)
 				transform.up = leftHandTransform.position - transform.position;
 		}
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
 			if (farmPlotPreview != null)
 				Destroy(farmPlotPreview.gameObject);
-
-			if (interactionText != null)
-				interactionText.SetActive(false);
 		}
 
 		public override void Equip(Transform rightHand, Transform leftHand)
@@ -85,7 +79,6 @@ namespace JTTF
 
 			leftHandTransform = leftHand;
 		}
-
 		public override void Use()
 		{
 			var farmPlot = Instantiate(farmPlotPrefab);

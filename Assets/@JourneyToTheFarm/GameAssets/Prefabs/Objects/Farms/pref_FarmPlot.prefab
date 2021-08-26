@@ -141,8 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
-  duration: 2
-  activableImage: {fileID: 2649440668117682864}
+  actionDuration: 1
+  actionType: 5
+  interactableImage: {fileID: 2649440668117682864}
   progressBar: {fileID: 543869184067344205}
 --- !u!1001 &8723695744861595650
 PrefabInstance:
@@ -250,6 +251,10 @@ PrefabInstance:
     - target: {fileID: 4591044461404147173, guid: 7b94bd252c5683545ad1410166348999, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6761168919038206642, guid: 7b94bd252c5683545ad1410166348999, type: 3}
+      propertyPath: m_Name
+      value: InteractableImage
       objectReference: {fileID: 0}
     - target: {fileID: 6761168919038206642, guid: 7b94bd252c5683545ad1410166348999, type: 3}
       propertyPath: m_Layer

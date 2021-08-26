@@ -29,16 +29,16 @@ namespace JTTF
 
         bool CanInteractObject()
 		{
-            return interactableObject != null && !interactableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && interactableObject.IsInteractable();
+            return interactableObject != null && !interactableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && interactableObject.IsInteractable;
         }
         void StartInteraction()
 		{
             inInteraction = true;
-            currentDuration = interactableObject.Duration;
+            currentDuration = interactableObject.ActionDuration;
             playerProgressBar.SetActive(true);
             interactableObject.StartToInteract();
 
-            onStartToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
+            onStartToInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
         }
         void UpdateInteractionTime()
 		{
@@ -48,14 +48,14 @@ namespace JTTF
                 Interact();
             currentDuration -= Time.deltaTime;
 
-            playerProgressBar.SetPercent(1 - (currentDuration / interactableObject.Duration));
+            playerProgressBar.SetPercent(1 - (currentDuration / interactableObject.ActionDuration));
         }
         void Interact()
 		{
             StopInteraction();
 
             interactableObject.Interact(OwnerPlayer);
-            onInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
+            onInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
         }
         void StopInteraction()
 		{
@@ -65,7 +65,7 @@ namespace JTTF
             currentDuration = 0.0f;
             playerProgressBar.SetActive(false);
 
-            onStopToInteract.Invoke(interactableObject.ActionType, interactableObject.Duration);
+            onStopToInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
 		}
 
         void CheckHasNearestInteractableObject()
@@ -97,7 +97,7 @@ namespace JTTF
 
                 interactableObject = nearestInteractable;
 
-                if (interactableObject != null && interactableObject.IsInteractable())
+                if (interactableObject != null && interactableObject.IsInteractable)
                     interactableObject.Select();
             }
         }

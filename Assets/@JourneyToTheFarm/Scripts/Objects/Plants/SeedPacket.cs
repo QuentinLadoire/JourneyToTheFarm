@@ -27,7 +27,7 @@ namespace JTTF
 		{
 			if (IsUsable)
 			{
-				InteractionText.SetText("Press E to Harvest");
+				InteractionText.SetText("Press E to Plant");
 				InteractionText.SetActive(true);
 
 				seedPreview.transform.position = farmPlot.transform.position;

@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 4535833760925595130}
   - component: {fileID: 7772301519014029599}
   m_Layer: 0
-  m_Name: pref_Chest
+  m_Name: pref_ChestContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,7 +260,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
-  duration: 1
+  actionDuration: 1
+  actionType: 6
   interactableImage: {fileID: 8660644854592310416}
 --- !u!1 &6692154169868255322
 GameObject:

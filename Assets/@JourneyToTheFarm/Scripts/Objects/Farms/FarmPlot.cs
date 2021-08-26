@@ -4,103 +4,122 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class FarmPlot : CustomBehaviour, IInteractable
+    public class FarmPlot : InteractableBehaviour
     {
-        [Header("FarmPlot Parameters")]
-        [SerializeField] float duration = 0.0f;
-        [SerializeField] GameObject activableImage = null;
+        [Header("FarmPlot Settings")]
         [SerializeField] FarmPlotProgressBar progressBar = null;
 
-        int currentIndex = -1;
-        GameObject seedObject = null;
-        float currentGrowDuration = 0.0f;
-        SeedInfo seedInfo = SeedInfo.None;
+        private int currentIndex = -1;
+        private GameObject seedObject = null;
+        private float currentGrowDuration = 0.0f;
+        private SeedInfo seedInfo = SeedInfo.None;
 
-        public bool HasSeed { get; private set; } = false;
-        public bool IsMature { get; private set; } = false;
+        public bool HasSeed => seedInfo != SeedInfo.None;
+        public bool IsMature => HasSeed && currentGrowDuration <= 0.0f;
 
-        public float Duration => duration;
-        public ActionType ActionType => ActionType.Pick;
-
-		private void Update()
+        private void DropPlant(Player player)
 		{
-			if (HasSeed && !IsMature)
+            if (World.DropItem(new Item(seedInfo.name, ItemType.Resource, 1), transform.position) == null)
+            {
+                if (!player.ShortcutController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1)))
+                {
+                    player.InventoryController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1));
+                }
+            }
+        }
+        private void ClearSeed()
+		{
+            currentIndex = -1;
+            currentGrowDuration = 0.0f;
+            seedInfo = SeedInfo.None;
+
+            Destroy(seedObject);
+		}
+        private void UpdateGrowing()
+		{
+            if (!IsMature)
+            {
+                if (!(currentGrowDuration <= 0.0f))
+                    currentGrowDuration -= Time.deltaTime;
+            }
+		}
+        private void UpdateSeedObject(float percent)
+		{
+            var index = (int)((seedInfo.seedStepPrefabs.Length - 1) * percent);
+            if (index != currentIndex)
+            {
+                if (seedObject != null)
+                    Destroy(seedObject);
+
+                seedObject = Instantiate(seedInfo.seedStepPrefabs[index]);
+                seedObject.transform.position = Vector3.zero;
+                seedObject.transform.SetParent(transform, false);
+
+                currentIndex = index;
+            }
+        }
+        private void UpdateFeedback()
+		{
+            if (IsInteractable)
 			{
-                if (currentGrowDuration <= 0.0f)
-                {
-                    IsMature = true;
-                    progressBar.SetActive(false);
-                    activableImage.SetActive(true);
-                }
-                currentGrowDuration -= Time.deltaTime;
+                progressBar.SetActive(false);
 
-                var currentPercent = 1 - (currentGrowDuration / seedInfo.growDuration);
-                var index = (int)((seedInfo.seedStepPrefabs.Length - 1) * currentPercent);
-
-                progressBar.SetPercent(currentPercent);
-                if (index != currentIndex)
-                {
-                    if (seedObject != null)
-                        Destroy(seedObject);
-
-                    seedObject = Instantiate(seedInfo.seedStepPrefabs[index]);
-                    seedObject.transform.position = Vector3.zero;
-                    seedObject.transform.SetParent(transform, false);
-
-                    currentIndex = index;
-                }
+                InteractableImage.SetActive(true);
 			}
+            else
+			{
+                if (HasSeed)
+				{
+                    var currentPercent = 1 - (currentGrowDuration / seedInfo.growDuration);
+
+                    progressBar.SetActive(true);
+                    progressBar.SetPercent(currentPercent);
+
+                    UpdateSeedObject(currentPercent);
+                }
+
+                InteractableImage.SetActive(false);
+			}
+		}
+
+		protected override bool CheckIsInteractable()
+		{
+            return IsMature;
+		}
+
+		protected override void Update()
+		{
+            base.Update();
+
+            UpdateGrowing();
+            UpdateFeedback();
 		}
 
 		public void SetSeed(SeedInfo seedInfo)
 		{
             this.seedInfo = seedInfo;
-
-            HasSeed = true;
-            currentIndex = -1;
             currentGrowDuration = seedInfo.growDuration;
-
-            progressBar.SetActive(true);
-            progressBar.SetPercent(1.0f);
-            activableImage.SetActive(false);
         }
 
-		public void Select()
+		public override void Select()
 		{
-            activableImage.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-		}
-		public void Deselect()
-		{
-            activableImage.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-		}
+			base.Select();
 
-		public bool IsInteractable()
-		{
-            return IsMature;
-		}
-        public void StartToInteract()
-        {
-            //nothing here
+            InteractionText.SetText("Press E to Gather");
+            InteractionText.SetActive(true);
         }
-        public void Interact(Player player)
+		public override void Deselect()
+		{
+			base.Deselect();
+
+            InteractionText.SetActive(false);
+		}
+
+		public override void Interact(Player player)
         {
-            if (World.DropItem(new Item(seedInfo.name, ItemType.Resource, 1), transform.position) == null)
-			{
-                if (!player.ShortcutController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1)))
-				{
-                    player.InventoryController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1));
-				}
-			}
-
-            activableImage.SetActive(false);
-
-            currentIndex = -1;
-            if (seedObject != null) Destroy(seedObject);
-            currentGrowDuration = 0.0f;
-            seedInfo = SeedInfo.None;
-
-            IsMature = false;
-            HasSeed = false;
+            DropPlant(player);
+            
+            ClearSeed();
         }
     }
 }

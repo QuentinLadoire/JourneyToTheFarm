@@ -5,54 +5,28 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class ChestContainer : CustomBehaviour, IInteractable
+	public class ChestContainer : InteractableBehaviour
 	{
-		public float Duration => duration;
-		public ActionType ActionType => ActionType.Open;
-
-		[Header("Chest Parameters")]
-		[SerializeField] float duration = 0.0f;
-		[SerializeField] GameObject interactableImage = null;
-
 		Animator animator = null;
 		ChestInventoryController inventoryController = null;
 
-		void OnInventoryClose()
+		private void OnInventoryClose()
 		{
 			PlayCloseChestAnim();
 		}
 
-		void PlayOpenChestAnim()
+		private void PlayOpenChestAnim()
 		{
 			animator.SetBool("IsOpen", true);
 		}
-		void PlayCloseChestAnim()
+		private void PlayCloseChestAnim()
 		{
 			animator.SetBool("IsOpen", false);
 		}
 
-		public void Select()
-		{
-			if (interactableImage != null)
-				interactableImage.SetActive(true);
-		}
-		public void Deselect()
-		{
-			if (interactableImage != null)
-				interactableImage.SetActive(false);
-		}
-
-		public bool IsInteractable()
+		protected override bool CheckIsInteractable()
 		{
 			return true;
-		}
-		public void StartToInteract()
-		{
-			PlayOpenChestAnim();
-		}
-		public void Interact(Player player)
-		{
-			inventoryController.OpenInventory();
 		}
 
 		protected override void Awake()
@@ -66,9 +40,36 @@ namespace JTTF
 		{
 			inventoryController.onInventotyClose += OnInventoryClose;
 		}
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
+			base.OnDestroy();
+
 			inventoryController.onInventotyClose -= OnInventoryClose;
+		}
+
+		public override void Select()
+		{
+			if (InteractableImage != null)
+				InteractableImage.SetActive(true);
+
+			InteractionText.SetText("Press E to Open");
+			InteractionText.SetActive(true);
+		}
+		public override void Deselect()
+		{
+			if (InteractableImage != null)
+				InteractableImage.SetActive(false);
+
+			InteractionText.SetActive(false);
+		}
+
+		public override void StartToInteract()
+		{
+			PlayOpenChestAnim();
+		}
+		public override void Interact(Player player)
+		{
+			inventoryController.OpenInventory();
 		}
 	}
 }

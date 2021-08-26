@@ -67,6 +67,8 @@ namespace JTTF
 		}
 		protected override void OnDestroy()
 		{
+			base.OnDestroy();
+
 			if (chestPreview != null)
 				chestPreview.Destroy();
 		}

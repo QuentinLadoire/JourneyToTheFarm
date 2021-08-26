@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable 0659
+#pragma warning disable 0661
+
 namespace JTTF
 {
 	[System.Serializable]
@@ -20,6 +23,22 @@ namespace JTTF
 			this.growDuration = growDuration;
 			this.seedPreviewPrefab = seedPreviewPrefab;
 			this.seedStepPrefabs = seedStepPrefabs;
+		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is SeedInfo info &&
+				   name == info.name &&
+				   growDuration == info.growDuration;
+		}
+
+		public static bool operator ==(SeedInfo left, SeedInfo right)
+		{
+			return left.Equals(right);
+		}
+		public static bool operator !=(SeedInfo left, SeedInfo right)
+		{
+			return !(left == right);
 		}
 	}
 }

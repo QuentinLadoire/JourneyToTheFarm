@@ -10,8 +10,8 @@ namespace JTTF
 		[SerializeField] float actionDuration = 0.0f;
 		[SerializeField] ActionType actionType = ActionType.None;
 
-		bool isUsable = false;
-		PlayerInteractionText interactionText = null;
+		private bool isUsable = false;
+		private PlayerInteractionText interactionText = null;
 
 		public bool IsUsable => isUsable;
 		public float ActionDuration => actionDuration;
@@ -30,7 +30,8 @@ namespace JTTF
 		}
 		protected virtual void OnDestroy()
 		{
-			interactionText.SetActive(false);
+			if (interactionText != null)
+				interactionText.SetActive(false);
 		}
 
 		protected virtual bool CheckIsUsable()

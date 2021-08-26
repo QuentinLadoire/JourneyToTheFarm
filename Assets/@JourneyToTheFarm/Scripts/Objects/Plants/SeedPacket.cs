@@ -15,26 +15,30 @@ namespace JTTF
 
 		public SeedInfo SeedInfo => seedInfo;
 		
-		void CheckIsUsable()
+		protected override bool CheckIsUsable()
 		{
-			var tmp = OwnerPlayer.InteractableController.InteractableObject as FarmPlot;
-			if (tmp != farmPlot)
+			farmPlot = OwnerPlayer.InteractableController.InteractableObject as FarmPlot;
+			if (farmPlot != null)
+				return !farmPlot.HasSeed;
+
+			return false;
+		}
+
+		void UpdateFeedback()
+		{
+			if (IsUsable)
 			{
-				farmPlot = tmp;
-				isUsable = false;
-				seedPreview.SetActive(false);
+				interactionText.SetText("Press E to Harvest");
+				interactionText.SetActive(true);
+
+				seedPreview.transform.position = farmPlot.transform.position;
+				seedPreview.SetActive(true);
+			}
+			else
+			{
 				interactionText.SetActive(false);
 
-				if (farmPlot != null && !farmPlot.HasSeed)
-				{
-					seedPreview.transform.position = farmPlot.transform.position;
-					seedPreview.SetActive(true);
-
-					interactionText.SetText("Press E to Plant");
-					interactionText.SetActive(true);
-
-					isUsable = true;
-				}
+				seedPreview.SetActive(false);
 			}
 		}
 
@@ -47,9 +51,11 @@ namespace JTTF
 			seedPreview = Instantiate(seedInfo.seedPreviewPrefab);
 			seedPreview.SetActive(false);
 		}
-		private void Update()
+		protected override void Update()
 		{
-			CheckIsUsable();
+			base.Update();
+
+			UpdateFeedback();
 		}
 		private void OnDestroy()
 		{
@@ -62,10 +68,6 @@ namespace JTTF
 			if (farmPlot != null)
 			{
 				farmPlot.SetSeed(seedInfo);
-
-				isUsable = false;
-				seedPreview.SetActive(false);
-				interactionText.SetActive(false);
 
 				OwnerPlayer.ShortcutController.ConsumeSelectedItem();
 			}

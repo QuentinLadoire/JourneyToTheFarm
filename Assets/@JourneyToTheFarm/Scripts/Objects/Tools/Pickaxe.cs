@@ -9,8 +9,10 @@ namespace JTTF
 		Rock rock = null;
 		PlayerInteractionText interactionText = null;
 
-		void CheckIsUsable()
+		protected override bool CheckIsUsable()
 		{
+			interactionText.SetActive(false);
+
 			if (Physics.Raycast(OwnerPlayer.transform.position + new Vector3(0.0f, 0.2f, 0.0f), OwnerPlayer.transform.forward, out RaycastHit hit, 0.7f))
 			{
 				rock = hit.collider.GetComponentInParent<Rock>();
@@ -19,15 +21,11 @@ namespace JTTF
 					interactionText.SetText("Press E to Mine");
 					interactionText.SetActive(true);
 
-					isUsable = true;
+					return true;
 				}
 			}
-			else
-			{
-				interactionText.SetActive(false);
 
-				isUsable = false;
-			}
+			return false;
 		}
 
 		protected override void Awake()
@@ -35,10 +33,6 @@ namespace JTTF
 			base.Awake();
 
 			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
-		}
-		private void Update()
-		{
-			CheckIsUsable();
 		}
 		private void OnDestroy()
 		{

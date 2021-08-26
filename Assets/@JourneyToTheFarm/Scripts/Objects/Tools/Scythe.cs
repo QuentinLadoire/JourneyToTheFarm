@@ -29,23 +29,21 @@ namespace JTTF
 				}
 			}
 		}
-		void CheckIsUsable()
+		protected override bool CheckIsUsable()
 		{
 			CheckMowGrass();
+
+			interactionText.SetActive(false);
 
 			if (grassList.Count > 0)
 			{
 				interactionText.SetText("Press E to Mow");
 				interactionText.SetActive(true);
 
-				isUsable = true;
+				return true;
 			}
-			else
-			{
-				interactionText.SetActive(false);
 
-				isUsable = false;
-			}
+			return false;
 		}
 
 		protected override void Awake()
@@ -53,10 +51,6 @@ namespace JTTF
 			base.Awake();
 
 			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
-		}
-		private void Update()
-		{
-			CheckIsUsable();
 		}
 		private void OnDestroy()
 		{

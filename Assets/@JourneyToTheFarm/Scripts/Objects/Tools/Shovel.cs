@@ -25,21 +25,19 @@ namespace JTTF
 			return (hit.transform != null && hit.transform.CompareTag("Constructible") &&
 				!Physics.CheckBox(center, halfSize, farmPlotPreview.transform.rotation, overlapLayer));
 		}
-		void CheckIsUsable()
+		protected override bool CheckIsUsable()
 		{
+			interactionText.SetActive(false);
+
 			if (IsConstructible())
 			{
 				interactionText.SetText("Press E to Dig");
 				interactionText.SetActive(true);
 
-				isUsable = true;
+				return true;
 			}
-			else
-			{
-				interactionText.SetActive(false);
 
-				isUsable = false;
-			}
+			return false;
 		}
 		void UpdatePreview()
 		{
@@ -63,11 +61,11 @@ namespace JTTF
 
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 		}
-		private void Update()
+		protected override void Update()
 		{
 			UpdatePreview();
 
-			CheckIsUsable();
+			base.Update();
 
 			if (leftHandTransform != null)
 				transform.up = leftHandTransform.position - transform.position;

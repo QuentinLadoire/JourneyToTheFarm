@@ -23,21 +23,19 @@ namespace JTTF
 			return (hit.transform.CompareTag("Constructible") &&
 				!Physics.CheckBox(center, halfSize, chestPreview.transform.rotation, overlapLayer));
 		}
-		void CheckIsUsable()
+		protected override bool CheckIsUsable()
 		{
+			interactionText.SetActive(false);
+
 			if (IsConstructible())
 			{
 				interactionText.SetText("Press E to Place");
 				interactionText.SetActive(true);
 
-				isUsable = true;
+				return true;
 			}
-			else
-			{
-				interactionText.SetActive(false);
 
-				isUsable = false;
-			}
+			return false;
 		}
 
 		protected override void Awake()
@@ -49,7 +47,7 @@ namespace JTTF
 			if (chestPreviewPrefab != null)
 				chestPreview = Instantiate(chestPreviewPrefab).GetComponent<PreviewObject>();
 		}
-		private void Update()
+		protected override void Update()
 		{
 			if (chestPreview == null) return;
 
@@ -59,13 +57,13 @@ namespace JTTF
 				chestPreview.transform.position = hit.point;
 				chestPreview.transform.forward = -OwnerPlayer.CharacterController.RoundForward;
 
-				if (isUsable)
+				if (IsUsable)
 					chestPreview.SetBlueColor();
 				else
 					chestPreview.SetRedColor();
 			}
 
-			CheckIsUsable();
+			base.Update();
 		}
 		private void OnDestroy()
 		{

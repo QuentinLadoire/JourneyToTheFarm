@@ -10,11 +10,21 @@ namespace JTTF
 		[SerializeField] float actionDuration = 0.0f;
 		[SerializeField] ActionType actionType = ActionType.None;
 
-		protected bool isUsable = false;
+		bool isUsable = false;
 
 		public bool IsUsable => isUsable;
 		public float ActionDuration => actionDuration;
 		public ActionType ActionType => actionType;
+
+		protected virtual void Update()
+		{
+			isUsable = CheckIsUsable();
+		}
+
+		protected virtual bool CheckIsUsable()
+		{
+			return false;
+		}
 
 		public virtual void Use()
 		{

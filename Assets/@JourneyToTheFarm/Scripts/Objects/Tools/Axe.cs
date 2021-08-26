@@ -9,8 +9,10 @@ namespace JTTF
 		Tree tree = null;
 		PlayerInteractionText interactionText = null;
 
-		void CheckIsUsable()
+		protected override bool CheckIsUsable()
 		{
+			interactionText.SetActive(false);
+
 			if (Physics.Raycast(OwnerPlayer.transform.position + Vector3.up, OwnerPlayer.transform.forward, out RaycastHit hit, 1.0f))
 			{
 				tree = hit.collider.GetComponentInParent<Tree>();
@@ -19,15 +21,11 @@ namespace JTTF
 					interactionText.SetText("Press E to Cut");
 					interactionText.SetActive(true);
 
-					isUsable = true;
+					return true;
 				}
 			}
-			else
-			{
-				interactionText.SetActive(false);
 
-				isUsable = false;
-			}
+			return false;
 		}
 
 		protected override void Awake()
@@ -35,10 +33,6 @@ namespace JTTF
 			base.Awake();
 
 			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
-		}
-		private void Update()
-		{
-			CheckIsUsable();
 		}
 		private void OnDestroy()
 		{

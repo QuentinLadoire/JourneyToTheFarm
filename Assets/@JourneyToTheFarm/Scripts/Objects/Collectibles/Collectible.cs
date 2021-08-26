@@ -27,7 +27,7 @@ namespace JTTF
 		}
 		void OnTriggerEnterCallback(Collider other)
 		{
-			var player = other.gameObject.GetComponent<Player>();
+			var player = other.gameObject.GetComponentInParent<Player>();
 			if (player != null)
 				Collect(player);
 		}

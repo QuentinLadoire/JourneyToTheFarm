@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraController: {fileID: 0}
+  cameraControllerPrefab: {fileID: 4403957497182260590, guid: e367098f108baf04d9349129bc64390f, type: 3}
   moveSpeed: 5
   jumpForce: 5
   layer:

@@ -9,8 +9,13 @@ namespace JTTF
 		static GameManager instance = null;
 
 		public static DataBase DataBase => instance.dataBase;
+		public static PrefabDataBase PrefabDataBase => instance.prefabDataBase;
 		public static Camera playerCamera = null;
 		public static Player player = null;
+
+		[SerializeField] DataBase dataBase = null;
+		[SerializeField] PrefabDataBase prefabDataBase = null;
+		[SerializeField] private bool hideCursorOnPlay = true;
 
 		public static void ActiveCursor()
 		{
@@ -23,15 +28,14 @@ namespace JTTF
 			Cursor.visible = false;
 		}
 
-		[SerializeField] DataBase dataBase = null;
-
 		private void Awake()
 		{
 			instance = this;
 		}
 		private void Start()
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			if (hideCursorOnPlay)
+				DesactiveCursor();
 		}
 	}
 }

@@ -19,11 +19,8 @@ namespace JTTF
 
 		void Collect(Player player)
 		{
-			if (!player.ShortcutController.AddItem(new Item(ItemName, ItemType, 1)) &&
-				!player.InventoryController.AddItem(new Item(ItemName, ItemType, 1)))
-				return;
-			
-			Destroy();
+			if (player.AddItem(new Item(ItemName, ItemType, 1)))
+				Destroy();
 		}
 		void OnTriggerEnterCallback(Collider other)
 		{

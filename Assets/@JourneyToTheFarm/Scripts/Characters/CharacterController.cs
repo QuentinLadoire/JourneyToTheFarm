@@ -7,41 +7,33 @@ namespace JTTF
 {
 	public class CharacterController : MonoBehaviour
 	{
-		public Player OwnerPlayer { get; private set; }
+		[SerializeField] private float moveSpeed = 5.0f;
+		[SerializeField] private float jumpForce = 5.0f;
+		[SerializeField] private LayerMask layer = -1;
+		[SerializeField] private TPCameraController cameraController = null;
 
-		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
-		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
-		public Action onHasMoved = () => { /*Debug.Log("HasMove");*/ };
-		public Action onHasJump = () => { /*Debug.Log("HasJump");*/ };
+		private bool hasJump = false;
+		private bool wantJump = false;
+		private bool hasControl = true;
+		private Player ownerPlayer = null;
+		private new Rigidbody rigidbody = null;
+		private GameObject followingCamera = null;
 
-		public bool HasControl { get; private set; } = true;
-		public bool IsIdle => direction == Vector3.zero;
-		public Vector3 RoundPosition => transform.position.RoundToInt();
-		public Vector3 RoundForward => transform.forward.RoundToInt();
+		private Vector3 direction = Vector3.zero;
+		private Vector3 previousDirection = Vector3.zero;
+		private Vector3 previousPosition = Vector3.zero;
+
+		public bool HasControl => hasControl;
 		public Vector3 Direction => direction;
+		public Player OwnerPlayer => ownerPlayer;
+		public bool IsIdle => direction == Vector3.zero;
+		public Vector3 RoundForward => transform.forward.RoundToInt();
+		public Vector3 RoundPosition => transform.position.RoundToInt();
 
-		[SerializeField] TPCameraController cameraController = null;
-		[SerializeField] float moveSpeed = 5.0f;
-		[SerializeField] float jumpForce = 5.0f;
-		[SerializeField] LayerMask layer = -1;
-
-		GameObject followingCamera = null;
-		new Rigidbody rigidbody = null;
-		bool wantJump = false;
-		bool hasJump = false;
-
-		Vector3 direction = Vector3.zero;
-		Vector3 previousDirection = Vector3.zero;
-		Vector3 previousPosition = Vector3.zero;
-
-		public void ActiveControl()
-		{
-			HasControl = true;
-		}
-		public void DesactiveControl()
-		{
-			HasControl = false;
-		}
+		public Action onHasJump = () => { /*Debug.Log("HasJump");*/ };
+		public Action onHasMoved = () => { /*Debug.Log("HasMove");*/ };
+		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
+		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
 
 		void ProcessInput()
 		{
@@ -93,13 +85,15 @@ namespace JTTF
 
 		private void Awake()
 		{
-			OwnerPlayer = GetComponent<Player>();
+			ownerPlayer = GetComponent<Player>();
 			rigidbody = GetComponent<Rigidbody>();
 		}
 		private void Start()
 		{
-			cameraController.SetOwner(OwnerPlayer);
-			followingCamera = cameraController.CameraObject;
+			if (cameraController == null)
+				cameraController = Instantiate(GameManager.PrefabDataBase.CameraControllerPrefab).GetComponent<TPCameraController>();
+
+			SetCameraController(cameraController);
 		}
 		private void Update()
 		{
@@ -116,6 +110,22 @@ namespace JTTF
 		private void LateUpdate()
 		{
 			ProcessEvents();
+		}
+
+		public void SetCameraController(TPCameraController cameraController)
+		{
+			this.cameraController = cameraController;
+			this.cameraController.SetFollowingObject(gameObject);
+			followingCamera = cameraController.CameraObject;
+		}
+
+		public void ActiveControl()
+		{
+			hasControl = true;
+		}
+		public void DesactiveControl()
+		{
+			hasControl = false;
 		}
 	}
 }

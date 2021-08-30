@@ -29,6 +29,8 @@ namespace JTTF
 		}
 		private void Start()
 		{
+            GameManager.DesactiveCursor();
+
             ShortcutController.AddItem(new Item("Shovel", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Axe", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
@@ -37,5 +39,10 @@ namespace JTTF
             ShortcutController.AddItem(new Item("Chest", ItemType.Container, 1));
             ShortcutController.AddItem(new Item("Wheat", ItemType.Resource, 50));
         }
+
+        public bool AddItem(Item item)
+		{
+            return ShortcutController.AddItem(item) || InventoryController.AddItem(item);
+		}
 	}
 }

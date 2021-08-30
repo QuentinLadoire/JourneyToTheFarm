@@ -4,39 +4,32 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class TPCameraController : MonoBehaviour, IOwnable
+	public class TPCameraController : MonoBehaviour
 	{
-		public Player OwnerPlayer { get; private set; }
-		public GameObject CameraObject => cameraObject;
-
-		[SerializeField] GameObject cameraObject = null;
-		[SerializeField] GameObject followingObject = null;
-
 		[SerializeField] float speed = 5.0f;
-		[SerializeField] float angularSpeed = 1.0f;
-
 		[SerializeField] float farOffset = -5.0f;
-
+		[SerializeField] float angularSpeed = 1.0f;
+		[SerializeField] GameObject cameraObject = null;
 		[SerializeField] Vector3 followingOffset = Vector3.zero;
 
-		public void SetOwner(Player owner)
-		{
-			OwnerPlayer = owner;
-		}
+		private GameObject followingObject = null;
+		private CharacterController characterController = null;
 
-		void CameraRotation()
+		public GameObject CameraObject => cameraObject;
+
+		private void CameraRotation()
 		{
 			cameraObject.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Mouse X") * angularSpeed);
 			cameraObject.transform.RotateAround(transform.position, cameraObject.transform.right, -Input.GetAxis("Mouse Y") * angularSpeed);
 		}
-		void CameraFarOffset()
+		private void CameraFarOffset()
 		{
 			if (Physics.Raycast(transform.position, -cameraObject.transform.forward, out RaycastHit hit, -farOffset))
 				cameraObject.transform.position = hit.point;
 			else
 				cameraObject.transform.localPosition = cameraObject.transform.forward * farOffset;
 		}
-		void CameraFollowing()
+		private void CameraFollowing()
 		{
 			if (followingObject == null) return;
 
@@ -49,7 +42,7 @@ namespace JTTF
 		}
 		private void Update()
 		{
-			if (OwnerPlayer.CharacterController.HasControl)
+			if (characterController.HasControl)
 				CameraRotation();
 
 			CameraFarOffset();
@@ -58,11 +51,21 @@ namespace JTTF
 		{
 			CameraFollowing();
 		}
-
 		private void OnValidate()
 		{
 			if (followingObject != null)
 				transform.position = followingObject.transform.position + followingOffset;
+		}
+
+		public void SetFollowingObject(GameObject obj)
+		{
+			followingObject = obj;
+
+			if (followingObject != null)
+			{
+				characterController = followingObject.GetComponent<CharacterController>();
+				transform.position = followingObject.transform.position + followingOffset;
+			}
 		}
 	}
 }

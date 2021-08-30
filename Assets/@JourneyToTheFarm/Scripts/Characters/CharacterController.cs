@@ -7,8 +7,8 @@ namespace JTTF
 {
 	public class CharacterController : MonoBehaviour
 	{
-		[SerializeField] private float moveSpeed = 5.0f;
-		[SerializeField] private float jumpForce = 5.0f;
+		[SerializeField] readonly private float moveSpeed = 5.0f;
+		[SerializeField] readonly private float jumpForce = 5.0f;
 		[SerializeField] private LayerMask layer = -1;
 		[SerializeField] private TPCameraController cameraController = null;
 
@@ -83,19 +83,19 @@ namespace JTTF
 				onHasJump.Invoke();
 		}
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			ownerPlayer = GetComponent<Player>();
 			rigidbody = GetComponent<Rigidbody>();
 		}
-		private void Start()
+		protected virtual void Start()
 		{
 			if (cameraController == null)
 				cameraController = Instantiate(GameManager.PrefabDataBase.CameraControllerPrefab).GetComponent<TPCameraController>();
 
 			SetCameraController(cameraController);
 		}
-		private void Update()
+		protected virtual void Update()
 		{
 			if (HasControl)
 				ProcessInput();
@@ -103,11 +103,11 @@ namespace JTTF
 			ProcessRotation();
 			ProcessJump();
 		}
-		private void FixedUpdate()
+		protected virtual void FixedUpdate()
 		{
 			ProcessMovement();
 		}
-		private void LateUpdate()
+		protected virtual void LateUpdate()
 		{
 			ProcessEvents();
 		}

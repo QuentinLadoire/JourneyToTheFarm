@@ -6,17 +6,18 @@ namespace JTTF
 {
     public class PlayerInventoryController : InventoryController, IOpenable, IClosable
 	{
-		bool isOpen = false;
+		private bool isOpen = false;
+		private Player ownerPlayer = null;
 
 		protected override int InventorySize => 30;
 
-		public Player Player { get; private set; } = null;
+		public Player OwnerPlayer => ownerPlayer;
 
 		protected override void Awake()
 		{
 			base.Awake();
 
-			Player = GetComponent<Player>();
+			ownerPlayer = GetComponent<Player>();
 		}
 		private void Update()
 		{
@@ -39,14 +40,14 @@ namespace JTTF
 			isOpen = true;
 			CanvasManager.GamePanel.OpenPlayerInventory(this);
 			GameManager.ActiveCursor();
-			Player.CharacterController.DesactiveControl();
+			OwnerPlayer.CharacterController.DesactiveControl();
 		}
 		public void CloseInventory()
 		{
 			isOpen = false;
 			CanvasManager.GamePanel.ClosePlayerInventory();
 			GameManager.DesactiveCursor();
-			Player.CharacterController.ActiveControl();
+			OwnerPlayer.CharacterController.ActiveControl();
 		}
 	}
 }

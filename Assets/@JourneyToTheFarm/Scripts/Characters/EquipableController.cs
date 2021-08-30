@@ -17,11 +17,11 @@ namespace JTTF
 
         public Action<GameObject> onEquipedObjectChange = (GameObject) => { /*Debug.Log("OnEquipedObjectChange");*/ };
 
-        private void Awake()
+        protected virtual void Awake()
         {
             OwnerPlayer = GetComponent<Player>();
         }
-		private void Start()
+		protected virtual void Start()
 		{
 			OwnerPlayer.ShortcutController.onSelectedSlotChange += OnSelectedSlotChange;
 		}

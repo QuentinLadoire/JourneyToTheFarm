@@ -15,7 +15,7 @@ namespace JTTF
         public InteractableController InteractableController { get; private set; }
         public EquipableController EquipableController { get; private set; }
 
-        private void Awake()
+        protected virtual void Awake()
 		{
             GameManager.player = this;
 
@@ -29,8 +29,6 @@ namespace JTTF
 		}
 		private void Start()
 		{
-            GameManager.DesactiveCursor();
-
             ShortcutController.AddItem(new Item("Shovel", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Axe", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Pickaxe", ItemType.Tool, 1));

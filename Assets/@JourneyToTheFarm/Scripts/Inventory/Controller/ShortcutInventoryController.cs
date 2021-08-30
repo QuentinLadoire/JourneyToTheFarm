@@ -46,7 +46,7 @@ namespace JTTF
 
 			OwnerPlayer = GetComponent<Player>();
 		}
-		private void Start()
+		protected virtual void Start()
 		{
 			CanvasManager.GamePanel.InitShortcutInventory(this);
 

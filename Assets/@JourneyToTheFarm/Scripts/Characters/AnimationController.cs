@@ -6,8 +6,6 @@ namespace JTTF
 {
     public class AnimationController : MonoBehaviour
     {
-		public Player OwnerPlayer { get; private set; }
-
 		[Header("DigAnimation")]
 		[SerializeField] float digAnimationDuration = 0.0f;
 		[SerializeField] float digAnimationMultiplier = 1.0f;
@@ -36,8 +34,11 @@ namespace JTTF
 		[SerializeField] float pickAnimationDuration = 0.0f;
 		[SerializeField] float pickAnimationMultiplier = 1.0f;
 
-		Animator animator = null;
 		bool inAction = false;
+		Animator animator = null;
+		Player ownerPlayer = null;
+
+		public Player OwnerPlayer => ownerPlayer;
 
 		float GetDesiredAnimationSpeed(float duration, float durationMax, float multiplier)
 		{
@@ -198,12 +199,12 @@ namespace JTTF
 			animator.speed = speed;
 		}
 
-		private void Awake()
+		protected virtual void Awake()
 		{
-			OwnerPlayer = GetComponent<Player>();
+			ownerPlayer = GetComponent<Player>();
 			animator = GetComponentInChildren<Animator>();
 		}
-		private void Start()
+		protected virtual void Start()
 		{
 			OwnerPlayer.UsableObjectController.onStartToUseObject += OnStartToUseObject;
 			OwnerPlayer.UsableObjectController.onStopToUseObject += OnStopToUseObject;
@@ -211,12 +212,12 @@ namespace JTTF
 			OwnerPlayer.InteractableController.onStartToInteract += OnStartToInteract;
 			OwnerPlayer.InteractableController.onStopToInteract += OnStopToInteract;
 		}
-		private void Update()
+		protected virtual void Update()
 		{
 			if (!inAction)
 				MovementAnimation(OwnerPlayer.CharacterController.Direction);
 		}
-		private void OnDestroy()
+		protected virtual void OnDestroy()
 		{
 			OwnerPlayer.UsableObjectController.onStartToUseObject -= OnStartToUseObject;
 			OwnerPlayer.UsableObjectController.onStopToUseObject -= OnStopToUseObject;

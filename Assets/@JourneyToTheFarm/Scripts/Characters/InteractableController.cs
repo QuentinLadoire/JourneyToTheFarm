@@ -7,31 +7,31 @@ namespace JTTF
 {
     public class InteractableController : MonoBehaviour
     {
-        public Player OwnerPlayer { get; private set; }
+        [SerializeField] private float checkRadius = 1.0f;
+
+        private Player ownerPlayer = null;
+        private bool inInteraction = false;
+        private float currentDuration = 0.0f;
+        private IInteractable interactableObject = null;
+        private PlayerProgressBar playerProgressBar = null;
+
+        public Player OwnerPlayer => ownerPlayer;
+        public IInteractable InteractableObject => interactableObject;
 
         public Action<ActionType, float> onStartToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStartToInteract");*/ };
         public Action<ActionType, float> onInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnInteract");*/ };
         public Action<ActionType, float> onStopToInteract = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToInteract");*/ };
 
-        [SerializeField] float checkRadius = 1.0f;
-
-        bool inInteraction = false;
-        float currentDuration = 0.0f;
-        IInteractable interactableObject = null;
-        PlayerProgressBar playerProgressBar = null;
-
-        public IInteractable InteractableObject => interactableObject;
-
-        void OnMoveEnter()
+        private void OnMoveEnter()
 		{
             StopInteraction();
 		}
 
-        bool CanInteractObject()
+        private bool CanInteractObject()
 		{
             return interactableObject != null && !interactableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && interactableObject.IsInteractable;
         }
-        void StartInteraction()
+        private void StartInteraction()
 		{
             inInteraction = true;
             currentDuration = interactableObject.ActionDuration;
@@ -40,7 +40,7 @@ namespace JTTF
 
             onStartToInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
         }
-        void UpdateInteractionTime()
+        private void UpdateInteractionTime()
 		{
             if (!inInteraction) return;
 
@@ -50,14 +50,14 @@ namespace JTTF
 
             playerProgressBar.SetPercent(1 - (currentDuration / interactableObject.ActionDuration));
         }
-        void Interact()
+        private void Interact()
 		{
             StopInteraction();
 
             interactableObject.Interact(OwnerPlayer);
             onInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
         }
-        void StopInteraction()
+        private void StopInteraction()
 		{
             if (!inInteraction) return;
 
@@ -68,7 +68,7 @@ namespace JTTF
             onStopToInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
 		}
 
-        void CheckHasNearestInteractableObject()
+        private void CheckHasNearestInteractableObject()
 		{
             if (inInteraction) return;
 
@@ -101,20 +101,22 @@ namespace JTTF
                     interactableObject.Select();
             }
         }
-        void ProcessInput()
+        private void ProcessInput()
 		{
             if (Input.GetButton("Interact") && CanInteractObject())
                 StartInteraction();
         }
 
-		private void Awake()
+		protected virtual void Awake()
 		{
-            OwnerPlayer = GetComponent<Player>();
-
-            OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
+            ownerPlayer = GetComponent<Player>();
 
             playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
 		}
+        protected virtual void Start()
+		{
+            OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
+        }
 		private void Update()
 		{
 			if (OwnerPlayer.CharacterController.HasControl)

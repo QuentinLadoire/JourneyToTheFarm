@@ -7,19 +7,19 @@ namespace JTTF
 {
     public class UsableObjectController : MonoBehaviour
     {
-		public Player OwnerPlayer { get; private set; }
+		private bool inUse = false;
+		private Player ownerPlayer = null;
+		private IUsable usableObject = null;
+		private float currentDuration = 0.0f;
+		private PlayerProgressBar playerProgressBar = null;
+
+		public Player OwnerPlayer => ownerPlayer;
 
 		public Action<ActionType, float> onStartToUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnStartToUseObejct");*/ };
 		public Action<ActionType, float> onUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnUseObject");*/ };
 		public Action<ActionType, float> onStopToUseObject = (ActionType actionType, float duration) => { /*Debug.Log("OnStopToUseObject");*/ };
 
-		PlayerProgressBar playerProgressBar = null;
-
-		bool inUse = false;
-		IUsable usableObject = null;
-		float currentDuration = 0.0f;
-
-		void OnEquipedObjectChange(GameObject equipedObject)
+		private void OnEquipedObjectChange(GameObject equipedObject)
 		{
 			if (usableObject != null)
 			{
@@ -30,16 +30,16 @@ namespace JTTF
 			if (equipedObject != null)
 				usableObject = equipedObject.GetComponent<IUsable>();
 		}
-		void OnMoveEnter()
+		private void OnMoveEnter()
 		{
 			StopToUseObject();
 		}
 
-		bool CanUseObject()
+		private bool CanUseObject()
 		{
 			return usableObject != null && !usableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && usableObject.IsUsable;
 		}
-		void StartToUseObject()
+		private void StartToUseObject()
 		{
 			inUse = true;
 			currentDuration = usableObject.ActionDuration;
@@ -47,7 +47,7 @@ namespace JTTF
 
 			onStartToUseObject.Invoke(usableObject.ActionType, usableObject.ActionDuration);
 		}
-		void UpdateUseTime()
+		private void UpdateUseTime()
 		{
 			if (!inUse) return;
 
@@ -57,7 +57,7 @@ namespace JTTF
 				UseObject();
 			currentDuration -= Time.deltaTime;
 		}
-		void UseObject()
+		private void UseObject()
 		{
 			StopToUseObject();
 
@@ -67,7 +67,7 @@ namespace JTTF
 			usableObject.Use();
 			onUseObject.Invoke(actionType, duration);
 		}
-		void StopToUseObject()
+		private void StopToUseObject()
 		{
 			if (inUse)
 			{
@@ -79,15 +79,15 @@ namespace JTTF
 			}
 		}
 
-		void ProcessInput()
+		private void ProcessInput()
 		{
 			if (Input.GetButtonDown("UseObject") && CanUseObject())
 				StartToUseObject();
 		}
 
-		private void Awake()
+		protected virtual void Awake()
 		{
-			OwnerPlayer = GetComponent<Player>();
+			ownerPlayer = GetComponent<Player>();
 
 			OwnerPlayer.EquipableController.onEquipedObjectChange += OnEquipedObjectChange;
 			OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;

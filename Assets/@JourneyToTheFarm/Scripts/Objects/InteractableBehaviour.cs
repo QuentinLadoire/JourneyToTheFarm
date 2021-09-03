@@ -26,12 +26,16 @@ namespace JTTF
 
 			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
 		}
-		protected virtual void Update()
+		protected override void Update()
 		{
+			base.Update();
+
 			isInteractable = CheckIsInteractable();
 		}
-		protected virtual void OnDestroy()
+		protected override void OnDestroy()
 		{
+			base.OnDestroy();
+
 			if (interactionText != null)
 				interactionText.SetActive(false);
 		}

@@ -16,13 +16,17 @@ namespace JTTF
 
 			canvas = GetComponent<Canvas>();
 		}
-		private void Start()
+		protected override void Start()
 		{
+			base.Start();
+
 			camera = GameManager.playerCamera;
 			canvas.worldCamera = GameManager.playerCamera;
 		}
-		private void Update()
+		protected override void Update()
 		{
+			base.Update();
+
 			if (camera != null)
 				transform.forward = camera.transform.forward;
 		}

@@ -10,41 +10,31 @@ namespace JTTF
         [SerializeField] Transform rightHand = null;
         [SerializeField] Transform leftHand = null;
 
-        GameObject equipedObject = null;
+        protected GameObject equipedObject = null;
 
 		public GameObject EquipedObject => equipedObject;
         public Player OwnerPlayer { get; private set; } = null;
 
         public Action<GameObject> onEquipedObjectChange = (GameObject) => { /*Debug.Log("OnEquipedObjectChange");*/ };
 
-        protected virtual void Awake()
-        {
-            OwnerPlayer = GetComponent<Player>();
-        }
-		protected virtual void Start()
+		private void OnSelectedSlotChange(int index, Item item)
 		{
-			OwnerPlayer.ShortcutController.onSelectedSlotChange += OnSelectedSlotChange;
-		}
-		private void OnDestroy()
-		{
-			OwnerPlayer.ShortcutController.onSelectedSlotChange -= OnSelectedSlotChange;
+			ChangeEquipedObject(item);
 		}
 
-		void ClearEquipedObject()
+		private void ClearEquipedObject()
 		{
 			if (equipedObject != null)
 				Destroy(equipedObject);
 
 			equipedObject = null;
 		}
-		void InstantiateObject(Item item)
+		private void InstantiateObject(Item item)
 		{
 			if (item != Item.None && item.Prefab != null)
 				equipedObject = Instantiate(item.Prefab);
-
-			onEquipedObjectChange.Invoke(equipedObject);
 		}
-		void CheckIsEquipable()
+		private void CheckIsEquipable()
 		{
 			if (equipedObject == null) return;
 
@@ -52,7 +42,7 @@ namespace JTTF
 			if (equipable != null)
 				equipable.Equip(rightHand, leftHand);
 		}
-		void CheckIsOwnable()
+		private void CheckIsOwnable()
 		{
 			if (equipedObject == null) return;
 
@@ -61,17 +51,32 @@ namespace JTTF
 				ownable.SetOwner(OwnerPlayer);
 		}
 
-		void ChangeEquipedObject(Item item)
+		protected virtual void Awake()
+        {
+            OwnerPlayer = GetComponent<Player>();
+        }
+		protected virtual void Start()
+		{
+			OwnerPlayer.ShortcutController.onSelectedSlotChange += OnSelectedSlotChange;
+		}
+		protected virtual void OnDestroy()
+		{
+			OwnerPlayer.ShortcutController.onSelectedSlotChange -= OnSelectedSlotChange;
+		}
+
+		protected virtual void ChangeEquipedObject(Item item)
+		{
+			SetEquipedObject(item);
+		}
+
+		public void SetEquipedObject(Item item)
 		{
 			ClearEquipedObject();
 			InstantiateObject(item);
-			CheckIsOwnable();
 			CheckIsEquipable();
-		}
+			CheckIsOwnable();
 
-		void OnSelectedSlotChange(int index, Item item)
-		{
-			ChangeEquipedObject(item);
+			onEquipedObjectChange.Invoke(equipedObject);
 		}
 	}
 }

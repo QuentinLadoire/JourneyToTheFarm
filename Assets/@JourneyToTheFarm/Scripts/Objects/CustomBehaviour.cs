@@ -10,6 +10,18 @@ public class CustomBehaviour : MonoBehaviour
 	{
 		SetActive(isActiveOnAwake);
 	}
+	protected virtual void Start()
+	{
+
+	}
+	protected virtual void Update()
+	{
+
+	}
+	protected virtual void OnDestroy()
+	{
+
+	}
 
 	public void SetActive(bool value)
 	{

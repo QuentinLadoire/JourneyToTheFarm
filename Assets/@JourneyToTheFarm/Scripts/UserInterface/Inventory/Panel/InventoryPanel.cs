@@ -43,8 +43,10 @@ namespace JTTF
             for (int i = 0; i < slotArray.Length; i++)
                 slotArray[i].Init(i, this);
         }
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
+            base.OnDestroy();
+
             if (controller != null)
                 controller.onInventoryChange -= OnInventoryChange;
 		}

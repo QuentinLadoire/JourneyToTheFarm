@@ -52,9 +52,9 @@ namespace JTTF
 			return IsConstructible();
 		}
 
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake();
+			base.Start();
 
 			farmPlotPreview = Instantiate(farmPlotPreviewPrefab).GetComponent<PreviewObject>();
 		}

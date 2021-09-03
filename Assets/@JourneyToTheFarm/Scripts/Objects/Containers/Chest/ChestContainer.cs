@@ -36,8 +36,10 @@ namespace JTTF
 			animator = GetComponent<Animator>();
 			inventoryController = GetComponent<ChestInventoryController>();
 		}
-		private void Start()
+		protected override void Start()
 		{
+			base.Start();
+
 			inventoryController.onInventotyClose += OnInventoryClose;
 		}
 		protected override void OnDestroy()

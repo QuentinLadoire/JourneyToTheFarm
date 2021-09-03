@@ -40,8 +40,10 @@ namespace JTTF
             }
         }
 
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
+            base.OnDestroy();
+
             if (sController != null)
             {
                 sController.onSelectedSlotChange -= OnScroll;

@@ -301,7 +301,7 @@ MonoBehaviour:
     - NetworkTest
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
-    - Prefab: {fileID: 6196129823870336311, guid: 46740f9b076877b4aa16f58eb9e1d7a6, type: 3}
+    - Prefab: {fileID: 4110536171662277979, guid: 73909d2d2c0659c4d9c429b1c33fa64b, type: 3}
       PlayerPrefab: 1
     PlayerPrefabHash:
       id: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
     EnableNetworkVariable: 1
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
-    ForceSamePrefabs: 1
+    ForceSamePrefabs: 0
     UsePrefabSync: 0
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
@@ -332,7 +332,7 @@ MonoBehaviour:
     00000000:
       type: {class: NullableBoolSerializable, ns: MLAPI.Configuration, asm: Unity.Multiplayer.MLAPI.Runtime}
       data:
-        Value: 1649700082809075112
+        Value: 16642450054670649568
 --- !u!1001 &437617569
 PrefabInstance:
   m_ObjectHideFlags: 0

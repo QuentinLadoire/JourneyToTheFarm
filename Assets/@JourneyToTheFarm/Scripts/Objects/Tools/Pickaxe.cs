@@ -6,7 +6,7 @@ namespace JTTF
 {
 	public class Pickaxe : UsableBehaviour
 	{
-		Rock rock = null;
+		private Rock rock = null;
 
 		private void UpdateFeedback()
 		{

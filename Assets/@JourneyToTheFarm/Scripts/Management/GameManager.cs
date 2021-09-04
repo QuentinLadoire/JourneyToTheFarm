@@ -6,16 +6,16 @@ namespace JTTF
 {
 	public class GameManager : MonoBehaviour
 	{
-		static GameManager instance = null;
+		private static GameManager instance = null;
+
+		[SerializeField] private DataBase dataBase = null;
+		[SerializeField] private PrefabDataBase prefabDataBase = null;
+		[SerializeField] private bool hideCursorOnPlay = true;
 
 		public static DataBase DataBase => instance.dataBase;
 		public static PrefabDataBase PrefabDataBase => instance.prefabDataBase;
 		public static Camera playerCamera = null;
 		public static Player player = null;
-
-		[SerializeField] DataBase dataBase = null;
-		[SerializeField] PrefabDataBase prefabDataBase = null;
-		[SerializeField] private bool hideCursorOnPlay = true;
 
 		public static void ActiveCursor()
 		{

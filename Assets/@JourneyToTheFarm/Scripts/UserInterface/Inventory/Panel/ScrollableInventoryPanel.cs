@@ -8,20 +8,20 @@ namespace JTTF
     public class ScrollableInventoryPanel : InventoryPanel
     {
         [Header("Scrollable Inventory Panel Parameters")]
-        [SerializeField] Image selectedSlot = null;
+        [SerializeField] private Image selectedSlot = null;
 
-        ShortcutInventoryController sController = null;
+        private ShortcutInventoryController sController = null;
 
-        void SetSelected(int index)
+        private void SetSelected(int index)
 		{
             selectedSlot.transform.position = slotArray[index].transform.position;
 		}
 
-        void OnScroll(int index, Item item)
+        private void OnScroll(int index, Item item)
 		{
             SetSelected(index);
 		}
-        void OnInventoryChange()
+        private void OnInventoryChange()
 		{
             RefreshInventory();
         }

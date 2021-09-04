@@ -12,21 +12,21 @@ public class Chunk : MonoBehaviour
 	[HideInInspector]
 	public MapGenerationSetting setting = null;
 
-	MeshFilter meshFilter = null;
-	MeshRenderer meshRenderer = null;
-	MeshCollider meshCollider = null;
+	private MeshFilter meshFilter = null;
+	private MeshRenderer meshRenderer = null;
+	private MeshCollider meshCollider = null;
 
-	HeightmapData heightmap = null;
-	HeightmapData treeHeightmap = null;
-	HeightmapData rockHeightmap = null;
-	HeightmapData grassHeightmap = null;
+	private HeightmapData heightmap = null;
+	private HeightmapData treeHeightmap = null;
+	private HeightmapData rockHeightmap = null;
+	private HeightmapData grassHeightmap = null;
 
-	float GetHeight(int x, int y)
+	private float GetHeight(int x, int y)
 	{
 		return heightmap.data[x, y] * setting.terrainSetting.heightMultiplier - setting.terrainSetting.heightMultiplier * 0.5f;
 	}
 
-	void CreateNewTree_01(int x, int y)
+	private void CreateNewTree_01(int x, int y)
 	{
 		if (setting.treeSetting.tree_01Prefab == null)
 			return;
@@ -41,7 +41,7 @@ public class Chunk : MonoBehaviour
 		var randomScale = Random.Range(2.0f, 4.0f);
 		newTreePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 	}
-	void CreateNewTree_02(int x, int y)
+	private void CreateNewTree_02(int x, int y)
 	{
 		if (setting.treeSetting.tree_02Prefab == null)
 			return;
@@ -57,7 +57,7 @@ public class Chunk : MonoBehaviour
 		newTreePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 	}
 
-	void CreateNewRock_05(int x, int y)
+	private void CreateNewRock_05(int x, int y)
 	{
 		if (setting.rockSetting.rock_05Prefab == null)
 			return;
@@ -73,7 +73,7 @@ public class Chunk : MonoBehaviour
 		newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 	}
 
-	void CreateNewGrass_Patch_05(int x, int y)
+	private void CreateNewGrass_Patch_05(int x, int y)
 	{
 		if (setting.grassSetting.grass_Patch_02Prefab == null)
 			return;
@@ -89,7 +89,7 @@ public class Chunk : MonoBehaviour
 		newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 	}
 
-	void ComputeHeightmap()
+	private void ComputeHeightmap()
 	{
 		if (setting == null)
 			return;
@@ -97,7 +97,7 @@ public class Chunk : MonoBehaviour
 		var offset = new Vector2(transform.position.x, transform.position.z);
 		heightmap = setting.ComputeHeightmap(offset);
 	}
-	void GenerateMesh()
+	private void GenerateMesh()
 	{
 		if (heightmap == null)
 			return;
@@ -164,7 +164,7 @@ public class Chunk : MonoBehaviour
 		meshFilter.mesh = mesh;
 		meshCollider.sharedMesh = mesh;
 	}
-	void GenerateTexture()
+	private void GenerateTexture()
 	{
 		if (heightmap == null)
 			return;
@@ -173,7 +173,7 @@ public class Chunk : MonoBehaviour
 		mat.SetTexture("Texture2D_dcc01194ebed4494a1e3bbc386c54016", HeightmapUtility.GenerateTextureFromHeightmap(heightmap));
 		meshRenderer.material = mat;
 	}
-	void ComputeTreeHeightmap()
+	private void ComputeTreeHeightmap()
 	{
 		if (setting == null)
 			return;
@@ -181,7 +181,7 @@ public class Chunk : MonoBehaviour
 		var offset = new Vector2(transform.position.x, transform.position.z);
 		treeHeightmap = setting.ComputeTreeHeightmap(offset);
 	}
-	void GenerateTree()
+	private void GenerateTree()
 	{
 		if (heightmap == null || treeHeightmap == null)
 			return;
@@ -197,7 +197,7 @@ public class Chunk : MonoBehaviour
 				}
 			}
 	}
-	void ComputeRockHeightmap()
+	private void ComputeRockHeightmap()
 	{
 		if (setting == null)
 			return;
@@ -205,7 +205,7 @@ public class Chunk : MonoBehaviour
 		var offset = new Vector2(transform.position.x, transform.position.z);
 		rockHeightmap = setting.ComputeRockHeightmap(offset);
 	}
-	void GenerateRock()
+	private void GenerateRock()
 	{
 		if (heightmap == null || rockHeightmap == null)
 			return;
@@ -221,7 +221,7 @@ public class Chunk : MonoBehaviour
 				}
 			}
 	}
-	void ComputeGrassHeightmap()
+	private void ComputeGrassHeightmap()
 	{
 		if (setting == null)
 			return;
@@ -229,7 +229,7 @@ public class Chunk : MonoBehaviour
 		var offset = new Vector2(transform.position.x, transform.position.z);
 		grassHeightmap = setting.ComputeGrassHeightmap(offset);
 	}
-	void GenerateGrass()
+	private void GenerateGrass()
 	{
 		if (heightmap == null || grassHeightmap == null)
 			return;

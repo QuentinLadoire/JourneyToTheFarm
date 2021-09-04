@@ -8,7 +8,7 @@ namespace JTTF
 	public class PlayerProgressBar : UIBehaviour
 	{
 		[Header("FarmerProgressBar")]
-		[SerializeField] Image gaugeImage = null;
+		[SerializeField] private Image gaugeImage = null;
 
 		public void SetPercent(float percent)
 		{

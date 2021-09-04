@@ -7,8 +7,8 @@ namespace JTTF
 {
 	public class FarmPlotCanvas : UIBehaviour
 	{
-		Canvas canvas = null;
-		new Camera camera = null;
+		private Canvas canvas = null;
+		private new Camera camera = null;
 
 		protected override void Awake()
 		{

@@ -7,8 +7,8 @@ namespace JTTF
 {
 	public class ItemUI : UIBehaviour
 	{
-		[SerializeField] Image itemIcon = null;
-		[SerializeField] Text itemAmount = null;
+		[SerializeField] private Image itemIcon = null;
+		[SerializeField] private Text itemAmount = null;
 
 		public void SetItem(Item item)
 		{

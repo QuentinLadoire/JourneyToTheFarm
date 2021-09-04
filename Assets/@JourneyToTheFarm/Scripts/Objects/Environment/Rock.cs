@@ -6,10 +6,10 @@ namespace JTTF
 {
     public class Rock : MonoBehaviour
     {
-		[SerializeField] string stoneName = "Stone";
-		[SerializeField] int stoneQuantity = 3;
+		[SerializeField] private string stoneName = "Stone";
+		[SerializeField] private int stoneQuantity = 3;
 
-		bool isHarvested = false;
+		private bool isHarvested = false;
 
 		public bool IsHarvestable()
 		{

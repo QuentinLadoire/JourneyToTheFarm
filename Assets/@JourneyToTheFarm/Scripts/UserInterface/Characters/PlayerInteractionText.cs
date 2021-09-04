@@ -7,7 +7,7 @@ namespace JTTF
 {
     public class PlayerInteractionText : UIBehaviour
     {
-        [SerializeField] Text interactionText = null;
+        [SerializeField] private Text interactionText = null;
 
         public void SetText(string str)
 		{

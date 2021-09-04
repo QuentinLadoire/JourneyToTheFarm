@@ -7,8 +7,8 @@ namespace JTTF
 {
     public class EquipableController : CustomNetworkBehaviour
     {
-        [SerializeField] Transform rightHand = null;
-        [SerializeField] Transform leftHand = null;
+        [SerializeField] private Transform rightHand = null;
+        [SerializeField] private Transform leftHand = null;
 
         protected GameObject equipedObject = null;
 

@@ -7,13 +7,13 @@ namespace JTTF
 	public class Shovel : UsableBehaviour
 	{
 		[Header("Shovel Settings")]
-		[SerializeField] LayerMask raycastLayer = -1;
-		[SerializeField] LayerMask overlapLayer = -1;
-		[SerializeField] GameObject farmPlotPrefab = null;
-		[SerializeField] GameObject farmPlotPreviewPrefab = null;
+		[SerializeField] private LayerMask raycastLayer = -1;
+		[SerializeField] private LayerMask overlapLayer = -1;
+		[SerializeField] private GameObject farmPlotPrefab = null;
+		[SerializeField] private GameObject farmPlotPreviewPrefab = null;
 
-		Transform leftHandTransform = null;
-		PreviewObject farmPlotPreview = null;
+		private Transform leftHandTransform = null;
+		private PreviewObject farmPlotPreview = null;
 		
 		private bool IsConstructible()
 		{

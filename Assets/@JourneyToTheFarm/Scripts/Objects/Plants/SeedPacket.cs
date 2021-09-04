@@ -7,23 +7,14 @@ namespace JTTF
 	public class SeedPacket : UsableBehaviour
 	{
 		[Header("SeedPacket Settings")]
-		[SerializeField] SeedInfo seedInfo = SeedInfo.None;
+		[SerializeField] private SeedInfo seedInfo = SeedInfo.None;
 
-		FarmPlot farmPlot = null;
-		GameObject seedPreview = null;
+		private FarmPlot farmPlot = null;
+		private GameObject seedPreview = null;
 
 		public SeedInfo SeedInfo => seedInfo;
 		
-		protected override bool CheckIsUsable()
-		{
-			farmPlot = OwnerPlayer.InteractableController.InteractableObject as FarmPlot;
-			if (farmPlot != null)
-				return !farmPlot.HasSeed;
-
-			return false;
-		}
-
-		void UpdateFeedback()
+		private void UpdateFeedback()
 		{
 			if (IsUsable)
 			{
@@ -39,6 +30,15 @@ namespace JTTF
 
 				seedPreview.SetActive(false);
 			}
+		}
+
+		protected override bool CheckIsUsable()
+		{
+			farmPlot = OwnerPlayer.InteractableController.InteractableObject as FarmPlot;
+			if (farmPlot != null)
+				return !farmPlot.HasSeed;
+
+			return false;
 		}
 
 		protected override void Awake()

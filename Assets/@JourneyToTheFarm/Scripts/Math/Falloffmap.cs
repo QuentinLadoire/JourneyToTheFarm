@@ -10,6 +10,15 @@ public class FalloffmapData
 
 public class FalloffmapUtility
 {
+    private static float Evaluate(float value)
+	{
+        float pow = 3;
+        float b = 2.2f;
+        var powValue = Mathf.Pow(value, pow);
+
+        return powValue / (powValue + Mathf.Pow((b - b * value), pow));
+	}
+
     public static Texture2D GenerateTextureFromFalloffMap(FalloffmapData falloffMap)
 	{
         Texture2D texture = new Texture2D(falloffMap.resolution, falloffMap.resolution);
@@ -24,15 +33,6 @@ public class FalloffmapUtility
         texture.Apply();
 
         return texture;
-	}
-
-    static float Evaluate(float value)
-	{
-        float pow = 3;
-        float b = 2.2f;
-        var powValue = Mathf.Pow(value, pow);
-
-        return powValue / (powValue + Mathf.Pow((b - b * value), pow));
 	}
 
     public static FalloffmapData GenerateSquareFalloffMap(int resolution)

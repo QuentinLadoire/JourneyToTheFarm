@@ -7,7 +7,7 @@ namespace JTTF
 {
 	public class ShortcutInventoryController : InventoryController
 	{
-		int currentIndex = 0;
+		private int currentIndex = 0;
 
 		protected override int InventorySize => 10;
 
@@ -15,7 +15,7 @@ namespace JTTF
 
 		public Action<int, Item> onSelectedSlotChange = (int index, Item item) => { /*Debug.Log("OnScroll");*/ };
 
-		void ScrollUp()
+		private void ScrollUp()
 		{
 			currentIndex--;
 			if (currentIndex == -1)
@@ -23,7 +23,7 @@ namespace JTTF
 
 			onSelectedSlotChange.Invoke(currentIndex, inventory.ItemArray[currentIndex]);
 		}
-		void ScrollDown()
+		private void ScrollDown()
 		{
 			currentIndex++;
 			if (currentIndex == inventory.SizeMax)
@@ -31,7 +31,7 @@ namespace JTTF
 
 			onSelectedSlotChange.Invoke(currentIndex, inventory.ItemArray[currentIndex]);
 		}
-		void ProcessInput()
+		private void ProcessInput()
 		{
 			var delta = Input.GetAxisRaw("ScrollShortcut");
 			if (delta > 0.0f)

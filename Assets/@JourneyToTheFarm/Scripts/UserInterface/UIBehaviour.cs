@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class UIBehaviour : CustomBehaviour
 {
-	public RectTransform RectTransform => GetRectTransform();
-	RectTransform rectTransform = null;
+	private RectTransform rectTransform = null;
 
-	RectTransform GetRectTransform()
+	public RectTransform RectTransform => GetRectTransform();
+
+	private RectTransform GetRectTransform()
 	{
 		if (rectTransform == null)
 			rectTransform = GetComponent<RectTransform>();

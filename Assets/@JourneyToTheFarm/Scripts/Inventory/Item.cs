@@ -9,7 +9,7 @@ namespace JTTF
 {
     public struct Item
     {
-        static Item noneItem = new Item("NoName", ItemType.None, 0);
+        private static Item noneItem = new Item("NoName", ItemType.None, 0);
 
         public string name;
         public ItemType type;

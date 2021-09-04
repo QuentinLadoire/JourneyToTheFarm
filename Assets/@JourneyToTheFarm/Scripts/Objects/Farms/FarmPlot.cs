@@ -7,7 +7,7 @@ namespace JTTF
     public class FarmPlot : InteractableBehaviour
     {
         [Header("FarmPlot Settings")]
-        [SerializeField] FarmPlotProgressBar progressBar = null;
+        [SerializeField] private FarmPlotProgressBar progressBar = null;
 
         private int currentIndex = -1;
         private GameObject seedObject = null;

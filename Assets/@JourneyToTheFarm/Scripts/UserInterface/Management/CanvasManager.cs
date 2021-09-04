@@ -6,11 +6,11 @@ namespace JTTF
 {
     public class CanvasManager : MonoBehaviour
     {
-        static CanvasManager instance = null;
+        private static CanvasManager instance = null;
 
 		public static GamePanel GamePanel => instance.gamePanel;
 
-		[SerializeField] GamePanel gamePanel = null;
+		[SerializeField] private GamePanel gamePanel = null;
 
 		private void Awake()
 		{

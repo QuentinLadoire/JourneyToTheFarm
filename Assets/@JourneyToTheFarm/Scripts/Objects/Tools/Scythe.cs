@@ -7,9 +7,9 @@ namespace JTTF
 	public class Scythe : UsableBehaviour
 	{
 		[Header("Scythe Settings")]
-		[SerializeField] LayerMask overlapLayer = -1;
+		[SerializeField] private LayerMask overlapLayer = -1;
 
-		readonly List<Grass> grassList = new List<Grass>();
+		readonly private List<Grass> grassList = new List<Grass>();
 
 		private void CheckOverlapGrass()
 		{

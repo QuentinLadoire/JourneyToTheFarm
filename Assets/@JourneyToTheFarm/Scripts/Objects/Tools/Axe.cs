@@ -6,7 +6,7 @@ namespace JTTF
 {
 	public class Axe : UsableBehaviour
 	{
-		Tree tree = null;
+		private Tree tree = null;
 
 		private void UpdateFeedback()
 		{

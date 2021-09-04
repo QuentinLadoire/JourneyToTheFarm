@@ -125,7 +125,7 @@ public class MapGeneration : MonoBehaviour
 
 	readonly List<Chunk> chunkList = new List<Chunk>();
 
-	void CreateNewChunk(int x, int y)
+	private void CreateNewChunk(int x, int y)
 	{
 		if (chunkPrefab == null)
 			return;

@@ -7,7 +7,8 @@ namespace JTTF
     public class Grass : CustomBehaviour
     {
         [Header("Grass Parameters")]
-        [Range(0.0f, 1.0f)] [SerializeField] float dropRate = 1.0f;
+        [Range(0.0f, 1.0f)]
+        [SerializeField] private float dropRate = 1.0f;
 
         public void Harvest(Player player)
 		{

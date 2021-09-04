@@ -7,8 +7,8 @@ namespace JTTF
 	public class UsableBehaviour : EquipableBehaviour, IUsable
 	{
 		[Header("UsableBehaviour Settings")]
-		[SerializeField] float actionDuration = 0.0f;
-		[SerializeField] ActionType actionType = ActionType.None;
+		[SerializeField] private float actionDuration = 0.0f;
+		[SerializeField] private ActionType actionType = ActionType.None;
 
 		private bool isUsable = false;
 		private PlayerInteractionText interactionText = null;

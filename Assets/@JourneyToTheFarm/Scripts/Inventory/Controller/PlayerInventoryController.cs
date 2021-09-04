@@ -34,7 +34,7 @@ namespace JTTF
 			ProcessInput();
 		}
 
-		void ProcessInput()
+		private void ProcessInput()
 		{
 			if (Input.GetButtonDown("Inventory"))
 			{

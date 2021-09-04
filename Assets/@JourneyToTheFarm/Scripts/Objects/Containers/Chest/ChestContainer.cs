@@ -7,8 +7,8 @@ namespace JTTF
 {
 	public class ChestContainer : InteractableBehaviour
 	{
-		Animator animator = null;
-		ChestInventoryController inventoryController = null;
+		private Animator animator = null;
+		private ChestInventoryController inventoryController = null;
 
 		private void OnInventoryClose()
 		{

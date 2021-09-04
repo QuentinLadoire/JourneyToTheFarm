@@ -7,9 +7,9 @@ namespace JTTF
 	public class InteractableBehaviour : CustomBehaviour, IInteractable
 	{
 		[Header("InteractableBehaviour Settings")]
-		[SerializeField] float actionDuration = 0.0f;
-		[SerializeField] ActionType actionType = ActionType.None;
-		[SerializeField] GameObject interactableImage = null;
+		[SerializeField] private float actionDuration = 0.0f;
+		[SerializeField] private ActionType actionType = ActionType.None;
+		[SerializeField] private GameObject interactableImage = null;
 
 		private bool isInteractable = false;
 		private PlayerInteractionText interactionText = null;

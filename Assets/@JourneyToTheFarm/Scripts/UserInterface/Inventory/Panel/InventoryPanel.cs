@@ -14,7 +14,7 @@ namespace JTTF
 
         public InventoryController Controller => controller;
 
-        void OnInventoryChange()
+        private void OnInventoryChange()
 		{
             RefreshInventory();
         }

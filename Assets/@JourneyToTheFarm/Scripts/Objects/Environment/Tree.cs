@@ -6,32 +6,16 @@ namespace JTTF
 {
     public class Tree : MonoBehaviour
     {
-        [SerializeField] string logName = "Log";
-		[SerializeField] int logQuantity = 3;
-		[SerializeField] float lifeTime = 0.0f;
-		[SerializeField] GameObject modelObject = null;
+        [SerializeField] private string logName = "Log";
+		[SerializeField] private int logQuantity = 3;
+		[SerializeField] private float lifeTime = 0.0f;
+		[SerializeField] private GameObject modelObject = null;
 
-		Rigidbody rigidbodyModel = null;
-		float currentLifeTime = 0.0f;
-        bool isHarvested = false;
+		private Rigidbody rigidbodyModel = null;
+		private float currentLifeTime = 0.0f;
+        private bool isHarvested = false;
 
-        public bool IsHarvestable()
-		{
-            return !isHarvested;
-		}
-		public void Harvest(Player player)
-		{
-			isHarvested = true;
-			currentLifeTime = lifeTime;
-			rigidbodyModel.isKinematic = false;
-
-			for (int i = 0; i < logQuantity; i++)
-			{
-				World.DropItem(new Item(logName, ItemType.Resource, 1), transform.position + Vector3.up * 0.5f);
-			}
-		}
-
-		void UpdateVisibleModel()
+		private void UpdateVisibleModel()
 		{
 			if (isHarvested)
 			{
@@ -49,6 +33,22 @@ namespace JTTF
 		private void Update()
 		{
 			UpdateVisibleModel();
+		}
+
+		public bool IsHarvestable()
+		{
+            return !isHarvested;
+		}
+		public void Harvest(Player player)
+		{
+			isHarvested = true;
+			currentLifeTime = lifeTime;
+			rigidbodyModel.isKinematic = false;
+
+			for (int i = 0; i < logQuantity; i++)
+			{
+				World.DropItem(new Item(logName, ItemType.Resource, 1), transform.position + Vector3.up * 0.5f);
+			}
 		}
 	}
 }

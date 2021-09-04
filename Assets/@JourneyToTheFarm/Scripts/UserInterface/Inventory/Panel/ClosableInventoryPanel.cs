@@ -8,11 +8,11 @@ namespace JTTF
     public class ClosableInventoryPanel : InventoryPanel
     {
         [Header("Closable Inventory Panel Parameters")]
-        [SerializeField] Button closeButton = null;
+        [SerializeField] private Button closeButton = null;
 
-        IClosable closable = null;
+        private IClosable closable = null;
 
-        void OnClickButton()
+        private void OnClickButton()
         {
             if (closable != null && !closable.Equals(null))
                 closable.CloseInventory();

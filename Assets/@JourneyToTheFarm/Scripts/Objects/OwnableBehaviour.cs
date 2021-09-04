@@ -6,7 +6,7 @@ namespace JTTF
 {
 	public class OwnableBehaviour : CustomBehaviour, IOwnable
 	{
-		Player ownerPlayer = null;
+		private Player ownerPlayer = null;
 
 		public Player OwnerPlayer => ownerPlayer;
 

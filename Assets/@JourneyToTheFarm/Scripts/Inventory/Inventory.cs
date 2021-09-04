@@ -6,16 +6,16 @@ namespace JTTF
 {
     public class Inventory
     {
+        private readonly Item[] itemArray = null;
+
         public Item[] ItemArray => itemArray;
         public int SizeMax => itemArray.Length;
 
-        readonly Item[] itemArray = null;
-
-        bool IndexIsGood(int index)
+        private bool IndexIsGood(int index)
 		{
             return index >= 0 && index < SizeMax;
 		}
-        void ClearItemAt(int index)
+        private void ClearItemAt(int index)
 		{
             itemArray[index] = Item.None;
 		}

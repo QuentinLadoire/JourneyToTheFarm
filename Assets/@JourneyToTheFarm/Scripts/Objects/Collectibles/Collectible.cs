@@ -7,22 +7,22 @@ namespace JTTF
     public class Collectible : CustomBehaviour
     {
 		[Header("Collectible Parameters")]
-		[SerializeField] TriggerBehaviour trigger = null;
-		[SerializeField] string itemName = "NoName";
-		[SerializeField] ItemType itemType = ItemType.None;
+		[SerializeField] private TriggerBehaviour trigger = null;
+		[SerializeField] private string itemName = "NoName";
+		[SerializeField] private ItemType itemType = ItemType.None;
 
-		new Rigidbody rigidbody = null;
+		private new Rigidbody rigidbody = null;
 
 		public string ItemName => itemName;
 		public ItemType ItemType => itemType;
 		public Rigidbody Rigidbody => rigidbody;
 
-		void Collect(Player player)
+		private void Collect(Player player)
 		{
 			if (player.AddItem(new Item(ItemName, ItemType, 1)))
 				Destroy();
 		}
-		void OnTriggerEnterCallback(Collider other)
+		private void OnTriggerEnterCallback(Collider other)
 		{
 			var player = other.gameObject.GetComponentInParent<Player>();
 			if (player != null)

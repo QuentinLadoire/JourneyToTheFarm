@@ -6,11 +6,11 @@ namespace JTTF
 {
 	public class TPCameraController : MonoBehaviour
 	{
-		[SerializeField] float speed = 5.0f;
-		[SerializeField] float farOffset = -5.0f;
-		[SerializeField] float angularSpeed = 1.0f;
-		[SerializeField] GameObject cameraObject = null;
-		[SerializeField] Vector3 followingOffset = Vector3.zero;
+		[SerializeField] private float speed = 5.0f;
+		[SerializeField] private float farOffset = -5.0f;
+		[SerializeField] private float angularSpeed = 1.0f;
+		[SerializeField] private GameObject cameraObject = null;
+		[SerializeField] private Vector3 followingOffset = Vector3.zero;
 
 		private GameObject followingObject = null;
 		private MovementController characterController = null;

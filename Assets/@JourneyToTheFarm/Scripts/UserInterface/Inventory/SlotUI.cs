@@ -6,11 +6,11 @@ namespace JTTF
 {
 	public class SlotUI : UIBehaviour, IDragable, IDropable
 	{
-		[SerializeField] ItemUI itemUI = null;
+		[SerializeField] private ItemUI itemUI = null;
 
-		int index = -1;
-		Item item = Item.None;
-		InventoryPanel ownerPanel = null;
+		private int index = -1;
+		private Item item = Item.None;
+		private InventoryPanel ownerPanel = null;
 
 		public void Init(int index, InventoryPanel owner)
 		{

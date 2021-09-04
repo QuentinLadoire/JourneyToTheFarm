@@ -8,7 +8,7 @@ namespace JTTF
     {
         public const float dropForce = 5.0f;
 
-        static Vector3 GetRandomDirection()
+        private static Vector3 GetRandomDirection()
 		{
             var direction = Random.insideUnitSphere;
             direction.y = 0.9f;

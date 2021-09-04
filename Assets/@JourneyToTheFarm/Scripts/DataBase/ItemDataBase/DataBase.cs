@@ -15,7 +15,7 @@ namespace JTTF
 
         public ItemAsset DefaultItemAsset = new ItemAsset();
 
-        ItemAsset GetToolItemAsset(string name)
+        private ItemAsset GetToolItemAsset(string name)
 		{
             foreach (var item in toolItems)
                 if (item.name == name)
@@ -23,7 +23,7 @@ namespace JTTF
 
             return DefaultItemAsset;
 		}
-        ItemAsset GetSeedItemAsset(string name)
+        private ItemAsset GetSeedItemAsset(string name)
 		{
             foreach (var item in seedPackets)
                 if (item.name == name)
@@ -31,7 +31,7 @@ namespace JTTF
 
             return DefaultItemAsset;
 		}
-        ItemAsset GetRessourceItemAsset(string name)
+        private ItemAsset GetRessourceItemAsset(string name)
 		{
             foreach (var item in ressourceItems)
                 if (item.name == name)
@@ -39,7 +39,7 @@ namespace JTTF
 
             return DefaultItemAsset;
 		}
-        ItemAsset GetContainerItemAsset(string name)
+        private ItemAsset GetContainerItemAsset(string name)
 		{
             foreach (var item in containerItems)
                 if (item.name == name)
@@ -47,7 +47,7 @@ namespace JTTF
 
             return DefaultItemAsset;
 		}
-        ItemAsset GetWorkbenchItemAsset(string name)
+        private ItemAsset GetWorkbenchItemAsset(string name)
 		{
             foreach (var item in workbenchItems)
                 if (item.name == name)
@@ -55,6 +55,7 @@ namespace JTTF
 
             return DefaultItemAsset;
 		}
+
         public ItemAsset GetItemAsset(string name, ItemType type)
 		{
             return type switch

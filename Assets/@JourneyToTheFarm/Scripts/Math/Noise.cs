@@ -2,7 +2,7 @@ using System;
 
 public static class Noise
 {
-	static readonly int[] perm = {
+	private static readonly int[] perm = {
 		151, 160, 137,  91,  90,  15, 131,  13, 201,  95,  96,  53, 194, 233,
 		  7, 225, 140,  36, 103,  30,  69, 142,   8,  99,  37, 240,  21,  10,
 		 23, 190,   6, 148, 247, 120, 234,  75,   0,  26, 197,  62,  94, 252,
@@ -44,16 +44,16 @@ public static class Noise
 		215,  61, 156, 180
 	};
 
-	static float Fade(float t)
+	private static float Fade(float t)
 	{
 		return t * t * t * (t * (t * 6 - 15) + 10);
 	}
-	static float Lerp(float a, float b, float t)
+	private static float Lerp(float a, float b, float t)
 	{
 		return a + t * (b - a);
 	}
 
-	static float Grad(int hash, float x, float y)
+	private static float Grad(int hash, float x, float y)
 	{
 		return (hash & 0x3) switch
 		{
@@ -64,7 +64,7 @@ public static class Noise
 			_ => 0 // never happens
 		};
 	}
-	static float Grad(int hash, float x, float y, float z)
+	private static float Grad(int hash, float x, float y, float z)
 	{
 		return (hash & 0xF) switch
 		{

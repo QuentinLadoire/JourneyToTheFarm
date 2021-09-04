@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable 0044
+
 namespace JTTF
 {
 	public class MovementController : CustomNetworkBehaviour
 	{
-		[SerializeField] readonly private float moveSpeed = 5.0f;
-		[SerializeField] readonly private float jumpForce = 5.0f;
+		[SerializeField] private float moveSpeed = 5.0f;
+		[SerializeField] private float jumpForce = 5.0f;
 		[SerializeField] private LayerMask layer = -1;
 		[SerializeField] private TPCameraController cameraController = null;
 
@@ -35,7 +37,7 @@ namespace JTTF
 		public Action onMoveExit = () => { /*Debug.Log("OnHasIdle");*/ };
 		public Action onMoveEnter = () => { /*Debug.Log("OnHasMove");*/ };
 
-		void ProcessInput()
+		private void ProcessInput()
 		{
 			var x = Input.GetAxisRaw("Horizontal") * transform.right;
 			var z = Input.GetAxisRaw("Vertical") * transform.forward;
@@ -45,12 +47,12 @@ namespace JTTF
 			previousDirection = direction;
 			direction = (x + z).normalized;
 		}
-		void ProcessMovement()
+		private void ProcessMovement()
 		{
 			previousPosition = transform.position;
 			rigidbody.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
 		}
-		void ProcessJump()
+		private void ProcessJump()
 		{
 			hasJump = false;
 			if (wantJump && Physics.CheckSphere(transform.position + Vector3.up * 0.5f, 0.55f, layer))
@@ -59,7 +61,7 @@ namespace JTTF
 				hasJump = true;
 			}
 		}
-		void ProcessRotation()
+		private void ProcessRotation()
 		{
 			if (followingCamera == null) { Debug.LogError("Following Camera is Null"); return; }
 			if (IsIdle == true) return;
@@ -68,7 +70,7 @@ namespace JTTF
 			transform.rotation = cameraRotation;
 		}
 
-		void ProcessEvents()
+		private void ProcessEvents()
 		{
 			if (direction != Vector3.zero && previousDirection == Vector3.zero)
 				onMoveEnter.Invoke();

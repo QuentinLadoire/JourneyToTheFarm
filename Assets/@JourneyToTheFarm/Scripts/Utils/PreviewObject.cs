@@ -6,10 +6,17 @@ namespace JTTF
 {
 	public class PreviewObject : CustomBehaviour
 	{
-		[SerializeField] Color blueColor = new Color(230, 255, 255);
-		[SerializeField] Color redColor = Color.red;
+		[SerializeField] private Color blueColor = new Color(230, 255, 255);
+		[SerializeField] private Color redColor = Color.red;
 
-		MeshRenderer[] meshRenderers = null;
+		private MeshRenderer[] meshRenderers = null;
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			meshRenderers = GetComponentsInChildren<MeshRenderer>();
+		}
 
 		public void SetBlueColor()
 		{
@@ -20,13 +27,6 @@ namespace JTTF
 		{
 			foreach (var renderer in meshRenderers)
 				renderer.material.color = redColor;
-		}
-
-		protected override void Awake()
-		{
-			base.Awake();
-
-			meshRenderers = GetComponentsInChildren<MeshRenderer>();
 		}
 	}
 }

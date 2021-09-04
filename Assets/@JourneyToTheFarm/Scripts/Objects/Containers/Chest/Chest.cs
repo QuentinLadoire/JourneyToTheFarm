@@ -7,12 +7,12 @@ namespace JTTF
 	public class Chest : UsableBehaviour
 	{
 		[Header("Chest Settings")]
-		[SerializeField] LayerMask raycastLayer = -1;
-		[SerializeField] LayerMask overlapLayer = -1;
-		[SerializeField] GameObject chestPrefab = null;
-		[SerializeField] GameObject chestPreviewPrefab = null;
+		[SerializeField] private LayerMask raycastLayer = -1;
+		[SerializeField] private LayerMask overlapLayer = -1;
+		[SerializeField] private GameObject chestPrefab = null;
+		[SerializeField] private GameObject chestPreviewPrefab = null;
 
-		PreviewObject chestPreview = null;
+		private PreviewObject chestPreview = null;
 		
 		private bool IsConstructible()
 		{

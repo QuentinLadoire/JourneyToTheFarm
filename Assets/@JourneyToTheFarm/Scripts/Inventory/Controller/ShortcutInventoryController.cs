@@ -46,14 +46,28 @@ namespace JTTF
 
 			OwnerPlayer = GetComponent<Player>();
 		}
-		protected virtual void Start()
+		protected override void Start()
 		{
+			base.Start();
+			
+			if (!(this.IsClient && this.IsLocalPlayer))
+			{
+				this.enabled = false;
+				return;
+			}
+			
 			CanvasManager.GamePanel.InitShortcutInventory(this);
-
+		}
+		protected override void FirstFrameUpdate()
+		{
+			base.FirstFrameUpdate();
+			
 			onSelectedSlotChange.Invoke(currentIndex, inventory.ItemArray[currentIndex]); //Call for Instantiate the item at game start, if item exist
 		}
-		private void Update()
+		protected override void Update()
 		{
+			base.Update();
+
 			ProcessInput();
 		}
 

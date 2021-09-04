@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class InteractableController : MonoBehaviour
+    public class InteractableController : CustomNetworkBehaviour
     {
         [SerializeField] private float checkRadius = 1.0f;
 
@@ -107,18 +107,29 @@ namespace JTTF
                 StartInteraction();
         }
 
-		protected virtual void Awake()
+		protected override void Awake()
 		{
+            base.Awake();
+
             ownerPlayer = GetComponent<Player>();
+		}
+        protected override void Start()
+		{
+            base.Start();
+
+            if (!(this.IsClient && this.IsLocalPlayer))
+			{
+                this.enabled = false;
+                return;
+			}
 
             playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
-		}
-        protected virtual void Start()
-		{
             OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
         }
-		private void Update()
+		protected override void Update()
 		{
+            base.Update();
+
 			if (OwnerPlayer.CharacterController.HasControl)
 			{
                 CheckHasNearestInteractableObject();
@@ -128,8 +139,10 @@ namespace JTTF
                 UpdateInteractionTime();
 			}
 		}
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
+            base.OnDestroy();
+
             OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
 		}
 	}

@@ -6,6 +6,13 @@ public class CustomBehaviour : MonoBehaviour
 {
 	[SerializeField] bool isActiveOnAwake = true;
 
+	private bool firstFrame = true;
+
+	protected virtual void FirstFrameUpdate()
+	{
+		
+	}
+
 	protected virtual void Awake()
 	{
 		SetActive(isActiveOnAwake);
@@ -16,7 +23,11 @@ public class CustomBehaviour : MonoBehaviour
 	}
 	protected virtual void Update()
 	{
-
+		if (firstFrame)
+		{
+			FirstFrameUpdate();
+			firstFrame = false;
+		}
 	}
 	protected virtual void OnDestroy()
 	{

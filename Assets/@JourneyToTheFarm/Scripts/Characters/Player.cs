@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class Player : MonoBehaviour
+    public class Player : CustomNetworkBehaviour
     {
-        public CharacterController CharacterController { get; private set; }
+        public MovementController CharacterController { get; private set; }
         public AnimationController AnimationController { get; private set; }
         public PlayerInventoryController InventoryController { get; private set; }
         public ShortcutInventoryController ShortcutController { get; private set; }
@@ -15,11 +15,13 @@ namespace JTTF
         public InteractableController InteractableController { get; private set; }
         public EquipableController EquipableController { get; private set; }
 
-        protected virtual void Awake()
+        protected override void Awake()
 		{
+            base.Awake();
+
             GameManager.player = this;
 
-            CharacterController = GetComponent<CharacterController>();
+            CharacterController = GetComponent<MovementController>();
             AnimationController = GetComponent<AnimationController>();
             InventoryController = GetComponent<PlayerInventoryController>();
             ShortcutController = GetComponent<ShortcutInventoryController>();
@@ -27,8 +29,16 @@ namespace JTTF
             InteractableController = GetComponent<InteractableController>();
             EquipableController = GetComponent<EquipableController>();
 		}
-		private void Start()
+		protected override void Start()
 		{
+            base.Start();
+            
+            if (!(this.IsClient && this.IsLocalPlayer))
+			{
+                this.enabled = false;
+                return;
+			}
+
             ShortcutController.AddItem(new Item("Shovel", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Axe", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
@@ -38,7 +48,7 @@ namespace JTTF
             ShortcutController.AddItem(new Item("Wheat", ItemType.Resource, 50));
         }
 
-        public bool AddItem(Item item)
+		public bool AddItem(Item item)
 		{
             return ShortcutController.AddItem(item) || InventoryController.AddItem(item);
 		}

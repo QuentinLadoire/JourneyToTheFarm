@@ -13,7 +13,7 @@ namespace JTTF
 		[SerializeField] Vector3 followingOffset = Vector3.zero;
 
 		private GameObject followingObject = null;
-		private CharacterController characterController = null;
+		private MovementController characterController = null;
 
 		public GameObject CameraObject => cameraObject;
 
@@ -63,7 +63,7 @@ namespace JTTF
 
 			if (followingObject != null)
 			{
-				characterController = followingObject.GetComponent<CharacterController>();
+				characterController = followingObject.GetComponent<MovementController>();
 				transform.position = followingObject.transform.position + followingOffset;
 			}
 		}

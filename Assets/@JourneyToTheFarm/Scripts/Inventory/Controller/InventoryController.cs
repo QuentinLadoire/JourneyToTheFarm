@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class InventoryController : MonoBehaviour
+    public class InventoryController : CustomNetworkBehaviour
     {
 		protected virtual int InventorySize => 0;
 
@@ -14,8 +14,10 @@ namespace JTTF
 		public Inventory Inventory => inventory;
 		public Action onInventoryChange = () => { /*Debug.Log("OnInventoryChange");*/ };
 
-		protected virtual void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			inventory = new Inventory(InventorySize);
 		}
 

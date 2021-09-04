@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class UsableObjectController : MonoBehaviour
+    public class UsableObjectController : CustomNetworkBehaviour
     {
 		private bool inUse = false;
 		private Player ownerPlayer = null;
@@ -85,17 +85,31 @@ namespace JTTF
 				StartToUseObject();
 		}
 
-		protected virtual void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			ownerPlayer = GetComponent<Player>();
+		}
+		protected override void Start()
+		{
+			base.Start();
+
+			if (!(this.IsClient && this.IsLocalPlayer))
+			{
+				this.enabled = false;
+				return;
+			}
 
 			OwnerPlayer.EquipableController.onEquipedObjectChange += OnEquipedObjectChange;
 			OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
 
 			playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
 		}
-		private void Update()
+		protected override void Update()
 		{
+			base.Update();
+
 			if (OwnerPlayer.CharacterController.HasControl)
 			{
 				ProcessInput();
@@ -103,8 +117,10 @@ namespace JTTF
 				UpdateUseTime();
 			}
 		}
-		private void OnDestroy()
+		protected override void OnDestroy()
 		{
+			base.OnDestroy();
+
 			OwnerPlayer.EquipableController.onEquipedObjectChange -= OnEquipedObjectChange;
 			OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
 		}

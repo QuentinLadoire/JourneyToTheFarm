@@ -19,7 +19,17 @@ namespace JTTF
 
 			ownerPlayer = GetComponent<Player>();
 		}
-		private void Update()
+		protected override void Start()
+		{
+			base.Start();
+
+			if (!(this.IsClient && this.IsLocalPlayer))
+			{
+				this.enabled = false;
+				return;
+			}
+		}
+		protected override void Update()
 		{
 			ProcessInput();
 		}

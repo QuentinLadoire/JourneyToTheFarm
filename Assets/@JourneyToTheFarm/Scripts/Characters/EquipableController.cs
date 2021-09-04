@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class EquipableController : MonoBehaviour
+    public class EquipableController : CustomNetworkBehaviour
     {
         [SerializeField] Transform rightHand = null;
         [SerializeField] Transform leftHand = null;
@@ -51,25 +51,7 @@ namespace JTTF
 				ownable.SetOwner(OwnerPlayer);
 		}
 
-		protected virtual void Awake()
-        {
-            OwnerPlayer = GetComponent<Player>();
-        }
-		protected virtual void Start()
-		{
-			OwnerPlayer.ShortcutController.onSelectedSlotChange += OnSelectedSlotChange;
-		}
-		protected virtual void OnDestroy()
-		{
-			OwnerPlayer.ShortcutController.onSelectedSlotChange -= OnSelectedSlotChange;
-		}
-
-		protected virtual void ChangeEquipedObject(Item item)
-		{
-			SetEquipedObject(item);
-		}
-
-		public void SetEquipedObject(Item item)
+		private void ChangeEquipedObject(Item item)
 		{
 			ClearEquipedObject();
 			InstantiateObject(item);
@@ -77,6 +59,31 @@ namespace JTTF
 			CheckIsOwnable();
 
 			onEquipedObjectChange.Invoke(equipedObject);
+		}
+
+		protected override void Awake()
+        {
+			base.Awake();
+
+            OwnerPlayer = GetComponent<Player>();
+        }
+		protected override void Start()
+		{
+			base.Start();
+
+			if (!(this.IsClient && this.IsLocalPlayer))
+			{
+				this.enabled = false;
+				return;
+			}
+
+			OwnerPlayer.ShortcutController.onSelectedSlotChange += OnSelectedSlotChange;
+		}
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+
+			OwnerPlayer.ShortcutController.onSelectedSlotChange -= OnSelectedSlotChange;
 		}
 	}
 }

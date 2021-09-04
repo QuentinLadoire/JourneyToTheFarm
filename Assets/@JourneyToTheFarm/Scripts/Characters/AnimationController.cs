@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-    public class AnimationController : MonoBehaviour
+    public class AnimationController : CustomNetworkBehaviour
     {
 		[Header("DigAnimation")]
 		[SerializeField] float digAnimationDuration = 0.0f;
@@ -199,26 +199,40 @@ namespace JTTF
 			animator.speed = speed;
 		}
 
-		protected virtual void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			ownerPlayer = GetComponent<Player>();
 			animator = GetComponentInChildren<Animator>();
 		}
-		protected virtual void Start()
+		protected override void Start()
 		{
+			base.Start();
+			
+			if (!(this.IsClient && this.IsLocalPlayer))
+			{
+				this.enabled = false;
+				return;
+			}
+
 			OwnerPlayer.UsableObjectController.onStartToUseObject += OnStartToUseObject;
 			OwnerPlayer.UsableObjectController.onStopToUseObject += OnStopToUseObject;
 
 			OwnerPlayer.InteractableController.onStartToInteract += OnStartToInteract;
 			OwnerPlayer.InteractableController.onStopToInteract += OnStopToInteract;
 		}
-		protected virtual void Update()
+		protected override void Update()
 		{
+			base.Update();
+
 			if (!inAction)
 				MovementAnimation(OwnerPlayer.CharacterController.Direction);
 		}
-		protected virtual void OnDestroy()
+		protected override void OnDestroy()
 		{
+			base.OnDestroy();
+
 			OwnerPlayer.UsableObjectController.onStartToUseObject -= OnStartToUseObject;
 			OwnerPlayer.UsableObjectController.onStopToUseObject -= OnStopToUseObject;
 

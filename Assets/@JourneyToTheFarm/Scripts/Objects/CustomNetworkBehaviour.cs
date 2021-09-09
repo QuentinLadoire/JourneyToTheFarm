@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
 
+[RequireComponent(typeof(NetworkObject))]
 public class CustomNetworkBehaviour : NetworkBehaviour
 {
 	[SerializeField] private bool isActiveOnAwake = true;

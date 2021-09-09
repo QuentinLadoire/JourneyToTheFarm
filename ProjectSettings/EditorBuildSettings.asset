@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/@JourneyToTheFarm/GameAssets/Scenes/MainMenu/MainMenu.unity
+    guid: 89a5719a64134a94aa40396855abdf79
+  - enabled: 1
+    path: Assets/@JourneyToTheFarm/GameAssets/Scenes/Lobby/Lobby.unity
+    guid: 0a8b4a0b291f0634ca12b5ea93ce293d
+  - enabled: 1
+    path: Assets/@JourneyToTheFarm/GameAssets/Scenes/MapGeneration/MapGeneration.unity
+    guid: 65b3f3be24172084ba7e3bf97336e74e
+  - enabled: 1
     path: Assets/@JourneyToTheFarm/Test/Scenes/NetworkTest.unity
     guid: ff152e1e9b1dcef40bab9dd68d43bb76
   m_configObjects: {}

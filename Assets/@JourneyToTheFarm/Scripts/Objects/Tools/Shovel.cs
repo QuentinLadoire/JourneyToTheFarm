@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
+using MLAPI.Messaging;
 
 namespace JTTF
 {
@@ -81,9 +83,11 @@ namespace JTTF
 		}
 		public override void Use()
 		{
-			var farmPlot = Instantiate(farmPlotPrefab);
-			farmPlot.transform.position = farmPlotPreview.transform.position;
-			farmPlot.transform.up = farmPlotPreview.transform.up;
+			World.Instantiate(farmPlotPrefab, farmPlotPreview.transform.position, farmPlotPreview.transform.rotation);
+
+			//var farmPlot = Instantiate(farmPlotPrefab);
+			//farmPlot.transform.position = farmPlotPreview.transform.position;
+			//farmPlot.transform.rotation = farmPlotPreview.transform.rotation;
 		}
 	}
 }

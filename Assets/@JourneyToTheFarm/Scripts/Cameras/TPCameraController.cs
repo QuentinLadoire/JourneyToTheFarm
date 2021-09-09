@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable IDE0044
+#pragma warning disable IDE0051
+
 namespace JTTF
 {
-	public class TPCameraController : MonoBehaviour
+	public class TPCameraController : CustomBehaviour
 	{
 		[SerializeField] private float speed = 5.0f;
 		[SerializeField] private float farOffset = -5.0f;
@@ -36,12 +39,16 @@ namespace JTTF
 			transform.position = Vector3.MoveTowards(transform.position, followingObject.transform.position + followingOffset, speed * Time.deltaTime);
 		}
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			GameManager.playerCamera = cameraObject.GetComponent<Camera>();
 		}
-		private void Update()
+		protected override void Update()
 		{
+			base.Update();
+
 			if (characterController.HasControl)
 				CameraRotation();
 

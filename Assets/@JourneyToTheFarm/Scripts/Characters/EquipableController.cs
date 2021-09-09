@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable IDE0044
+
 namespace JTTF
 {
     public class EquipableController : CustomNetworkBehaviour

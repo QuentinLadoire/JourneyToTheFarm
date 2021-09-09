@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#pragma warning disable 0044
+#pragma warning disable IDE0044
 
 namespace JTTF
 {
@@ -63,7 +63,7 @@ namespace JTTF
 		}
 		private void ProcessRotation()
 		{
-			if (followingCamera == null) { Debug.LogError("Following Camera is Null"); return; }
+			if (followingCamera == null) { Debug.LogWarning("Following Camera is Null"); return; }
 			if (IsIdle == true) return;
 
 			var cameraRotation = Quaternion.LookRotation(Vector3.Scale(followingCamera.transform.forward, new Vector3(1.0f, 0.0f, 1.0f)));
@@ -92,15 +92,19 @@ namespace JTTF
 			ownerPlayer = GetComponent<Player>();
 			rigidbody = GetComponent<Rigidbody>();
 		}
-		protected override void Start()
+		public override void NetworkStart()
 		{
-			base.Start();
+			base.NetworkStart();
 
 			if (!(this.IsClient && this.IsLocalPlayer))
 			{
 				this.enabled = false;
 				return;
 			}
+		}
+		protected override void Start()
+		{
+			base.Start();
 
 			if (cameraController == null)
 				cameraController = Instantiate(GameManager.PrefabDataBase.CameraControllerPrefab).GetComponent<TPCameraController>();

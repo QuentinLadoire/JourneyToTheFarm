@@ -115,15 +115,19 @@ namespace JTTF
 
             ownerPlayer = GetComponent<Player>();
 		}
-        protected override void Start()
+		public override void NetworkStart()
 		{
-            base.Start();
+			base.NetworkStart();
 
             if (!(this.IsClient && this.IsLocalPlayer))
-			{
+            {
                 this.enabled = false;
                 return;
-			}
+            }
+        }
+		protected override void Start()
+		{
+            base.Start();
 
             playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
             OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;

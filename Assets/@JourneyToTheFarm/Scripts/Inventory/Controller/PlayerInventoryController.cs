@@ -19,9 +19,9 @@ namespace JTTF
 
 			ownerPlayer = GetComponent<Player>();
 		}
-		protected override void Start()
+		public override void NetworkStart()
 		{
-			base.Start();
+			base.NetworkStart();
 
 			if (!(this.IsClient && this.IsLocalPlayer))
 			{

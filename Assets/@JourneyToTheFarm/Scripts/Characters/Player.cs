@@ -29,15 +29,19 @@ namespace JTTF
             InteractableController = GetComponent<InteractableController>();
             EquipableController = GetComponent<EquipableController>();
 		}
+		public override void NetworkStart()
+		{
+			base.NetworkStart();
+
+            if (!(this.IsClient && this.IsLocalPlayer))
+            {
+                this.enabled = false;
+                return;
+            }
+        }
 		protected override void Start()
 		{
             base.Start();
-            
-            if (!(this.IsClient && this.IsLocalPlayer))
-			{
-                this.enabled = false;
-                return;
-			}
 
             ShortcutController.AddItem(new Item("Shovel", ItemType.Tool, 1));
             ShortcutController.AddItem(new Item("Axe", ItemType.Tool, 1));

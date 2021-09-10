@@ -208,16 +208,20 @@ namespace JTTF
 			ownerPlayer = GetComponent<Player>();
 			animator = GetComponentInChildren<Animator>();
 		}
-		protected override void Start()
+		public override void NetworkStart()
 		{
-			base.Start();
-			
+			base.NetworkStart();
+
 			if (!(this.IsClient && this.IsLocalPlayer))
 			{
 				this.enabled = false;
 				return;
 			}
-
+		}
+		protected override void Start()
+		{
+			base.Start();
+			
 			OwnerPlayer.UsableObjectController.onStartToUseObject += OnStartToUseObject;
 			OwnerPlayer.UsableObjectController.onStopToUseObject += OnStopToUseObject;
 

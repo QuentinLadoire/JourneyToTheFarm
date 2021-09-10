@@ -146,7 +146,6 @@ namespace JTTF.Lobby
 		public void OnStartButtonClicked()
 		{
 			NetworkSceneManager.SwitchScene("NetworkTest");
-			GameManager.PlayMultiplayer();
 		}
 	}
 }

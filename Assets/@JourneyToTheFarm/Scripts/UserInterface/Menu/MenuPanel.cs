@@ -63,10 +63,12 @@ namespace JTTF
 
 		public void OnHostButtonClicked()
 		{
+			GameManager.PlayMultiplayer();
 			NetworkManager.Singleton.StartHost();
 		}
 		public void OnJoinButtonClicked()
 		{
+			GameManager.PlayMultiplayer();
 			NetworkManager.Singleton.StartClient();
 		}
 		public void OnCancelButtonClicked()

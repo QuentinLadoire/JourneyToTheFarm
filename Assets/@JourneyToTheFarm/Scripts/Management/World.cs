@@ -40,24 +40,51 @@ namespace JTTF
             return DropItem(item, spawnPosition, GetRandomDirection());
         }
 
-        public static void Instantiate(GameObject prefab, Vector3 position, Quaternion rotation)
+        public static void SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
         {
             if (prefab == null) return;
 
-            var hash = prefab.GetComponent<NetworkObject>().PrefabHash;
-            instance.InstantiateServerRpc(hash, position, rotation);
+            if (GameManager.IsMulti)
+            {
+                var hash = prefab.GetComponent<NetworkObject>().PrefabHash;
+                instance.SpawnObjectServerRpc(hash, position, rotation);
+            }
+            else
+			{
+                MonoBehaviour.Instantiate(prefab, position, rotation);
+			}
         }
+        public static void SpawnPlayerObject(Vector3 position, Quaternion rotation)
+		{
+            if (GameManager.IsMulti)
+			{
+                instance.SpawnPlayerObjectServerRpc(NetworkManager.Singleton.LocalClientId, position, rotation);
+            }
+            else
+			{
+                MonoBehaviour.Instantiate(GameManager.PrefabDataBase.FarmerControllerPrefab, position, rotation);
+			}
+		}
 
         [ServerRpc(RequireOwnership = false)]
-        private void InstantiateServerRpc(ulong prefabHash, Vector3 position, Quaternion rotation)
+        private void SpawnObjectServerRpc(ulong prefabHash, Vector3 position, Quaternion rotation)
         {
             var index = NetworkSpawnManager.GetNetworkPrefabIndexOfHash(prefabHash);
             var prefab = NetworkManager.NetworkConfig.NetworkPrefabs[index].Prefab;
 
-            var obj = Instantiate(prefab).GetComponent<NetworkObject>();
-            obj.transform.position = position;
-            obj.transform.rotation = rotation;
-            obj.Spawn();
+            var netObject = MonoBehaviour.Instantiate(prefab, position, rotation).GetComponent<NetworkObject>();
+            netObject.Spawn();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void SpawnPlayerObjectServerRpc(ulong clientId, Vector3 position, Quaternion rotation)
+        {
+            var playerPrefab = NetworkManager.Singleton.NetworkConfig.NetworkPrefabs.Find(item => item.PlayerPrefab == true);
+            if (playerPrefab != null)
+            {
+                var netObject = MonoBehaviour.Instantiate(playerPrefab.Prefab, position, rotation).GetComponent<NetworkObject>();
+                netObject.SpawnAsPlayerObject(clientId);
+            }
         }
 
         protected override void Awake()

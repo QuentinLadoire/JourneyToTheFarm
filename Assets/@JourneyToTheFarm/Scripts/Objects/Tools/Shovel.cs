@@ -83,11 +83,7 @@ namespace JTTF
 		}
 		public override void Use()
 		{
-			World.Instantiate(farmPlotPrefab, farmPlotPreview.transform.position, farmPlotPreview.transform.rotation);
-
-			//var farmPlot = Instantiate(farmPlotPrefab);
-			//farmPlot.transform.position = farmPlotPreview.transform.position;
-			//farmPlot.transform.rotation = farmPlotPreview.transform.rotation;
+			World.SpawnObject(farmPlotPrefab, farmPlotPreview.transform.position, farmPlotPreview.transform.rotation);
 		}
 	}
 }

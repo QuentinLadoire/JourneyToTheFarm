@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
 
+#pragma warning disable IDE0044
+#pragma warning disable IDE0051
+
 namespace JTTF
 {
 	public class GameManager : MonoBehaviour

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace JTTF
 {
-	public class InteractableBehaviour : CustomNetworkBehaviour, IInteractable
+	public class InteractableBehaviour : CustomBehaviour, IInteractable
 	{
 		[Header("InteractableBehaviour Settings")]
 		[SerializeField] private float actionDuration = 0.0f;

@@ -151,6 +151,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -191,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3487159894583205710}
   - component: {fileID: 380047522750815728}
+  - component: {fileID: 3813676410516969617}
   - component: {fileID: 4535833760925595130}
   - component: {fileID: 7772301519014029599}
   m_Layer: 0
@@ -235,6 +237,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3813676410516969617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487159894583205711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkInstanceId: 0
+  PrefabHash: 3734737744638954945
+  PrefabHashGenerator: pref_ChestContainer
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
 --- !u!114 &4535833760925595130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bf39a0af5f250459b76c7248c7ef9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 1
 --- !u!114 &7772301519014029599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +336,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

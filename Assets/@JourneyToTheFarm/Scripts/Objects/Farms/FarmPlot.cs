@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable IDE0044
+
 namespace JTTF
 {
     public class FarmPlot : InteractableBehaviour
@@ -12,26 +14,21 @@ namespace JTTF
         private int currentIndex = -1;
         private GameObject seedObject = null;
         private float currentGrowDuration = 0.0f;
-        private SeedInfo seedInfo = SeedInfo.None;
+        private SeedAsset seedAsset = SeedAsset.None;
 
-        public bool HasSeed => seedInfo != SeedInfo.None;
+        public bool HasSeed => seedAsset != SeedAsset.None;
         public bool IsMature => HasSeed && currentGrowDuration <= 0.0f;
 
         private void DropPlant(Player player)
 		{
-            if (World.DropItem(new Item(seedInfo.name, ItemType.Resource, 1), transform.position) == null)
-            {
-                if (!player.ShortcutController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1)))
-                {
-                    player.InventoryController.AddItem(new Item(seedInfo.name, ItemType.Resource, 1));
-                }
-            }
+            if (World.DropItem(new Item(seedAsset.name, ItemType.Resource, 1), transform.position) == null)
+                player.AddItem(new Item(seedAsset.name, ItemType.Resource, 1));
         }
         private void ClearSeed()
 		{
             currentIndex = -1;
             currentGrowDuration = 0.0f;
-            seedInfo = SeedInfo.None;
+            seedAsset = SeedAsset.None;
 
             Destroy(seedObject);
 		}
@@ -45,13 +42,13 @@ namespace JTTF
 		}
         private void UpdateSeedObject(float percent)
 		{
-            var index = (int)((seedInfo.seedStepPrefabs.Length - 1) * percent);
+            var index = (int)((seedAsset.seedStepPrefabs.Length - 1) * percent);
             if (index != currentIndex)
             {
                 if (seedObject != null)
                     Destroy(seedObject);
 
-                seedObject = Instantiate(seedInfo.seedStepPrefabs[index]);
+                seedObject = Instantiate(seedAsset.seedStepPrefabs[index]);
                 seedObject.transform.position = Vector3.zero;
                 seedObject.transform.SetParent(transform, false);
 
@@ -70,7 +67,7 @@ namespace JTTF
 			{
                 if (HasSeed)
 				{
-                    var currentPercent = 1 - (currentGrowDuration / seedInfo.growDuration);
+                    var currentPercent = 1 - (currentGrowDuration / seedAsset.growDuration);
 
                     progressBar.SetActive(true);
                     progressBar.SetPercent(currentPercent);
@@ -91,14 +88,27 @@ namespace JTTF
 		{
             base.Update();
 
-            UpdateGrowing();
-            UpdateFeedback();
+            if (GameManager.IsMulti)
+            {
+                if (NetworkManager.IsServer)
+				{
+                    UpdateGrowing();
+                }
+
+                UpdateFeedback();
+            }
+            else
+			{
+                UpdateGrowing();
+                UpdateFeedback();
+            }
 		}
 
-		public void SetSeed(SeedInfo seedInfo)
+		public void SetSeed(string seedName)
 		{
-            this.seedInfo = seedInfo;
-            currentGrowDuration = seedInfo.growDuration;
+            seedAsset = GameManager.SeedDataBase.GetSeedAsset(seedName);
+            if (seedAsset != SeedAsset.None)
+                currentGrowDuration = seedAsset.growDuration;
         }
 
 		public override void Select()

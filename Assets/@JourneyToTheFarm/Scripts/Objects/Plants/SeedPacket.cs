@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable IDE0044
+
 namespace JTTF
 {
 	public class SeedPacket : UsableBehaviour
 	{
 		[Header("SeedPacket Settings")]
-		[SerializeField] private SeedInfo seedInfo = SeedInfo.None;
+		[SerializeField] private string seedName = "NoName";
 
 		private FarmPlot farmPlot = null;
 		private GameObject seedPreview = null;
 
-		public SeedInfo SeedInfo => seedInfo;
+		public string SeedName => seedName;
 		
 		private void UpdateFeedback()
 		{
@@ -45,8 +47,12 @@ namespace JTTF
 		{
 			base.Awake();
 
-			seedPreview = Instantiate(seedInfo.seedPreviewPrefab);
-			seedPreview.SetActive(false);
+			var seedAsset = GameManager.SeedDataBase.GetSeedAsset(SeedName);
+			if (seedAsset != SeedAsset.None)
+			{
+				seedPreview = Instantiate(seedAsset.seedPreviewPrefab);
+				seedPreview.SetActive(false);
+			}
 		}
 		protected override void Update()
 		{
@@ -64,7 +70,7 @@ namespace JTTF
 		{
 			if (farmPlot != null)
 			{
-				farmPlot.SetSeed(seedInfo);
+				farmPlot.SetSeed(SeedName);
 
 				OwnerPlayer.ShortcutController.ConsumeSelectedItem();
 			}

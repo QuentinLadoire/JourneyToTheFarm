@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable IDE0044
+
 namespace JTTF
 {
-	public class InteractableBehaviour : CustomBehaviour, IInteractable
+	public class InteractableBehaviour : CustomNetworkBehaviour, IInteractable
 	{
 		[Header("InteractableBehaviour Settings")]
 		[SerializeField] private float actionDuration = 0.0f;
@@ -20,9 +22,9 @@ namespace JTTF
 		public GameObject InteractableImage => interactableImage;
 		public PlayerInteractionText InteractionText => interactionText;
 
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake();
+			base.Start();
 
 			interactionText = CanvasManager.GamePanel.PlayerPanel.PlayerInteractionText;
 		}

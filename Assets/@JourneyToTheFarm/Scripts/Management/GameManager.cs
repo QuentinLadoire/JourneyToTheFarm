@@ -11,6 +11,7 @@ namespace JTTF
 	public class GameManager : MonoBehaviour
 	{
 		[SerializeField] private DataBase dataBase = null;
+		[SerializeField] private SeedDataBase seedDataBase = null;
 		[SerializeField] private PrefabDataBase prefabDataBase = null;
 		[SerializeField] private bool hideCursorOnPlay = true;
 
@@ -24,6 +25,7 @@ namespace JTTF
 		public static bool IsSolo => !isMulti;
 		public static bool IsMulti => isMulti;
 		public static DataBase DataBase => instance.dataBase;
+		public static SeedDataBase SeedDataBase => instance.seedDataBase;
 		public static PrefabDataBase PrefabDataBase => instance.prefabDataBase;
 
 		public static void PlaySolo()

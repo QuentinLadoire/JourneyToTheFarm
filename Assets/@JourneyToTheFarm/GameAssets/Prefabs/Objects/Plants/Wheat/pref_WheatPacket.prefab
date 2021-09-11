@@ -51,6 +51,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -128,13 +129,4 @@ MonoBehaviour:
   isActiveOnAwake: 1
   actionDuration: 1
   actionType: 3
-  seedInfo:
-    name: Wheat
-    growDuration: 5
-    seedPreviewPrefab: {fileID: 1958678361418349235, guid: 33722e848afe4d74faabe7cf24239f08, type: 3}
-    seedStepPrefabs:
-    - {fileID: 9213947403575454389, guid: 83fcb0379fa802848bbdf9abd815872a, type: 3}
-    - {fileID: 6935387169717251825, guid: d07d3bccaaacf184fbcc021606291690, type: 3}
-    - {fileID: 5531454515972779376, guid: 040ec7a06c4a6f6488039491a3675233, type: 3}
-    - {fileID: 8920104340475481578, guid: f3c0a5afb3cfeac4eb4af08146516b00, type: 3}
-    - {fileID: 265630820187437164, guid: 5b717f36d57469342bbbf3ce35b8a307, type: 3}
+  seedName: Wheat

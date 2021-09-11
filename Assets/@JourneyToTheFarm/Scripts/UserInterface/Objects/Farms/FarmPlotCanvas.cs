@@ -20,8 +20,8 @@ namespace JTTF
 		{
 			base.Start();
 
-			camera = GameManager.playerCamera;
-			canvas.worldCamera = GameManager.playerCamera;
+			camera = GameManager.cameraController.Camera;
+			canvas.worldCamera = GameManager.cameraController.Camera;
 		}
 		protected override void Update()
 		{

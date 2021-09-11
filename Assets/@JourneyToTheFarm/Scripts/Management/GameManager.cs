@@ -19,8 +19,8 @@ namespace JTTF
 
 		private static bool isMulti = false;
 
-		public static Camera playerCamera = null;
 		public static Player player = null;
+		public static TPCameraController cameraController = null;
 		
 		public static bool IsSolo => !isMulti;
 		public static bool IsMulti => isMulti;
@@ -63,6 +63,17 @@ namespace JTTF
 		{
 			if (hideCursorOnPlay)
 				DesactiveCursor();
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.P))
+			{
+				if (cameraController.HasControl)
+					cameraController.DesactiveControl();
+				else
+					cameraController.ActiveControl();
+			}
 		}
 	}
 }

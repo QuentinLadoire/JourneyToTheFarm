@@ -9,28 +9,30 @@ namespace JTTF
 {
 	public class TPCameraController : CustomBehaviour
 	{
+		[SerializeField] private bool hasControl = true;
 		[SerializeField] private float speed = 5.0f;
 		[SerializeField] private float farOffset = -5.0f;
 		[SerializeField] private float angularSpeed = 1.0f;
-		[SerializeField] private GameObject cameraObject = null;
+		[SerializeField] private new Camera camera = null;
 		[SerializeField] private Vector3 followingOffset = Vector3.zero;
 
 		private GameObject followingObject = null;
-		private MovementController characterController = null;
 
-		public GameObject CameraObject => cameraObject;
+		public Camera Camera => camera;
+		public bool HasControl => hasControl;
+		public GameObject CameraObject => camera.gameObject;
 
 		private void CameraRotation()
 		{
-			cameraObject.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Mouse X") * angularSpeed);
-			cameraObject.transform.RotateAround(transform.position, cameraObject.transform.right, -Input.GetAxis("Mouse Y") * angularSpeed);
+			CameraObject.transform.RotateAround(transform.position, Vector3.up, Input.GetAxis("Mouse X") * angularSpeed);
+			CameraObject.transform.RotateAround(transform.position, CameraObject.transform.right, -Input.GetAxis("Mouse Y") * angularSpeed);
 		}
 		private void CameraFarOffset()
 		{
-			if (Physics.Raycast(transform.position, -cameraObject.transform.forward, out RaycastHit hit, -farOffset))
-				cameraObject.transform.position = hit.point;
+			if (Physics.Raycast(transform.position, -CameraObject.transform.forward, out RaycastHit hit, -farOffset))
+				CameraObject.transform.position = hit.point;
 			else
-				cameraObject.transform.localPosition = cameraObject.transform.forward * farOffset;
+				CameraObject.transform.localPosition = CameraObject.transform.forward * farOffset;
 		}
 		private void CameraFollowing()
 		{
@@ -43,13 +45,13 @@ namespace JTTF
 		{
 			base.Awake();
 
-			GameManager.playerCamera = cameraObject.GetComponent<Camera>();
+			GameManager.cameraController = this;
 		}
 		protected override void Update()
 		{
 			base.Update();
 
-			if (characterController.HasControl)
+			if (HasControl)
 				CameraRotation();
 
 			CameraFarOffset();
@@ -69,10 +71,16 @@ namespace JTTF
 			followingObject = obj;
 
 			if (followingObject != null)
-			{
-				characterController = followingObject.GetComponent<MovementController>();
 				transform.position = followingObject.transform.position + followingOffset;
-			}
+		}
+
+		public void ActiveControl()
+		{
+			hasControl = true;
+		}
+		public void DesactiveControl()
+		{
+			hasControl = false;
 		}
 	}
 }

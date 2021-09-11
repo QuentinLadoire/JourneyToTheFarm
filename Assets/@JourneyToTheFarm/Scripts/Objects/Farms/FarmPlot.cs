@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
+using MLAPI.Messaging;
 
 #pragma warning disable IDE0044
 
@@ -22,16 +23,53 @@ namespace JTTF
         public bool HasSeed => seedAsset != SeedAsset.None;
         public bool IsMature => HasSeed && currentGrowDuration <= 0.0f;
 
+        [ServerRpc(RequireOwnership = false)]
+        private void ClearSeedServerRpc()
+        {
+            currentGrowDuration = 0.0f;
+            seedAsset = SeedAsset.None;
+
+            farmPlotState.SeedNameSync.Value = "NoName";
+            farmPlotState.CurrentGrowDurationSync.Value = 0.0f;
+        }
+        private void ClearSeedSolo()
+        {
+            currentIndex = -1;
+            currentGrowDuration = 0.0f;
+            seedAsset = SeedAsset.None;
+
+            Destroy(seedObject);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void SetSeedServerRpc(string seedName)
+        {
+            seedAsset = GameManager.SeedDataBase.GetSeedAsset(seedName);
+            if (seedAsset != SeedAsset.None)
+            {
+                farmPlotState.SeedNameSync.Value = seedName;
+                farmPlotState.CurrentGrowDurationSync.Value = seedAsset.growDuration;
+            }
+        }
+        private void SetSeedSolo(string seedName)
+        {
+            seedAsset = GameManager.SeedDataBase.GetSeedAsset(seedName);
+            if (seedAsset != SeedAsset.None)
+            {
+                currentGrowDuration = seedAsset.growDuration;
+            }
+        }
+
         private void OnSeedNameSyncValueChanged(string previousValue, string newValue)
 		{
             if (newValue == "NoName")
-			{
-                ClearSeed();
-            }
+                ClearSeedSolo();
             else
-			{
-                seedAsset = GameManager.SeedDataBase.GetSeedAsset(newValue);
-            }
+                SetSeedSolo(newValue);
+		}
+        private void OnCurrentGrowDurationSynValueChanged(float previousValue, float newValue)
+		{
+            currentGrowDuration = newValue;
 		}
 
         private void DropPlant(Player player)
@@ -41,29 +79,18 @@ namespace JTTF
         }
         private void ClearSeed()
 		{
-            currentIndex = -1;
-            currentGrowDuration = 0.0f;
-            seedAsset = SeedAsset.None;
-
-            Destroy(seedObject);
-
             if (GameManager.IsMulti)
-			{
-                farmPlotState.SeedNameSync.Value = seedAsset.name;
-                farmPlotState.CurrentGrowDurationSync.Value = currentGrowDuration;
-			}
+                ClearSeedServerRpc();
+            else
+                ClearSeedSolo();
 		}
+
         private void UpdateGrowing()
 		{
             if (!IsMature)
             {
-                if (!(currentGrowDuration <= 0.0f))
-                {
+                if (currentGrowDuration > 0.0f)
                     currentGrowDuration -= Time.deltaTime;
-
-                    if (GameManager.IsMulti)
-                        farmPlotState.CurrentGrowDurationSync.Value = currentGrowDuration;
-                }
             }
 		}
         private void UpdateSeedObject(float percent)
@@ -107,7 +134,33 @@ namespace JTTF
 			}
 		}
 
-		protected override bool CheckIsInteractable()
+        private void UpdateSolo()
+		{
+            UpdateGrowing();
+            UpdateFeedback();
+        }
+        private void UpdateMulti()
+		{
+            if (NetworkManager.Singleton.IsServer)
+            {
+                if (!IsMature)
+                {
+                    if (currentGrowDuration > 0.0f)
+                    {
+                        currentGrowDuration -= Time.deltaTime;
+
+                        farmPlotState.CurrentGrowDurationSync.Value = currentGrowDuration;
+                    }
+                }
+            }
+
+            if (NetworkManager.Singleton.IsClient)
+            {
+                UpdateFeedback();
+            }
+        }
+
+        protected override bool CheckIsInteractable()
 		{
             return IsMature;
 		}
@@ -118,14 +171,15 @@ namespace JTTF
 
             farmPlotState = GetComponent<FarmPlotState>();
         }
-        protected override void Start()
+		protected override void Start()
 		{
-            base.Start();
+			base.Start();
 
             if (GameManager.IsMulti && NetworkManager.Singleton.IsClient)
 			{
                 farmPlotState.SeedNameSync.OnValueChanged += OnSeedNameSyncValueChanged;
-            }
+                farmPlotState.CurrentGrowDurationSync.OnValueChanged += OnCurrentGrowDurationSynValueChanged;
+			}
 		}
 		protected override void Update()
 		{
@@ -133,22 +187,11 @@ namespace JTTF
 
             if (GameManager.IsMulti)
             {
-                if (NetworkManager.Singleton.IsServer)
-				{
-                    UpdateGrowing();
-                }
-
-                if (NetworkManager.Singleton.IsClient)
-				{
-                    currentGrowDuration = farmPlotState.CurrentGrowDurationSync.Value;
-				}
-
-                UpdateFeedback();
+                UpdateMulti();
             }
             else
 			{
-                UpdateGrowing();
-                UpdateFeedback();
+                UpdateSolo();
             }
 		}
 		protected override void OnDestroy()
@@ -158,22 +201,16 @@ namespace JTTF
             if (GameManager.IsMulti && NetworkManager.Singleton != null && NetworkManager.Singleton.IsClient)
 			{
                 farmPlotState.SeedNameSync.OnValueChanged -= OnSeedNameSyncValueChanged;
-			}
+                farmPlotState.CurrentGrowDurationSync.OnValueChanged -= OnCurrentGrowDurationSynValueChanged;
+            }
 		}
 
 		public void SetSeed(string seedName)
 		{
-            seedAsset = GameManager.SeedDataBase.GetSeedAsset(seedName);
-            if (seedAsset != SeedAsset.None)
-            {
-                currentGrowDuration = seedAsset.growDuration;
-
-                if (GameManager.IsMulti)
-				{
-                    farmPlotState.SeedNameSync.Value = seedAsset.name;
-                    farmPlotState.CurrentGrowDurationSync.Value = currentGrowDuration;
-				}
-            }
+            if (GameManager.IsMulti)
+                SetSeedServerRpc(seedName);
+            else
+                SetSeedSolo(seedName);
         }
 
 		public override void Select()
@@ -193,7 +230,7 @@ namespace JTTF
 		public override void Interact(Player player)
         {
             DropPlant(player);
-            
+
             ClearSeed();
         }
     }

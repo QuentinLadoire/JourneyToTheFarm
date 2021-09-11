@@ -14,12 +14,12 @@ namespace JTTF
         private NetworkVariableString seedNameSync = new NetworkVariableString(new NetworkVariableSettings
         {
             ReadPermission = NetworkVariablePermission.Everyone,
-            WritePermission = NetworkVariablePermission.Everyone
+            WritePermission = NetworkVariablePermission.ServerOnly
         });
         private NetworkVariableFloat currentGrowDurationSync = new NetworkVariableFloat(new NetworkVariableSettings
         {
             ReadPermission = NetworkVariablePermission.Everyone,
-            WritePermission = NetworkVariablePermission.Everyone
+            WritePermission = NetworkVariablePermission.ServerOnly
         });
 
         public NetworkVariableString SeedNameSync => seedNameSync;

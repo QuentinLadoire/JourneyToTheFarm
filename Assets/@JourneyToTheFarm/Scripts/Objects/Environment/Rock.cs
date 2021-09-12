@@ -7,6 +7,8 @@ using JTTF.Inventory;
 using JTTF.Management;
 using MLAPI.Messaging;
 
+#pragma warning disable IDE0044
+
 namespace JTTF.Gameplay
 {
     public class Rock : CustomNetworkBehaviour

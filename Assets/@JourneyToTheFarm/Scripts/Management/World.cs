@@ -25,22 +25,25 @@ namespace JTTF.Management
             return direction;
         }
 
-        public static Collectible DropItem(Item item, Vector3 spawnPosition, Vector3 direction)
+        public static void DropItem(Item item, Vector3 spawnPosition, Vector3 direction)
         {
             if (item != Item.None && item.CollectiblePrefab != null)
             {
-                var collectible = Instantiate(item.CollectiblePrefab).GetComponent<Collectible>();
-                collectible.transform.position = spawnPosition;
-                collectible.Rigidbody.AddForce(direction * dropForce, ForceMode.Impulse);
-
-                return collectible;
+                if (GameManager.IsMulti)
+                {
+                    var prefabHash = item.CollectiblePrefab.GetComponent<NetworkObject>().PrefabHash;
+                    instance.SpawnCollectibleServerRpc(prefabHash, spawnPosition, Quaternion.identity, direction);
+                }
+                else
+                {
+                    var collectible = Instantiate(item.CollectiblePrefab, spawnPosition, Quaternion.identity).GetComponent<Collectible>();
+                    collectible.Rigidbody.AddForce(direction * dropForce, ForceMode.Impulse);
+                }
             }
-
-            return null;
         }
-        public static Collectible DropItem(Item item, Vector3 spawnPosition)
+        public static void DropItem(Item item, Vector3 spawnPosition)
         {
-            return DropItem(item, spawnPosition, GetRandomDirection());
+            DropItem(item, spawnPosition, GetRandomDirection());
         }
 
         public static void SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
@@ -88,6 +91,19 @@ namespace JTTF.Management
                 var netObject = MonoBehaviour.Instantiate(playerPrefab.Prefab, position, rotation).GetComponent<NetworkObject>();
                 netObject.SpawnAsPlayerObject(clientId);
             }
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void SpawnCollectibleServerRpc(ulong prefabHash, Vector3 position, Quaternion rotation, Vector3 direction)
+		{
+            var index = NetworkSpawnManager.GetNetworkPrefabIndexOfHash(prefabHash);
+            var prefab = NetworkManager.NetworkConfig.NetworkPrefabs[index].Prefab;
+
+            var netObject = MonoBehaviour.Instantiate(prefab, position, rotation).GetComponent<NetworkObject>();
+            netObject.Spawn();
+
+            var collectible = netObject.GetComponent<Collectible>();
+            collectible.Rigidbody.AddForce(direction * dropForce, ForceMode.Impulse);
         }
 
         protected override void Awake()

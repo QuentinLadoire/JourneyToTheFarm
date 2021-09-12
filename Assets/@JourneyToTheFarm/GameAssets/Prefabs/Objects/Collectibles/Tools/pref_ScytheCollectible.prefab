@@ -103,5 +103,13 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: defb3cd6a9a614a42899bc1fa16d51c1, type: 3}
+    - target: {fileID: 7306684839018431568, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}
+      propertyPath: PrefabHash
+      value: 14869244934415452109
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306684839018431568, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}
+      propertyPath: PrefabHashGenerator
+      value: pref_ScytheCollectible
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}

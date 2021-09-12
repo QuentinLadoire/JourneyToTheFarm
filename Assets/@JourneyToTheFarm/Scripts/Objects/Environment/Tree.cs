@@ -9,7 +9,6 @@ using MLAPI;
 using MLAPI.Messaging;
 
 #pragma warning disable IDE0044
-#pragma warning disable IDE0051
 
 namespace JTTF.Gameplay
 {

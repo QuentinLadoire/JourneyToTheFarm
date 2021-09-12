@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Enum;
-using JTTF.Character;
 using JTTF.Behaviour;
+using JTTF.Character;
 using JTTF.Inventory;
+using JTTF.Management;
+using MLAPI;
+
+#pragma warning disable IDE0044
 
 namespace JTTF.Gameplay
 {
-    public class Collectible : CustomBehaviour
+    public class Collectible : CustomNetworkBehaviour
     {
 		[Header("Collectible Parameters")]
 		[SerializeField] private TriggerBehaviour trigger = null;
@@ -38,13 +42,22 @@ namespace JTTF.Gameplay
 			base.Awake();
 
 			rigidbody = GetComponent<Rigidbody>();
+		}
+		public override void NetworkStart()
+		{
+			base.NetworkStart();
+
+			if (!IsServer)
+			{
+				enabled = false;
+				return;
+			}
+		}
+		protected override void Start()
+		{
+			base.Start();
 
 			trigger.onTriggerEnter += OnTriggerEnterCallback;
-		}
-
-		public void SetCollectible(string itemName)
-		{
-			this.itemName = itemName;
 		}
 	}
 }

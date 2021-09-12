@@ -4,6 +4,9 @@ using UnityEngine;
 using JTTF.Behaviour;
 using MLAPI.NetworkVariable;
 
+#pragma warning disable IDE0044
+#pragma warning disable IDE0090
+
 namespace JTTF
 {
     public class TreeState : CustomNetworkBehaviour

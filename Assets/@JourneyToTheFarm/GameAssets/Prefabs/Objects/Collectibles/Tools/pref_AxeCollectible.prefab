@@ -95,5 +95,13 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: fbd987385e40b654db3857859d8e2560, type: 3}
+    - target: {fileID: 7306684839018431568, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}
+      propertyPath: PrefabHash
+      value: 8873399999687954063
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306684839018431568, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}
+      propertyPath: PrefabHashGenerator
+      value: pref_AxeCollectible
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}

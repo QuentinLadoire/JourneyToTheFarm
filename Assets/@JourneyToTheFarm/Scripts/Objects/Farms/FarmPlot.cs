@@ -11,6 +11,8 @@ using JTTF.Management;
 using MLAPI;
 using MLAPI.Messaging;
 
+#pragma warning disable IDE0044
+
 namespace JTTF.Gameplay
 {
     public class FarmPlot : InteractableBehaviour
@@ -80,8 +82,9 @@ namespace JTTF.Gameplay
 
         private void DropPlant(Player player)
 		{
-            if (World.DropItem(new Item(seedAsset.name, ItemType.Resource, 1), transform.position) == null)
-                player.AddItem(new Item(seedAsset.name, ItemType.Resource, 1));
+            //Spawn a Collectible in term
+            //World.DropItem(new Item(seedAsset.name, ItemType.Resource, 1), transform.position)
+            player.AddItem(new Item(seedAsset.name, ItemType.Resource, 1));
         }
         private void ClearSeed()
 		{

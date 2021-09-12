@@ -115,5 +115,13 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 8b8caa9c5d36c8c488d14b086ae82e55, type: 3}
+    - target: {fileID: 7306684839018431568, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}
+      propertyPath: PrefabHash
+      value: 8879741782682185462
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306684839018431568, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}
+      propertyPath: PrefabHashGenerator
+      value: pref_StoneCollectible
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9310261ad8657bb418fab9e7729a738e, type: 3}

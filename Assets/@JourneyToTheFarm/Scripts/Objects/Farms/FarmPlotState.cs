@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
+using JTTF.Behaviour;
 using MLAPI.NetworkVariable;
 
 #pragma warning disable IDE0044

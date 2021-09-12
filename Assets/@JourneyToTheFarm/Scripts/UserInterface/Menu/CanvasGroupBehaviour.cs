@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
 
-[RequireComponent(typeof(CanvasGroup))]
-public class CanvasGroupBehaviour : UIBehaviour
+namespace JTTF.Menu
 {
-    private CanvasGroup canvasGroup = null;
-
-	public CanvasGroup CanvasGroup => canvasGroup;
-
-	protected override void Awake()
+	[RequireComponent(typeof(CanvasGroup))]
+	public class CanvasGroupBehaviour : UIBehaviour
 	{
-		base.Awake();
+		private CanvasGroup canvasGroup = null;
 
-		canvasGroup = GetComponent<CanvasGroup>();
+		public CanvasGroup CanvasGroup => canvasGroup;
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			canvasGroup = GetComponent<CanvasGroup>();
+		}
 	}
 }

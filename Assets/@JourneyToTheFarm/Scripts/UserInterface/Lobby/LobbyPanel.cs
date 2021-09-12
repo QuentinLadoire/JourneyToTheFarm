@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using JTTF.Behaviour;
 using MLAPI;
 using MLAPI.Messaging;
 using MLAPI.SceneManagement;

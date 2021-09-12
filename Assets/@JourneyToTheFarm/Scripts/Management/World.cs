@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Gameplay;
+using JTTF.Behaviour;
+using JTTF.Inventory;
 using MLAPI;
 using MLAPI.Spawning;
 using MLAPI.Messaging;
 
-namespace JTTF
+namespace JTTF.Management
 {
     public class World : CustomNetworkBehaviour
     {

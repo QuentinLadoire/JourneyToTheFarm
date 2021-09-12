@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Character;
 
-namespace JTTF
+namespace JTTF.Inventory
 {
 	public class ShortcutInventoryController : InventoryController
 	{

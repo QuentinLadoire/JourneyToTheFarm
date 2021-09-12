@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using JTTF.Behaviour;
 
-namespace JTTF
+namespace JTTF.UI
 {
     public class PlayerInteractionText : UIBehaviour
     {

@@ -1,5 +1,6 @@
+using JTTF.Character;
 
-namespace JTTF
+namespace JTTF.Interface
 {
     public interface IOwnable
     {

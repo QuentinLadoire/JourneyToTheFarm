@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using JTTF.Enum;
+using JTTF.Character;
 
-namespace JTTF
+namespace JTTF.Interface
 {
     public interface IInteractable
     {

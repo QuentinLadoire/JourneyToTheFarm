@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Interface;
 
-namespace JTTF
+namespace JTTF.Behaviour
 {
 	public class EquipableBehaviour : OwnableBehaviour, IEquipable
 	{

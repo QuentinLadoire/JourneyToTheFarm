@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.DataBase;
+using JTTF.Behaviour;
+using JTTF.Management;
 
 #pragma warning disable IDE0044
 
-namespace JTTF
+namespace JTTF.Gameplay
 {
 	public class SeedPacket : UsableBehaviour
 	{

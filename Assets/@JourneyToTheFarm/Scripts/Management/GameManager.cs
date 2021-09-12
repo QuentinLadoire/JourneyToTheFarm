@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MLAPI;
+using JTTF.Character;
+using JTTF.DataBase;
 
 #pragma warning disable IDE0044
 #pragma warning disable IDE0051
 
-namespace JTTF
+namespace JTTF.Management
 {
 	public class GameManager : MonoBehaviour
 	{
-		[SerializeField] private DataBase dataBase = null;
+		[SerializeField] private ItemDataBase itemDataBase = null;
 		[SerializeField] private SeedDataBase seedDataBase = null;
 		[SerializeField] private PrefabDataBase prefabDataBase = null;
 		[SerializeField] private bool hideCursorOnPlay = true;
@@ -24,7 +25,7 @@ namespace JTTF
 		
 		public static bool IsSolo => !isMulti;
 		public static bool IsMulti => isMulti;
-		public static DataBase DataBase => instance.dataBase;
+		public static ItemDataBase DataBase => instance.itemDataBase;
 		public static SeedDataBase SeedDataBase => instance.seedDataBase;
 		public static PrefabDataBase PrefabDataBase => instance.prefabDataBase;
 

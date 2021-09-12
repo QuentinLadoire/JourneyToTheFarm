@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Character;
+using JTTF.Interface;
+using JTTF.Management;
 
-namespace JTTF
+namespace JTTF.Inventory
 {
     public class PlayerInventoryController : InventoryController, IOpenable, IClosable
 	{

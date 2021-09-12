@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
+using JTTF.Character;
+using JTTF.Inventory;
 
-namespace JTTF
+namespace JTTF.Gameplay
 {
 	public class ChestContainer : InteractableBehaviour
 	{

@@ -1,19 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
 
-namespace JTTF
+namespace JTTF.DataBase
 {
-	public enum ItemType
-	{
-		None = -1,
-		Tool,
-		SeedPacket,
-		Resource,
-		Container,
-		Workbench
-	}
-
 	[System.Serializable]
 	public class ItemAsset
 	{

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Character;
+using JTTF.Interface;
 
-namespace JTTF
+namespace JTTF.Behaviour
 {
 	public class OwnableBehaviour : CustomBehaviour, IOwnable
 	{

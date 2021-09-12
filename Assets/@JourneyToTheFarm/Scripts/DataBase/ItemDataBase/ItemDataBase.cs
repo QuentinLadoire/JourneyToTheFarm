@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
 
 #pragma warning disable IDE0090
 
-namespace JTTF
+namespace JTTF.DataBase
 {
     [CreateAssetMenu(fileName = "NewDataBase", menuName = "DataBase")]
-    public class DataBase : ScriptableObject
+    public class ItemDataBase : ScriptableObject
     {
         public List<ItemAsset> toolItems = new List<ItemAsset>();
         public List<ItemAsset> seedPackets = new List<ItemAsset>();

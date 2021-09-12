@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
 
-namespace JTTF
+namespace JTTF.Interface
 {
     public interface IUsable
     {

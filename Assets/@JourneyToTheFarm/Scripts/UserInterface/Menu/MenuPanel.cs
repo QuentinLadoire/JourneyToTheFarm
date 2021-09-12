@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using JTTF.Management;
 using MLAPI;
 using MLAPI.SceneManagement;
 
 #pragma warning disable IDE0044
-#pragma warning disable IDE0051
 
-namespace JTTF
+namespace JTTF.Menu
 {
     public class MenuPanel : MonoBehaviour
     {

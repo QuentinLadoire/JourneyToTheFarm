@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
 
-namespace JTTF
+namespace JTTF.Gameplay
 {
 	public class Chest : UsableBehaviour
 	{

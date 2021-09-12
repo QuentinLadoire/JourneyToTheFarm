@@ -2,8 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
+using JTTF.Behaviour;
+using JTTF.Inventory;
+using JTTF.Management;
 
-namespace JTTF
+namespace JTTF.Character
 {
     public class Player : CustomNetworkBehaviour
     {

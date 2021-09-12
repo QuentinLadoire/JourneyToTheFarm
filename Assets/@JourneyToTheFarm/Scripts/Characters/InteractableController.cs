@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Enum;
+using JTTF.Behaviour;
+using JTTF.Interface;
 
 #pragma warning disable IDE0044
 
-namespace JTTF
+namespace JTTF.Character
 {
     public class InteractableController : CustomNetworkBehaviour
     {

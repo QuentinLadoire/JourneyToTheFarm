@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Interface;
+using JTTF.Behaviour;
+using JTTF.Inventory;
 
 #pragma warning disable IDE0044
 
-namespace JTTF
+namespace JTTF.Character
 {
     public class EquipableController : CustomNetworkBehaviour
     {

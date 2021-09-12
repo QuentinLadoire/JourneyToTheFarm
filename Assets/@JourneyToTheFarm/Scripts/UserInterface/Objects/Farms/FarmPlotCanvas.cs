@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using JTTF.Behaviour;
+using JTTF.Management;
 
-namespace JTTF
+namespace JTTF.UI
 {
 	public class FarmPlotCanvas : UIBehaviour
 	{

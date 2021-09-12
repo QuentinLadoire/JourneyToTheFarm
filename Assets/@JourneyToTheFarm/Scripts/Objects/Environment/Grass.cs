@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
+using JTTF.Behaviour;
+using JTTF.Character;
+using JTTF.Inventory;
+using JTTF.Management;
 
-namespace JTTF
+namespace JTTF.Gameplay
 {
     public class Grass : CustomBehaviour
     {

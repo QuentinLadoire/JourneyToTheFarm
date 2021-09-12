@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
+using JTTF.Management;
 using MLAPI;
 using MLAPI.Messaging;
 

@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
+using JTTF.Management;
 
 #pragma warning disable IDE0044
 
-namespace JTTF
+namespace JTTF.Character
 {
 	public class MovementController : CustomNetworkBehaviour
 	{

@@ -1,9 +1,10 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
+using JTTF.Inventory;
 
-namespace JTTF
+namespace JTTF.UI
 {
     public class InventoryPanel : UIBehaviour
     {

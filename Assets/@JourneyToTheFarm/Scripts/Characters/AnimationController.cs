@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
+using JTTF.Behaviour;
 
 #pragma warning disable IDE0044
 
-namespace JTTF
+namespace JTTF.Character
 {
     public class AnimationController : CustomNetworkBehaviour
     {

@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
 
-namespace JTTF
+namespace JTTF.Inventory
 {
     public class InventoryController : CustomNetworkBehaviour
     {

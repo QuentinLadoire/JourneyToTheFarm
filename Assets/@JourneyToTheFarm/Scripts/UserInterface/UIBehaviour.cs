@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIBehaviour : CustomBehaviour
+namespace JTTF.Behaviour
 {
-	private RectTransform rectTransform = null;
-
-	public RectTransform RectTransform => GetRectTransform();
-
-	private RectTransform GetRectTransform()
+	public class UIBehaviour : CustomBehaviour
 	{
-		if (rectTransform == null)
-			rectTransform = GetComponent<RectTransform>();
+		private RectTransform rectTransform = null;
 
-		return rectTransform;
-	}
+		public RectTransform RectTransform => GetRectTransform();
 
-	protected override void Awake()
-	{
-		base.Awake();
+		private RectTransform GetRectTransform()
+		{
+			if (rectTransform == null)
+				rectTransform = GetComponent<RectTransform>();
 
-		if (rectTransform == null)
-			rectTransform = GetComponent<RectTransform>();
+			return rectTransform;
+		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			if (rectTransform == null)
+				rectTransform = GetComponent<RectTransform>();
+		}
 	}
 }

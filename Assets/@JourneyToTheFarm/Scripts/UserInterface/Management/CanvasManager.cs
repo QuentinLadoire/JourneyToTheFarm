@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JTTF
+namespace JTTF.UI
 {
     public class CanvasManager : MonoBehaviour
     {

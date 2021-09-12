@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
+using JTTF.Character;
+using JTTF.Inventory;
+using JTTF.Management;
 
-namespace JTTF
+namespace JTTF.Gameplay
 {
     public class Rock : MonoBehaviour
     {

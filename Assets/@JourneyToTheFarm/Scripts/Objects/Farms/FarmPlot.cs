@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Enum;
+using JTTF.DataBase;
+using JTTF.Behaviour;
+using JTTF.Character;
+using JTTF.Inventory;
+using JTTF.Management;
 using MLAPI;
 using MLAPI.Messaging;
 
-namespace JTTF
+namespace JTTF.Gameplay
 {
     public class FarmPlot : InteractableBehaviour
     {

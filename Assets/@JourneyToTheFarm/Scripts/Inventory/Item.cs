@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Enum;
+using JTTF.Management;
 
 #pragma warning disable 0659
 #pragma warning disable 0661
 
-namespace JTTF
+namespace JTTF.Inventory
 {
     public struct Item
     {

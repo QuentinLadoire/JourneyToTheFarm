@@ -2,8 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Enum;
+using JTTF.Behaviour;
+using JTTF.Interface;
 
-namespace JTTF
+namespace JTTF.Character
 {
     public class UsableObjectController : CustomNetworkBehaviour
     {

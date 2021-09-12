@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Interface;
+using JTTF.Management;
 
-namespace JTTF
+namespace JTTF.Inventory
 {
     public class ChestInventoryController : InventoryController, IOpenable, IClosable
     {

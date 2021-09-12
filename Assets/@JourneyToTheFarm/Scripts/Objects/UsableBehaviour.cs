@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.UI;
+using JTTF.Enum;
+using JTTF.Interface;
 
-namespace JTTF
+namespace JTTF.Behaviour
 {
 	public class UsableBehaviour : EquipableBehaviour, IUsable
 	{

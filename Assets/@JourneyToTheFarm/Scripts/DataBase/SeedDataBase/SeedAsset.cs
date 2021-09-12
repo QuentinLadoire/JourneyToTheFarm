@@ -7,7 +7,7 @@ using UnityEngine;
 #pragma warning disable CS0659
 #pragma warning disable CS0661
 
-namespace JTTF
+namespace JTTF.DataBase
 {
     [System.Serializable]
     public struct SeedAsset

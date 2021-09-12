@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JTTF
+namespace JTTF.DataBase
 {
     [CreateAssetMenu(fileName = "NewPrefabDataBase", menuName = "PrefabDataBase")]
     public class PrefabDataBase : ScriptableObject

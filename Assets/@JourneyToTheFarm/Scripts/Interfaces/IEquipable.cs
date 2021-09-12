@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JTTF
+namespace JTTF.Interface
 {
     public interface IEquipable
     {

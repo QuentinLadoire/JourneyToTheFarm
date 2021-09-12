@@ -4,7 +4,7 @@ using UnityEngine;
 
 #pragma warning disable IDE0090
 
-namespace JTTF
+namespace JTTF.DataBase
 {
     [CreateAssetMenu(fileName = "NewSeedDataBase", menuName = "SeedDataBase")]
     public class SeedDataBase : ScriptableObject

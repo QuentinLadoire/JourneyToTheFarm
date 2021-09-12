@@ -4,8 +4,6 @@ using UnityEngine;
 using MLAPI;
 using MLAPI.Messaging;
 
-#pragma warning disable IDE0044
-
 namespace JTTF
 {
     public class FarmPlot : InteractableBehaviour
@@ -30,6 +28,7 @@ namespace JTTF
             seedAsset = SeedAsset.None;
 
             farmPlotState.SeedNameSync.Value = "NoName";
+            farmPlotState.AlreadyInInteraction.Value = false;
             farmPlotState.CurrentGrowDurationSync.Value = 0.0f;
         }
         private void ClearSeedSolo()
@@ -118,20 +117,20 @@ namespace JTTF
 
                 InteractableImage.SetActive(true);
 			}
+            else if (HasSeed)
+			{
+                var currentPercent = 1 - (currentGrowDuration / seedAsset.growDuration);
+
+                progressBar.SetActive(true);
+                progressBar.SetPercent(currentPercent);
+
+                UpdateSeedObject(currentPercent);
+			}
             else
 			{
-                if (HasSeed)
-				{
-                    var currentPercent = 1 - (currentGrowDuration / seedAsset.growDuration);
-
-                    progressBar.SetActive(true);
-                    progressBar.SetPercent(currentPercent);
-
-                    UpdateSeedObject(currentPercent);
-                }
-
+                progressBar.SetActive(false);
                 InteractableImage.SetActive(false);
-			}
+            }
 		}
 
         private void UpdateSolo()
@@ -160,9 +159,20 @@ namespace JTTF
             }
         }
 
-        protected override bool CheckIsInteractable()
+        private bool CheckIsInteractableSolo()
 		{
             return IsMature;
+		}
+        private bool CheckIsInteractbleMulti()
+		{
+            return !farmPlotState.AlreadyInInteraction.Value && IsMature;
+		}
+        protected override bool CheckIsInteractable()
+		{
+            if (GameManager.IsMulti)
+                return CheckIsInteractbleMulti();
+            else
+                return CheckIsInteractableSolo();
 		}
 
 		protected override void Awake()
@@ -227,6 +237,13 @@ namespace JTTF
             InteractionText.SetActive(false);
 		}
 
+		public override void StartToInteract()
+		{
+            if (GameManager.IsMulti)
+			{
+                farmPlotState.AlreadyInInteraction.Value = true;
+			}
+		}
 		public override void Interact(Player player)
         {
             DropPlant(player);

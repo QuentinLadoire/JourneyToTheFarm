@@ -44,7 +44,7 @@ namespace JTTF.Gameplay
 		public override void Use()
 		{
 			if (tree != null)
-				tree.Harvest(OwnerPlayer);
+				tree.Harvest();
 		}
 	}
 }

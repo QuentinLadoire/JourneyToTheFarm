@@ -2,24 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Enum;
-using JTTF.Character;
+using JTTF.Behaviour;
 using JTTF.Inventory;
 using JTTF.Management;
+using MLAPI.Messaging;
 
 namespace JTTF.Gameplay
 {
-    public class Rock : MonoBehaviour
+    public class Rock : CustomNetworkBehaviour
     {
 		[SerializeField] private string stoneName = "Stone";
 		[SerializeField] private int stoneQuantity = 3;
 
 		private bool isHarvested = false;
 
-		public bool IsHarvestable()
+		[ServerRpc(RequireOwnership = false)]
+		private void HarvestServerRpc()
 		{
-			return !isHarvested;
+			HarvestSolo();
 		}
-		public void Harvest(Player player)
+		private void HarvestSolo()
 		{
 			isHarvested = true;
 			Destroy(gameObject);
@@ -28,6 +30,18 @@ namespace JTTF.Gameplay
 			{
 				World.DropItem(new Item(stoneName, ItemType.Resource, 1), transform.position + Vector3.up * 0.5f);
 			}
+		}
+
+		public bool IsHarvestable()
+		{
+			return !isHarvested;
+		}
+		public void Harvest()
+		{
+			if (GameManager.IsMulti)
+				HarvestServerRpc();
+			else
+				HarvestSolo();
 		}
 	}
 }

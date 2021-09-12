@@ -52,6 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -105,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5189669790895673463}
+  - component: {fileID: 4914470730773193421}
   - component: {fileID: 5189669790895673456}
   m_Layer: 8
   m_Name: pref_Rock_04
@@ -128,6 +130,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4914470730773193421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189669790895673462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkInstanceId: 0
+  PrefabHash: 9461702859704039981
+  PrefabHashGenerator: pref_Rock_04
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
 --- !u!114 &5189669790895673456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e27b17abe998642831d62f8c0d1438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveOnAwake: 1
   stoneName: Stone
   stoneQuantity: 3
-  modelObject: {fileID: 5189669789892812773}

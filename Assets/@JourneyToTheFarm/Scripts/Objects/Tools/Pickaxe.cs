@@ -43,7 +43,7 @@ namespace JTTF.Gameplay
 		public override void Use()
 		{
 			if (rock != null)
-				rock.Harvest(OwnerPlayer);
+				rock.Harvest();
 		}
 	}
 }

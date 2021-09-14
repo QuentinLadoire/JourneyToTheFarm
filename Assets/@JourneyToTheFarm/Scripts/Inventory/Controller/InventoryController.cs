@@ -8,9 +8,9 @@ namespace JTTF.Inventory
 {
     public class InventoryController : CustomNetworkBehaviour
     {
-		protected virtual int InventorySize => 0;
+        [SerializeField] private Inventory inventory = null;
 
-        protected Inventory inventory = null;
+		protected virtual int InventorySize => 0;
 
 		public Inventory Inventory => inventory;
 		public Action onInventoryChange = () => { /*Debug.Log("OnInventoryChange");*/ };
@@ -19,7 +19,7 @@ namespace JTTF.Inventory
 		{
 			base.Awake();
 
-			inventory = new Inventory(InventorySize);
+			inventory.Init(InventorySize);
 		}
 
 		public bool AddItem(Item item)

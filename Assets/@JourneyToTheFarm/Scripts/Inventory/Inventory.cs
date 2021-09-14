@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Behaviour;
 
 namespace JTTF.Inventory
 {
-    public class Inventory
+    public class Inventory : CustomBehaviour
     {
-        private readonly Item[] itemArray = null;
+        private Item[] itemArray = null;
 
         public Item[] ItemArray => itemArray;
         public int SizeMax => itemArray.Length;
@@ -116,10 +117,10 @@ namespace JTTF.Inventory
             return -1;
         }
 
-		public Inventory(int size)
+        public void Init(int size)
 		{
             itemArray = new Item[size];
             itemArray.Fill(Item.None);
-		}
+        }
 	}
 }

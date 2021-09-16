@@ -7,6 +7,7 @@ using JTTF.Inventory;
 using JTTF.Management;
 using MLAPI;
 using MLAPI.Messaging;
+using MLAPI.NetworkVariable;
 
 #pragma warning disable IDE0044
 
@@ -19,8 +20,11 @@ namespace JTTF.Gameplay
 		[SerializeField] private float lifeTime = 0.0f;
 		[SerializeField] private GameObject modelObject = null;
 
-        private bool isHarvested = false;
-		private TreeState treeState = null;
+		private NetworkVariableBool isHarvested = new NetworkVariableBool(new NetworkVariableSettings
+		{
+			ReadPermission = NetworkVariablePermission.Everyone,
+			WritePermission = NetworkVariablePermission.ServerOnly
+		}, false);
 		private float currentLifeTime = 0.0f;
 		private Rigidbody rigidbodyModel = null;
 
@@ -32,13 +36,11 @@ namespace JTTF.Gameplay
 		[ServerRpc(RequireOwnership = false)]
 		private void HarvestServerRpc()
 		{
-			treeState.IsHarvestedSync.Value = true;
-
 			HarvestSolo();
 		}
 		private void HarvestSolo()
 		{
-			isHarvested = true;
+			isHarvested.Value = true;
 			currentLifeTime = lifeTime;
 			rigidbodyModel.isKinematic = false;
 
@@ -50,7 +52,7 @@ namespace JTTF.Gameplay
 
 		private void UpdateVisibleModel()
 		{
-			if (isHarvested)
+			if (isHarvested.Value)
 			{
 				if (currentLifeTime <= 0.0f)
 					Destroy(gameObject);
@@ -69,23 +71,12 @@ namespace JTTF.Gameplay
 			UpdateVisibleModel();
 		}
 
-		private bool IsHarvestableSolo()
-		{
-			return !isHarvested;
-		}
-		private bool IsHarvestableMulti()
-		{
-			return !treeState.IsHarvestedSync.Value;
-		}
-
 		protected override void Awake()
 		{
 			base.Awake();
 
 			if (modelObject != null)
 				rigidbodyModel = modelObject.GetComponent<Rigidbody>();
-
-			treeState = GetComponent<TreeState>();
 		}
 		protected override void Start()
 		{
@@ -93,7 +84,7 @@ namespace JTTF.Gameplay
 
 			if (GameManager.IsMulti && NetworkManager.Singleton.IsClient)
 			{
-				treeState.IsHarvestedSync.OnValueChanged += OnIsHarvestedSyncValueChanged;
+				isHarvested.OnValueChanged += OnIsHarvestedSyncValueChanged;
 			}
 		}
 		protected override void Update()
@@ -108,10 +99,7 @@ namespace JTTF.Gameplay
 
 		public bool IsHarvestable()
 		{
-			if (GameManager.IsMulti)
-				return IsHarvestableMulti();
-			else
-				return IsHarvestableSolo();
+			return !isHarvested.Value;
 		}
 		public void Harvest()
 		{

@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Behaviour;
+using MLAPI.Serialization;
+using MLAPI.NetworkVariable;
+using MLAPI.NetworkVariable.Collections;
 
 #pragma warning disable IDE0044
 #pragma warning disable IDE0090
 
 namespace JTTF.Inventory
 {
-    public class ItemContainer
+    public class ItemContainer : INetworkSerializable
 	{
         public int displayIndex = -1;
         public Item item = Item.None;
@@ -17,18 +20,35 @@ namespace JTTF.Inventory
 
         public bool IsFull => !(amount < item.StackCount);
         public int FreeCount => Mathf.Clamp(item.StackCount - amount, 0, item.StackCount);
+
+		public void NetworkSerialize(NetworkSerializer serializer)
+		{
+            serializer.Serialize(ref displayIndex);
+            item.NetworkSerialize(serializer);
+            serializer.Serialize(ref amount);
+		}
 	}
 
     public class Inventory : CustomNetworkBehaviour
     {
         private int sizeMax = 0;
         private bool[] displayIndexArray = null;
-        private List<ItemContainer> itemContainerList = new List<ItemContainer>();
+        //private List<ItemContainer> itemContainerList = new List<ItemContainer>();
+        private NetworkList<ItemContainer> itemContainerList = new NetworkList<ItemContainer>(new NetworkVariableSettings
+        {
+            ReadPermission = NetworkVariablePermission.Everyone,
+            WritePermission = NetworkVariablePermission.ServerOnly
+        });
 
         public int SizeMax => sizeMax;
         public int ItemCount => itemContainerList.Count;
 
         public Action onInventoryChange = () => { /*Debug.Log("OnInventoryChange");*/ };
+
+        private void OnItemContainerListChanged(NetworkListEvent<ItemContainer> changeEvent)
+		{
+            onInventoryChange.Invoke();
+		}
 
         private bool IndexIsGood(int index)
 		{
@@ -68,7 +88,14 @@ namespace JTTF.Inventory
             displayIndexArray[index] = value;
 		}
 
-        public bool CanAddItem(Item item, int amount)
+		protected override void Awake()
+		{
+            base.Awake();
+
+            itemContainerList.OnListChanged += OnItemContainerListChanged;
+        }
+
+		public bool CanAddItem(Item item, int amount)
 		{
             var containerCount = amount / item.StackCount;
             var freeContainerCount = sizeMax - ItemCount;

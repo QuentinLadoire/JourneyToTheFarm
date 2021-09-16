@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7092799552010721163}
   - component: {fileID: 2260183838110445152}
+  - component: {fileID: 245102035643180427}
   m_Layer: 3
   m_Name: Inventory
   m_TagString: Untagged
@@ -44,6 +45,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
+--- !u!114 &245102035643180427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796996585564112631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ff113fb5a0bf34393727df3e7891f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActiveOnAwake: 1
 --- !u!1 &2067519430430479159
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,6 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5224425598935893083}
   - component: {fileID: 5764052042502667536}
+  - component: {fileID: 6236871993219035053}
   m_Layer: 3
   m_Name: ShortcutInventory
   m_TagString: Untagged
@@ -85,6 +100,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aefa6071b436c764f9dab5dc700d01ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActiveOnAwake: 1
+--- !u!114 &6236871993219035053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067519430430479159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ff113fb5a0bf34393727df3e7891f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1

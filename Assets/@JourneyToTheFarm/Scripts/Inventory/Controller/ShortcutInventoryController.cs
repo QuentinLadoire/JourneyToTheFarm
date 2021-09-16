@@ -23,7 +23,7 @@ namespace JTTF.Inventory
 			if (currentIndex == -1)
 				currentIndex = Inventory.SizeMax - 1;
 
-			onSelectedSlotChange.Invoke(currentIndex, Inventory.ItemArray[currentIndex]);
+			onSelectedSlotChange.Invoke(currentIndex, Inventory.GetItemAtDisplayIndex(currentIndex));
 		}
 		private void ScrollDown()
 		{
@@ -31,7 +31,7 @@ namespace JTTF.Inventory
 			if (currentIndex == Inventory.SizeMax)
 				currentIndex = 0;
 
-			onSelectedSlotChange.Invoke(currentIndex, Inventory.ItemArray[currentIndex]);
+			onSelectedSlotChange.Invoke(currentIndex, Inventory.GetItemAtDisplayIndex(currentIndex));
 		}
 		private void ProcessInput()
 		{
@@ -68,7 +68,7 @@ namespace JTTF.Inventory
 		{
 			base.FirstFrameUpdate();
 			
-			onSelectedSlotChange.Invoke(currentIndex, Inventory.ItemArray[currentIndex]); //Call for Instantiate the item at game start, if item exist
+			onSelectedSlotChange.Invoke(currentIndex, Inventory.GetItemAtDisplayIndex(currentIndex)); //Call for Instantiate the item at game start, if item exist
 		}
 		protected override void Update()
 		{
@@ -79,9 +79,11 @@ namespace JTTF.Inventory
 
 		public void ConsumeSelectedItem()
 		{
-			UnstackItemAt(currentIndex, 1);
-			if (Inventory.ItemArray[currentIndex] == Item.None)
-				onSelectedSlotChange.Invoke(currentIndex, Inventory.ItemArray[currentIndex]);
+			RemoveItemAt(currentIndex, 1);
+			if (Inventory.GetItemAtDisplayIndex(currentIndex) == Item.None)
+			{
+				onSelectedSlotChange.Invoke(currentIndex, Item.None);
+			}
 		}
 	}
 }

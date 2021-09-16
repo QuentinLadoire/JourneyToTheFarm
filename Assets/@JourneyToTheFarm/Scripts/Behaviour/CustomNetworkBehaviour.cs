@@ -5,7 +5,6 @@ using MLAPI;
 
 namespace JTTF.Behaviour
 {
-	[RequireComponent(typeof(NetworkObject))]
 	public class CustomNetworkBehaviour : NetworkBehaviour
 	{
 		[SerializeField] private bool isActiveOnAwake = true;

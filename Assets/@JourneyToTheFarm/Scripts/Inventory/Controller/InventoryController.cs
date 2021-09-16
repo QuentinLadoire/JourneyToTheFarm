@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Behaviour;
 
+#pragma warning disable IDE0044
+
 namespace JTTF.Inventory
 {
     public class InventoryController : CustomNetworkBehaviour
@@ -13,7 +15,7 @@ namespace JTTF.Inventory
 		protected virtual int InventorySize => 0;
 
 		public Inventory Inventory => inventory;
-		public Action onInventoryChange = () => { /*Debug.Log("OnInventoryChange");*/ };
+		public Action OnInventoryChange { get => inventory.onInventoryChange; set => inventory.onInventoryChange = value; }
 
 		protected override void Awake()
 		{
@@ -22,62 +24,45 @@ namespace JTTF.Inventory
 			inventory.Init(InventorySize);
 		}
 
-		public bool AddItem(Item item)
+		public bool CanAddItem(Item item, int amount)
 		{
-			bool value = inventory.AddItem(item);
-			if (value)
-				onInventoryChange.Invoke();
-
-			return value;
-		}
-		public bool RemoveItem(Item item)
-		{
-			bool value = inventory.RemoveItem(item);
-			if (value)
-				onInventoryChange.Invoke();
-
-			return value;
+			return inventory.CanAddItem(item, amount);
 		}
 
-		public bool AddItemAt(int index, Item item)
+		public void AddItemAt(int displayIndex, int amount)
 		{
-			var value = inventory.AddItemAt(index, item);
-			if (value)
-				onInventoryChange.Invoke();
-
-			return value;
+			inventory.AddItemAt(displayIndex, amount);
 		}
-		public bool RemoveItemAt(int index)
+		public void RemoveItemAt(int displayIndex, int amount)
 		{
-			var value = inventory.RemoveItemAt(index);
-			if (value)
-				onInventoryChange.Invoke();
-
-			return value;
+			inventory.RemoveItemAt(displayIndex, amount);
 		}
 
-		public int StackItemAt(int index, int amount)
+		public void AddItem(Item item, int amount)
 		{
-			var value = inventory.StackItemAt(index, amount);
-			if (value != -1)
-				onInventoryChange.Invoke();
-
-			return value;
+			inventory.AddItem(item, amount);
 		}
-		public int UnstackItemAt(int index, int amount)
+		public void RemoveItem(Item item, int amount)
 		{
-			var value = inventory.UnstackItemAt(index, amount);
-			if (value != -1)
-				onInventoryChange.Invoke();
-
-			return value;
+			inventory.RemoveItem(item, amount);
 		}
 
-		public void SwitchItem(int index, InventoryController other, int otherIndex)
+		public void MoveItem(int from, int to)
 		{
-			var toMove = inventory.ItemArray[index];
-			AddItemAt(index, other.Inventory.ItemArray[otherIndex]);
-			other.AddItemAt(otherIndex, toMove);
+			inventory.MoveItem(from, to);
+		}
+		public void MoveItem(int from, Inventory otherInventory, int to)
+		{
+			inventory.MoveItem(from, otherInventory, to);
+		}
+
+		public void SwapItem(int from, int to)
+		{
+			inventory.SwapItem(from, to);
+		}
+		public void SwapItem(int from, Inventory otherInventory, int to)
+		{
+			inventory.SwapItem(from, otherInventory, to);
 		}
 	}
 }

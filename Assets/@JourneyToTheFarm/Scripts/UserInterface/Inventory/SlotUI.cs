@@ -4,6 +4,8 @@ using UnityEngine;
 using JTTF.Behaviour;
 using JTTF.Inventory;
 
+#pragma warning disable IDE0044
+
 namespace JTTF.UI
 {
 	public class SlotUI : UIBehaviour, IDragable, IDropable
@@ -19,23 +21,29 @@ namespace JTTF.UI
 			this.index = index;
 			ownerPanel = owner;
 		}
-		public void SetItem(Item item)
+		public void SetItem(Item item, int amount)
 		{
 			this.item = item;
-			itemUI.SetItem(item);
+			itemUI.SetItem(item, amount);
 		}
 
 		public void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
 		{
+			if (item == Item.None) return;
+
 			CanvasManager.GamePanel.ParentToDragAndDropPanel(itemUI.transform);
 			itemUI.transform.position = eventData.position;
 		}
 		public void OnDrag(UnityEngine.EventSystems.PointerEventData eventData)
 		{
+			if (item == Item.None) return;
+
 			itemUI.transform.position = eventData.position;
 		}
 		public void OnPointerUp(UnityEngine.EventSystems.PointerEventData eventData)
 		{
+			if (item == Item.None) return;
+
 			itemUI.transform.SetParent(transform, false);
 			itemUI.RectTransform.anchoredPosition = Vector2.zero;
 		}
@@ -49,14 +57,28 @@ namespace JTTF.UI
 				{
 					if (draggedSlotUI != this) //if not him self
 					{
-						if (draggedSlotUI.item.name == item.name)
+						if (item == Item.None) //if we need to move or swap item
 						{
-							var rest = ownerPanel.Controller.StackItemAt(index, draggedSlotUI.item.amount);
-							if (rest != -1)
-								draggedSlotUI.ownerPanel.Controller.UnstackItemAt(draggedSlotUI.index, draggedSlotUI.item.amount - rest);
+							if (draggedSlotUI.ownerPanel == ownerPanel) //Move Item on same Panel
+							{
+								draggedSlotUI.ownerPanel.Controller.MoveItem(draggedSlotUI.index, index);
+							}
+							else //Move Item on another Panel
+							{
+								draggedSlotUI.ownerPanel.Controller.MoveItem(draggedSlotUI.index, ownerPanel.Controller.Inventory, index);
+							}
 						}
 						else
-							ownerPanel.Controller.SwitchItem(index, draggedSlotUI.ownerPanel.Controller, draggedSlotUI.index);
+						{
+							if (draggedSlotUI.ownerPanel == ownerPanel) //Swap Item on same Panel
+							{
+								draggedSlotUI.ownerPanel.Controller.SwapItem(draggedSlotUI.index, index);
+							}
+							else //Swap Item on another Panel
+							{
+								draggedSlotUI.ownerPanel.Controller.SwapItem(draggedSlotUI.index, ownerPanel.Controller.Inventory, index);
+							}
+						}
 					}
 				}
 			}

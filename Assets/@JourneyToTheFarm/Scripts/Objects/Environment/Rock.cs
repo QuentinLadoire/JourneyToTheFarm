@@ -30,7 +30,7 @@ namespace JTTF.Gameplay
 
 			for (int i = 0; i < stoneQuantity; i++)
 			{
-				World.DropItem(new Item(stoneName, ItemType.Resource, 1), transform.position + Vector3.up * 0.5f);
+				World.DropItem(new Item(stoneName, ItemType.Resource), transform.position + Vector3.up * 0.5f);
 			}
 		}
 

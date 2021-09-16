@@ -84,7 +84,7 @@ namespace JTTF.Gameplay
 		{
             //Spawn a Collectible in term
             //World.DropItem(new Item(seedAsset.name, ItemType.Resource, 1), transform.position)
-            player.AddItem(new Item(seedAsset.name, ItemType.Resource, 1));
+            player.AddItem(new Item(seedAsset.name, ItemType.Resource), 1);
         }
         private void ClearSeed()
 		{

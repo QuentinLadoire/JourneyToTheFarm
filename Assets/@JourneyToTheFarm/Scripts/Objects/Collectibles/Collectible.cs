@@ -27,8 +27,11 @@ namespace JTTF.Gameplay
 
 		private void Collect(Player player)
 		{
-			if (player.AddItem(new Item(ItemName, ItemType, 1)))
+			if (player.CanAddItem(new Item(ItemName, ItemType), 1))
+			{
+				player.AddItem(new Item(ItemName, ItemType), 1);
 				Destroy();
+			}
 		}
 		private void OnTriggerEnterCallback(Collider other)
 		{

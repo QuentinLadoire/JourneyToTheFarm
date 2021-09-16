@@ -55,6 +55,7 @@ namespace JTTF.Inventory
 			CanvasManager.GamePanel.OpenPlayerInventory(this);
 			GameManager.ActiveCursor();
 			OwnerPlayer.CharacterController.DesactiveControl();
+			GameManager.cameraController.DesactiveControl();
 		}
 		public void CloseInventory()
 		{
@@ -62,6 +63,7 @@ namespace JTTF.Inventory
 			CanvasManager.GamePanel.ClosePlayerInventory();
 			GameManager.DesactiveCursor();
 			OwnerPlayer.CharacterController.ActiveControl();
+			GameManager.cameraController.ActiveControl();
 		}
 	}
 }

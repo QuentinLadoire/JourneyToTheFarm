@@ -25,14 +25,24 @@ namespace JTTF.UI
             if (controller == null) return;
 
             for (int i = 0; i < slotArray.Length; i++)
-                slotArray[i].SetItem(controller.Inventory.ItemArray[i]);
+            {
+                var index = controller.Inventory.GetIndex(i);
+                if (index != -1)
+                {
+                    slotArray[i].SetItem(controller.Inventory.GetItemAt(index), controller.Inventory.GetAmountAt(index));
+                }
+                else
+				{
+                    slotArray[i].SetItem(Item.None, 0);
+				}
+            }
         }
 
         protected virtual void Init()
         {
             if (controller == null) return;
 
-            controller.onInventoryChange += OnInventoryChange;
+            controller.OnInventoryChange += OnInventoryChange;
 
             RefreshInventory();
         }
@@ -49,7 +59,7 @@ namespace JTTF.UI
             base.OnDestroy();
 
             if (controller != null)
-                controller.onInventoryChange -= OnInventoryChange;
+                controller.OnInventoryChange -= OnInventoryChange;
 		}
 
 		public void SetInventoryController(InventoryController controller)

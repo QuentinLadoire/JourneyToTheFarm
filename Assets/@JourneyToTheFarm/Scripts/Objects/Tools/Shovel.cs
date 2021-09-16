@@ -6,6 +6,8 @@ using JTTF.Management;
 using MLAPI;
 using MLAPI.Messaging;
 
+#pragma warning disable IDE0044
+
 namespace JTTF
 {
 	public class Shovel : UsableBehaviour
@@ -73,6 +75,8 @@ namespace JTTF
 		}
 		protected override void OnDestroy()
 		{
+			base.OnDestroy();
+
 			if (farmPlotPreview != null)
 				Destroy(farmPlotPreview.gameObject);
 		}

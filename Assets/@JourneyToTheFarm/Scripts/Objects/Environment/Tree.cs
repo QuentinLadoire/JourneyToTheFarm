@@ -44,7 +44,7 @@ namespace JTTF.Gameplay
 
 			for (int i = 0; i < logQuantity; i++)
 			{
-				World.DropItem(new Item(logName, ItemType.Resource, 1), transform.position + Vector3.up * 0.5f);
+				World.DropItem(new Item(logName, ItemType.Resource), transform.position + Vector3.up * 0.5f);
 			}
 		}
 

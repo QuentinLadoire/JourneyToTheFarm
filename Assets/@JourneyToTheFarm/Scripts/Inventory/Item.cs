@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Enum;
 using JTTF.Management;
+using MLAPI.Serialization;
 
-#pragma warning disable 0659
-#pragma warning disable 0661
+#pragma warning disable IDE0090
+#pragma warning disable IDE0079
+#pragma warning disable CS0659
+#pragma warning disable CS0661
 
 namespace JTTF.Inventory
 {
-    public struct Item
+	public struct Item : INetworkSerializable
     {
-        private static Item noneItem = new Item("NoName", ItemType.None, 0);
+        private static Item noneItem = new Item("NoName", ItemType.None);
 
         public string name;
         public ItemType type;
-        public int amount;
 
         public static Item None => noneItem;
         public bool IsStackable => GameManager.DataBase.GetItemAsset(name, type).stackable;
@@ -24,19 +26,23 @@ namespace JTTF.Inventory
         public GameObject Prefab => GameManager.DataBase.GetItemAsset(name, type).prefab;
 		public GameObject CollectiblePrefab => GameManager.DataBase.GetItemAsset(name, type).collectiblePrefab;
 
-		public Item(string name, ItemType type, int amount)
+		public Item(string name, ItemType type)
 		{
 			this.name = name;
 			this.type = type;
-			this.amount = amount;
+		}
+
+		public void NetworkSerialize(NetworkSerializer serializer)
+		{
+			serializer.Serialize(ref name);
+			serializer.Serialize(ref type);
 		}
 
 		public override bool Equals(object obj)
 		{
 			return obj is Item item &&
 				   name == item.name &&
-				   type == item.type &&
-				   amount == item.amount;
+				   type == item.type;
 		}
 
 		public static bool operator ==(Item left, Item right)

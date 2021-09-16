@@ -37,7 +37,7 @@ namespace JTTF.UI
             if (sController != null)
             {
                 sController.onSelectedSlotChange += OnScroll;
-                sController.onInventoryChange += OnInventoryChange;
+                sController.OnInventoryChange += OnInventoryChange;
             }
         }
 
@@ -48,7 +48,7 @@ namespace JTTF.UI
             if (sController != null)
             {
                 sController.onSelectedSlotChange -= OnScroll;
-                sController.onInventoryChange -= OnInventoryChange;
+                sController.OnInventoryChange -= OnInventoryChange;
             }
 		}
 	}

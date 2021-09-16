@@ -4,15 +4,17 @@ using UnityEngine;
 using JTTF.Behaviour;
 using JTTF.Inventory;
 
+#pragma warning disable IDE0044
+
 namespace JTTF.UI
 {
     public class GamePanel : UIBehaviour
     {
-        [SerializeField] PlayerPanel playerPanel = null;
-        [SerializeField] InventoryPanel playerInventoryPanel = null;
-        [SerializeField] InventoryPanel chestInventoryPanel = null;
-        [SerializeField] InventoryPanel shortcutInventoryPanel = null;
-        [SerializeField] GameObject dragAndDropPanel = null;
+        [SerializeField] private PlayerPanel playerPanel = null;
+        [SerializeField] private InventoryPanel playerInventoryPanel = null;
+        [SerializeField] private InventoryPanel chestInventoryPanel = null;
+        [SerializeField] private InventoryPanel shortcutInventoryPanel = null;
+        [SerializeField] private GameObject dragAndDropPanel = null;
 
         public PlayerPanel PlayerPanel => playerPanel;
 

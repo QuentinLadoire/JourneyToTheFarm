@@ -47,18 +47,25 @@ namespace JTTF.Character
 		{
             base.Start();
 
-            ShortcutController.AddItem(new Item("Shovel", ItemType.Tool, 1));
-            ShortcutController.AddItem(new Item("Axe", ItemType.Tool, 1));
-            ShortcutController.AddItem(new Item("Pickaxe", ItemType.Tool, 1));
-            ShortcutController.AddItem(new Item("Scythe", ItemType.Tool, 1));
-            ShortcutController.AddItem(new Item("WheatPacket", ItemType.SeedPacket, 4));
-            ShortcutController.AddItem(new Item("Chest", ItemType.Container, 1));
-            ShortcutController.AddItem(new Item("Wheat", ItemType.Resource, 50));
+            ShortcutController.AddItem(new Item("Shovel", ItemType.Tool), 1);
+            ShortcutController.AddItem(new Item("Axe", ItemType.Tool), 1);
+            ShortcutController.AddItem(new Item("Pickaxe", ItemType.Tool), 1);
+            ShortcutController.AddItem(new Item("Scythe", ItemType.Tool), 1);
+            ShortcutController.AddItem(new Item("WheatPacket", ItemType.SeedPacket), 4);
+            ShortcutController.AddItem(new Item("Chest", ItemType.Container), 1);
+            ShortcutController.AddItem(new Item("Wheat", ItemType.Resource), 50);
         }
 
-		public bool AddItem(Item item)
+        public bool CanAddItem(Item item, int amount)
 		{
-            return ShortcutController.AddItem(item) || InventoryController.AddItem(item);
+            return ShortcutController.CanAddItem(item, amount) || InventoryController.CanAddItem(item, amount);
+		}
+		public void AddItem(Item item, int amount)
+		{
+            if (ShortcutController.CanAddItem(item, amount))
+                ShortcutController.AddItem(item, amount);
+            else if (InventoryController.CanAddItem(item, amount))
+                InventoryController.AddItem(item, amount);
 		}
 	}
 }

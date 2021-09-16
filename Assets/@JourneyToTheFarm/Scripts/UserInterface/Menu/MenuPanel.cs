@@ -7,6 +7,7 @@ using MLAPI;
 using MLAPI.SceneManagement;
 
 #pragma warning disable IDE0044
+#pragma warning disable IDE0051
 
 namespace JTTF.Menu
 {
@@ -22,7 +23,8 @@ namespace JTTF.Menu
 		}
 		private void OnDestroy()
 		{
-			NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
+			if (NetworkManager.Singleton != null)
+				NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
 		}
 
 		private void OnServerStarted()

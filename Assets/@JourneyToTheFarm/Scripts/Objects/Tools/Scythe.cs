@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Behaviour;
 
+#pragma warning disable IDE0090
+
 namespace JTTF.Gameplay
 {
 	public class Scythe : UsableBehaviour
@@ -59,7 +61,7 @@ namespace JTTF.Gameplay
 		public override void Use()
 		{
 			foreach (var grass in grassList)
-				grass.Harvest(OwnerPlayer);
+				grass.Harvest();
 
 			grassList.Clear();
 		}

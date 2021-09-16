@@ -129,16 +129,12 @@ namespace JTTF.Inventory
                 if (itemContainer.item == item && !itemContainer.IsFull)
 				{
                     itemContainer.amount += amount;
-                    if (itemContainer.amount > itemContainer.item.StackCount)
-                    {
-                        amount = itemContainer.amount - itemContainer.item.StackCount;
-                        itemContainer.amount = itemContainer.item.StackCount;
-                    }
-                    else
-                    {
+                    itemContainer.amount = Mathf.Clamp(itemContainer.amount, 0, itemContainer.item.StackCount);
+                    amount = itemContainer.amount - itemContainer.item.StackCount;
+                    
+                    if (amount <= 0)
                         break;
-                    }
-				}
+                }
 			}
 
             if (amount > 0)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Behaviour;
+using JTTF.Management;
 using MLAPI.Serialization;
 using MLAPI.NetworkVariable;
 using MLAPI.NetworkVariable.Collections;
@@ -33,16 +34,27 @@ namespace JTTF.Inventory
     {
         private int sizeMax = 0;
         private bool[] displayIndexArray = null;
-        //private List<ItemContainer> itemContainerList = new List<ItemContainer>();
-        private NetworkList<ItemContainer> itemContainerList = new NetworkList<ItemContainer>(new NetworkVariableSettings
+        private List<ItemContainer> itemContainerList = new List<ItemContainer>();
+        private NetworkList<ItemContainer> itemContainerNetworkList = new NetworkList<ItemContainer>(new NetworkVariableSettings
         {
             ReadPermission = NetworkVariablePermission.Everyone,
             WritePermission = NetworkVariablePermission.ServerOnly
         });
 
-        public int SizeMax => sizeMax;
-        public int ItemCount => itemContainerList.Count;
+        private IList<ItemContainer> ItemContainerList
+        { 
+            get
+            {
+                if (GameManager.IsMulti)
+                    return itemContainerNetworkList;
+                else
+                    return itemContainerList;
+            }
+        }
 
+        public int SizeMax => sizeMax;
+        public int ItemCount => ItemContainerList.Count;
+        
         public Action onInventoryChange = () => { /*Debug.Log("OnInventoryChange");*/ };
 
         private void OnItemContainerListChanged(NetworkListEvent<ItemContainer> changeEvent)
@@ -57,8 +69,8 @@ namespace JTTF.Inventory
 
         private void ClearItemContainerAt(int index)
 		{
-            SetDisplayIndexAt(itemContainerList[index].displayIndex, true);
-            itemContainerList.RemoveAt(index);
+            SetDisplayIndexAt(ItemContainerList[index].displayIndex, true);
+            ItemContainerList.RemoveAt(index);
 		}
         private void AddItemContainer(int displayIndex, Item item, int amount)
 		{
@@ -69,7 +81,7 @@ namespace JTTF.Inventory
                 item = item,
                 amount = amount
             };
-            itemContainerList.Add(itemContainer);
+            ItemContainerList.Add(itemContainer);
 		}
 
         private int GetFreeDisplayIndex()
@@ -92,10 +104,10 @@ namespace JTTF.Inventory
 		{
             base.Awake();
 
-            itemContainerList.OnListChanged += OnItemContainerListChanged;
+            itemContainerNetworkList.OnListChanged += OnItemContainerListChanged;
         }
 
-		public bool CanAddItem(Item item, int amount)
+        public bool CanAddItem(Item item, int amount)
 		{
             var containerCount = amount / item.StackCount;
             var freeContainerCount = sizeMax - ItemCount;
@@ -105,7 +117,7 @@ namespace JTTF.Inventory
 			}
             else
 			{
-                foreach (var container in itemContainerList)
+                foreach (var container in ItemContainerList)
 				{
                     if (container.item == item)
 					{
@@ -126,10 +138,10 @@ namespace JTTF.Inventory
             var index = GetIndex(displayIndex);
             if (index != -1)
 			{
-                itemContainerList[index].amount += amount;
-                if (itemContainerList[index].amount > itemContainerList[index].item.StackCount)
+                ItemContainerList[index].amount += amount;
+                if (ItemContainerList[index].amount > ItemContainerList[index].item.StackCount)
 				{
-                    itemContainerList[index].amount = itemContainerList[index].item.StackCount;
+                    ItemContainerList[index].amount = ItemContainerList[index].item.StackCount;
 				}
                 onInventoryChange.Invoke();
 			}
@@ -139,8 +151,8 @@ namespace JTTF.Inventory
             var index = GetIndex(displayIndex);
             if (index != -1)
 			{
-                itemContainerList[index].amount -= amount;
-                if (itemContainerList[index].amount <= 0)
+                ItemContainerList[index].amount -= amount;
+                if (ItemContainerList[index].amount <= 0)
 				{
                     ClearItemContainerAt(index);
 				}
@@ -152,7 +164,7 @@ namespace JTTF.Inventory
 		{
             for (int i = 0; i < ItemCount; i++)
 			{
-                var itemContainer = itemContainerList[i];
+                var itemContainer = ItemContainerList[i];
                 if (itemContainer.item == item && !itemContainer.IsFull)
 				{
                     itemContainer.amount += amount;
@@ -175,7 +187,7 @@ namespace JTTF.Inventory
 		{
             for (int i = 0; i < ItemCount; i++)
 			{
-                var itemContainer = itemContainerList[i];
+                var itemContainer = ItemContainerList[i];
                 if (itemContainer.item == item)
 				{
                     itemContainer.amount -= amount;
@@ -200,7 +212,7 @@ namespace JTTF.Inventory
             var index = GetIndex(from);
             if (index != -1)
             {
-                itemContainerList[index].displayIndex = to;
+                ItemContainerList[index].displayIndex = to;
 
                 SetDisplayIndexAt(from, true);
                 SetDisplayIndexAt(to, false);
@@ -213,7 +225,7 @@ namespace JTTF.Inventory
             var index = GetIndex(from);
             if (index != -1)
             {
-                otherInventory.AddItemContainer(to, itemContainerList[index].item, itemContainerList[index].amount);
+                otherInventory.AddItemContainer(to, ItemContainerList[index].item, ItemContainerList[index].amount);
                 ClearItemContainerAt(index);
 
                 onInventoryChange.Invoke();
@@ -228,8 +240,8 @@ namespace JTTF.Inventory
 
             if (fromIndex != -1 && toIndex != -1)
             {
-                itemContainerList[fromIndex].displayIndex = to;
-                itemContainerList[toIndex].displayIndex = from;
+                ItemContainerList[fromIndex].displayIndex = to;
+                ItemContainerList[toIndex].displayIndex = from;
 
                 onInventoryChange.Invoke();
             }
@@ -240,17 +252,17 @@ namespace JTTF.Inventory
             var toIndex = otherInventory.GetIndex(to);
             if (fromIndex != -1 && toIndex != -1)
             {
-                var fromItem = itemContainerList[fromIndex].item;
-                var fromAmount = itemContainerList[fromIndex].amount;
+                var fromItem = ItemContainerList[fromIndex].item;
+                var fromAmount = ItemContainerList[fromIndex].amount;
 
-                var toItem = otherInventory.itemContainerList[toIndex].item;
-                var toAmount = otherInventory.itemContainerList[toIndex].amount;
+                var toItem = otherInventory.ItemContainerList[toIndex].item;
+                var toAmount = otherInventory.ItemContainerList[toIndex].amount;
 
-                itemContainerList[fromIndex].item = toItem;
-                itemContainerList[fromIndex].amount = toAmount;
+                ItemContainerList[fromIndex].item = toItem;
+                ItemContainerList[fromIndex].amount = toAmount;
 
-                otherInventory.itemContainerList[toIndex].item = fromItem;
-                otherInventory.itemContainerList[toIndex].amount = fromAmount;
+                otherInventory.ItemContainerList[toIndex].item = fromItem;
+                otherInventory.ItemContainerList[toIndex].amount = fromAmount;
 
                 onInventoryChange.Invoke();
                 otherInventory.onInventoryChange.Invoke();
@@ -261,7 +273,7 @@ namespace JTTF.Inventory
 		{
             for (int i = 0; i < ItemCount; i++)
 			{
-                var itemContainer = itemContainerList[i];
+                var itemContainer = ItemContainerList[i];
                 if (itemContainer.displayIndex == displayIndex)
                     return i;
 			}
@@ -272,7 +284,7 @@ namespace JTTF.Inventory
 		{
             if (IndexIsGood(index))
 			{
-                return itemContainerList[index].item;
+                return ItemContainerList[index].item;
 			}
 
             return Item.None;
@@ -281,7 +293,7 @@ namespace JTTF.Inventory
 		{
             if (IndexIsGood(index))
 			{
-                return itemContainerList[index].amount;
+                return ItemContainerList[index].amount;
 			}
 
             return 0;
@@ -291,7 +303,7 @@ namespace JTTF.Inventory
 		{
             if (IndexIsGood(index))
 			{
-                return itemContainerList[index].displayIndex;
+                return ItemContainerList[index].displayIndex;
 			}
 
             return -1;
@@ -301,7 +313,7 @@ namespace JTTF.Inventory
             var index = GetIndex(displayIndex);
             if (index != -1)
             {
-                return itemContainerList[index].item;
+                return ItemContainerList[index].item;
             }
 
             return Item.None;
@@ -311,7 +323,7 @@ namespace JTTF.Inventory
             var index = GetIndex(displayIndex);
             if (index != -1)
             {
-                return itemContainerList[index].amount;
+                return ItemContainerList[index].amount;
             }
 
             return 0;

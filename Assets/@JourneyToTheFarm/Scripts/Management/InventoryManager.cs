@@ -36,10 +36,10 @@ namespace JTTF.Management
             instance.inventoryList.Remove(inventory);
 		}
 
-		public static Inventory GetInventory(ulong behaviourId)
+		public static Inventory GetInventory(ulong networkObjectID, ulong networkBehaviourId)
 		{
 			foreach (var inventory in instance.inventoryList)
-				if (inventory.NetworkBehaviourId == behaviourId)
+				if (inventory.NetworkObjectId == networkObjectID && inventory.NetworkBehaviourId == networkBehaviourId)
 					return inventory;
 
 			return null;

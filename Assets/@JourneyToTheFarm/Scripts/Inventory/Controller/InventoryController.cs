@@ -24,6 +24,8 @@ namespace JTTF.Inventory
 			base.Awake();
 
 			inventory.Init(InventorySize);
+
+			InventoryManager.AddNewInventory(inventory);
 		}
 
 		[ServerRpc(RequireOwnership = false)]
@@ -54,9 +56,9 @@ namespace JTTF.Inventory
 			inventory.MoveItem(from, to);
 		}
 		[ServerRpc(RequireOwnership = false)]
-		private void MoveItemServerRpc(int from, ulong otherInventoryID, int to)
+		private void MoveItemServerRpc(int from, ulong otherInventoryObjectID, ulong otherInventoryBehaviourID, int to)
 		{
-			var otherInventory = InventoryManager.GetInventory(otherInventoryID);
+			var otherInventory = InventoryManager.GetInventory(otherInventoryObjectID, otherInventoryBehaviourID);
 			if (otherInventory != null)
 			{
 				inventory.MoveItem(from, otherInventory, to);
@@ -69,9 +71,9 @@ namespace JTTF.Inventory
 			inventory.SwapItem(from, to);
 		}
 		[ServerRpc(RequireOwnership = false)]
-		private void SwapItemServerRpc(int from, ulong otherInventoryID, int to)
+		private void SwapItemServerRpc(int from, ulong otherInventoryObjectID, ulong otherInventoryBehaviourID, int to)
 		{
-			var otherInventory = InventoryManager.GetInventory(otherInventoryID);
+			var otherInventory = InventoryManager.GetInventory(otherInventoryObjectID, otherInventoryBehaviourID);
 			if (otherInventory != null)
 			{
 				inventory.SwapItem(from, otherInventory, to);
@@ -123,7 +125,7 @@ namespace JTTF.Inventory
 		public void MoveItem(int from, Inventory otherInventory, int to)
 		{
 			if (GameManager.IsMulti)
-				MoveItemServerRpc(from, otherInventory.NetworkBehaviourId, to);
+				MoveItemServerRpc(from, otherInventory.NetworkObjectId, otherInventory.NetworkBehaviourId, to);
 			else
 				inventory.MoveItem(from, otherInventory, to);
 		}
@@ -138,7 +140,7 @@ namespace JTTF.Inventory
 		public void SwapItem(int from, Inventory otherInventory, int to)
 		{
 			if (GameManager.IsMulti)
-				SwapItemServerRpc(from, otherInventory.NetworkBehaviourId, to);
+				SwapItemServerRpc(from, otherInventory.NetworkObjectId, otherInventory.NetworkBehaviourId, to);
 			else
 				inventory.SwapItem(from, otherInventory, to);
 		}

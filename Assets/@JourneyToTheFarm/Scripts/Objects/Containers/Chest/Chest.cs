@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Behaviour;
+using JTTF.Management;
 
 namespace JTTF.Gameplay
 {
@@ -78,7 +79,7 @@ namespace JTTF.Gameplay
 		{
 			if (chestPrefab != null)
 			{
-				Instantiate(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
+				World.SpawnObject(chestPrefab, chestPreview.transform.position, chestPreview.transform.rotation);
 				OwnerPlayer.ShortcutController.ConsumeSelectedItem();
 			}
 		}

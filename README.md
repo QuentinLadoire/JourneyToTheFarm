@@ -9,6 +9,6 @@
 ![](Gifs/Harvest.gif)
 ![](Gifs/Craft.gif)
 
-##Video presentation :
+## Video presentation :
 *Click on the image*  
 [![](https://img.youtube.com/vi/C5u-9NfnUP4/0.jpg)](https://www.youtube.com/watch?v=C5u-9NfnUP4)

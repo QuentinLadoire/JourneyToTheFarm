@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Enum;
 using JTTF.Behaviour;
-using JTTF.Character;
 using JTTF.Inventory;
 using JTTF.Management;
+using MLAPI;
 
 #pragma warning disable IDE0044
 
@@ -17,7 +17,7 @@ namespace JTTF.Gameplay
         [Range(0.0f, 1.0f)]
         [SerializeField] private float dropRate = 1.0f;
 
-        public void Harvest()
+        private void HarvestSolo()
 		{
             if (Random.value < dropRate)
             {
@@ -29,6 +29,11 @@ namespace JTTF.Gameplay
             }
 
             Destroy();
+        }
+
+		public void Harvest()
+		{
+            HarvestSolo();
 		}
     }
 }

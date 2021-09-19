@@ -20,6 +20,11 @@ namespace JTTF.Gameplay
 		[SerializeField] private float lifeTime = 0.0f;
 		[SerializeField] private GameObject modelObject = null;
 
+		private NetworkVariableFloat scaleSync = new NetworkVariableFloat(new NetworkVariableSettings
+		{
+			ReadPermission = NetworkVariablePermission.Everyone,
+			WritePermission = NetworkVariablePermission.ServerOnly
+		});
 		private NetworkVariableBool isHarvested = new NetworkVariableBool(new NetworkVariableSettings
 		{
 			ReadPermission = NetworkVariablePermission.Everyone,
@@ -82,9 +87,20 @@ namespace JTTF.Gameplay
 		{
 			base.Start();
 
+			if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
+			{
+				scaleSync.Value = transform.localScale.x;
+			}
 			if (GameManager.IsMulti && NetworkManager.Singleton.IsClient)
 			{
 				isHarvested.OnValueChanged += OnIsHarvestedSyncValueChanged;
+			}
+			if (GameManager.IsMulti && !NetworkManager.Singleton.IsServer)
+			{
+				scaleSync.OnValueChanged += (previousValue, newValue) =>
+				{
+					transform.localScale = new Vector3(newValue, newValue, newValue);
+				};
 			}
 		}
 		protected override void Update()

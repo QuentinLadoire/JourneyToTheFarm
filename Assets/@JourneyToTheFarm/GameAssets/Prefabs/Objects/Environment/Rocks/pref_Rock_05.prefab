@@ -145,7 +145,7 @@ MonoBehaviour:
   NetworkInstanceId: 0
   PrefabHash: 9461702859704039980
   PrefabHashGenerator: pref_Rock_05
-  AlwaysReplicateAsRoot: 0
+  AlwaysReplicateAsRoot: 1
   DontDestroyWithOwner: 0
 --- !u!114 &5189669790895673456
 MonoBehaviour:

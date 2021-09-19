@@ -146,7 +146,7 @@ namespace JTTF.Lobby
 		}
 		public void OnStartButtonClicked()
 		{
-			NetworkSceneManager.SwitchScene("NetworkTest");
+			NetworkSceneManager.SwitchScene("MapGeneration");
 		}
 	}
 }

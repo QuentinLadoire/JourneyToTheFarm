@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JTTF.Management;
+using MLAPI;
 
 namespace JTTF.MapGeneration
 {
@@ -57,6 +59,12 @@ namespace JTTF.MapGeneration
 
 			var randomScale = Random.Range(2.0f, 4.0f);
 			newTreePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+			if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
+			{
+				var netObject = newTreePrefab.GetComponent<NetworkObject>();
+				netObject.Spawn();
+			}
 		}
 
 		private void CreateNewRock_05(int x, int y)
@@ -73,6 +81,12 @@ namespace JTTF.MapGeneration
 
 			var randomScale = Random.Range(5.0f, 15.0f);
 			newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+			if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
+			{
+				var netObject = newRockPrefab.GetComponent<NetworkObject>();
+				netObject.Spawn();
+			}
 		}
 
 		private void CreateNewGrass_Patch_05(int x, int y)
@@ -80,15 +94,21 @@ namespace JTTF.MapGeneration
 			if (setting.grassSetting.grass_Patch_02Prefab == null)
 				return;
 
-			var newRockPrefab = Instantiate(setting.grassSetting.grass_Patch_02Prefab);
-			newRockPrefab.transform.parent = transform;
-			newRockPrefab.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
+			var newGrassPatch = Instantiate(setting.grassSetting.grass_Patch_02Prefab);
+			newGrassPatch.transform.parent = transform;
+			newGrassPatch.transform.localPosition = new Vector3(x, GetHeight(x, y), y);
 
 			var randomAngle = Random.Range(0.0f, 360.0f);
-			newRockPrefab.transform.eulerAngles = new Vector3(0.0f, randomAngle, 0.0f);
+			newGrassPatch.transform.eulerAngles = new Vector3(0.0f, randomAngle, 0.0f);
 
 			var randomScale = Random.Range(0.2f, 0.8f);
-			newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+			newGrassPatch.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+			//if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
+			//{
+			//	var netObject = newGrassPatch.GetComponent<NetworkObject>();
+			//	netObject.Spawn();
+			//}
 		}
 
 		private void ComputeHeightmap()
@@ -263,14 +283,16 @@ namespace JTTF.MapGeneration
 
 			GenerateTexture();
 
-			ComputeTreeHeightmap();
-			GenerateTree();
-
-			ComputeRockHeightmap();
-			GenerateRock();
-
 			ComputeGrassHeightmap();
 			GenerateGrass();
+
+			if (!GameManager.IsMulti || (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer))
+			{
+				ComputeTreeHeightmap();
+				GenerateTree();
+				ComputeRockHeightmap();
+				GenerateRock();
+			}
 		}
 	}
 }

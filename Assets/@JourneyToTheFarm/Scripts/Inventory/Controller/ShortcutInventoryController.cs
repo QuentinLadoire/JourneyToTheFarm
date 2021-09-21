@@ -42,6 +42,14 @@ namespace JTTF.Inventory
 				ScrollDown();
 		}
 
+		private void RefreshSelectedSlot()
+		{
+			if (Inventory.GetItemAtDisplayIndex(currentIndex) == Item.None)
+			{
+				onSelectedSlotChange.Invoke(currentIndex, Item.None);
+			}
+		}
+
 		protected override void Awake()
 		{
 			base.Awake();
@@ -63,6 +71,8 @@ namespace JTTF.Inventory
 			base.Start();
 			
 			CanvasManager.GamePanel.InitShortcutInventory(this);
+
+			OnInventoryChange += RefreshSelectedSlot;
 		}
 		protected override void FirstFrameUpdate()
 		{
@@ -80,10 +90,7 @@ namespace JTTF.Inventory
 		public void ConsumeSelectedItem()
 		{
 			RemoveItemAt(currentIndex, 1);
-			if (Inventory.GetItemAtDisplayIndex(currentIndex) == Item.None)
-			{
-				onSelectedSlotChange.Invoke(currentIndex, Item.None);
-			}
+			RefreshSelectedSlot();
 		}
 	}
 }

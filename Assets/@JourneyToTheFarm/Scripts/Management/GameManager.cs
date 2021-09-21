@@ -40,15 +40,24 @@ namespace JTTF.Management
 			isMulti = true;
 		}
 
+		private static int activeCount = 0;
 		public static void ActiveCursor()
 		{
+			activeCount++;
+
 			Cursor.lockState = CursorLockMode.Confined;
 			Cursor.visible = true;
 		}
 		public static void DeactiveCursor()
 		{
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
+			if (activeCount > 0)
+				activeCount--;
+
+			if (activeCount == 0)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+			}
 		}
 
 		private void Awake()

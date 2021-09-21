@@ -75,13 +75,19 @@ namespace JTTF
 				transform.position = followingObject.transform.position + followingOffset;
 		}
 
+		private int activeCount = 0;
 		public void ActiveControl()
 		{
+			activeCount++;
 			hasControl = true;
 		}
 		public void DeactiveControl()
 		{
-			hasControl = false;
+			if (activeCount > 0)
+				activeCount--;
+
+			if (activeCount == 0)
+				hasControl = false;
 		}
 	}
 }

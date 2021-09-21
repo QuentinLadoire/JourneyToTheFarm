@@ -12,6 +12,7 @@ namespace JTTF.Management
 			base.Start();
 
 			World.SpawnPlayerObject(transform.position, transform.rotation);
+			GameManager.DeactiveCursor();
 
 			Destroy();
 		}

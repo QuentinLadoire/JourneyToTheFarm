@@ -53,17 +53,17 @@ namespace JTTF.Inventory
 		{
 			isOpen = true;
 			CanvasManager.GamePanel.OpenPlayerInventory(this);
-			GameManager.ActiveCursor();
 			OwnerPlayer.MovementController.DeactiveControl();
 			GameManager.cameraController.DeactiveControl();
+			GameManager.ActiveCursor();
 		}
 		public void CloseInventory()
 		{
 			isOpen = false;
 			CanvasManager.GamePanel.ClosePlayerInventory();
-			GameManager.DeactiveCursor();
 			OwnerPlayer.MovementController.ActiveControl();
 			GameManager.cameraController.ActiveControl();
+			GameManager.DeactiveCursor();
 		}
 	}
 }

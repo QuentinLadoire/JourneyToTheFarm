@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace JTTF.DataBase
 {
-    [CreateAssetMenu(fileName = "NewSeedDataBase", menuName = "SeedDataBase")]
+    [CreateAssetMenu(fileName = "NewSeedDataBase", menuName = "DataBase/SeedDataBase")]
     public class SeedDataBase : ScriptableObject
     {
         public List<SeedAsset> seedAssets = new List<SeedAsset>();

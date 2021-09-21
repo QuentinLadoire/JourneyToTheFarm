@@ -382,7 +382,7 @@ namespace JTTF.Inventory
 
             return Item.None;
         }
-        public int GetAmountAtDisplaIndex(int displayIndex)
+        public int GetAmountAtDisplayIndex(int displayIndex)
         {
             var index = GetIndex(displayIndex);
             if (index != -1)
@@ -391,6 +391,18 @@ namespace JTTF.Inventory
             }
 
             return 0;
+        }
+
+        public int GetAmountOf(Item item)
+		{
+            int amount = 0;
+            foreach (var container in ItemContainerList)
+			{
+                if (container.item == item)
+                    amount += container.amount;
+			}
+
+            return amount;
         }
 
         public void Init(int size)

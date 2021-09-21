@@ -11,7 +11,7 @@ namespace JTTF.Character
 {
     public class Player : CustomNetworkBehaviour
     {
-        public MovementController CharacterController { get; private set; }
+        public MovementController MovementController { get; private set; }
         public AnimationController AnimationController { get; private set; }
         public PlayerInventoryController InventoryController { get; private set; }
         public ShortcutInventoryController ShortcutController { get; private set; }
@@ -25,7 +25,7 @@ namespace JTTF.Character
 
             GameManager.player = this;
 
-            CharacterController = GetComponent<MovementController>();
+            MovementController = GetComponent<MovementController>();
             AnimationController = GetComponent<AnimationController>();
             InventoryController = GetComponent<PlayerInventoryController>();
             ShortcutController = GetComponent<ShortcutInventoryController>();
@@ -60,12 +60,26 @@ namespace JTTF.Character
 		{
             return ShortcutController.CanAddItem(item, amount) || InventoryController.CanAddItem(item, amount);
 		}
+
+        public int GetAmountOf(Item item)
+		{
+            return ShortcutController.GetAmountOf(item) + InventoryController.GetAmountOf(item);
+		}
+
 		public void AddItem(Item item, int amount)
 		{
             if (ShortcutController.CanAddItem(item, amount))
                 ShortcutController.AddItem(item, amount);
             else if (InventoryController.CanAddItem(item, amount))
                 InventoryController.AddItem(item, amount);
+		}
+        public void RemoveItem(Item item, int amount)
+		{
+            var shorcutAmount = ShortcutController.GetAmountOf(item);
+            ShortcutController.RemoveItem(item, shorcutAmount);
+            amount -= shorcutAmount;
+
+            InventoryController.RemoveItem(item, amount);
 		}
 	}
 }

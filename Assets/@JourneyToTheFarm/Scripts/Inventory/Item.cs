@@ -12,6 +12,7 @@ using MLAPI.Serialization;
 
 namespace JTTF.Inventory
 {
+	[System.Serializable]
 	public struct Item : INetworkSerializable
     {
         private static Item noneItem = new Item("NoName", ItemType.None);
@@ -20,11 +21,11 @@ namespace JTTF.Inventory
         public ItemType type;
 
         public static Item None => noneItem;
-        public bool IsStackable => GameManager.DataBase.GetItemAsset(name, type).stackable;
-		public int StackCount => GameManager.DataBase.GetItemAsset(name, type).stackCount;
-        public Sprite Sprite => GameManager.DataBase.GetItemAsset(name, type).sprite;
-        public GameObject Prefab => GameManager.DataBase.GetItemAsset(name, type).prefab;
-		public GameObject CollectiblePrefab => GameManager.DataBase.GetItemAsset(name, type).collectiblePrefab;
+        public bool IsStackable => GameManager.ItemDataBase.GetItemAsset(name, type).stackable;
+		public int StackCount => GameManager.ItemDataBase.GetItemAsset(name, type).stackCount;
+        public Sprite Sprite => GameManager.ItemDataBase.GetItemAsset(name, type).sprite;
+        public GameObject Prefab => GameManager.ItemDataBase.GetItemAsset(name, type).prefab;
+		public GameObject CollectiblePrefab => GameManager.ItemDataBase.GetItemAsset(name, type).collectiblePrefab;
 
 		public Item(string name, ItemType type)
 		{

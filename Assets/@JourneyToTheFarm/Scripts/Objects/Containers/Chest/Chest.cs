@@ -22,7 +22,7 @@ namespace JTTF.Gameplay
 			if (Physics.Raycast(ray, out RaycastHit hit, 5.0f, raycastLayer))
 			{
 				chestPreview.transform.position = hit.point;
-				chestPreview.transform.forward = -OwnerPlayer.CharacterController.RoundForward;
+				chestPreview.transform.forward = -OwnerPlayer.MovementController.RoundForward;
 
 				var center = chestPreview.transform.position + new Vector3(0.0f, 0.2355309f, 0.0f);
 				var halfSize = new Vector3(1.234013f, 0.4710618f, 0.7313852f) * 0.5f;

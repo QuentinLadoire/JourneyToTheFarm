@@ -41,7 +41,7 @@ namespace JTTF.Character
 
 		private bool CanUseObject()
 		{
-			return usableObject != null && !usableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && usableObject.IsUsable;
+			return usableObject != null && !usableObject.Equals(null) && OwnerPlayer.MovementController.IsIdle && usableObject.IsUsable;
 		}
 		private void StartToUseObject()
 		{
@@ -110,7 +110,7 @@ namespace JTTF.Character
 			base.Start();
 
 			OwnerPlayer.EquipableController.onEquipedObjectChange += OnEquipedObjectChange;
-			OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
+			OwnerPlayer.MovementController.onMoveEnter += OnMoveEnter;
 
 			playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
 		}
@@ -118,7 +118,7 @@ namespace JTTF.Character
 		{
 			base.Update();
 
-			if (OwnerPlayer.CharacterController.HasControl)
+			if (OwnerPlayer.MovementController.HasControl)
 			{
 				ProcessInput();
 
@@ -130,7 +130,7 @@ namespace JTTF.Character
 			base.OnDestroy();
 
 			OwnerPlayer.EquipableController.onEquipedObjectChange -= OnEquipedObjectChange;
-			OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
+			OwnerPlayer.MovementController.onMoveEnter -= OnMoveEnter;
 		}
 	}
 }

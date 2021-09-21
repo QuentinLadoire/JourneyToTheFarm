@@ -18,13 +18,13 @@ namespace JTTF.Inventory
 		{
 			CanvasManager.GamePanel.OpenChestInventory(this);
 			GameManager.ActiveCursor();
-			GameManager.player.CharacterController.DesactiveControl();
+			GameManager.player.MovementController.DeactiveControl();
 		}
 		public void CloseInventory()
 		{
 			CanvasManager.GamePanel.CloseChestInventory();
-			GameManager.DesactiveCursor();
-			GameManager.player.CharacterController.ActiveControl();
+			GameManager.DeactiveCursor();
+			GameManager.player.MovementController.ActiveControl();
 
 			onInventotyClose.Invoke();
 		}

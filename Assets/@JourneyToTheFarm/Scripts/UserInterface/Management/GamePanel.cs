@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Behaviour;
 using JTTF.Inventory;
+using JTTF.Character;
 
 #pragma warning disable IDE0044
 
@@ -15,8 +16,11 @@ namespace JTTF.UI
         [SerializeField] private InventoryPanel chestInventoryPanel = null;
         [SerializeField] private InventoryPanel shortcutInventoryPanel = null;
         [SerializeField] private GameObject dragAndDropPanel = null;
+        [SerializeField] private CraftingPanel craftingPanel = null;
+        [SerializeField] private CraftingProgressBar craftingProgressBar = null;
 
         public PlayerPanel PlayerPanel => playerPanel;
+        public CraftingProgressBar CraftingProgressBar => craftingProgressBar;
 
         public void OpenPlayerInventory(PlayerInventoryController controller)
 		{
@@ -38,9 +42,23 @@ namespace JTTF.UI
             chestInventoryPanel.SetActive(false);
         }
 
+        public void OpenCraftingPanel()
+		{
+            craftingPanel.SetActive(true);
+            craftingPanel.InitRecipeDescription();
+		}
+        public void CloseCraftingPanel()
+		{
+            craftingPanel.SetActive(false);
+		}
+
         public void InitShortcutInventory(ShortcutInventoryController controller)
 		{
             shortcutInventoryPanel.SetInventoryController(controller);
+		}
+        public void InitCraftingPanel(CraftingController controller)
+		{
+            craftingPanel.Init(controller);
 		}
 
         public void ParentToDragAndDropPanel(Transform transform)

@@ -35,7 +35,7 @@ namespace JTTF.Character
 
         private bool CanInteractObject()
 		{
-            return interactableObject != null && !interactableObject.Equals(null) && OwnerPlayer.CharacterController.IsIdle && interactableObject.IsInteractable;
+            return interactableObject != null && !interactableObject.Equals(null) && OwnerPlayer.MovementController.IsIdle && interactableObject.IsInteractable;
         }
         private void StartInteraction()
 		{
@@ -134,13 +134,13 @@ namespace JTTF.Character
             base.Start();
 
             playerProgressBar = CanvasManager.GamePanel.PlayerPanel.PlayerProgressBar;
-            OwnerPlayer.CharacterController.onMoveEnter += OnMoveEnter;
+            OwnerPlayer.MovementController.onMoveEnter += OnMoveEnter;
         }
 		protected override void Update()
 		{
             base.Update();
 
-			if (OwnerPlayer.CharacterController.HasControl)
+			if (OwnerPlayer.MovementController.HasControl)
 			{
                 CheckHasNearestInteractableObject();
 
@@ -153,7 +153,7 @@ namespace JTTF.Character
 		{
             base.OnDestroy();
 
-            OwnerPlayer.CharacterController.onMoveEnter -= OnMoveEnter;
+            OwnerPlayer.MovementController.onMoveEnter -= OnMoveEnter;
 		}
 	}
 }

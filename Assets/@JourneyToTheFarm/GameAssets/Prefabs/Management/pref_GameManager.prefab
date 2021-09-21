@@ -46,4 +46,5 @@ MonoBehaviour:
   itemDataBase: {fileID: 11400000, guid: b8eb71ad38010274085df9e53915a6ef, type: 2}
   seedDataBase: {fileID: 11400000, guid: 9c99d38e63a09de43abf49f1bf08557e, type: 2}
   prefabDataBase: {fileID: 11400000, guid: 438f585eb8a07a844bac8aa39cc342b4, type: 2}
+  recipeDataBase: {fileID: 11400000, guid: e1f872e0e7f2e784d86e5bcde8843102, type: 2}
   hideCursorOnPlay: 0

@@ -14,6 +14,7 @@ namespace JTTF.Management
 		[SerializeField] private ItemDataBase itemDataBase = null;
 		[SerializeField] private SeedDataBase seedDataBase = null;
 		[SerializeField] private PrefabDataBase prefabDataBase = null;
+		[SerializeField] private RecipeDataBase recipeDataBase = null;
 		[SerializeField] private bool hideCursorOnPlay = true;
 
 		private static GameManager instance = null;
@@ -25,9 +26,10 @@ namespace JTTF.Management
 		
 		public static bool IsSolo => !isMulti;
 		public static bool IsMulti => isMulti;
-		public static ItemDataBase DataBase => instance.itemDataBase;
+		public static ItemDataBase ItemDataBase => instance.itemDataBase;
 		public static SeedDataBase SeedDataBase => instance.seedDataBase;
 		public static PrefabDataBase PrefabDataBase => instance.prefabDataBase;
+		public static RecipeDataBase RecipeDataBase => instance.recipeDataBase;
 
 		public static void PlaySolo()
 		{
@@ -43,7 +45,7 @@ namespace JTTF.Management
 			Cursor.lockState = CursorLockMode.Confined;
 			Cursor.visible = true;
 		}
-		public static void DesactiveCursor()
+		public static void DeactiveCursor()
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
@@ -63,7 +65,7 @@ namespace JTTF.Management
 		private void Start()
 		{
 			if (hideCursorOnPlay)
-				DesactiveCursor();
+				DeactiveCursor();
 		}
 
 		private void Update()
@@ -71,7 +73,7 @@ namespace JTTF.Management
 			if (Input.GetKeyDown(KeyCode.P))
 			{
 				if (cameraController.HasControl)
-					cameraController.DesactiveControl();
+					cameraController.DeactiveControl();
 				else
 					cameraController.ActiveControl();
 			}

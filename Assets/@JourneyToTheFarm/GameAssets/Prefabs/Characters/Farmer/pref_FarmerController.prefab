@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 1436786526447741699}
   - component: {fileID: 1644365230994723854}
   - component: {fileID: 5518234966276075095}
+  - component: {fileID: 5496376923020994032}
   m_Layer: 3
   m_Name: pref_FarmerController
   m_TagString: Untagged
@@ -358,6 +359,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveOnAwake: 1
   inventory: {fileID: 5764052042502667536}
+--- !u!114 &5496376923020994032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110536171662277979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc6c843ef941624c8846dbd280e34ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActiveOnAwake: 1
 --- !u!1001 &7181768473722939871
 PrefabInstance:
   m_ObjectHideFlags: 0

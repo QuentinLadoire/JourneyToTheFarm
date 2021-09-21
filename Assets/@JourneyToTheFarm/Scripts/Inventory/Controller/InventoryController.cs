@@ -85,6 +85,11 @@ namespace JTTF.Inventory
 			return inventory.CanAddItem(item, amount);
 		}
 
+		public int GetAmountOf(Item item)
+		{
+			return inventory.GetAmountOf(item);
+		}
+
 		public void AddItemAt(int displayIndex, int amount)
 		{
 			if (GameManager.IsMulti)

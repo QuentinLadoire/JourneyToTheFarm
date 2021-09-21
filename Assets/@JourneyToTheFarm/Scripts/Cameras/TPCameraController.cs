@@ -79,7 +79,7 @@ namespace JTTF
 		{
 			hasControl = true;
 		}
-		public void DesactiveControl()
+		public void DeactiveControl()
 		{
 			hasControl = false;
 		}

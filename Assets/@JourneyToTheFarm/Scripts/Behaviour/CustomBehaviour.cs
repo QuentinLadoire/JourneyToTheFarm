@@ -10,6 +10,8 @@ namespace JTTF.Behaviour
 
 		private bool firstFrame = true;
 
+		public bool IsActiveOnAwake { get => isActiveOnAwake; set => isActiveOnAwake = value; }
+
 		protected virtual void FirstFrameUpdate()
 		{
 

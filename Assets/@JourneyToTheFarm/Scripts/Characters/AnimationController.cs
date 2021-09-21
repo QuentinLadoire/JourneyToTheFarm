@@ -235,7 +235,7 @@ namespace JTTF.Character
 			base.Update();
 
 			if (!inAction)
-				MovementAnimation(OwnerPlayer.CharacterController.Direction);
+				MovementAnimation(OwnerPlayer.MovementController.Direction);
 		}
 		protected override void OnDestroy()
 		{

@@ -7,7 +7,7 @@ using JTTF.Enum;
 
 namespace JTTF.DataBase
 {
-    [CreateAssetMenu(fileName = "NewDataBase", menuName = "DataBase")]
+    [CreateAssetMenu(fileName = "NewItemDataBase", menuName = "DataBase/ItemDataBase")]
     public class ItemDataBase : ScriptableObject
     {
         public List<ItemAsset> toolItems = new List<ItemAsset>();

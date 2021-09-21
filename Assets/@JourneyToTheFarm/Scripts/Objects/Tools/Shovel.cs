@@ -23,7 +23,7 @@ namespace JTTF
 		
 		private bool IsConstructible()
 		{
-			if (Physics.Raycast(OwnerPlayer.CharacterController.RoundPosition + Vector3.up, Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
+			if (Physics.Raycast(OwnerPlayer.MovementController.RoundPosition + Vector3.up, Vector3.down, out RaycastHit hit, 5.0f, raycastLayer))
 			{
 				farmPlotPreview.transform.position = hit.point;
 				farmPlotPreview.transform.up = hit.normal;

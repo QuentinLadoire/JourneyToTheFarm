@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace JTTF.DataBase
 {
-    [CreateAssetMenu(fileName = "NewPrefabDataBase", menuName = "PrefabDataBase")]
+    [CreateAssetMenu(fileName = "NewPrefabDataBase", menuName = "DataBase/PrefabDataBase")]
     public class PrefabDataBase : ScriptableObject
     {
         [SerializeField] private GameObject menuCanvasPrefab = null;

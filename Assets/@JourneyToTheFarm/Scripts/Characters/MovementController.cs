@@ -143,7 +143,7 @@ namespace JTTF.Character
 		{
 			hasControl = true;
 		}
-		public void DesactiveControl()
+		public void DeactiveControl()
 		{
 			hasControl = false;
 		}

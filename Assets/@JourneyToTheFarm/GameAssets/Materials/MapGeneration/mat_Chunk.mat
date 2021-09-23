@@ -79,7 +79,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - Metallic: 0
+    - Smoothness: 0
     - Vector1_078cc122e92a48b4abcb4c487fbb88cd: 0.4875
     - Vector1_74a11b94ca5b4aaf9c1429921b260d54: 0.58
     - Vector1_aff02f29822645a588a49868de12655e: 1

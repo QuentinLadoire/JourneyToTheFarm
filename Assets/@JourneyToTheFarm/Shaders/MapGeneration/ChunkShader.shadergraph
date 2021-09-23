@@ -23,6 +23,12 @@
         },
         {
             "m_Id": "aff02f29822645a588a49868de12655e"
+        },
+        {
+            "m_Id": "b1412ff8233c4e09b997df607d5ff7a1"
+        },
+        {
+            "m_Id": "505493999c9849a68d9c2f8623bb1011"
         }
     ],
     "m_Keywords": [],
@@ -80,6 +86,12 @@
         },
         {
             "m_Id": "470d96caba4544aead5574c24fbabbe3"
+        },
+        {
+            "m_Id": "bd9991bb9a364725b60b3094a2cc972f"
+        },
+        {
+            "m_Id": "afc9460aefeb4254adeb2af0762cb246"
         }
     ],
     "m_GroupDatas": [],
@@ -158,6 +170,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "afc9460aefeb4254adeb2af0762cb246"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e420b960c04d47f8a1092bf5f9cc5176"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "bc3688a7cc3d4fc2831179ac613accbd"
                 },
                 "m_SlotId": 4
@@ -167,6 +193,20 @@
                     "m_Id": "e4083a45cea34903b423a2268f470ef8"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "bd9991bb9a364725b60b3094a2cc972f"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "8c920c25c3314d60b9f9df52127c2906"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -365,6 +405,8 @@
         "m_GuidSerialized": "2b750b64-4a91-47b8-8078-99b51d30ce55"
     },
     "m_Name": "GrassHeight",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_078cc122e92a48b4abcb4c487fbb88cd",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -388,6 +430,8 @@
         "m_GuidSerialized": "7c20745a-07a7-4da4-9bb9-2a630b6c2e7d"
     },
     "m_Name": "RockColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_0d4de970a3e740048b3bea7c6bd502d6",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -412,6 +456,8 @@
         "m_GuidSerialized": "f3097e66-b8eb-4938-9485-07afec77daf4"
     },
     "m_Name": "GrassColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_0f55e5f53874417889142a66d7927cf6",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -651,6 +697,31 @@
     },
     "m_Property": {
         "m_Id": "aff02f29822645a588a49868de12655e"
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "505493999c9849a68d9c2f8623bb1011",
+    "m_Guid": {
+        "m_GuidSerialized": "0d9e9a64-ba36-49c6-ba1f-d5dccffa6fde"
+    },
+    "m_Name": "Smoothness",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Smoothness",
+    "m_DefaultReferenceName": "Smoothness",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 1,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -919,6 +990,21 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "73df06e1deb74649986c1f4a480b6da2",
+    "m_Id": 0,
+    "m_DisplayName": "Metallic",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "74a11b94ca5b4aaf9c1429921b260d54",
@@ -926,6 +1012,8 @@
         "m_GuidSerialized": "5ea2d8f1-c8de-4de2-8564-ec5a44c59182"
     },
     "m_Name": "RockHeight",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_74a11b94ca5b4aaf9c1429921b260d54",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1147,6 +1235,56 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "a98554f95da449efa1761cca4ec1d8e4",
+    "m_Id": 0,
+    "m_DisplayName": "Smoothness",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "afc9460aefeb4254adeb2af0762cb246",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -12.0,
+            "y": 408.0,
+            "width": 117.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "73df06e1deb74649986c1f4a480b6da2"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "b1412ff8233c4e09b997df607d5ff7a1"
+    }
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "aff02f29822645a588a49868de12655e",
@@ -1154,6 +1292,8 @@
         "m_GuidSerialized": "869e3d05-739c-4701-86e5-e642b441b7d2"
     },
     "m_Name": "SnowHeight",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_aff02f29822645a588a49868de12655e",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1163,6 +1303,31 @@
     "m_Hidden": false,
     "m_Value": 0.0,
     "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "b1412ff8233c4e09b997df607d5ff7a1",
+    "m_Guid": {
+        "m_GuidSerialized": "3a155795-3b5e-4835-8efc-2020bd973c08"
+    },
+    "m_Name": "Metallic",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Metallic",
+    "m_DefaultReferenceName": "Metallic",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
@@ -1222,6 +1387,41 @@
     },
     "m_TextureType": 0,
     "m_NormalMapSpace": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "bd9991bb9a364725b60b3094a2cc972f",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -13.0,
+            "y": 447.0,
+            "width": 142.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "a98554f95da449efa1761cca4ec1d8e4"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "505493999c9849a68d9c2f8623bb1011"
+    }
 }
 
 {
@@ -1397,6 +1597,8 @@
         "m_GuidSerialized": "0819d529-3033-4b44-a34d-c7412223ad20"
     },
     "m_Name": "SnowColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_d643f1c4116e41e6b50859204b907b9d",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1454,6 +1656,8 @@
         "m_GuidSerialized": "c38b2979-5f2e-4a11-a734-497d98c83ed5"
     },
     "m_Name": "NoiseMap",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_dcc01194ebed4494a1e3bbc386c54016",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,

@@ -51,9 +51,6 @@ namespace JTTF.Character
             ShortcutController.AddItem(new Item("Axe", ItemType.Tool), 1);
             ShortcutController.AddItem(new Item("Pickaxe", ItemType.Tool), 1);
             ShortcutController.AddItem(new Item("Scythe", ItemType.Tool), 1);
-            ShortcutController.AddItem(new Item("WheatPacket", ItemType.SeedPacket), 4);
-            ShortcutController.AddItem(new Item("Chest", ItemType.Container), 1);
-            ShortcutController.AddItem(new Item("Wheat", ItemType.Resource), 50);
         }
 
         public bool CanAddItem(Item item, int amount)

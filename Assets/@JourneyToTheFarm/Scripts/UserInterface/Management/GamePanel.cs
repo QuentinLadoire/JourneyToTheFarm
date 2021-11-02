@@ -52,6 +52,11 @@ namespace JTTF.UI
             craftingPanel.SetActive(false);
 		}
 
+        public void RefreshCraftingPanel()
+		{
+            craftingPanel.InitRecipeDescription();
+		}
+
         public void InitShortcutInventory(ShortcutInventoryController controller)
 		{
             shortcutInventoryPanel.SetInventoryController(controller);

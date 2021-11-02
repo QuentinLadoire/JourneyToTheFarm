@@ -14,5 +14,6 @@ namespace JTTF.Interface
 
         public void StartToInteract();
         public void Interact(Player player);
+        public void StopToInteract();
     }
 }

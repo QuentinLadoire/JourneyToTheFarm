@@ -25,6 +25,10 @@ namespace JTTF.MapGeneration
 		private HeightmapData rockHeightmap = null;
 		private HeightmapData grassHeightmap = null;
 
+		private List<GameObject> treeList = new List<GameObject>();
+		private List<GameObject> rockList = new List<GameObject>();
+		private List<GameObject> grassList = new List<GameObject>();
+
 		private float GetHeight(int x, int y)
 		{
 			return heightmap.data[x, y] * setting.terrainSetting.heightMultiplier - setting.terrainSetting.heightMultiplier * 0.5f;
@@ -60,6 +64,8 @@ namespace JTTF.MapGeneration
 			var randomScale = Random.Range(2.0f, 4.0f);
 			newTreePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
+			treeList.Add(newTreePrefab);
+
 			if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
 			{
 				var netObject = newTreePrefab.GetComponent<NetworkObject>();
@@ -82,6 +88,8 @@ namespace JTTF.MapGeneration
 			var randomScale = Random.Range(5.0f, 15.0f);
 			newRockPrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
+			rockList.Add(newRockPrefab);
+
 			if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
 			{
 				var netObject = newRockPrefab.GetComponent<NetworkObject>();
@@ -103,6 +111,8 @@ namespace JTTF.MapGeneration
 
 			var randomScale = Random.Range(0.2f, 0.8f);
 			newGrassPatch.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+			grassList.Add(newGrassPatch);
 
 			//if (GameManager.IsMulti && NetworkManager.Singleton.IsServer)
 			//{
@@ -277,15 +287,15 @@ namespace JTTF.MapGeneration
 		private void Start()
 		{
 			Random.InitState((int)(transform.position.x + transform.position.y));
-
+			
 			ComputeHeightmap();
 			GenerateMesh();
-
+			
 			GenerateTexture();
-
+			
 			ComputeGrassHeightmap();
 			GenerateGrass();
-
+			
 			if (!GameManager.IsMulti || (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer))
 			{
 				ComputeTreeHeightmap();
@@ -293,6 +303,85 @@ namespace JTTF.MapGeneration
 				ComputeRockHeightmap();
 				GenerateRock();
 			}
+		}
+		private void Update()
+		{
+			//Generate Flat Terrain
+			//if (Input.GetKeyDown(KeyCode.Keypad1))
+			//{
+			//	treeList.ForEach(item => Destroy(item));
+			//	treeList.Clear();
+			//	rockList.ForEach(item => Destroy(item));
+			//	rockList.Clear();
+			//	grassList.ForEach(item => Destroy(item));
+			//	grassList.Clear();
+			//
+			//
+			//	heightmap = setting.ComputeSimpleHeightmap();
+			//	GenerateMesh();
+			//	//GenerateTexture();
+			//}
+			//if (Input.GetKeyDown(KeyCode.Keypad2))
+			//{
+			//	treeList.ForEach(item => Destroy(item));
+			//	treeList.Clear();
+			//	rockList.ForEach(item => Destroy(item));
+			//	rockList.Clear();
+			//	grassList.ForEach(item => Destroy(item));
+			//	grassList.Clear();
+			//
+			//	var offset = new Vector2(transform.position.x, transform.position.z);
+			//	heightmap = setting.ComputeWithPeaksHeightmap(offset);
+			//	GenerateMesh();
+			//	//GenerateTexture();
+			//}
+			//if (Input.GetKeyDown(KeyCode.Keypad3))
+			//{
+			//	treeList.ForEach(item => Destroy(item));
+			//	treeList.Clear();
+			//	rockList.ForEach(item => Destroy(item));
+			//	rockList.Clear();
+			//	grassList.ForEach(item => Destroy(item));
+			//	grassList.Clear();
+			//
+			//	ComputeHeightmap();
+			//	GenerateMesh();
+			//	//GenerateTexture();
+			//}
+			//if (Input.GetKeyDown(KeyCode.Keypad4))
+			//{
+			//	GenerateTexture();
+			//}
+			//if (Input.GetKeyDown(KeyCode.Keypad5))
+			//{
+			//	Random.InitState((int)(transform.position.x + transform.position.y));
+			//
+			//	treeList.ForEach(item => Destroy(item));
+			//	treeList.Clear();
+			//
+			//	ComputeTreeHeightmap();
+			//	GenerateTree();
+			//}
+			//if (Input.GetKeyDown(KeyCode.Keypad6))
+			//{
+			//	Random.InitState((int)(transform.position.x + transform.position.y));
+			//
+			//	rockList.ForEach(item => Destroy(item));
+			//	rockList.Clear();
+			//
+			//	ComputeRockHeightmap();
+			//	GenerateRock();
+			//}
+			//if (Input.GetKeyDown(KeyCode.Keypad7))
+			//{
+			//	Random.InitState((int)(transform.position.x + transform.position.y));
+			//
+			//	grassList.ForEach(item => Destroy(item));
+			//	grassList.Clear();
+			//
+			//	ComputeGrassHeightmap();
+			//	GenerateGrass();
+			//}
 		}
 	}
 }

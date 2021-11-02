@@ -230,5 +230,9 @@ namespace JTTF.Gameplay
 
             ClearSeed();
         }
+        public override void StopToInteract()
+		{
+            InteractionText.SetActive(false);
+		}
     }
 }

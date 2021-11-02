@@ -117,6 +117,18 @@ namespace JTTF.MapGeneration
 		{
 			return HeightmapUtility.GenerateHeightmapFrom(offset, grassSetting.noiseSetting);
 		}
+
+		public HeightmapData ComputeSimpleHeightmap()
+		{
+			return HeightmapUtility.GenerateHeightmapFrom(terrainSetting.flatGroundSetting);
+		}
+		public HeightmapData ComputeWithPeaksHeightmap(Vector2 offset)
+		{
+			var flatHeightmap = HeightmapUtility.GenerateHeightmapFrom(terrainSetting.flatGroundSetting);
+			var peaksHeightmap = HeightmapUtility.GenerateHeightmapFrom(offset, terrainSetting.peaksSetting);
+
+			return HeightmapUtility.LightenBlend(flatHeightmap, peaksHeightmap, terrainSetting.peaksOpacity);
+		}
 	}
 
 	public class MapGeneration : MonoBehaviour

@@ -26,8 +26,7 @@ public class FractalNoiseSetting
 	public float lacunarity = 2.0f;
 	[Range(0.0f, 1.0f)]
 	public float persistance = 0.5f;
-	public int seed = 0;
-
+	
 	public Vector2 ScaleFactor => tiling / resolution;
 }
 
@@ -158,29 +157,29 @@ public static class NoiseUtility
 
 	public static float FractalNoise2D(float x, float y, FractalNoiseSetting setting)
 	{
-		return Noise.FractalNoise2D(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, setting.seed);
+		return Noise.FractalNoise2D(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, 0.0f, 0.0f);
 	}
 	public static float FractalNoise2DNormalized(float x, float y, FractalNoiseSetting setting)
 	{
-		return Noise.FractalNoise2DNormalized(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, setting.seed);
+		return Noise.FractalNoise2DNormalized(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, 0.0f, 0.0f);
 	}
 
 	public static float TurbulenceNoise2D(float x, float y, FractalNoiseSetting setting)
 	{
-		return Noise.TurbulenceNoise2D(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, setting.seed);
+		return Noise.TurbulenceNoise2D(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, 0.0f, 0.0f);
 	}
 
 	public static float MarbleNoise2D(float x, float y, FractalNoiseSetting setting)
 	{
-		return Noise.MarbleNoise2D(x, y, setting.ScaleFactor.x, setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, setting.seed);
+		return Noise.MarbleNoise2D(x, y, setting.ScaleFactor.x, setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, 0.0f, 0.0f);
 	}
 	public static float MarbleNoise2DNormalized(float x, float y, FractalNoiseSetting setting)
 	{
-		return Noise.MarbleNoise2DNormalized(x, y, setting.ScaleFactor.x, setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, setting.seed);
+		return Noise.MarbleNoise2DNormalized(x, y, setting.ScaleFactor.x, setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, 0.0f, 0.0f);
 	}
 
 	public static float WoodNoise2D(float x, float y, FractalNoiseSetting setting)
 	{
-		return Noise.WoodNoise2D(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, setting.seed);
+		return Noise.WoodNoise2D(x * setting.ScaleFactor.x, y * setting.ScaleFactor.y, setting.layer, setting.lacunarity, setting.persistance, 0.0f, 0.0f);
 	}
 }

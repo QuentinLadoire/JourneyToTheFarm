@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using JTTF.Enum;
 using JTTF.Behaviour;
+using JTTF.Management;
+using MLAPI.NetworkVariable;
 
 #pragma warning disable IDE0044
 
@@ -43,6 +45,12 @@ namespace JTTF.Character
 		private Player ownerPlayer = null;
 
 		public Player OwnerPlayer => ownerPlayer;
+
+		private NetworkVariableFloat speedSync = new NetworkVariableFloat(new NetworkVariableSettings
+		{
+			ReadPermission = NetworkVariablePermission.Everyone,
+			WritePermission = NetworkVariablePermission.OwnerOnly
+		});
 
 		private float GetDesiredAnimationSpeed(float duration, float durationMax, float multiplier)
 		{
@@ -156,6 +164,9 @@ namespace JTTF.Character
 			animator.SetFloat("DirectionX", localDirection.x);
 			animator.SetFloat("DirectionY", localDirection.z);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void DigAnimation(bool value, float speed = 1.0f)
 		{
@@ -163,18 +174,27 @@ namespace JTTF.Character
 			
 			animator.SetBool("IsDig", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void CutAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsCut", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void MineAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsMine", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void PlantAnimation(bool value, float speed = 1.0f)
 		{
@@ -182,18 +202,27 @@ namespace JTTF.Character
 
 			animator.SetBool("IsPlant", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void PlaceAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsPlace", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void OpenAnimation(bool value, float speed = 1.0f)
 		{
 			if (animator == null) { Debug.LogError("Animator is Null"); return; }
 			animator.SetBool("IsOpen", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 		private void PickAnimation(bool value, float speed = 1.0f)
 		{
@@ -201,6 +230,9 @@ namespace JTTF.Character
 
 			animator.SetBool("IsPick", value);
 			animator.speed = speed;
+
+			if (GameManager.IsMulti && this.IsOwner)
+				speedSync.Value = speed;
 		}
 
 		protected override void Awake()
@@ -213,6 +245,12 @@ namespace JTTF.Character
 		public override void NetworkStart()
 		{
 			base.NetworkStart();
+
+			if (GameManager.IsMulti && !this.IsOwner)
+				speedSync.OnValueChanged += (previousValue, newValue) =>
+				{
+					animator.speed = newValue;
+				};
 
 			if (!(this.IsClient && this.IsLocalPlayer))
 			{

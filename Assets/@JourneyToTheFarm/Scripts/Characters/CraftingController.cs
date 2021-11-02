@@ -49,6 +49,8 @@ namespace JTTF.Character
             foreach (var requirement in currentRecipe.requirements)
                 OwnerPlayer.RemoveItem(requirement.item, requirement.amount);
 
+            CanvasManager.GamePanel.RefreshCraftingPanel();
+
             CancelCraft();
         }
 

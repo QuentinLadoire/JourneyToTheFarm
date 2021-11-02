@@ -70,6 +70,7 @@ namespace JTTF.Character
             inInteraction = false;
             currentDuration = 0.0f;
             playerProgressBar.SetActive(false);
+            interactableObject.StopToInteract();
 
             onStopToInteract.Invoke(interactableObject.ActionType, interactableObject.ActionDuration);
 		}

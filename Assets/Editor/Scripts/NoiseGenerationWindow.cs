@@ -112,7 +112,6 @@ public class NoiseLayer : Layer
 				setting.layer = EditorGUILayout.IntField("Layer", setting.layer);
 				setting.lacunarity = EditorGUILayout.FloatField("Lacunarity", setting.lacunarity);
 				setting.persistance = EditorGUILayout.Slider("Persistance", setting.persistance, 0.0f, 1.0f);
-				setting.seed = EditorGUILayout.IntField("Seed", setting.seed);
 			}
 			EditorGUI.indentLevel = 0;
 		}
@@ -202,27 +201,23 @@ public class NoiseGenerationWindow : EditorWindow
 	{
 		windowSettingRect.x = 0.0f;
 		windowSettingRect.y = 0.0f;
-		windowSettingRect.width = width * 0.25f;
-		windowSettingRect.height = height;
+		windowSettingRect.width = position.width * 0.25f;
+		windowSettingRect.height = position.height;
 
 		areaTextureRect.x = windowSettingRect.xMax;
 		areaTextureRect.y = 0.0f;
-		areaTextureRect.width = width * 0.50f;
-		areaTextureRect.height = height;
+		areaTextureRect.width = position.width * 0.50f;
+		areaTextureRect.height = position.height;
 
 		noiseSettingRect.x = areaTextureRect.xMax;
 		noiseSettingRect.y = 0.0f;
-		noiseSettingRect.width = width * 0.25f;
-		noiseSettingRect.height = height;
+		noiseSettingRect.width = position.width * 0.25f;
+		noiseSettingRect.height = position.height;
 
 		noiseLayerListRect.x = 0.0f;
 		noiseLayerListRect.y = 17.0f;
 		noiseLayerListRect.width = 300.0f;
 		noiseLayerListRect.height = 300.0f;
-	}
-	void InitTexture()
-	{
-		noiseTexture = Texture2D.whiteTexture;
 
 		textureRect.width = areaTextureRect.width;
 		textureRect.height = areaTextureRect.width;
@@ -269,7 +264,6 @@ public class NoiseGenerationWindow : EditorWindow
 		fractalNoiseSetting.layer = IntField("Layer", fractalNoiseSetting.layer);
 		fractalNoiseSetting.lacunarity = FloatField("Lacunarity", fractalNoiseSetting.lacunarity);
 		fractalNoiseSetting.persistance = Slider("Persistance", fractalNoiseSetting.persistance, 0.0f, 1.0f);
-		fractalNoiseSetting.seed = IntField("Seed", fractalNoiseSetting.seed);
 		
 		noiseInput = Vector2Field("Input", noiseInput);
 
@@ -284,8 +278,7 @@ public class NoiseGenerationWindow : EditorWindow
 		turbulenceNoiseSetting.layer = IntField("Layer", turbulenceNoiseSetting.layer);
 		turbulenceNoiseSetting.lacunarity = FloatField("Lacunarity", turbulenceNoiseSetting.lacunarity);
 		turbulenceNoiseSetting.persistance = Slider("Persistance", turbulenceNoiseSetting.persistance, 0.0f, 1.0f);
-		turbulenceNoiseSetting.seed = IntField("Seed", turbulenceNoiseSetting.seed);
-
+		
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
 	void DisplayMarbleNoiseSettingMode()
@@ -296,8 +289,7 @@ public class NoiseGenerationWindow : EditorWindow
 		marbleNoiseSetting.layer = IntField("Layer", marbleNoiseSetting.layer);
 		marbleNoiseSetting.lacunarity = FloatField("Lacunarity", marbleNoiseSetting.lacunarity);
 		marbleNoiseSetting.persistance = Slider("Persistance", marbleNoiseSetting.persistance, 0.0f, 1.0f);
-		marbleNoiseSetting.seed = IntField("Seed", marbleNoiseSetting.seed);
-
+		
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
 	void DisplayWoodNoiseSettingMode()
@@ -309,8 +301,7 @@ public class NoiseGenerationWindow : EditorWindow
 		woodNoiseSetting.layer = IntField("Layer", woodNoiseSetting.layer);
 		woodNoiseSetting.lacunarity = FloatField("Lacunarity", woodNoiseSetting.lacunarity);
 		woodNoiseSetting.persistance = Slider("Persistance", woodNoiseSetting.persistance, 0.0f, 1.0f);
-		woodNoiseSetting.seed = IntField("Seed", woodNoiseSetting.seed);
-
+		
 		noiseInput = Vector2Field("Input", noiseInput);
 	}
 	void DisplayBlendNoiseSettingMode()
@@ -413,14 +404,18 @@ public class NoiseGenerationWindow : EditorWindow
 
 	private void Awake()
 	{
-		this.minSize = new Vector2(width, height);
-		this.maxSize = new Vector2(width, height);
-		
+		var rect = position;
+		rect.size = new Vector2(width, height);
+		position = rect;
+
+		noiseTexture = Texture2D.whiteTexture;
+
 		InitRect();
-		InitTexture();
 	}
 	private void OnGUI()
 	{
+		InitRect();
+
 		DisplayWindowSetting();
 		DisplayAreaTexture();
 		DisplayNoiseSetting();

@@ -68,5 +68,9 @@ namespace JTTF.Behaviour
 		{
 			Debug.LogWarning("The Mehtod Interact of " + this.GetType().ToString() + ", is not Implemented.");
 		}
+		public virtual void StopToInteract()
+		{
+
+		}
 	}
 }
